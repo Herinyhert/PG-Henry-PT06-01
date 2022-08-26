@@ -3,7 +3,6 @@ import { SET_ERROR, GET_ARTICULOS} from '../actions';
 interface stateI {
     articulos: [{
         name: string,       
-        description: string, 
         category: string, 
         stock: number, 
         price: number, 
@@ -19,7 +18,6 @@ const initialState: stateI = {
     articulos: [
         {
             name: "Monitor 29",
-            description: "Monitor WideScreen 29 Full Hd 4k", 
             category: "Perifericos", 
             stock: 13, 
             price: 400, 

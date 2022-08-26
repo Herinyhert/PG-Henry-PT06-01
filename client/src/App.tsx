@@ -1,25 +1,22 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import { HashRouter as Router, Route, Link, Routes } from 'react-router-dom'
-import Landing from './pages/Landing/Landing';
-import Home from './pages/Home/Home';
+import React from "react";
+import { Route, Routes, BrowserRouter } from "react-router-dom";
+import Landing from "./pages/Landing/Landing";
+import Home from "./pages/Home/Home";
+import NavBar from "./components/NavBar/NavBar";
 
-function App() {
+export default function App() {
   return (
-<Router>
-  <div>
-
-<Routes>
- 
-  <Route  path="/"  element={<Landing/>} />
-  <Route  path="/Home" element={<Home/>} />
-  
-</Routes>
-  </div>
-
-</Router>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Landing />} />
+        {/* <Route>
+          <NavBar /> */}
+          {/* <Routes> */}
+            <Route path="home" element={<Home />} />
+            <Route path="*" element={<div>404</div>} />
+          {/* </Routes> */}
+        {/* </Route> */}
+      </Routes>
+    </BrowserRouter>
   );
 }
-
-export default App;
