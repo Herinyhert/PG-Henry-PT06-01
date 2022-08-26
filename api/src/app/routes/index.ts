@@ -1,18 +1,18 @@
 import { json } from 'express';
-import { PrismaClient } from '@prisma/client';
 import  Router  from 'express'; 
+import prisma from '../../db';
+import { Prisma } from '@prisma/client';
 
 
 const router = Router()
-const prisma = new PrismaClient()
-router.use(json())
+
 
 router.post("/", async (req, res) =>{  
-    const { name, description, category, stock, price, img, state } = req.body
-    const newProduct = await prisma.products.create({
+    const { name, brand, category, stock, price, img, state } = req.body
+    const newProduct = await prisma.product.create({
         data: {
             name: name, 
-            description: description, 
+            brand: brand, 
             category: category, 
             stock: stock, 
             price: price, 
@@ -40,6 +40,7 @@ router.get("/", async (req, res) => {
     let { page= 0, pageSize= 5, name, orderBy ,direction } = req.query;
     const pageNumber = Number(page);
     const pageSizeNumber = Number(pageSize);
+    const where: Prisma.ProductWhereInput ={}
     if (!Number.isFinite(pageNumber)) {
       res.status(400).json({ message: `the 'page' must be a number` });
       return
@@ -52,9 +53,13 @@ router.get("/", async (req, res) => {
       res.status(400).json({ message: `the 'name' must be a string` });
       return
     }
-    const searchproducts = await prisma.products.findMany({
-        skip: (pageNumber * 5) -5,
-        take: 5
+    const searchproducts = await prisma.product.findMany({
+            skip: (pageNumber * 5) -5,
+            take: 5,
+            where: {name:{
+              contains: name, 
+              mode: 'insensitive'
+            }}
     })
 
   
