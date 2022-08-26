@@ -1,11 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-
 import { Link } from "react-router-dom";
-//import StartRating from "../StarRating";
+import StartRating from "../StarRating/StarRating";
 
-export default function CardProduct({ img: string , name, price, stock }) {
-  // le paso por props: flags, name, continents y por eso no necesito traerme ningún estado
+export default function CardProduct({id, img, name, stock, price, category}){
+
   return (
     <Tarjeta>
       {/* <img src="https://cdn.pixabay.com/photo/2015/02/09/20/03/koala-630117__340.jpg" /> */}
@@ -17,13 +16,14 @@ export default function CardProduct({ img: string , name, price, stock }) {
       />
       <Name>{name}</Name>
 
-      {/* <StartRating /> */}
+      <StartRating />
 
-      <Stock>{stock}</Stock>
+      <Stock>Stock: {stock}</Stock><br></br>
+      <Category>Categoria: {category}</Category>
       <br></br>
       <Price>{price}</Price>
 
-      <Link to={`/countries/${id}`}>
+      <Link to={`/detail/${id}`}>
         <Button>Details</Button>
       </Link>
     </Tarjeta>
@@ -87,6 +87,9 @@ const Price = styled.span`
    margin-botton: 5px;
    box-shadow: -10px 20px 15px -10px rgba(17, 233, 91, 0.3);
    z-index:2
+ `;
+ const Category = styled.span`
+   margin-botton: 100px;
  `;
 
 const Stock = styled.span`
