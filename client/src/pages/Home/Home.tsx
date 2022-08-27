@@ -13,7 +13,7 @@ import { ReduxState } from "../../reducer";
 export default function Home() {
   const [state, setState] = useState({
     page: 1,
-    pageSize: 5,
+    pageSize: 12,
     name: undefined,
     order: undefined,
     direction: undefined,
