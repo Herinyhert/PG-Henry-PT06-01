@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { getArticulos } from "../../actions";
 import { AnyAction } from "redux";
 import { ReduxState } from "../../reducer";
+import SideBar from "../../components/SideBar/SideBar";
 
 export default function Home() {
   const [state, setState] = useState({
@@ -41,6 +42,9 @@ export default function Home() {
         onSearch={(search) => setState({ ...state, page: 1, name: search })}
       />
       <TopMenu />
+      <SideBar
+       onDirection={(direction) => setState({ ...state, page: 1, order: "name", direction: direction})}
+      />
       <CardsProducts>
         {allProducts.map((art) => (
           <CardProduct key={art.id} articulo={art} />
