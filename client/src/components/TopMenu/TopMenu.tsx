@@ -54,8 +54,8 @@ const Div = styled.div`
 `;
 //!Herencia
 const DivLeft = styled(Div)`
-  border-top-left-radius: 15px;
-  border-bottom-left-radius: 15px;
+  border-top-left-radius: 1rem;
+  border-bottom-left-radius: 1rem;
 `;
 
 const DivRight = styled(Div)`

@@ -1,4 +1,4 @@
-import { Prisma } from "@prisma/client";
+import { Prisma} from "@prisma/client";
 import { Router } from "express"
 import prisma from "../../../db";
 
@@ -22,7 +22,7 @@ productRoutes.post("/", async (req, res) => {
 
 
 productRoutes.get("/", async (req, res) => {
-  let { page = 1, pageSize = 5, name, order, direction } = req.query;
+  let { page = 1, pageSize = 12, name, order, direction } = req.query;
   const pageNumber = Number(page);
   const pageSizeNumber = Number(pageSize);
   const where: Prisma.ProductWhereInput = {}
@@ -55,8 +55,8 @@ productRoutes.get("/", async (req, res) => {
   }
 
   const searchproducts = await prisma.product.findMany({
-    skip: ((pageNumber - 1) * 5),
-    take: 5,
+    skip: ((pageNumber - 1) * 12),
+    take: 12,
     where: where,
     orderBy: orderBy
   })

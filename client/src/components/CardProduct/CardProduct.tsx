@@ -18,7 +18,9 @@ export default function CardProduct({articulo}: CardProductProps){
         height="127"
         alt="img"
       />
+      
       <Name>{articulo.name}</Name>
+          
 
       <StartRating />
 
@@ -36,10 +38,10 @@ export default function CardProduct({articulo}: CardProductProps){
 
 const Tarjeta = styled.div`
   position: relative;
-  margin: 25px;
+  margin: 30px;
   padding-top: 35px;
-  width: 240px;
-  height: 360px;
+  width: 320px;
+  height: 380px;
   border-radius: 16px;
   justify-items: center;
   box-shadow: rgba(0, 0, 0, 0.5) 0px 54px 55px,
@@ -60,12 +62,15 @@ const Tarjeta = styled.div`
 
 const Name = styled.div`
    font-family: "Kalam", cursive;
-   font-size: 20px;
-   text-shadow: 3px 3px 3px #5f5e5e;
+   font-size: 15px;
+   font-size: bold;
+   height: 65px;
+   margin: 8px
+   /* text-shadow: 3px 3px 3px #5f5e5e; */
 `;
 const Span = styled.span`
    padding: 0 20px;
-   font-size: 11px;
+   font-weight: 11px;
 
    & Span Estrella.grey {
      color: #acacab;
@@ -87,7 +92,7 @@ const Price = styled.span`
    color: #fff;
    border-radius: 7px;
    margin-top: 20px;
-   margin-left: 35px;
+   margin-left: 110px;
    margin-botton: 5px;
    box-shadow: -10px 20px 15px -10px rgba(17, 233, 91, 0.3);
    z-index:2
@@ -100,5 +105,5 @@ const Stock = styled.span`
    margin-botton: 100px;
  `;
 const Button = styled.button`
-   margin-top:80px
+   margin-top:60px
  `;
