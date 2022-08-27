@@ -39,7 +39,7 @@ const TextErr = styled.h1`
 `;
 
 const ButonToHome = styled.button`
-  background-color: #333fc4;
+  background-color: #335d90;
   border: none;
   color: white;
   padding: 15px 32px;
