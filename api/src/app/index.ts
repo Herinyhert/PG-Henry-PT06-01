@@ -6,8 +6,8 @@ const app = express();
 
 app.use(morgan("dev"));
 app.use(json())
-app.use('/', router);
 app.use(cors({ origin: "*", credentials: true }));
+app.use('/', router);
 
 
 export default app;

@@ -1,49 +1,33 @@
-import { SET_ERROR, GET_ARTICULOS} from '../actions';
+import { SET_ERROR, GET_ARTICULOS, Articulo } from '../actions';
 
-interface stateI {
-    articulos: [{
-        name: string,       
-        category: string, 
-        stock: number, 
-        price: number, 
-        img: string
-    }]
+export interface ReduxState {
+    articulos: Articulo[]
+    page:number
+    pageSize: number
 }
 
 interface actionI {
     type: string;
-   }
+    payload:[]
+}
 
-const initialState: stateI = {
-    articulos: [
-        {
-            name: "Monitor 29",
-            category: "Perifericos", 
-            stock: 13, 
-            price: 400, 
-            img: "https://www.computershopping.com.ar/Images/Productos/Grandes/29UM58-P_Foto1g.jpg"
-            
-        }
-        
-      
-    ]
+const initialState: ReduxState = {
+    articulos: [],
+    page: 1,
+    pageSize: 5
 }
 
 function rootReducer(state = initialState, action: actionI) {
     switch (action.type) {
-       
-        // case GET_ARTICULOS:
-        //     return {
-        //         ...state,
-        //         articulos: action.payload,
-        //                     }
 
-
+        case GET_ARTICULOS:
+            return {
+                ...state,
+                articulos: action.payload,
+            }
         default:
             return state;
     }
-
-
 }
 
 export default rootReducer;
