@@ -1,15 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { ImSearch } from "react-icons/im";
 
-export interface SearchBarProps {}
+export interface SearchBarProps {
+  onSearch: Function
+}
 
-export default function SearchBar({}: SearchBarProps) {
+export default function SearchBar({onSearch}: SearchBarProps) {
+  
+  const [state, setState] = useState('')
+   
+  function handlechange (e){
+      setState(e.target.value)
+  }
+
+  function handleclick(){
+      onSearch(state)
+  }
+  
   return (
     <SearchBarContainer>
-      <Input placeholder="What are you looking for?..."></Input>
+      <Input onChange={ handlechange } placeholder="What are you looking for?..."></Input>
 
-      <Search>
+      <Search onClick={ handleclick } >
         <ImSearch />
       </Search>
     </SearchBarContainer>
