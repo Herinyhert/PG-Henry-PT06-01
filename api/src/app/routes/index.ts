@@ -1,9 +1,10 @@
-import Router from 'express';
-import productRoutes from './product';
-import categoryRoutes from './category';
-const router = Router()
+import Router from "express";
+import productRoutes from "./product";
+import categoryRoutes from "./category";
 
-router.use('/product', productRoutes)
-router.use('/category', categoryRoutes)
+const router = Router();
 
-export default router
+router.use("/product", productRoutes);
+router.use("/category", categoryRoutes);
+
+export default router;

@@ -63,4 +63,15 @@ productRoutes.get("/", async (req, res) => {
   res.status(200).json(searchproducts);
 });
 
+productRoutes.get("/:id", async (req, res) => {
+  //console.log("estoy aqui", req.params.id)
+  const productId = Number(req.params.id);
+  //console.log("2estoy", productId)
+  const productUnique = await prisma.product.findUnique({ where: { id: productId }, })
+
+  productUnique
+    ? res.status(200).send(productUnique)
+    : res.status(404).send('no existe id buscado');
+})
+
 export default productRoutes
