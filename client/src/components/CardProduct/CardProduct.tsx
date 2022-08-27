@@ -2,8 +2,12 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import StartRating from "../StarRating/StarRating";
+import { Articulo } from "../../actions";
+export interface CardProductProps{
+  articulo: Articulo
+}
 
-export default function CardProduct({id, img, name, stock, price, category}){
+export default function CardProduct({articulo}: CardProductProps){
 
   return (
     <Tarjeta>
@@ -14,16 +18,16 @@ export default function CardProduct({id, img, name, stock, price, category}){
         height="127"
         alt="img"
       />
-      <Name>{name}</Name>
+      <Name>{articulo.name}</Name>
 
       <StartRating />
 
-      <Stock>Stock: {stock}</Stock><br></br>
-      <Category>Categoria: {category}</Category>
+      <Stock>Stock: {articulo.stock}</Stock><br></br>
+      <Category>Categoria: {articulo.categoryId}</Category>
       <br></br>
-      <Price>{price}</Price>
+      <Price>{articulo.price}</Price>
 
-      <Link to={`/detail/${id}`}>
+      <Link to={`/detail/${articulo.id}`}>
         <Button>Details</Button>
       </Link>
     </Tarjeta>
