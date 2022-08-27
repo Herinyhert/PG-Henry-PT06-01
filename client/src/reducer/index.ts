@@ -14,7 +14,7 @@ interface actionI {
 const initialState: ReduxState = {
     articulos: [],
     page: 1,
-    pageSize: 5
+    pageSize: 12
 }
 
 function rootReducer(state = initialState, action: actionI) {
