@@ -1,7 +1,7 @@
 import { json } from 'express';
 import  Router  from 'express'; 
 import prisma from '../../db';
-import { Prisma } from '@prisma/client';
+import { Prisma, PrismaClient } from '@prisma/client';
 import { ParsedUrlQuery } from 'querystring';
 import { Query, QueryParse } from 'pg';
 import { ParsedPath } from 'path';
@@ -36,6 +36,17 @@ router.post("/category", async (req, res) =>{
   res.status(200).send(newCategory)
 });
 
+
+router.get("/:id", async (req, res)=>{
+  //console.log("estoy aqui", req.params.id)
+  const productId = Number(req.params.id);
+  //console.log("2estoy", productId)
+  const productUnique = await prisma.product.findUnique({ where: { id: productId },})
+
+  productUnique
+  ? res.status(200).send(productUnique)
+  : res.status(404).send('no existe id buscado');
+})
 
 router.get("/", async (req, res) => {
     let { page= 0, pageSize= 5, name, order  , direction } = req.query;
