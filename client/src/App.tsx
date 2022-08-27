@@ -3,6 +3,7 @@ import { Route, Routes, BrowserRouter } from "react-router-dom";
 import Landing from "./pages/Landing/Landing";
 import Home from "./pages/Home/Home";
 import NavBar from "./components/NavBar/NavBar";
+import ErrorCard from "./components/ErrorCard/ErrorCard";
 
 export default function App() {
   return (
@@ -13,7 +14,7 @@ export default function App() {
           <NavBar /> */}
           {/* <Routes> */}
             <Route path="home" element={<Home />} />
-            <Route path="*" element={<div>404</div>} />
+            <Route path="*" element={<ErrorCard/>} />
           {/* </Routes> */}
         {/* </Route> */}
       </Routes>
