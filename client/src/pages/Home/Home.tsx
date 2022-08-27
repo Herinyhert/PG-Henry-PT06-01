@@ -7,38 +7,43 @@ import SearchBar from "../../components/SearchBar/SearchBar";
 import TopMenu from "../../components/TopMenu/TopMenu";
 import { useDispatch } from "react-redux";
 import { getArticulos } from "../../actions";
-import { AnyAction } from "redux"
+import { AnyAction } from "redux";
 import { ReduxState } from "../../reducer";
 
-
 export default function Home() {
-
   const [state, setState] = useState({
     page: 1,
     pageSize: 5,
-  })
+    name: undefined,
+    order: undefined,
+    direction: undefined,
+  });
 
   const allProducts = useSelector((state: ReduxState) => state.articulos);
 
-  const dispatch = useDispatch<any>()
+  const dispatch = useDispatch<any>();
 
   useEffect(() => {
-    dispatch(getArticulos({ page: state.page, pageSize: state.pageSize }));
-
-  }, [dispatch])
-
-
+    dispatch(
+      getArticulos({
+        page: state.page,
+        pageSize: state.pageSize,
+        name: state.name,
+        order: state.order,
+        direction: state.direction,
+      })
+    );
+  }, [dispatch, state.page, state.name, state.order, state.direction]);
 
   return (
     <HomeContainer>
-      <SearchBar />
+      <SearchBar
+        onSearch={(search) => setState({ ...state, page: 1, name: search })}
+      />
       <TopMenu />
       <CardsProducts>
         {allProducts.map((art) => (
-          <CardProduct
-            key={art.id}
-            articulo={art}
-          />
+          <CardProduct key={art.id} articulo={art} />
         ))}
       </CardsProducts>
     </HomeContainer>

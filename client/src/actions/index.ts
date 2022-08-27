@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { FaJediOrder } from 'react-icons/fa';
 import { Dispatch } from 'redux';
 export const GET_ARTICULOS = 'GET_ARTICULOS';
 export const SET_ERROR = 'SET_ERROR'
@@ -17,15 +18,21 @@ export interface Articulo{
 export interface params{
     page: number
     pageSize: number
+    name: string
+    order: string
+    direction: string
 }
 
-export function getArticulos({page, pageSize}:params) {
+export function getArticulos({page, pageSize, name, order, direction}:params) {
     return async function (dispatch: Dispatch) {
         try {
             var json = await axios.get<Articulo[]>("http://localhost:3001/product",{
                 params:{
                     page: page,
-                    pageSize: pageSize
+                    pageSize: pageSize,
+                    name: name,
+                    order: order,
+                    direction: direction
                 }
             });
             console.log(json)
