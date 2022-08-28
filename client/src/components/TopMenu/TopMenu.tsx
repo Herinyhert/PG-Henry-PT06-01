@@ -1,12 +1,19 @@
 import React from "react";
 import styled from "styled-components";
+import { MdComputer } from "react-icons/md";
 
 export interface TopMenuProps {}
 
 export default function TopMenu({}: TopMenuProps) {
   return (
     <TopMenuContainer>
-      <DivLeft>Laptops, Tablets & PCs</DivLeft>
+      <DivLeft>
+        {/* <Icon>
+          <MdComputer />
+        </Icon> */}
+        Laptops, Tablets & PCs
+      </DivLeft>
+
       <Div>Computer & Office</Div>
       <Div>Hardware & Components</Div>
       <Div>Software</Div>
@@ -41,6 +48,11 @@ const Div = styled.div`
   -webkit-transition: all 150ms ease-in-out;
   transition: all 150ms ease-in-out;
   color: white;
+  width: 120px;
+  height: 45px;
+  justify-content: center;
+  align-items: center;
+  
 
   &:hover {
     box-shadow: 0 0 10px 0 #335d90 inset, 0 0 10px 4px #335d90;
@@ -61,4 +73,9 @@ const DivLeft = styled(Div)`
 const DivRight = styled(Div)`
   border-top-right-radius: 1rem;
   border-bottom-right-radius: 1rem;
+`;
+
+const Icon = styled.div`
+font-size: 30px;
+color: white;
 `;
