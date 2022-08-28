@@ -3,28 +3,36 @@ import styled from "styled-components";
 
 export interface SideBarProps {
   onDirection: Function;
+
 }
 
-export default function SideBar({ onDirection }: SideBarProps) {
+export default function OrderPrice({ onDirection }: SideBarProps) {
   const [direction, setDirection] = useState("");
 
   function handleOrder(e) {
- //   e.preventDefault()
-    setDirection(e.target.value);
+    e.preventDefault()
     onDirection(direction);
-    
+    setDirection(e.target.value);
   }
-//console.log(direction)
+
+  function handleOrderPrice(e) {
+    e.preventDefault()
+    onDirection(direction);
+    setDirection(e.target.value);
+  }
+  //console.log(direction)
   return (
     <SideBarContainer>
-        
-    <select onChange={(e) => handleOrder(e)}>
-      <option disabled selected value={undefined}>
-        Ordenar Alfabeticamente
-      </option>
-      <option value="asc">A-Z</option>
-      <option value="desc">Z-A</option>
-    </select>
+
+   
+
+      <select onChange={(e) => handleOrder(e)}>
+        <option disabled selected value="">
+          {""}Ordenar Por Precio
+        </option>
+        <option value="asc">Menor Precio</option>
+        <option value="desc">Mayor Precio</option>
+      </select>
 
 
     </SideBarContainer>

@@ -9,7 +9,10 @@ import { useDispatch } from "react-redux";
 import { getArticulos } from "../../actions";
 import { AnyAction } from "redux";
 import { ReduxState } from "../../reducer";
-import SideBar from "../../components/SideBar/SideBar";
+import Paginado from "../../components/Paginado/Paginado";
+import OrderName from "../../components/SideBar/OrderName";
+import OrderPrice from "../../components/SideBar/OrderPrice";
+import OrderBrand from "../../components/SideBar/OrderBrand";
 
 export default function Home() {
   const [state, setState] = useState({
@@ -21,7 +24,9 @@ export default function Home() {
   });
 
   const allProducts = useSelector((state: ReduxState) => state.articulos);
-
+  //const totalCount = useSelector((state1: ReduxState) => state1.totalCount);
+  const totalCount = 900;
+  console.log(totalCount)
   const dispatch = useDispatch<any>();
 
   useEffect(() => {
@@ -42,8 +47,21 @@ export default function Home() {
         onSearch={(search) => setState({ ...state, page: 1, name: search })}
       />
       <TopMenu />
-      <SideBar
-       onDirection={(direction) => setState({ ...state, page: 1, order: "name", direction: direction})}
+      <OrderName
+        onDirection={(direction) => setState({ ...state, page: 1, order: "name", direction: direction })}
+      />
+
+      <OrderPrice
+        onDirection={(direction) => setState({ ...state, page: 1, order: "price", direction: direction })}
+      />
+      <OrderBrand
+        onDirection={(direction) => setState({ ...state, page: 1, order: "brand", direction: direction })}
+      />
+
+      <Paginado
+        onPageChange={(page) => setState({ ...state, page })}
+        totalCount={totalCount}
+        pageSize={state.pageSize}
       />
       <CardsProducts>
         {allProducts.map((art) => (
