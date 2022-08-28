@@ -30,12 +30,12 @@ productRoutes.get("/", async (req, res) => {
   } = req.query;
   const pageNumber = Number(page);
   const pageSizeNumber = Number(pageSize);
-  if (!Number.isFinite(pageNumber)) {
-    res.status(400).json({ message: `the 'page' must be a number` });
+  if (!Number.isFinite(pageNumber) || page < 1) {
+    res.status(400).json({ message: `the 'page' must be a number > 0` });
     return;
   }
-  if (!Number.isFinite(pageSizeNumber)) {
-    res.status(400).json({ message: `the 'pageSize' must be a number` });
+  if (!Number.isFinite(pageSizeNumber) || pageSize < 1) {
+    res.status(400).json({ message: `the 'pageSize' must be a number > 0` });
     return;
   }
   if (name && typeof name !== "string") {
@@ -50,11 +50,9 @@ productRoutes.get("/", async (req, res) => {
     order !== "price" &&
     order !== "state"
   ) {
-    res
-      .status(400)
-      .json({
-        message: `the 'order' must be 'id', 'name', 'brand', 'stock', 'price' or 'state'`,
-      });
+    res.status(400).json({
+      message: `the 'order' must be 'id', 'name', 'brand', 'stock', 'price' or 'state'`,
+    });
     return;
   }
   if (direction !== "asc" && direction !== "desc") {
