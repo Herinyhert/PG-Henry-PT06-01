@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { FaJediOrder } from 'react-icons/fa';
 import { Dispatch } from 'redux';
 export const GET_ARTICULOS = 'GET_ARTICULOS';
 export const SET_ERROR = 'SET_ERROR'

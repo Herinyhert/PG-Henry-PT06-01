@@ -15,6 +15,9 @@ export default function SearchBar({onSearch}: SearchBarProps) {
   }
 
   function handleclick(){
+    if(state === ""){
+      alert("Enter a product to search...")
+    }
       onSearch(state)
   }
   
