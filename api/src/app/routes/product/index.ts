@@ -6,7 +6,8 @@ const productRoutes = Router();
 
 productRoutes.post("/", async (req, res) => {
   const { name, brand, categoryId, stock, price, img, state } = req.body;
-  const newProduct = await prisma.product.create({
+  console.log(name, brand, categoryId, stock, price, img, state );
+  const newProduct = await prisma.product.create({  
     data: {
       name: name,
       brand: brand,
