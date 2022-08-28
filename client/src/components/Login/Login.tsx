@@ -55,9 +55,12 @@ const ContainerFormLogin = styled.div`
   align-items: center;
   display: grid;
   text-align: left;
-  padding-left: 1rem;
+  margin: auto; 
+  margin-top: 2rem;
+  padding: 1rem;
+  //padding-left: 1rem;
 
-  margin: 3rem;
+  /* margin: 3rem; */
 
   width: 320px;
   height: 200px;
