@@ -7,22 +7,12 @@ export interface SideBarProps {
 }
 
 export default function OrderName({ onDirection }: SideBarProps) {
-  const [direction, setDirection] = useState("");
-
-  function handleOrder(e) {
-    e.preventDefault()
-    onDirection(direction);
-    setDirection(e.target.value);
-      }
-
- 
-
 
   
   return (
     <SideBarContainer>
 
-      <select onChange={(e) => handleOrder(e)}>
+      <select onChange={(e) => onDirection(e.target.value)}>
         <option disabled selected value="">
           {""}Ordenar Alfabeticamente
         </option>
