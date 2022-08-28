@@ -14,4 +14,19 @@ categoryRoutes.post("/", async (req, res) => {
     res.status(200).send(newCategory)
 });
 
+
+/////obtengo todas las categorias.
+categoryRoutes.get('/', async (req, res) => {
+    const name = req.query.name;
+
+    let allCategories = await prisma.category.findMany()
+    if (allCategories) {
+        res.status(200).send(allCategories)
+    } else {
+        res.status(404).send('error');
+    }
+    
+
+})
+
 export default categoryRoutes
