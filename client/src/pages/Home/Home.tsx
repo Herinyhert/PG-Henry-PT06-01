@@ -40,7 +40,7 @@ export default function Home() {
         direction: state.direction,
       })
     );
-  }, [dispatch, state.page, state.name, state.order, state.direction]);
+  }, [dispatch, state.page, state.pageSize, state.name, state.order, state.direction]);
 
   return (
     <HomeContainer>

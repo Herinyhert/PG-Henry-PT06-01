@@ -47,3 +47,11 @@ export function getArticulos({page, pageSize, name, order, direction}:params) {
         }
     }
 }
+
+export function postProduct(payload){
+    return function (dispatch){
+        return axios.post('http://localhost:3001/product',payload)
+        .then(response =>response)
+        .catch(error =>{dispatch({type: SET_ERROR, payload: error})})
+    }
+}
