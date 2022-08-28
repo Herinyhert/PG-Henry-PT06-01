@@ -7,26 +7,13 @@ export interface SideBarProps {
 }
 
 export default function OrderPrice({ onDirection }: SideBarProps) {
-  const [direction, setDirection] = useState("");
 
-  function handleOrder(e) {
-    e.preventDefault()
-    onDirection(direction);
-    setDirection(e.target.value);
-  }
-
-  function handleOrderPrice(e) {
-    e.preventDefault()
-    onDirection(direction);
-    setDirection(e.target.value);
-  }
-  //console.log(direction)
   return (
     <SideBarContainer>
 
    
 
-      <select onChange={(e) => handleOrder(e)}>
+      <select onChange={(e) => onDirection(e.target.value)}>
         <option disabled selected value="">
           {""}Ordenar Por Precio
         </option>
