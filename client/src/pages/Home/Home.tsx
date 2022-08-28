@@ -13,6 +13,7 @@ import Paginado from "../../components/Paginado/Paginado";
 import OrderName from "../../components/SideBar/OrderName";
 import OrderPrice from "../../components/SideBar/OrderPrice";
 import OrderBrand from "../../components/SideBar/OrderBrand";
+import NavBar from "../../components/NavBar/NavBar";
 
 export default function Home() {
   const [state, setState] = useState({
@@ -43,10 +44,12 @@ export default function Home() {
 
   return (
     <HomeContainer>
+      <NavBar/>
       <SearchBar
         onSearch={(search) => setState({ ...state, page: 1, name: search })}
       />
       <TopMenu />
+      <Ordenamientos>
       <OrderName
         onDirection={(direction) => setState({ ...state, page: 1, order: "name", direction: direction })}
       />
@@ -57,7 +60,7 @@ export default function Home() {
       <OrderBrand
         onDirection={(direction) => setState({ ...state, page: 1, order: "brand", direction: direction })}
       />
-
+</Ordenamientos>
       <Paginado
         onPageChange={(page) => setState({ ...state, page })}
         totalCount={totalCount}
@@ -88,4 +91,10 @@ const CardsProducts = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   margin-bottom: 30px;
+`;
+
+const Ordenamientos = styled.div`
+display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
 `;
