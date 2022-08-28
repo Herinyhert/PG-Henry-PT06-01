@@ -12,7 +12,8 @@ export interface Articulo{
     price: number,
     img:String,
     state:String,
-    categoryId:number
+    categoryId:number,
+    totalCount:number
 }
 
 export interface params{
