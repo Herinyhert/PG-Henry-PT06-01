@@ -1,27 +1,36 @@
 import React from "react";
 import styled from "styled-components";
 import { MdComputer } from "react-icons/md";
+import { useSelector } from "react-redux";
+import { ReduxState } from "../../reducer";
 
-export interface TopMenuProps {}
+export interface TopMenuProps { }
 
-export default function TopMenu({}: TopMenuProps) {
+export default function TopMenu({ }: TopMenuProps) {
+
+  const allCategorias = useSelector((state: ReduxState) => state.categorias);
+  const arrayPrueba = allCategorias.slice(0, 10);
+
+
   return (
     <TopMenuContainer>
-      <DivLeft>
-        {/* <Icon>
-          <MdComputer />
-        </Icon> */}
-        Laptops, Tablets & PCs
-      </DivLeft>
 
-      <Div>Computer & Office</Div>
-      <Div>Hardware & Components</Div>
-      <Div>Software</Div>
-      <Div>Smartphones, Radio & GPS </Div>
-      <Div>Photo / Video</Div>
-      <Div>TV / HiFi / Video</Div>
-      <DivRight>Games & Entertainment</DivRight>
+
+      {
+        arrayPrueba.map((cat) =>(
+          
+          <Div> {cat.name} </Div>
+
+        )
+          
+
+        
+        )
+    
+      }
+
     </TopMenuContainer>
+
   );
 }
 

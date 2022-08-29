@@ -2,7 +2,8 @@ import axios from 'axios';
 import { FaJediOrder } from 'react-icons/fa';
 import { Dispatch } from 'redux';
 export const GET_ARTICULOS = 'GET_ARTICULOS';
-export const SET_ERROR = 'SET_ERROR'
+export const SET_ERROR = 'SET_ERROR';
+export const GET_CATEGORIES = 'GET_CATEGORIES'
 
 export interface Articulo{
     id:number,    
@@ -15,6 +16,12 @@ export interface Articulo{
     categoryId:number,
     totalCount:number
 }
+
+export interface Category{
+    id:number,    
+    name:String
+}
+
 
 export interface params{
     page: number
@@ -40,7 +47,25 @@ export function getArticulos({page, pageSize, name, order, direction}:params) {
             return dispatch({ type: GET_ARTICULOS, payload: json.data })
         }
         catch (error) {
-            console.log(error);
+                       
+            return dispatch({ type: SET_ERROR, payload: "error" })
+
+        }
+    }
+}
+
+
+export function getCategorias() {
+   
+    
+    return async function (dispatch: Dispatch) {
+        try {
+            var json = await axios.get<Category[]>("http://localhost:3001/category");
+           
+           
+            return dispatch({ type: GET_CATEGORIES, payload: json.data })
+        }
+        catch (error) {
             
             return dispatch({ type: SET_ERROR, payload: "error" })
 

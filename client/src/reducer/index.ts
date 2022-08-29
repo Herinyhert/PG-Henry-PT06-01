@@ -1,22 +1,24 @@
-import { SET_ERROR, GET_ARTICULOS, Articulo } from '../actions';
+import { SET_ERROR, GET_ARTICULOS, GET_CATEGORIES, Articulo, Category } from '../actions';
 
 export interface ReduxState {
     articulos: Articulo[]
-    page:number
+    categorias: Category[]
+    page: number
     pageSize: number
-    totalCount:number
+    totalCount: number
 }
 
 interface actionI {
     type: string;
-    payload:[]
+    payload: []
 }
 
 const initialState: ReduxState = {
     articulos: [],
+    categorias: [],
     page: 1,
     pageSize: 12,
-    totalCount:0
+    totalCount: 0
 }
 
 function rootReducer(state = initialState, action: actionI) {
@@ -26,6 +28,11 @@ function rootReducer(state = initialState, action: actionI) {
             return {
                 ...state,
                 articulos: action.payload,
+            }
+        case GET_CATEGORIES:
+            return {
+                ...state,
+                categorias: action.payload,
             }
         default:
             return state;
