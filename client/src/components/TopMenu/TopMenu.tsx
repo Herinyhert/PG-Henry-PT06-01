@@ -4,30 +4,37 @@ import { MdComputer } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { ReduxState } from "../../reducer";
 
-export interface TopMenuProps { }
 
-export default function TopMenu({ }: TopMenuProps) {
+
+ export interface TopMenuProps {
+  onClickOpcion: Function;
+
+}
+
+
+export default function TopMenu({onClickOpcion }: TopMenuProps) {
 
   const allCategorias = useSelector((state: ReduxState) => state.categorias);
+  //provisorio hasta tener bien los datos en la base
   const arrayPrueba = allCategorias.slice(0, 10);
 
 
   return (
     <TopMenuContainer>
 
-
+      {/* armo menu */}
       {
-        arrayPrueba.map((cat) =>(
+        arrayPrueba.map((cat,i) => 
+          i === 0
+            ? <DivLeft onClick={e=>onClickOpcion(cat.id)}>{cat.name}</DivLeft>
+            : i === 9 
+            ? <DivRight>{cat.name}</DivRight>
+            : <Div> {cat.name} </Div>
           
-          <Div> {cat.name} </Div>
-
-        )
-          
-
         
         )
-    
-      }
+
+     }
 
     </TopMenuContainer>
 
@@ -35,17 +42,19 @@ export default function TopMenu({ }: TopMenuProps) {
 }
 
 const TopMenuContainer = styled.header`
-  width: auto;
-  height: 80px;
+  width: 96vw;
+  height: 10vh;
   background-color: white;
   color: black;
   display: flex;
+  flex-wrap: nowrap;
   align-items: center;
   justify-content: space-between;
-  margin-top: 30px;
+  margin-top: 5vh;
 `;
 
 const Div = styled.div`
+  cursor:pointer;
   display: inline-flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -57,10 +66,11 @@ const Div = styled.div`
   -webkit-transition: all 150ms ease-in-out;
   transition: all 150ms ease-in-out;
   color: white;
-  width: 120px;
-  height: 45px;
+  width: 100vw;
+  height: 8.2vh;
   justify-content: center;
   align-items: center;
+  font-size:1.2vw;
   
 
   &:hover {

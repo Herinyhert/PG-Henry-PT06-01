@@ -8,9 +8,9 @@ export interface NavBarProps {}
 export default function NavBar({}: NavBarProps) {
   return (
     <NavBarContainer>
-      <div>
+      <LogoNav>
         <h2>Logo</h2>
-      </div>
+      </LogoNav>
       <ContainerButtons>
       <Link to="/Login">
         <ButtonLogin>Login</ButtonLogin>
@@ -22,6 +22,13 @@ export default function NavBar({}: NavBarProps) {
     </NavBarContainer>
   );
 }
+
+const LogoNav = styled.div`
+  margin-left: 1rem;
+  justify-content: center;
+  font-size: 1.36vw;
+`;
+
 const ContainerButtons = styled.div`
   display: inline-flex;
   flex-wrap: wrap;
@@ -29,18 +36,18 @@ const ContainerButtons = styled.div`
 `;
 
 const ButtonLogin = styled.button`
-  width: 4rem;
-  height: 42px;
+  width: 7vw;
+  height: 6vh;
   background: transparent;
   border-radius: 0.313rem;
   border: 0.13rem solid white;
 
   margin-right: 1rem;
-  padding: 5px;
+  padding: 0.06rem;
   display: inline-block;
   -webkit-appearance: none;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 1.6vw;
   color: white;
 
   -webkit-transition: all 150ms ease-in-out;
@@ -57,17 +64,17 @@ const ButtonLogin = styled.button`
 `;
 
 const Shop = styled.button`
-  width: 3rem;
-  height: 42px;
+  width: 5.4vw;
+  height: 6vh;
   background: transparent;
   border-radius: 0.313rem;
-  margin-right: 2rem;
+  margin-right: 1rem;
   padding: 5px;
   display: inline-block;
   -webkit-appearance: none;
   border: 0.13rem solid white;
   cursor: pointer;
-  font-size: 25px;
+  font-size: 2.14vw;
   color: white;
 
   -webkit-transition: all 150ms ease-in-out;
@@ -85,11 +92,13 @@ const Shop = styled.button`
 
 const NavBarContainer = styled.header`
   width: 100%;
-  height: 56px;
+  height: 8vh;
   background-color: #1e212a;
   color: #c9cace;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0px 16px;
+ //padding: 0px 16px;
+// padding-left: 3rem;
+
 `;

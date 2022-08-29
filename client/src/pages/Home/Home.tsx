@@ -24,45 +24,69 @@ export default function Home() {
 
   const allProducts = useSelector((state: ReduxState) => state.articulos);
 
-
   const totalCount = useSelector((state1: ReduxState) => state1.totalCount);
-  
 
   const dispatch = useDispatch<any>();
 
   useEffect(() => {
     dispatch(getCategorias());
     dispatch(
-        getArticulos({
+      getArticulos({
         page: state.page,
         pageSize: state.pageSize,
         name: state.name,
         order: state.order,
         direction: state.direction,
       })
-      
     );
-  }, [dispatch, state.page,  state.pageSize, state.name, state.order, state.direction]);
+  }, [
+    dispatch,
+    state.page,
+    state.pageSize,
+    state.name,
+    state.order,
+    state.direction,
+  ]);
 
   return (
     <HomeContainer>
-      <NavBar/>
+      <NavBar />
       <SearchBar
         onSearch={(search) => setState({ ...state, page: 1, name: search })}
       />
-      <TopMenu />
+      <TopMenu
+        onClickOpcion={(search) =>
+          setState({ ...state, page: 1, name: "categoryId" })
+        }
+      />
       <Ordenamientos>
-      <OrderName
-        onDirection={(direction) => setState({ ...state, page: 1, order: "name", direction: direction })}
-      />
+        <OrderName
+          onDirection={(direction) =>
+            setState({ ...state, page: 1, order: "name", direction: direction })
+          }
+        />
 
-      <OrderPrice
-        onDirection={(direction) => setState({ ...state, page: 1, order: "price", direction: direction })}
-      />
-      <OrderBrand
-        onDirection={(direction) => setState({ ...state, page: 1, order: "brand", direction: direction })}
-      />
-</Ordenamientos>
+        <OrderPrice
+          onDirection={(direction) =>
+            setState({
+              ...state,
+              page: 1,
+              order: "price",
+              direction: direction,
+            })
+          }
+        />
+        <OrderBrand
+          onDirection={(direction) =>
+            setState({
+              ...state,
+              page: 1,
+              order: "brand",
+              direction: direction,
+            })
+          }
+        />
+      </Ordenamientos>
       <Paginado
         onPageChange={(page) => setState({ ...state, page })}
         totalCount={totalCount}
@@ -96,7 +120,8 @@ const CardsProducts = styled.div`
 `;
 
 const Ordenamientos = styled.div`
-display: inline-flex;
+margin: 1rem;
+  display: inline-flex;
   flex-wrap: wrap;
   justify-content: center;
 `;
