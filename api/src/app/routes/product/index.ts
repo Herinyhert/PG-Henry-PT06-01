@@ -6,8 +6,37 @@ const productRoutes = Router();
 
 productRoutes.post("/", async (req, res) => {
   const { name, brand, categoryId, stock, price, img, state } = req.body;
-  console.log(name, brand, categoryId, stock, price, img, state );
-  const newProduct = await prisma.product.create({  
+
+  if (typeof name !== "string") {
+    res.status(400).json({ message: `the 'name' must be a string` });
+    return;
+  }
+  if (typeof brand !== "string") {
+    res.status(400).json({ message: `the 'brand' must be a string` });
+    return;
+  }
+  if (typeof categoryId !== "number" || categoryId < 1) {
+    res.status(400).json({ message: `the 'categoryId' must be a number > 0` });
+    return;
+  }
+  if (typeof stock !== "number" || categoryId < 1) {
+    res.status(400).json({ message: `the 'stock' must be a number > 0` });
+    return;
+  }
+  if (typeof price !== "number" || categoryId < 1) {
+    res.status(400).json({ message: `the 'price' must be a number > 0` });
+    return;
+  }
+  if (typeof img !== "string") {
+    res.status(400).json({ message: `the 'img' must be a string` });
+    return;
+  }
+  if (typeof state !== "string") {
+    res.status(400).json({ message: `the 'state' must be a string` });
+    return;
+  }
+  const newProduct = await prisma.product.create({
+
     data: {
       name: name,
       brand: brand,
@@ -76,8 +105,10 @@ productRoutes.get("/", async (req, res) => {
     take: pageSizeNumber,
     where: where,
     orderBy: { [order]: direction },
+    include: { category: true },
   });
-  res.status(200).json(searchproducts);
+  const totalCuantity = await prisma.product.count();
+  res.status(200).json([totalCuantity, searchproducts]);
 });
 
 productRoutes.get("/:id", async (req, res) => {
@@ -86,6 +117,7 @@ productRoutes.get("/:id", async (req, res) => {
   //console.log("2estoy", productId)
   const productUnique = await prisma.product.findUnique({
     where: { id: productId },
+    include: { category: true },
   });
 
   productUnique
