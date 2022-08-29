@@ -12,6 +12,7 @@ import OrderName from "../../components/SideBar/OrderName";
 import OrderPrice from "../../components/SideBar/OrderPrice";
 import OrderBrand from "../../components/SideBar/OrderBrand";
 import NavBar from "../../components/NavBar/NavBar";
+import { Link } from "react-router-dom";
 
 export default function Home() {
   const [state, setState] = useState({
@@ -70,7 +71,9 @@ export default function Home() {
       />
       <CardsProducts>
         {allProducts.map((art) => (
-          <CardProduct key={art.id} articulo={art} />
+          <Link to={`/product/${art.id}`}>
+            <CardProduct key={art.id} articulo={art} />
+          </Link>
         ))}
       </CardsProducts>
     </HomeContainer>

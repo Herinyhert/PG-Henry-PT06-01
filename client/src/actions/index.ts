@@ -36,17 +36,6 @@ export interface params{
     direction: string
 }
 
-export interface ParamsId{
-    id:number,    
-    name:String,
-    brand:String,    
-    stock: number,
-    price: number,
-    img:String,
-    state:String,
-    categoryId:number,
-    totalCount:number
-}
 
 export function getArticulos({page, pageSize, name, order, direction}:params) {
     return async function (dispatch: Dispatch) {
@@ -103,12 +92,12 @@ export function postProduct(payload){
     }
 }
 
-export function detailsProduct(id){
-    return async function (dispatch: Dispatch){
+export function detailsProduct(id: String){
+    //console.log("id action", id);
+        return async function (dispatch: Dispatch){
         try {
-            var json = await axios.get<ParamsId[]>(`http://localhost:3001/product/${id}`)
-            console.log("hola",json);
-            
+            var json = await axios.get<Articulo[]>(`http://localhost:3001/product/${id}`)
+            //console.log("json action", json);
             return dispatch({ type: GET_DETAIL_PRODUCT, payload: json.data })
         } catch (error) {
             return dispatch({ type: SET_ERROR, payload: "error" })
