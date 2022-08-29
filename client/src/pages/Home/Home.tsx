@@ -9,6 +9,11 @@ import { useDispatch } from "react-redux";
 import { getArticulos } from "../../actions";
 import { AnyAction } from "redux";
 import { ReduxState } from "../../reducer";
+import Paginado from "../../components/Paginado/Paginado";
+import OrderName from "../../components/SideBar/OrderName";
+import OrderPrice from "../../components/SideBar/OrderPrice";
+import OrderBrand from "../../components/SideBar/OrderBrand";
+import NavBar from "../../components/NavBar/NavBar";
 
 export default function Home() {
   const [state, setState] = useState({
@@ -20,7 +25,9 @@ export default function Home() {
   });
 
   const allProducts = useSelector((state: ReduxState) => state.articulos);
-
+  //const totalCount = useSelector((state1: ReduxState) => state1.totalCount);
+  const totalCount = 900;
+  console.log(totalCount)
   const dispatch = useDispatch<any>();
 
   useEffect(() => {
@@ -33,14 +40,32 @@ export default function Home() {
         direction: state.direction,
       })
     );
-  }, [dispatch, state.page, state.name, state.order, state.direction]);
+  }, [dispatch, state.page, state.pageSize, state.name, state.order, state.direction]);
 
   return (
     <HomeContainer>
+      <NavBar/>
       <SearchBar
         onSearch={(search) => setState({ ...state, page: 1, name: search })}
       />
       <TopMenu />
+      <Ordenamientos>
+      <OrderName
+        onDirection={(direction) => setState({ ...state, page: 1, order: "name", direction: direction })}
+      />
+
+      <OrderPrice
+        onDirection={(direction) => setState({ ...state, page: 1, order: "price", direction: direction })}
+      />
+      <OrderBrand
+        onDirection={(direction) => setState({ ...state, page: 1, order: "brand", direction: direction })}
+      />
+</Ordenamientos>
+      <Paginado
+        onPageChange={(page) => setState({ ...state, page })}
+        totalCount={totalCount}
+        pageSize={state.pageSize}
+      />
       <CardsProducts>
         {allProducts.map((art) => (
           <CardProduct key={art.id} articulo={art} />
@@ -66,4 +91,10 @@ const CardsProducts = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   margin-bottom: 30px;
+`;
+
+const Ordenamientos = styled.div`
+display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
 `;

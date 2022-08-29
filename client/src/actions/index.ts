@@ -12,7 +12,8 @@ export interface Articulo{
     price: number,
     img:String,
     state:String,
-    categoryId:number
+    categoryId:number,
+    totalCount:number
 }
 
 export interface params{
@@ -44,5 +45,13 @@ export function getArticulos({page, pageSize, name, order, direction}:params) {
             return dispatch({ type: SET_ERROR, payload: "error" })
 
         }
+    }
+}
+
+export function postProduct(payload){
+    return function (dispatch){
+        return axios.post('http://localhost:3001/product',payload)
+        .then(response =>response)
+        .catch(error =>{dispatch({type: SET_ERROR, payload: error})})
     }
 }

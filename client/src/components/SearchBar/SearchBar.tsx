@@ -64,8 +64,8 @@ const Input = styled.input`
 `;
 
 const Search = styled.button`
-  width: 43px;
-  height: 43px;
+  width: 42px;
+  height: 42px;
   /* border-radius: 10px; */
   border-top-right-radius: 0.313rem;
   border-bottom-right-radius: 0.313rem;

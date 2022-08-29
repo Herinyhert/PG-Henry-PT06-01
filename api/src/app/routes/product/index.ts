@@ -6,6 +6,7 @@ const productRoutes = Router();
 
 productRoutes.post("/", async (req, res) => {
   const { name, brand, categoryId, stock, price, img, state } = req.body;
+
   if (typeof name !== "string") {
     res.status(400).json({ message: `the 'name' must be a string` });
     return;
@@ -35,6 +36,7 @@ productRoutes.post("/", async (req, res) => {
     return;
   }
   const newProduct = await prisma.product.create({
+
     data: {
       name: name,
       brand: brand,

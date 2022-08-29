@@ -83,8 +83,9 @@ const Span = styled.span`
 
 const Price = styled.span`
    position: absolute;
+   width: 50px;
    background: #11e95b;
-   padding: 7px 30px;
+   padding: 8px 30px;
    text-align: center;
    display: inline-block;
    font-size: 24px;
@@ -92,8 +93,8 @@ const Price = styled.span`
    color: #fff;
    border-radius: 7px;
    margin-top: 20px;
-   margin-left: 110px;
-   margin-botton: 5px;
+   margin-left: 100px;
+   margin-botton: 20px;
    box-shadow: -10px 20px 15px -10px rgba(17, 233, 91, 0.3);
    z-index:2
  `;

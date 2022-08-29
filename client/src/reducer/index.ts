@@ -4,6 +4,7 @@ export interface ReduxState {
     articulos: Articulo[]
     page:number
     pageSize: number
+    totalCount:number
 }
 
 interface actionI {
@@ -14,7 +15,8 @@ interface actionI {
 const initialState: ReduxState = {
     articulos: [],
     page: 1,
-    pageSize: 5
+    pageSize: 12,
+    totalCount:0
 }
 
 function rootReducer(state = initialState, action: actionI) {
