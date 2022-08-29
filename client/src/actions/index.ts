@@ -1,10 +1,14 @@
 import axios from 'axios';
 import { FaJediOrder } from 'react-icons/fa';
 import { Dispatch } from 'redux';
-export const GET_ARTICULOS = 'GET_ARTICULOS';
-export const SET_ERROR = 'SET_ERROR';
-export const GET_CATEGORIES = 'GET_CATEGORIES';
-export const GET_TOTALARTICULOS = 'GET_TOTALARTICULOS'
+
+import {
+    GET_ARTICULOS,
+    GET_DETAIL_PRODUCT,
+    GET_CATEGORIES,
+    GET_TOTALARTICULOS,
+    SET_ERROR
+} from "./actiontype"
 
 export interface Articulo{
     id:number,    
@@ -30,6 +34,18 @@ export interface params{
     name: string
     order: string
     direction: string
+}
+
+export interface ParamsId{
+    id:number,    
+    name:String,
+    brand:String,    
+    stock: number,
+    price: number,
+    img:String,
+    state:String,
+    categoryId:number,
+    totalCount:number
 }
 
 export function getArticulos({page, pageSize, name, order, direction}:params) {
@@ -84,5 +100,18 @@ export function postProduct(payload){
         return axios.post('http://localhost:3001/product',payload)
         .then(response =>response)
         .catch(error =>{dispatch({type: SET_ERROR, payload: error})})
+    }
+}
+
+export function detailsProduct(id){
+    return async function (dispatch: Dispatch){
+        try {
+            var json = await axios.get<ParamsId[]>(`http://localhost:3001/product/${id}`)
+            console.log("hola",json);
+            
+            return dispatch({ type: GET_DETAIL_PRODUCT, payload: json.data })
+        } catch (error) {
+            return dispatch({ type: SET_ERROR, payload: "error" })
+        }
     }
 }
