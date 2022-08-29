@@ -3,7 +3,8 @@ import { FaJediOrder } from 'react-icons/fa';
 import { Dispatch } from 'redux';
 export const GET_ARTICULOS = 'GET_ARTICULOS';
 export const SET_ERROR = 'SET_ERROR';
-export const GET_CATEGORIES = 'GET_CATEGORIES'
+export const GET_CATEGORIES = 'GET_CATEGORIES';
+export const GET_TOTALARTICULOS = 'GET_TOTALARTICULOS'
 
 export interface Articulo{
     id:number,    
@@ -43,8 +44,13 @@ export function getArticulos({page, pageSize, name, order, direction}:params) {
                     direction: direction
                 }
             });
-            console.log(json)
-            return dispatch({ type: GET_ARTICULOS, payload: json.data })
+            
+            return [
+                dispatch({ type: GET_ARTICULOS, payload: json.data[1] }),
+                dispatch({ type: GET_TOTALARTICULOS, payload: json.data[0] })
+
+            ]
+            //
         }
         catch (error) {
                        

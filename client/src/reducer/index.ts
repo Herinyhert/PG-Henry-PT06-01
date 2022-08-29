@@ -1,4 +1,4 @@
-import { SET_ERROR, GET_ARTICULOS, GET_CATEGORIES, Articulo, Category } from '../actions';
+import { SET_ERROR, GET_ARTICULOS, GET_CATEGORIES, GET_TOTALARTICULOS, Articulo, Category } from '../actions';
 
 export interface ReduxState {
     articulos: Articulo[]
@@ -34,6 +34,12 @@ function rootReducer(state = initialState, action: actionI) {
                 ...state,
                 categorias: action.payload,
             }
+        case GET_TOTALARTICULOS:
+            return {
+                ...state,
+                totalCount: action.payload,
+            }
+
         default:
             return state;
     }
