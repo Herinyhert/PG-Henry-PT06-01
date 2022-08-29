@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import TopMenu from "../../components/TopMenu/TopMenu";
 import { useDispatch } from "react-redux";
-import { getArticulos } from "../../actions";
+import { getArticulos, getCategorias } from "../../actions";
 import { AnyAction } from "redux";
 import { ReduxState } from "../../reducer";
 import Paginado from "../../components/Paginado/Paginado";
@@ -26,21 +26,23 @@ export default function Home() {
 
   const allProducts = useSelector((state: ReduxState) => state.articulos);
   //const totalCount = useSelector((state1: ReduxState) => state1.totalCount);
-  const totalCount = 900;
+  const totalCount = 200;
   console.log(totalCount)
   const dispatch = useDispatch<any>();
 
   useEffect(() => {
+    dispatch(getCategorias());
     dispatch(
-      getArticulos({
+        getArticulos({
         page: state.page,
         pageSize: state.pageSize,
         name: state.name,
         order: state.order,
         direction: state.direction,
       })
+      
     );
-  }, [dispatch, state.page, state.pageSize, state.name, state.order, state.direction]);
+  }, [dispatch, state.page,  state.pageSize, state.name, state.order, state.direction]);
 
   return (
     <HomeContainer>
