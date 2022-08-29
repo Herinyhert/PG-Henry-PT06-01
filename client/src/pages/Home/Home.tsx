@@ -50,7 +50,7 @@ export default function Home() {
       <SearchBar
         onSearch={(search) => setState({ ...state, page: 1, name: search })}
       />
-      <TopMenu />
+      <TopMenu onClickOpcion={(search) => setState({ ...state, page: 1, name: "categoryId" })} />
       <Ordenamientos>
       <OrderName
         onDirection={(direction) => setState({ ...state, page: 1, order: "name", direction: direction })}
