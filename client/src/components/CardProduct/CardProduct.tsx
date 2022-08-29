@@ -9,6 +9,7 @@ export interface CardProductProps{
 
 export default function CardProduct({articulo}: CardProductProps){
 
+  console.log("ESTE ES EL ARTICULO", articulo)
   return (
     <Tarjeta>
       {/* <img src="https://cdn.pixabay.com/photo/2015/02/09/20/03/koala-630117__340.jpg" /> */}
@@ -25,7 +26,7 @@ export default function CardProduct({articulo}: CardProductProps){
       <StartRating />
 
       <Stock>Stock: {articulo.stock}</Stock><br></br>
-      <Category>Categoria: {articulo.categoryId}</Category>
+      <Category>Categoria: {articulo.category.name}</Category>
       <br></br>
       <Price>{articulo.price}</Price>
 
