@@ -6,6 +6,7 @@ import NavBar from "./components/NavBar/NavBar";
 import ErrorCard from "./components/ErrorCard/ErrorCard";
 import CreateProduct from "./pages/CreateProduct/CreateProduct";
 import Login from "./components/Login/Login";
+import DetailCardProduct from "./components/CardProduct/DetailCardProduct";
 
 
 
@@ -21,6 +22,7 @@ export default function App() {
             <Route path="login" element={<Login />} />
             <Route path="*" element={<ErrorCard/>} />
             <Route path="createproduct" element={<CreateProduct/>}/>
+            <Route path="product/:id" element={< DetailCardProduct/>}/>
           {/* </Routes> */}
         {/* </Route> */}
       </Routes>
