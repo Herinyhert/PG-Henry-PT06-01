@@ -55,6 +55,7 @@ productRoutes.get("/", async (req, res) => {
     name,
     order = "name",
     direction = "asc",
+    categoryId,
   } = req.query;
   const pageNumber = Number(page);
   const pageSizeNumber = Number(pageSize);
@@ -68,6 +69,10 @@ productRoutes.get("/", async (req, res) => {
   }
   if (name && typeof name !== "string") {
     res.status(400).json({ message: `the 'name' must be a string` });
+    return;
+  }
+  if (categoryId && (typeof categoryId !== "number" || categoryId < 1)) {
+    res.status(400).json({ message: `the 'categoryId' must be a number > 0` });
     return;
   }
   if (
@@ -97,6 +102,11 @@ productRoutes.get("/", async (req, res) => {
       mode: "insensitive",
     };
   }
+  if (typeof categoryId === "number") {
+    where.categoryId = {
+      equals: categoryId,
+    };
+  }
 
   const searchproducts = await prisma.product.findMany({
     skip: (pageNumber - 1) * pageSizeNumber,
@@ -105,7 +115,9 @@ productRoutes.get("/", async (req, res) => {
     orderBy: { [order]: direction },
     include: { category: true },
   });
-  const totalCuantity = await prisma.product.count();
+  const totalCuantity = await prisma.product.count({
+    where: where,
+  });
   res.status(200).json([totalCuantity, searchproducts]);
 });
 
