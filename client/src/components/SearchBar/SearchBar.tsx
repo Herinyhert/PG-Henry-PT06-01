@@ -33,7 +33,9 @@ export default function SearchBar({onSearch}: SearchBarProps) {
 }
 
 const SearchBarContainer = styled.body`
-  width: auto;
+  width: 100vw;
+  align-items: center;
+  justify-content: center;
   height: auto;
   border-radius: 0.625rem;
   padding: 0.313rem;
@@ -53,8 +55,8 @@ const SearchBarContainer = styled.body`
 
 const Input = styled.input`
   type: "text", // ver si imporatndo bien anda
-  width: auto;
-  height: 30px; 
+  width: 50vw;
+  height: 4.46vh; 
   
   border-top-left-radius: 0.313rem;
   border-bottom-left-radius: 0.313rem;
@@ -67,8 +69,8 @@ const Input = styled.input`
 `;
 
 const Search = styled.button`
-  width: 42px;
-  height: 42px;
+  width:2.65rem;
+  height: 2.65rem;
   /* border-radius: 10px; */
   border-top-right-radius: 0.313rem;
   border-bottom-right-radius: 0.313rem;
@@ -76,7 +78,7 @@ const Search = styled.button`
   display: inline-block;
   -webkit-appearance: none;
   cursor: pointer;
-  font-size: 25px;
+  font-size: 3vh;
   /* background-color: red; */
   box-shadow: 0 0 40px 40px #335d90 inset, 0 0 0 0 #335d90;
   -webkit-transition: all 150ms ease-in-out;

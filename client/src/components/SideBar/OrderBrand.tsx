@@ -30,7 +30,7 @@ const SideBarContainer = styled.body`
   height: 2rem;
   border-radius: 0.625rem;
   padding: 0.313rem;
-  margin: 2rem;
+  margin: 0.3rem;
   /* margin: 0.625rem 0 -1.25rem 0; */
   display: flex;
   -webkit-appearance: none;
