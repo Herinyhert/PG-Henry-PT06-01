@@ -15,6 +15,7 @@ export interface Articulo{
     img:String,
     state:String,
     categoryId:number,
+    category:Category,
     totalCount:number
 }
 
