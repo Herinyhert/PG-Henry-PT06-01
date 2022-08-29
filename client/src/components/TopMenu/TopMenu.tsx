@@ -1,27 +1,43 @@
 import React from "react";
 import styled from "styled-components";
 import { MdComputer } from "react-icons/md";
+import { useSelector } from "react-redux";
+import { ReduxState } from "../../reducer";
 
-export interface TopMenuProps {}
 
-export default function TopMenu({}: TopMenuProps) {
+
+ export interface TopMenuProps {
+  onClickOpcion: Function;
+
+}
+
+
+export default function TopMenu({onClickOpcion }: TopMenuProps) {
+
+  const allCategorias = useSelector((state: ReduxState) => state.categorias);
+  //provisorio hasta tener bien los datos en la base
+  const arrayPrueba = allCategorias.slice(0, 10);
+
+
   return (
     <TopMenuContainer>
-      <DivLeft>
-        {/* <Icon>
-          <MdComputer />
-        </Icon> */}
-        Laptops, Tablets & PCs
-      </DivLeft>
 
-      <Div>Computer & Office</Div>
-      <Div>Hardware & Components</Div>
-      <Div>Software</Div>
-      <Div>Smartphones, Radio & GPS </Div>
-      <Div>Photo / Video</Div>
-      <Div>TV / HiFi / Video</Div>
-      <DivRight>Games & Entertainment</DivRight>
+      {/* armo menu */}
+      {
+        arrayPrueba.map((cat,i) => 
+          i === 0
+            ? <DivLeft onClick={e=>onClickOpcion(cat.id)}>{cat.name}</DivLeft>
+            : i === 9 
+            ? <DivRight>{cat.name}</DivRight>
+            : <Div> {cat.name} </Div>
+          
+        
+        )
+
+     }
+
     </TopMenuContainer>
+
   );
 }
 

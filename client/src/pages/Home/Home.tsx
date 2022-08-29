@@ -2,12 +2,10 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import CardProduct from "../../components/CardProduct/CardProduct";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import TopMenu from "../../components/TopMenu/TopMenu";
 import { useDispatch } from "react-redux";
-import { getArticulos } from "../../actions";
-import { AnyAction } from "redux";
+import { getArticulos, getCategorias } from "../../actions";
 import { ReduxState } from "../../reducer";
 import Paginado from "../../components/Paginado/Paginado";
 import OrderName from "../../components/SideBar/OrderName";
@@ -25,22 +23,26 @@ export default function Home() {
   });
 
   const allProducts = useSelector((state: ReduxState) => state.articulos);
-  //const totalCount = useSelector((state1: ReduxState) => state1.totalCount);
-  const totalCount = 900;
-  console.log(totalCount)
+
+
+  const totalCount = useSelector((state1: ReduxState) => state1.totalCount);
+  
+
   const dispatch = useDispatch<any>();
 
   useEffect(() => {
+    dispatch(getCategorias());
     dispatch(
-      getArticulos({
+        getArticulos({
         page: state.page,
         pageSize: state.pageSize,
         name: state.name,
         order: state.order,
         direction: state.direction,
       })
+      
     );
-  }, [dispatch, state.page, state.pageSize, state.name, state.order, state.direction]);
+  }, [dispatch, state.page,  state.pageSize, state.name, state.order, state.direction]);
 
   return (
     <HomeContainer>
@@ -48,7 +50,7 @@ export default function Home() {
       <SearchBar
         onSearch={(search) => setState({ ...state, page: 1, name: search })}
       />
-      <TopMenu />
+      <TopMenu onClickOpcion={(search) => setState({ ...state, page: 1, name: "categoryId" })} />
       <Ordenamientos>
       <OrderName
         onDirection={(direction) => setState({ ...state, page: 1, order: "name", direction: direction })}
