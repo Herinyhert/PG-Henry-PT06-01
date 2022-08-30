@@ -1,10 +1,10 @@
-import { privateDecrypt } from "crypto";
-import React, { useState } from "react";
+// import { privateDecrypt } from "crypto";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { postProduct } from "../../actions";
-import { postImage } from "../../services/api/postImage";
+// import { postImage } from "../../services/api/postImage";
 
 export default function CreateProduct() {
   const dispatch = useDispatch<any>();
@@ -18,7 +18,7 @@ export default function CreateProduct() {
     categoryId: undefined,
   });
 
-  let [image, setImage] =useState<File>()
+  // let [image, setImage] =useState<File>()
 
   function handlechange(e) {
     if (e.target.name === "price") {
@@ -39,29 +39,33 @@ export default function CreateProduct() {
     }
   }
 
-  function handleImageChange(e:React.ChangeEvent<HTMLInputElement>){
-    setImage(e.target.files[0])
-  }
+  // function handleImageChange(e:React.ChangeEvent<HTMLInputElement>){
+  //   console.log(input)
+  //   setImage(e.target.files[0])
+  // }
 
-  function handlePostImage(e){
-    dispatch(postImage(image))
-  }
+  // function handlePostImage(e){
+  //   dispatch(postImage(image))
+  // }
 
-  function handelSubmit(e) {
+  function handelSubmit() {
+    console.log('hola')
     dispatch(postProduct(input));
   }
 
   return (
     <Container>
-      <Form onSubmit={(e) => handelSubmit(e)}>
+      <form onSubmit={() => handelSubmit()}>
+        <Form>
         <div>
           <Label>Nombre</Label>
-          <Input1 type="text" name="brand" onChange={(e) => handlechange(e)} />
+          <Input1 type="text" name="name" onChange={(e) => handlechange(e)} />
         </div>
         <div>
           <Label>Imagen</Label>
-          <input type="file" onChange={(e) => handleImageChange(e)} />
-          <button onClick={(e)=> handlePostImage(e)}>Subir Imagen</button>
+          <Input1 type="text" name="name" onChange={(e) => handlechange(e)} />
+          {/* <input type="file" onChange={(e) => handleImageChange(e)} />
+          <button onClick={(e)=> handlePostImage(e)}>Subir Imagen</button> */}
         </div>
         <div>
           <Label>Estado</Label>
@@ -92,9 +96,11 @@ export default function CreateProduct() {
           />
         </div>
         <Button type="submit">CREAR</Button>
-      </Form>
+        </Form>
+      </form>
     </Container>
   );
+  
 }
 
 const Container = styled.div`
