@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { postProduct } from "../../actions";
+import { postImage } from "../../services/api/postImage";
 
 export default function CreateProduct() {
   const dispatch = useDispatch<any>();
@@ -16,6 +17,8 @@ export default function CreateProduct() {
     stock: undefined,
     categoryId: undefined,
   });
+
+  let [image, setImage] =useState<File>()
 
   function handlechange(e) {
     if (e.target.name === "price") {
@@ -36,9 +39,15 @@ export default function CreateProduct() {
     }
   }
 
+  function handleImageChange(e:React.ChangeEvent<HTMLInputElement>){
+    setImage(e.target.files[0])
+  }
+
+  function handlePostImage(e){
+    dispatch(postImage(image))
+  }
+
   function handelSubmit(e) {
-    e.preventDefault();
-    console.log(input);
     dispatch(postProduct(input));
   }
 
@@ -51,7 +60,8 @@ export default function CreateProduct() {
         </div>
         <div>
           <Label>Imagen</Label>
-          <Input1 type="text" name="img" onChange={(e) => handlechange(e)} />
+          <input type="file" onChange={(e) => handleImageChange(e)} />
+          <button onClick={(e)=> handlePostImage(e)}>Subir Imagen</button>
         </div>
         <div>
           <Label>Estado</Label>
