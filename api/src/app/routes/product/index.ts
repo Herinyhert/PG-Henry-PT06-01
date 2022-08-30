@@ -59,6 +59,8 @@ productRoutes.get("/", async (req, res) => {
     direction = "asc",
     categoryId,
   } = req.query;
+
+  const cateId = Number(categoryId)
   const pageNumber = Number(page);
   const pageSizeNumber = Number(pageSize);
   if (!Number.isFinite(pageNumber) || page < 1) {
@@ -108,6 +110,10 @@ productRoutes.get("/", async (req, res) => {
     where.categoryId = {
       equals: categoryId,
     };
+  }
+
+  if (categoryId){
+    where.categoryId= cateId
   }
 
   const searchproducts = await prisma.product.findMany({
