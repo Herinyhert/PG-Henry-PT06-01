@@ -15,7 +15,7 @@ export interface Articulo{
     brand:String,    
     stock: number,
     price: number,
-    img:String,
+    img:string,
     state:String,
     categoryId:number,
     category:Category,

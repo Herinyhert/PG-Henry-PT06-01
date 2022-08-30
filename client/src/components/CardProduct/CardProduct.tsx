@@ -14,7 +14,8 @@ export default function CardProduct({articulo}: CardProductProps){
     <Tarjeta>
       {/* <img src="https://cdn.pixabay.com/photo/2015/02/09/20/03/koala-630117__340.jpg" /> */}
       <img
-        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSt6uPZ4FimHHCQbWfwsmKtSifzHUN59IbKWA&usqp=CAU"
+        // src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSt6uPZ4FimHHCQbWfwsmKtSifzHUN59IbKWA&usqp=CAU"
+        src={articulo.img}
         width="180"
         height="127"
         alt="img"
@@ -26,9 +27,9 @@ export default function CardProduct({articulo}: CardProductProps){
       <StartRating />
 
       <Stock>Stock: {articulo.stock}</Stock><br></br>
-      <Category>Categoria: {articulo.category.name}</Category>
+      <Category>Category: {articulo.category.name}</Category>
       <br></br>
-      <Price>${articulo.price}</Price>
+      <Price>${articulo.price.toFixed(2)}</Price>
 
       <Link to={`/product/${articulo.id}`}>
         <Button>View Details</Button>
@@ -42,7 +43,7 @@ const Tarjeta = styled.div`
   margin: 30px;
   padding-top: 35px;
   width: 320px;
-  height: 380px;
+  height: 420px;
   border-radius: 16px;
   justify-items: center;
   box-shadow: rgba(0, 0, 0, 0.5) 0px 54px 55px,
@@ -66,7 +67,7 @@ const Name = styled.div`
    font-family: "Kalam", cursive;
    font-size: 15px;
    font-size: bold;
-   height: 65px;
+   height: 80px;
    margin: 8px
    /* text-shadow: 3px 3px 3px #5f5e5e; */
 `;
@@ -74,9 +75,9 @@ const Name = styled.div`
 
 const Price = styled.span`
    position: absolute;
-   width: 50px;
+   width: 100px;
    background: #11e95b;
-   padding: 8px 30px;
+   padding: 8px 10px;
    text-align: center;
    display: inline-block;
    font-size: 24px;
@@ -84,7 +85,7 @@ const Price = styled.span`
    color: #fff;
    border-radius: 7px;
    margin-top: 20px;
-   margin-left: 120px;
+   margin-left: 105px;
    margin-botton: 20px;
    box-shadow: -10px 20px 15px -10px rgba(17, 233, 91, 0.3);
    z-index:2
