@@ -31,7 +31,7 @@ export default function CardProduct({articulo}: CardProductProps){
       <Price>${articulo.price}</Price>
 
       <Link to={`/product/${articulo.id}`}>
-        <Button>Details</Button>
+        <Button>View Details</Button>
       </Link>
     </Tarjeta>
   );
@@ -84,7 +84,7 @@ const Price = styled.span`
    color: #fff;
    border-radius: 7px;
    margin-top: 20px;
-   margin-left: 100px;
+   margin-left: 120px;
    margin-botton: 20px;
    box-shadow: -10px 20px 15px -10px rgba(17, 233, 91, 0.3);
    z-index:2
