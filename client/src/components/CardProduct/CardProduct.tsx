@@ -9,7 +9,7 @@ export interface CardProductProps{
 
 export default function CardProduct({articulo}: CardProductProps){
 
-  console.log("ESTE ES EL ARTICULO", articulo)
+  //console.log("ESTE ES EL ARTICULO", articulo)
   return (
     <Tarjeta>
       {/* <img src="https://cdn.pixabay.com/photo/2015/02/09/20/03/koala-630117__340.jpg" /> */}
