@@ -13,13 +13,13 @@ export default function OrderBrand({ onDirection }: SideBarProps) {
   return (
     <SideBarContainer>
 
-      <select onChange={(e) => onDirection(e.target.value)}>
+      <Select onChange={(e) => onDirection(e.target.value)}>
         <option disabled selected value="">
           {""}Ordenar Por Marca
         </option>
         <option value="asc">A-Z</option>
         <option value="desc">Z-A</option>
-      </select>
+      </Select>
     
     </SideBarContainer>
   );
@@ -28,7 +28,7 @@ export default function OrderBrand({ onDirection }: SideBarProps) {
 const SideBarContainer = styled.body`
   width: auto;
   height: 2rem;
-  border-radius: 0.625rem;
+  border-radius: 1rem;
   padding: 0.313rem;
   margin: 0.3rem;
   /* margin: 0.625rem 0 -1.25rem 0; */
@@ -42,5 +42,10 @@ const SideBarContainer = styled.body`
   position: relative;
   color: #f0f0f1;
   z-index: 0;
+`;
+
+const Select = styled.select`
+border-radius: 10px;
+width: 200px;
 `;
 

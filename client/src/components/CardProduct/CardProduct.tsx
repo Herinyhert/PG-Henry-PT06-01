@@ -28,9 +28,9 @@ export default function CardProduct({articulo}: CardProductProps){
       <Stock>Stock: {articulo.stock}</Stock><br></br>
       <Category>Categoria: {articulo.category.name}</Category>
       <br></br>
-      <Price>{articulo.price}</Price>
+      <Price>${articulo.price}</Price>
 
-      <Link to={`/detail/${articulo.id}`}>
+      <Link to={`/product/${articulo.id}`}>
         <Button>Details</Button>
       </Link>
     </Tarjeta>
@@ -54,6 +54,7 @@ const Tarjeta = styled.div`
   z-index: 0;
   text-align: center;
   vertical-align: center;
+  
     
   &:hover {
     transform: scale(1.1);
@@ -69,18 +70,7 @@ const Name = styled.div`
    margin: 8px
    /* text-shadow: 3px 3px 3px #5f5e5e; */
 `;
-const Span = styled.span`
-   padding: 0 20px;
-   font-weight: 11px;
 
-   & Span Estrella.grey {
-     color: #acacab;
-   }
- `;
-//  const Estrella = styled.span`
-//    padding: 0 20px;
-//    font-size: 11px;
-//  `;
 
 const Price = styled.span`
    position: absolute;
@@ -106,6 +96,14 @@ const Price = styled.span`
 const Stock = styled.span`
    margin-botton: 100px;
  `;
+
+
 const Button = styled.button`
-   margin-top:60px
+   margin-top:60px;
+   box-shadow: rgba(0, 0, 0, 0.5) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    border-radius:5px;
+    font-size: 15px;
+
  `;
