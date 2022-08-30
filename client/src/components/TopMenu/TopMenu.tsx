@@ -17,16 +17,13 @@ export default function TopMenu({ onClickOpcion }: TopMenuProps) {
     <TopMenuContainer>
       {/* armo menu */}
 
-      {
-        arrayPrueba.map((cat,i) => 
-          i === 0
-            ? <DivLeft onClick={e=>onClickOpcion(cat.id)}>{cat.name}</DivLeft>
-            : i === 9 
-            ? <DivRight onClick={e=>onClickOpcion(cat.id)}>{cat.name}</DivRight>
-            : <Div onClick={e=>onClickOpcion(cat.id)}> {cat.name} </Div>
-          
-        
-
+      {arrayPrueba.map((cat, i) =>
+        i === 0 ? (
+          <DivLeft onClick={(e) => onClickOpcion(cat.id)}>{cat.name}</DivLeft>
+        ) : i === 9 ? (
+          <DivRight onClick={(e) => onClickOpcion(cat.id)}>{cat.name}</DivRight>
+        ) : (
+          <Div onClick={(e) => onClickOpcion(cat.id)}> {cat.name} </Div>
         )
       }
     </TopMenuContainer>
@@ -63,7 +60,7 @@ const Div = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
-  
+
   font-size: 0.8vw;
 
   &:hover {
