@@ -50,22 +50,22 @@ export default function DetailCardProduct(){
     <Tarjeta>
       {/* <img src="https://cdn.pixabay.com/photo/2015/02/09/20/03/koala-630117__340.jpg" /> */}
       <img
-        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSt6uPZ4FimHHCQbWfwsmKtSifzHUN59IbKWA&usqp=CAU"
+        src={detail.img}
         width="320"
         height="226"
         alt="img"
       />
 
       <Name>{detail.name}</Name>
-      <Span>Marca:{detail.brand}</Span><br /><br />
+      <Span>Brand: {detail.brand}</Span><br /><br />
       <Stock>Stock: {detail.stock}</Stock><br /><br />
       
-      <Span>{detail.state}</Span>
+      {/* <Span>{detail.state}</Span> */}
       
       <StartRating />
-      <Category>Categoria:{detail.categoryId}</Category>      
+      <Category>Category: {detail.category.name}</Category>      
         <br /><br />
-        <Price>${detail.price}</Price><br />
+        <Price>${detail.price.toFixed(2)}</Price><br />
     </Tarjeta>
     </ContainerDetail>
     </>
@@ -193,7 +193,3 @@ const Button = styled.button`
  `;
 
 
- const Img = styled.img`
- width: 320px;
-
- `;

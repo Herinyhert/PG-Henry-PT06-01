@@ -9,17 +9,19 @@ import {
   SET_ERROR,
 } from "./actiontype";
 
-export interface Articulo {
-  id: number;
-  name: String;
-  brand: String;
-  stock: number;
-  price: number;
-  img: String;
-  state: String;
-  categoryId: number;
-  category: Category;
-  totalCount: number;
+
+export interface Articulo{
+    id:number,    
+    name:String,
+    brand:String,    
+    stock: number,
+    price: number,
+    img:string,
+    state:String,
+    categoryId:number,
+    category:Category,
+    totalCount:number
+
 }
 
 export interface Category {
