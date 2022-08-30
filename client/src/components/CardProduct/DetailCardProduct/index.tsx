@@ -1,10 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { detailsProduct } from "../../../actions";
 import { ReduxState } from "../../../reducer";
+import ErrorCard from "../../ErrorCard/ErrorCard";
+import NavBar from "../../NavBar/NavBar";
+import SearchBar from "../../SearchBar/SearchBar";
 import StartRating from "../../StarRating/StarRating";
+import TopMenu from "../../TopMenu/TopMenu";
 
 
 
@@ -12,6 +16,14 @@ export default function DetailCardProduct(){
 
   const { id } = useParams()
   
+  const [state, setState] = useState({
+    page: 1,
+    pageSize: 12,
+    name: undefined,
+    order: undefined,
+    direction: undefined,
+  });
+
   let detail = useSelector((state: ReduxState) => state.detailsProduct);
   const dispatch = useDispatch<any>();
   
@@ -20,17 +32,21 @@ export default function DetailCardProduct(){
   }, [dispatch]);
   
   
-  console.log(detail);
+
   
   return (
+     <> 
+      {detail ?
+      <>
+    <NavBar />
+    <SearchBar onSearch={(search) => setState({ ...state, page: 1, name: search })}/>
+
     <ContainerDetail>
        <Link to="/Home">
         {" "}
         <ButonToHome>Volver a home</ButonToHome>{" "}
       </Link>
-      
-      {detail ?
-      
+
     <Tarjeta>
       {/* <img src="https://cdn.pixabay.com/photo/2015/02/09/20/03/koala-630117__340.jpg" /> */}
       <img
@@ -40,28 +56,22 @@ export default function DetailCardProduct(){
         alt="img"
       />
 
-      <Name>{detail.id}</Name>
-      <p>{detail.name}</p>
-      <p>Marca: {detail.brand}</p>
-      <p>Stock: {detail.stock}</p>
-      <p>${detail.price}</p>
-      <p>{detail.state}</p>
-      <p>{detail.totalCount}</p>
-
+      <Name>{detail.name}</Name>
+      <Span>Marca:{detail.brand}</Span><br /><br />
+      <Stock>Stock: {detail.stock}</Stock><br /><br />
+      <Price>${detail.price}</Price><br />
+      <Span>{detail.state}</Span>
+      
       <StartRating />
-
-      <Stock>Stock: {detail.stock}</Stock><br></br>
-      <Category>Categoria: {detail.categoryId}</Category>
-      <br></br>
-      <Price>{detail.price}</Price>
-
+      <Category>Categoria:{detail.categoryId}</Category>      
+        <br /><br />
     </Tarjeta>
-
-
-    : <h1>no llego aqui</h1>}
-    
     </ContainerDetail>
-
+    </>
+    : <ErrorCard/>
+    }
+    
+    </>
   );
 }
 
@@ -129,15 +139,16 @@ const Tarjeta = styled.div`
 
 const Name = styled.div`
    font-family: "Kalam", cursive;
-   font-size: 15px;
+   font-size: 2rem;
    font-size: bold;
-   height: 65px;
+   height: 65px,none;
    margin: 8px
    /* text-shadow: 3px 3px 3px #5f5e5e; */
 `;
 const Span = styled.span`
-   padding: 0 20px;
+  padding: 0 20px;
    font-weight: 11px;
+   font-size: 1.5rem;
 
    & Span Estrella.grey {
      color: #acacab;
@@ -155,7 +166,7 @@ const Price = styled.span`
    padding: 8px 30px;
    text-align: center;
    display: inline-block;
-   font-size: 24px;
+   font-size: 2rem;
    font-weight: 200;
    color: #fff;
    border-radius: 7px;
@@ -167,10 +178,12 @@ const Price = styled.span`
  `;
  const Category = styled.span`
    margin-botton: 100px;
+   font-size: 1.5rem;
  `;
 
 const Stock = styled.span`
    margin-botton: 100px;
+   font-size: 1.5rem;
  `;
 const Button = styled.button`
    margin-top:60px
