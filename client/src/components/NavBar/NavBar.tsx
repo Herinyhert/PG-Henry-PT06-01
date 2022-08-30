@@ -20,6 +20,9 @@ export default function NavBar({}: NavBarProps) {
       </div>
       </div>
       <ContainerButtons>
+      <Link to="/CreateProduct">
+        <ButtonLogin>Create</ButtonLogin>
+      </Link>
       <Link to="/Login">
         <ButtonLogin>Login</ButtonLogin>
       </Link>
