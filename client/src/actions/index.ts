@@ -34,10 +34,12 @@ export interface params{
     name: string
     order: string
     direction: string
+    categoryId: number
+
 }
 
 
-export function getArticulos({page, pageSize, name, order, direction}:params) {
+export function getArticulos({page, pageSize, name, order, direction, categoryId}:params) {
     return async function (dispatch: Dispatch) {
         try {
             var json = await axios.get<Articulo[]>("http://localhost:3001/product",{
@@ -46,9 +48,11 @@ export function getArticulos({page, pageSize, name, order, direction}:params) {
                     pageSize: pageSize,
                     name: name,
                     order: order,
-                    direction: direction
+                    direction: direction,
+                    categoryId:categoryId
                 }
             });
+            console.log(json.data[1]);
             
             return [
                 dispatch({ type: GET_ARTICULOS, payload: json.data[1] }),
