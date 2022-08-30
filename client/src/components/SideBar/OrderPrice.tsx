@@ -13,13 +13,13 @@ export default function OrderPrice({ onDirection }: SideBarProps) {
 
    
 
-      <select onChange={(e) => onDirection(e.target.value)}>
+      <Select onChange={(e) => onDirection(e.target.value)}>
         <option disabled selected value="">
           {""}Ordenar Por Precio
         </option>
         <option value="asc">Menor Precio</option>
         <option value="desc">Mayor Precio</option>
-      </select>
+      </Select>
 
 
     </SideBarContainer>
@@ -43,5 +43,10 @@ const SideBarContainer = styled.body`
   position: relative;
   color: #f0f0f1;
   z-index: 0;
+`;
+
+const Select = styled.select`
+border-radius: 10px;
+width: 200px;
 `;
 
