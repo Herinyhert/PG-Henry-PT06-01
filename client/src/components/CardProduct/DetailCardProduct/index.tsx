@@ -39,7 +39,7 @@ export default function DetailCardProduct(){
       {detail ?
       <>
     <NavBar />
-    <SearchBar onSearch={(search) => setState({ ...state, page: 1, name: search })}/>
+    {/* <SearchBar onSearch={(search) => setState({ ...state, page: 1, name: search })}/> */}
 
     <ContainerDetail>
        <Link to="/Home">
@@ -51,20 +51,21 @@ export default function DetailCardProduct(){
       {/* <img src="https://cdn.pixabay.com/photo/2015/02/09/20/03/koala-630117__340.jpg" /> */}
       <img
         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSt6uPZ4FimHHCQbWfwsmKtSifzHUN59IbKWA&usqp=CAU"
-        width="180"
-        height="127"
+        width="320"
+        height="226"
         alt="img"
       />
 
       <Name>{detail.name}</Name>
       <Span>Marca:{detail.brand}</Span><br /><br />
       <Stock>Stock: {detail.stock}</Stock><br /><br />
-      <Price>${detail.price}</Price><br />
+      
       <Span>{detail.state}</Span>
       
       <StartRating />
       <Category>Categoria:{detail.categoryId}</Category>      
         <br /><br />
+        <Price>${detail.price}</Price><br />
     </Tarjeta>
     </ContainerDetail>
     </>
@@ -90,6 +91,7 @@ const ContainerDetail = styled.div`
 
   width: auto;
   height: auto;
+  
 
 `;
 
@@ -121,7 +123,7 @@ const Tarjeta = styled.div`
   margin: 30px;
   padding-top: 35px;
   width: 40rem;
-  height: auto;
+  height: 40rem;
   border-radius: 16px;
   justify-items: center;
   box-shadow: rgba(0, 0, 0, 0.5) 0px 54px 55px,
@@ -161,17 +163,18 @@ const Span = styled.span`
 
 const Price = styled.span`
    position: absolute;
-   width: 50px;
+   width: 36.400rem;
+   height: 60px;
    background: #11e95b;
-   padding: 8px 30px;
+   padding: 10px 30px;
    text-align: center;
    display: inline-block;
    font-size: 2rem;
    font-weight: 200;
    color: #fff;
-   border-radius: 7px;
+   border-radius: 0px  0px 16px 16px;
    margin-top: 20px;
-   margin-left: 100px;
+   margin-left: -321px;
    margin-botton: 20px;
    box-shadow: -10px 20px 15px -10px rgba(17, 233, 91, 0.3);
    z-index:2
@@ -187,4 +190,10 @@ const Stock = styled.span`
  `;
 const Button = styled.button`
    margin-top:60px
+ `;
+
+
+ const Img = styled.img`
+ width: 320px;
+
  `;
