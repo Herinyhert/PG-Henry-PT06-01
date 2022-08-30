@@ -21,6 +21,7 @@ export default function Home() {
     name: undefined,
     order: undefined,
     direction: undefined,
+    categoryId: undefined
   });
 
   const allProducts = useSelector((state: ReduxState) => state.articulos);
@@ -38,6 +39,7 @@ export default function Home() {
         name: state.name,
         order: state.order,
         direction: state.direction,
+        categoryId: state.categoryId
       })
     );
   }, [
@@ -47,6 +49,7 @@ export default function Home() {
     state.name,
     state.order,
     state.direction,
+    state.categoryId
   ]);
 
   return (
@@ -55,10 +58,8 @@ export default function Home() {
       <SearchBar
         onSearch={(search) => setState({ ...state, page: 1, name: search })}
       />
-      <TopMenu
-        onClickOpcion={(search) =>
-          setState({ ...state, page: 1, name: "categoryId" })
-        }
+     <TopMenu 
+     onClickOpcion={(categoryid) => setState({ ...state, page: 1, categoryId:categoryid})}
       />
       <Ordenamientos>
         <OrderName

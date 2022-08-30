@@ -16,13 +16,17 @@ export default function TopMenu({ onClickOpcion }: TopMenuProps) {
   return (
     <TopMenuContainer>
       {/* armo menu */}
-      {arrayPrueba.map((cat, i) =>
-        i === 0 ? (
-          <DivLeft onClick={(e) => onClickOpcion(cat.id)}>{cat.name}</DivLeft>
-        ) : i === 9 ? (
-          <DivRight>{cat.name}</DivRight>
-        ) : (
-          <Div> {cat.name} </Div>
+
+      {
+        arrayPrueba.map((cat,i) => 
+          i === 0
+            ? <DivLeft onClick={e=>onClickOpcion(cat.id)}>{cat.name}</DivLeft>
+            : i === 9 
+            ? <DivRight onClick={e=>onClickOpcion(cat.id)}>{cat.name}</DivRight>
+            : <Div onClick={e=>onClickOpcion(cat.id)}> {cat.name} </Div>
+          
+        
+
         )
       )}
     </TopMenuContainer>
