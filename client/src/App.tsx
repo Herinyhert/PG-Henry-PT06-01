@@ -21,7 +21,7 @@ export default function App() {
             <Route path="home" element={<Home />} />
             <Route path="login" element={<Login />} />
             <Route path="*" element={<ErrorCard/>} />
-            <Route path="createproduct" element={<CreateProduct/>}/>
+            <Route path="CreateProduct" element={<CreateProduct/>}/>
             <Route path="product/:id" element={< DetailCardProduct/>}/>
           {/* </Routes> */}
         {/* </Route> */}

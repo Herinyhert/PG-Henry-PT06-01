@@ -1,7 +1,7 @@
 // import { privateDecrypt } from "crypto";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { postProduct } from "../../actions";
 // import { postImage } from "../../services/api/postImage";
@@ -55,6 +55,11 @@ export default function CreateProduct() {
 
   return (
     <Container>
+       <Link to="/Home">
+        {" "}
+        <ButonToHome>Volver a home</ButonToHome>{" "}
+      </Link>
+
       <form onSubmit={() => handelSubmit()}>
         <Form>
         <div>
@@ -102,6 +107,29 @@ export default function CreateProduct() {
   );
   
 }
+
+const ButonToHome = styled.button`
+  font-family: "Kalam", cursive;
+  font-size: 15px;
+  font-size: bold;
+  height: 65px;
+  margin: 8px;
+  background-color: #335d90;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 0.4rem;
+
+  &:hover {
+    box-shadow: 0 0 10px 0 #335d90 inset, 0 0 10px 4px #335d90;
+    transform: scale(1.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+`;
 
 const Container = styled.div`
 margin: 0;
