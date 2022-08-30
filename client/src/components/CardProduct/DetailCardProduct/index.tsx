@@ -7,6 +7,7 @@ import { ReduxState } from "../../../reducer";
 import StartRating from "../../StarRating/StarRating";
 
 
+
 export default function DetailCardProduct(){
 
   const { id } = useParams()
@@ -22,7 +23,13 @@ export default function DetailCardProduct(){
   console.log(detail);
   
   return (
-    <div>{detail ?
+    <ContainerDetail>
+       <Link to="/Home">
+        {" "}
+        <ButonToHome>Volver a home</ButonToHome>{" "}
+      </Link>
+      
+      {detail ?
       
     <Tarjeta>
       {/* <img src="https://cdn.pixabay.com/photo/2015/02/09/20/03/koala-630117__340.jpg" /> */}
@@ -35,9 +42,9 @@ export default function DetailCardProduct(){
 
       <Name>{detail.id}</Name>
       <p>{detail.name}</p>
-      <p>{detail.brand}</p>
-      <p>{detail.stock}</p>
-      <p>{detail.price}</p>
+      <p>Marca: {detail.brand}</p>
+      <p>Stock: {detail.stock}</p>
+      <p>${detail.price}</p>
       <p>{detail.state}</p>
       <p>{detail.totalCount}</p>
 
@@ -51,17 +58,60 @@ export default function DetailCardProduct(){
     </Tarjeta>
 
 
-    : <h1>no llego aqui</h1>}</div>
+    : <h1>no llego aqui</h1>}
+    
+    </ContainerDetail>
 
   );
 }
+
+const ContainerDetail = styled.div`
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  display: grid;
+  text-align: center;
+  margin: auto; 
+  margin-top: 2rem;
+  padding: 1rem;
+  //padding-left: 1rem;
+
+  /* margin: 3rem; */
+
+  width: auto;
+  height: auto;
+
+`;
+
+const ButonToHome = styled.button`
+  font-family: "Kalam", cursive;
+  font-size: 15px;
+  font-size: bold;
+  height: 65px;
+  margin: 8px;
+  background-color: #335d90;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 0.4rem;
+
+  &:hover {
+    box-shadow: 0 0 10px 0 #335d90 inset, 0 0 10px 4px #335d90;
+    transform: scale(1.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+`;
 
 const Tarjeta = styled.div`
   position: relative;
   margin: 30px;
   padding-top: 35px;
-  width: 320px;
-  height: 380px;
+  width: 40rem;
+  height: auto;
   border-radius: 16px;
   justify-items: center;
   box-shadow: rgba(0, 0, 0, 0.5) 0px 54px 55px,
@@ -74,10 +124,7 @@ const Tarjeta = styled.div`
   text-align: center;
   vertical-align: center;
     
-  &:hover {
-    transform: scale(1.1);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-  }
+
 `;
 
 const Name = styled.div`
