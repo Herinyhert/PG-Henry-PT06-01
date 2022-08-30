@@ -39,7 +39,6 @@ export default function DetailCardProduct(){
       {detail ?
       <>
     <NavBar />
-    {/* <SearchBar onSearch={(search) => setState({ ...state, page: 1, name: search })}/> */}
 
     <ContainerDetail>
        <Link to="/Home">
@@ -85,7 +84,7 @@ const ContainerDetail = styled.div`
   margin-top: 2rem;
   padding: 1rem;
   //padding-left: 1rem;
-
+  
   /* margin: 3rem; */
 
   width: auto;
