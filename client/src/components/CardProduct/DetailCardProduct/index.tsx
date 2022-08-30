@@ -39,7 +39,7 @@ export default function DetailCardProduct(){
       {detail ?
       <>
     <NavBar />
-    <SearchBar onSearch={(search) => setState({ ...state, page: 1, name: search })}/>
+    {/* <SearchBar onSearch={(search) => setState({ ...state, page: 1, name: search })}/> */}
 
     <ContainerDetail>
        <Link to="/Home">

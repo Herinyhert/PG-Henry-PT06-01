@@ -28,7 +28,7 @@ export default function TopMenu({ onClickOpcion }: TopMenuProps) {
         
 
         )
-      )}
+      }
     </TopMenuContainer>
   );
 }
