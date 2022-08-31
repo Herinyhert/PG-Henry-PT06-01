@@ -8,19 +8,39 @@ datasource db {
 }
 
 model Product {
-  id          Int     @id @default(autoincrement())
-  name        String
-  brand       String    
-  stock       Int
-  price       Float
-  img         String
-  state       String
-  categoryId  Int
-  category   Category @relation(fields: [categoryId], references: [id]) 
+  id         Int      @id @default(autoincrement())
+  name       String
+  brand      String
+  stock      Int
+  price      Float
+  img        String
+  state      String
+  categoryId Int
+  category   Category @relation(fields: [categoryId], references: [id])
 }
 
 model Category {
-  id          Int     @id @default(autoincrement())
-  name        String
-  products    Product[]
+  id       Int       @id @default(autoincrement())
+  name     String
+  products Product[]
+}
+
+// ---Manuel Romero---------//
+model Role {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+  User User[]
+}
+
+model User {
+  id       Int      @id @default(autoincrement())
+  name     String
+  apellido String
+  email    String   @unique
+  tipeUser String // ---> Cliente Admin 
+  user     String
+  password String
+  state    Boolean? @default(true) // 1-Activo 0-inactivo
+  roleId   Int
+  role     Role     @relation(fields: [roleId], references: [id])
 }
