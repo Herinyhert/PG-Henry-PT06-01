@@ -8,15 +8,17 @@ datasource db {
 }
 
 model Product {
-  id         Int      @id @default(autoincrement())
-  name       String
-  brand      String
-  stock      Int
-  price      Float
-  img        String
-  state      String
-  categoryId Int
-  category   Category @relation(fields: [categoryId], references: [id])
+  id           Int            @id @default(autoincrement())
+  name         String
+  brand        String
+  stock        Int
+  price        Float
+  img          String
+  state        String
+  categoryId   Int
+  category     Category       @relation(fields: [categoryId], references: [id])
+  order_detail Order_detail[]
+  orderId      Int?
 }
 
 model Category {
@@ -43,4 +45,25 @@ model User {
   state    Boolean? @default(true) // 1-Activo 0-inactivo
   roleId   Int
   role     Role     @relation(fields: [roleId], references: [id])
+  orderU Order[]
+}
+
+model Order {
+  id           Int            @id @default(autoincrement())
+  amount       Float
+  date         DateTime       @default(now())
+  status       String
+  userId       Int
+  user User @relation(fields: [userId], references: [id])
+  order_detail Order_detail[]
+}
+
+model Order_detail {
+  id        Int     @id @default(autoincrement())
+  orderId   Int
+  productId Int
+  price     Float
+  quantity  Int
+  product   Product @relation(fields: [productId], references: [id])
+  order     Order   @relation(fields: [orderId], references: [id])
 }
