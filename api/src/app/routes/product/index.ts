@@ -57,6 +57,7 @@ productRoutes.get("/", async (req, res) => {
     direction = "asc",
     categoryId,
   } = req.query;
+
   const pageNumber = Number(page);
   const pageSizeNumber = Number(pageSize);
   const filterCategoryId = Number(categoryId);

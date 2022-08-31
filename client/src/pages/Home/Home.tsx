@@ -21,6 +21,7 @@ export default function Home() {
     name: undefined,
     order: undefined,
     direction: undefined,
+    categoryId: undefined
   });
 
   const allProducts = useSelector((state: ReduxState) => state.articulos);
@@ -38,6 +39,7 @@ export default function Home() {
         name: state.name,
         order: state.order,
         direction: state.direction,
+        categoryId: state.categoryId
       })
     );
   }, [
@@ -47,6 +49,7 @@ export default function Home() {
     state.name,
     state.order,
     state.direction,
+    state.categoryId
   ]);
 
   return (
@@ -55,10 +58,8 @@ export default function Home() {
       <SearchBar
         onSearch={(search) => setState({ ...state, page: 1, name: search })}
       />
-      <TopMenu
-        onClickOpcion={(search) =>
-          setState({ ...state, page: 1, name: "categoryId" })
-        }
+     <TopMenu 
+     onClickOpcion={(categoryid) => setState({ ...state, page: 1, categoryId:categoryid})}
       />
       <Ordenamientos>
         <OrderName
@@ -95,9 +96,9 @@ export default function Home() {
       />
       <CardsProducts>
         {allProducts.map((art) => (
-          <Link to={`/product/${art.id}`}>
+          // <Link to={`/product/${art.id}`}>
             <CardProduct key={art.id} articulo={art} />
-          </Link>
+          // </Link>
         ))}
       </CardsProducts>
     </HomeContainer>
@@ -109,6 +110,7 @@ const HomeContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  overflow-x: hidden;
 `;
 
 const Welcome = styled.h1`
@@ -120,6 +122,7 @@ const CardsProducts = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   margin-bottom: 30px;
+  
 `;
 
 const Ordenamientos = styled.div`

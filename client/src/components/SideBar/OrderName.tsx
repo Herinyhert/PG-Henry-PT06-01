@@ -12,13 +12,13 @@ export default function OrderName({ onDirection }: SideBarProps) {
   return (
     <SideBarContainer>
 
-      <select onChange={(e) => onDirection(e.target.value)}>
+      <Select onChange={(e) => onDirection(e.target.value)}>
         <option disabled selected value="">
-          {""}Ordenar Alfabeticamente
+          {""}Sort By Name
         </option>
         <option value="asc">A-Z</option>
         <option value="desc">Z-A</option>
-      </select>
+      </Select>
     
     </SideBarContainer>
   );
@@ -42,4 +42,10 @@ const SideBarContainer = styled.body`
   color: #f0f0f1;
   z-index: 0;
 `;
+
+const Select = styled.select`
+border-radius: 10px;
+width: 200px;
+`;
+
 

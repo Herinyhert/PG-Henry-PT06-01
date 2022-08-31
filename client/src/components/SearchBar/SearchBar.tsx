@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { ImSearch } from "react-icons/im";
+import Swal from 'sweetalert2'
 
 export interface SearchBarProps {
   onSearch: Function
@@ -16,7 +17,15 @@ export default function SearchBar({onSearch}: SearchBarProps) {
 
   function handleclick(){
     if(state === ""){
-      alert("Enter a product to search...")
+      // alert("Enter a product to search...")
+      Swal.fire({
+        title: 'Error!',
+        text: 'Enter a product to search...',
+        icon: 'error',
+        confirmButtonText: 'Return',
+        confirmButtonColor: '#335d90'
+      })
+
     }
       onSearch(state)
   }
@@ -56,8 +65,7 @@ const SearchBarContainer = styled.body`
 const Input = styled.input`
   type: "text", // ver si imporatndo bien anda
   width: 50vw;
-  height: 4.46vh; 
-  
+  height: 2rem; 
   border-top-left-radius: 0.313rem;
   border-bottom-left-radius: 0.313rem;
   border: 1px solid black;
@@ -70,7 +78,7 @@ const Input = styled.input`
 
 const Search = styled.button`
   width:2.65rem;
-  height: 2.65rem;
+  height: 2.74rem;
   /* border-radius: 10px; */
   border-top-right-radius: 0.313rem;
   border-bottom-right-radius: 0.313rem;

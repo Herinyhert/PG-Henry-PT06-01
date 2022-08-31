@@ -2,16 +2,27 @@ import React from "react";
 import styled from "styled-components";
 import { FiShoppingCart } from "react-icons/fi";
 import { Link } from "react-router-dom";
+import Logo from "../../img/Logo.png"
 
 export interface NavBarProps {}
 
 export default function NavBar({}: NavBarProps) {
   return (
     <NavBarContainer>
-      <LogoNav>
-        <h2>Logo</h2>
-      </LogoNav>
+      <div>
+       
+        <div>
+        <Img
+          id="logo"
+          src={Logo}
+          alt=""
+        />
+      </div>
+      </div>
       <ContainerButtons>
+      <Link to="/CreateProduct">
+        <ButtonLogin>Create</ButtonLogin>
+      </Link>
       <Link to="/Login">
         <ButtonLogin>Login</ButtonLogin>
       </Link>
@@ -22,13 +33,6 @@ export default function NavBar({}: NavBarProps) {
     </NavBarContainer>
   );
 }
-
-const LogoNav = styled.div`
-  margin-left: 1rem;
-  justify-content: center;
-  font-size: 1.36vw;
-`;
-
 const ContainerButtons = styled.div`
   display: inline-flex;
   flex-wrap: wrap;
@@ -36,19 +40,19 @@ const ContainerButtons = styled.div`
 `;
 
 const ButtonLogin = styled.button`
-  width: 7vw;
-  height: 6vh;
+  width: 4rem;
+  height: 42px;
   background: transparent;
   border-radius: 0.313rem;
-  border: 0.13rem solid white;
+  border: 0.13rem solid black;
 
   margin-right: 1rem;
-  padding: 0.06rem;
+  padding: 5px;
   display: inline-block;
   -webkit-appearance: none;
   cursor: pointer;
-  font-size: 1.6vw;
-  color: white;
+  font-size: 1rem;
+  color: black;
 
   -webkit-transition: all 150ms ease-in-out;
   transition: all 150ms ease-in-out;
@@ -64,18 +68,18 @@ const ButtonLogin = styled.button`
 `;
 
 const Shop = styled.button`
-  width: 5.4vw;
-  height: 6vh;
+  width: 3rem;
+  height: 42px;
   background: transparent;
   border-radius: 0.313rem;
-  margin-right: 1rem;
+  margin-right: 2rem;
   padding: 5px;
   display: inline-block;
   -webkit-appearance: none;
-  border: 0.13rem solid white;
+  border: 0.13rem solid black;
   cursor: pointer;
-  font-size: 2.14vw;
-  color: white;
+  font-size: 25px;
+  color: black;
 
   -webkit-transition: all 150ms ease-in-out;
   transition: all 150ms ease-in-out;
@@ -91,14 +95,33 @@ const Shop = styled.button`
 `;
 
 const NavBarContainer = styled.header`
-  width: 100%;
-  height: 8vh;
-  background-color: #1e212a;
-  color: #c9cace;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
- //padding: 0px 16px;
-// padding-left: 3rem;
+  height: 70px;
+    width: 100vw;
+    /* top: 10px; */
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    padding: 0 20px;
+    background-color:  trasparent ;
+    /* opacity: 0.5; */
+    /* border-radius: 16px; */
+    /* box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); */
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    justify-items: center;
 
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    z-index: 0;
 `;
+
+const Img = styled.img`
+width:140px;
+height:140px;
+/* top="10px" */
+margin-top: -11px;
+margin-left: 30px;
+z-index:1;
+          
+`;
+

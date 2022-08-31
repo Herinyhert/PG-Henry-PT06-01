@@ -1,9 +1,10 @@
-import { privateDecrypt } from "crypto";
-import React, { useState } from "react";
+// import { privateDecrypt } from "crypto";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { postProduct } from "../../actions";
+// import { postImage } from "../../services/api/postImage";
 
 export default function CreateProduct() {
   const dispatch = useDispatch<any>();
@@ -16,6 +17,8 @@ export default function CreateProduct() {
     stock: undefined,
     categoryId: undefined,
   });
+
+  // let [image, setImage] =useState<File>()
 
   function handlechange(e) {
     if (e.target.name === "price") {
@@ -36,22 +39,38 @@ export default function CreateProduct() {
     }
   }
 
-  function handelSubmit(e) {
-    e.preventDefault();
-    console.log(input);
+  // function handleImageChange(e:React.ChangeEvent<HTMLInputElement>){
+  //   console.log(input)
+  //   setImage(e.target.files[0])
+  // }
+
+  // function handlePostImage(e){
+  //   dispatch(postImage(image))
+  // }
+
+  function handelSubmit() {
+    console.log('hola')
     dispatch(postProduct(input));
   }
 
   return (
     <Container>
-      <Form onSubmit={(e) => handelSubmit(e)}>
+       <Link to="/Home">
+        {" "}
+        <ButonToHome>Volver a home</ButonToHome>{" "}
+      </Link>
+
+      <form onSubmit={() => handelSubmit()}>
+        <Form>
         <div>
           <Label>Nombre</Label>
-          <Input1 type="text" name="brand" onChange={(e) => handlechange(e)} />
+          <Input1 type="text" name="name" onChange={(e) => handlechange(e)} />
         </div>
         <div>
           <Label>Imagen</Label>
-          <Input1 type="text" name="img" onChange={(e) => handlechange(e)} />
+          <Input1 type="text" name="name" onChange={(e) => handlechange(e)} />
+          {/* <input type="file" onChange={(e) => handleImageChange(e)} />
+          <button onClick={(e)=> handlePostImage(e)}>Subir Imagen</button> */}
         </div>
         <div>
           <Label>Estado</Label>
@@ -82,10 +101,35 @@ export default function CreateProduct() {
           />
         </div>
         <Button type="submit">CREAR</Button>
-      </Form>
+        </Form>
+      </form>
     </Container>
   );
+  
 }
+
+const ButonToHome = styled.button`
+  font-family: "Kalam", cursive;
+  font-size: 15px;
+  font-size: bold;
+  height: 65px;
+  margin: 8px;
+  background-color: #335d90;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 0.4rem;
+
+  &:hover {
+    box-shadow: 0 0 10px 0 #335d90 inset, 0 0 10px 4px #335d90;
+    transform: scale(1.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+`;
 
 const Container = styled.div`
 margin: 0;
