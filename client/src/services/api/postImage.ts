@@ -1,10 +1,21 @@
-// import axios from "axios";
+import axios from "axios";
 
-
-
-export function postImage(image: File){
-    // axios.post("http://localhost:3001/image", image)
-    // .then( response => response)
-    console.log(image);
-    
+export interface PostImageResponse {
+  url: string;
 }
+
+export function postImage(image: File) {
+  const formData = new FormData();
+  formData.append("image", image);
+  return axios.post<PostImageResponse>(
+    "http://localhost:3001/image",
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  ).then((response)=> response.data.url)
+}
+
+
