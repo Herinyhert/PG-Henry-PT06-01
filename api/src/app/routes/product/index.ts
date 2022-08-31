@@ -6,7 +6,6 @@ const productRoutes = Router();
 
 productRoutes.post("/", async (req, res) => {
   const { name, brand, categoryId, stock, price, img, state } = req.body;
-
   if (typeof name !== "string") {
     res.status(400).json({ message: `the 'name' must be a string` });
     return;
@@ -36,7 +35,6 @@ productRoutes.post("/", async (req, res) => {
     return;
   }
   const newProduct = await prisma.product.create({
-
     data: {
       name: name,
       brand: brand,
@@ -60,9 +58,9 @@ productRoutes.get("/", async (req, res) => {
     categoryId,
   } = req.query;
 
-  const cateId = Number(categoryId)
   const pageNumber = Number(page);
   const pageSizeNumber = Number(pageSize);
+  const filterCategoryId = Number(categoryId);
   if (!Number.isFinite(pageNumber) || page < 1) {
     res.status(400).json({ message: `the 'page' must be a number > 0` });
     return;
@@ -75,12 +73,13 @@ productRoutes.get("/", async (req, res) => {
     res.status(400).json({ message: `the 'name' must be a string` });
     return;
   }
-///
-  /// esta validacion me da error PARA REVISAR SIEMPRE ME SALE QUE DEBE SER MAYOR A CERO
-///// la saque
-//
-//
-
+  if (
+    filterCategoryId &&
+    (typeof filterCategoryId !== "number" || filterCategoryId < 1)
+  ) {
+    res.status(400).json({ message: `the 'CategoryId' must be a number > 0` });
+    return;
+  }
   if (
     order !== "id" &&
     order !== "name" &&
@@ -109,13 +108,7 @@ productRoutes.get("/", async (req, res) => {
     };
   }
   if (typeof categoryId === "number") {
-    where.categoryId = {
-      equals: categoryId,
-    };
-  }
-
-  if (categoryId){
-    where.categoryId= cateId
+    where.categoryId = filterCategoryId;
   }
 
   const searchproducts = await prisma.product.findMany({
