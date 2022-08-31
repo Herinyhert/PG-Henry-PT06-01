@@ -59,6 +59,7 @@ productRoutes.get("/", async (req, res) => {
   } = req.query;
   const pageNumber = Number(page);
   const pageSizeNumber = Number(pageSize);
+  const filterCategoryId = Number(categoryId);
   if (!Number.isFinite(pageNumber) || page < 1) {
     res.status(400).json({ message: `the 'page' must be a number > 0` });
     return;
@@ -71,8 +72,11 @@ productRoutes.get("/", async (req, res) => {
     res.status(400).json({ message: `the 'name' must be a string` });
     return;
   }
-  if (categoryId && (typeof categoryId !== "number" || categoryId < 1)) {
-    res.status(400).json({ message: `the 'categoryId' must be a number > 0` });
+  if (
+    filterCategoryId &&
+    (typeof filterCategoryId !== "number" || filterCategoryId < 1)
+  ) {
+    res.status(400).json({ message: `the 'CategoryId' must be a number > 0` });
     return;
   }
   if (
@@ -103,9 +107,7 @@ productRoutes.get("/", async (req, res) => {
     };
   }
   if (typeof categoryId === "number") {
-    where.categoryId = {
-      equals: categoryId,
-    };
+    where.categoryId = filterCategoryId;
   }
 
   const searchproducts = await prisma.product.findMany({
