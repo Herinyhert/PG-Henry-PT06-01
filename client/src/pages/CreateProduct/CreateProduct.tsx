@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { postProduct } from "../../actions";
-// import { postImage } from "../../services/api/postImage";
+import { postImage } from "../../services/api/postImage";
 
 export default function CreateProduct() {
   const dispatch = useDispatch<any>();
@@ -18,7 +18,7 @@ export default function CreateProduct() {
     categoryId: undefined,
   });
 
-  // let [image, setImage] =useState<File>()
+  let [image, setImage] = useState<File>();
 
   function handlechange(e) {
     if (e.target.name === "price") {
@@ -39,73 +39,82 @@ export default function CreateProduct() {
     }
   }
 
-  // function handleImageChange(e:React.ChangeEvent<HTMLInputElement>){
-  //   console.log(input)
-  //   setImage(e.target.files[0])
-  // }
+  function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setImage(e.target.files[0]);
+  }
 
-  // function handlePostImage(e){
-  //   dispatch(postImage(image))
-  // }
+  async function handlePostImage(e) {
+    e.preventDefault();
+    const url = await postImage(image)
+    setInput({
+      ...input, 
+      img: url
+    })
+    
+  }
 
-  function handelSubmit() {
-    console.log('hola')
+  function handelSubmit(e) {
     dispatch(postProduct(input));
   }
 
   return (
     <Container>
+    
        <Link to="/Home">
         {" "}
         <ButonToHome>Volver a home</ButonToHome>{" "}
       </Link>
 
-      <form onSubmit={() => handelSubmit()}>
+      <form onSubmit={(e) => handelSubmit(e)}>
+
         <Form>
-        <div>
-          <Label>Nombre</Label>
-          <Input1 type="text" name="name" onChange={(e) => handlechange(e)} />
-        </div>
-        <div>
-          <Label>Imagen</Label>
-          <Input1 type="text" name="name" onChange={(e) => handlechange(e)} />
-          {/* <input type="file" onChange={(e) => handleImageChange(e)} />
-          <button onClick={(e)=> handlePostImage(e)}>Subir Imagen</button> */}
-        </div>
-        <div>
-          <Label>Estado</Label>
-          <Input1 type="text" name="state" onChange={(e) => handlechange(e)} />
-        </div>
-        <div>
-          <Label>Precio</Label>
-          <Input1
-            type="number"
-            name="price"
-            onChange={(e) => handlechange(e)}
-          />
-        </div>
-        <div>
-          <Label>Stock</Label>
-          <Input1
-            type="number"
-            name="stock"
-            onChange={(e) => handlechange(e)}
-          />
-        </div>
-        <div>
-          <Label>Categoria</Label>
-          <Input1
-            type="number"
-            name="categoryId"
-            onChange={(e) => handlechange(e)}
-          />
-        </div>
-        <Button type="submit">CREAR</Button>
+          <div>
+            <Label>Nombre</Label>
+            <Input1 type="text" name="name" onChange={(e) => handlechange(e)} />
+          </div>
+          <div>
+            <Label>Imagen</Label>
+            {/* <Input1 type="text" name="name" onChange={(e) => handlechange(e)} /> */}
+            <input type="file" onChange={(e) => handleImageChange(e)} />
+            <button onClick={(e) => handlePostImage(e)}>Subir Imagen</button>
+          </div>
+          <div>
+            <Label>Estado</Label>
+            <Input1
+              type="text"
+              name="state"
+              onChange={(e) => handlechange(e)}
+            />
+          </div>
+          <div>
+            <Label>Precio</Label>
+            <Input1
+              type="number"
+              name="price"
+              onChange={(e) => handlechange(e)}
+            />
+          </div>
+          <div>
+            <Label>Stock</Label>
+            <Input1
+              type="number"
+              name="stock"
+              onChange={(e) => handlechange(e)}
+            />
+          </div>
+          <div>
+            <Label>Categoria</Label>
+            <Input1
+              type="number"
+              name="categoryId"
+              onChange={(e) => handlechange(e)}
+            />
+          </div>
+          <Button type="submit">CREAR</Button>
         </Form>
       </form>
     </Container>
   );
-  
 }
 
 const ButonToHome = styled.button`
@@ -132,17 +141,17 @@ const ButonToHome = styled.button`
 `;
 
 const Container = styled.div`
-margin: 0;
-background-attachment: initial;
+  margin: 0;
+  background-attachment: initial;
 
-background-size: cover;
-background-repeat: no-repeat;
-background-position: center;
-height: auto;
-/* width: 100vw; */
-z-index: -1;
-min-height: 120vh;
-text-align: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: auto;
+  /* width: 100vw; */
+  z-index: -1;
+  min-height: 120vh;
+  text-align: center;
   vertical-align: center;
 `;
 
@@ -186,7 +195,7 @@ const Label = styled.div`
 `;
 
 const Input1 = styled.input`
-type: text;
+  type: text;
   font-size: 15px;
   /* font-weight: bold; */
   border: solid 1px black !important;
@@ -201,10 +210,10 @@ type: text;
 `;
 
 const Button = styled.button`
-margin: 35px;
-font-size: 20px;
-padding: 10px;
-box-shadow: 0 0 40px 40px #335d90 inset, 0 0 0 0 #335d90;
+  margin: 35px;
+  font-size: 20px;
+  padding: 10px;
+  box-shadow: 0 0 40px 40px #335d90 inset, 0 0 0 0 #335d90;
   -webkit-transition: all 150ms ease-in-out;
   transition: all 150ms ease-in-out;
   color: white;
