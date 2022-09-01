@@ -37,15 +37,14 @@ model Role {
 model User {
   id       Int      @id @default(autoincrement())
   name     String
-  apellido String
+  surname  String
   email    String   @unique
-  tipeUser String // ---> Cliente Admin 
-  user     String
+  username String   @unique
   password String
   state    Boolean? @default(true) // 1-Activo 0-inactivo
   roleId   Int
   role     Role     @relation(fields: [roleId], references: [id])
-  orderU Order[]
+  orderU   Order[]
 }
 
 model Order {
@@ -54,7 +53,7 @@ model Order {
   date         DateTime       @default(now())
   status       String
   userId       Int
-  user User @relation(fields: [userId], references: [id])
+  user         User           @relation(fields: [userId], references: [id])
   order_detail Order_detail[]
 }
 
