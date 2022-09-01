@@ -1,9 +1,9 @@
-import { Router } from "express";
-import prisma from "../../../db";
+import { Router } from 'express';
+import prisma from '../../../db';
 
 const backofficeRoutesOrder = Router();
 
-backofficeRoutesOrder.post("/", async (req, res) => {
+backofficeRoutesOrder.post('/', async (req, res) => {
   try {
     const { amount, status, userId } = req.body;
 
@@ -22,18 +22,18 @@ backofficeRoutesOrder.post("/", async (req, res) => {
   }
 });
 
-backofficeRoutesOrder.get("/", async (req, res) => {
+backofficeRoutesOrder.get('/', async (req, res) => {
   //  const id = req.query.name;
 
   let allOrders = await prisma.order.findMany();
   if (allOrders) {
     res.status(200).send(allOrders);
   } else {
-    res.status(404).send("error");
+    res.status(404).send('error');
   }
 });
 
-backofficeRoutesOrder.get("/:id", async (req, res) => {
+backofficeRoutesOrder.get('/:id', async (req, res) => {
   const orderId = Number(req.params.id);
 
   const orderUnique = await prisma.order.findUnique({
@@ -43,11 +43,11 @@ backofficeRoutesOrder.get("/:id", async (req, res) => {
   if (orderUnique) {
     res.status(200).send(orderUnique);
   } else {
-    res.status(404).send("error");
+    res.status(404).send('error');
   }
 });
 
-backofficeRoutesOrder.put("/:id", async (req, res) => {
+backofficeRoutesOrder.put('/:id', async (req, res) => {
   const orderlId = Number(req.params.id);
   const { amount, status } = req.body;
 
@@ -62,21 +62,20 @@ backofficeRoutesOrder.put("/:id", async (req, res) => {
   res.status(200).json(orderToChange);
 });
 
+backofficeRoutesOrder.delete('/:id', async (req, res) => {
+  //PROBAR CUANDO ESTE LISTA LA RUTA DE USER
 
-backofficeRoutesOrder.delete("/:id", async (req, res) => {
-    //PROBAR CUANDO ESTE LISTA LA RUTA DE USER
-  
-    try {
-      const orderId = Number(req.params.id);
-      //const { name } = req.body;
+  try {
+    const orderId = Number(req.params.id);
+    //const { name } = req.body;
 
-      let orderToDelete = await prisma.order.delete({
-        where: { id: orderId },
-      });
-      res.json(orderToDelete);
-    } catch (error) {
-      res.send(`No se pudo eliminar la orden, ${error}`);
-    }
-  });
+    let orderToDelete = await prisma.order.delete({
+      where: { id: orderId },
+    });
+    res.json(orderToDelete);
+  } catch (error) {
+    res.send(`No se pudo eliminar la orden, ${error}`);
+  }
+});
 
 export default backofficeRoutesOrder;
