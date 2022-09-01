@@ -2,9 +2,9 @@ import { Prisma } from "@prisma/client";
 import { Router } from "express";
 import prisma from "../../../db";
 
-const backofficeRoutes = Router();
+const backofficeRoutesRol = Router();
 
-backofficeRoutes.post("/rol", async (req, res) => {
+backofficeRoutesRol.post("/", async (req, res) => {
   try {
     const { name } = req.body;
 
@@ -25,7 +25,7 @@ backofficeRoutes.post("/rol", async (req, res) => {
     return;
   }
 });
-backofficeRoutes.get("/rol", async (req, res) => {
+backofficeRoutesRol.get("/", async (req, res) => {
   //  const name = req.query.name;
 
   let allRoles = await prisma.role.findMany();
@@ -36,7 +36,7 @@ backofficeRoutes.get("/rol", async (req, res) => {
   }
 });
 
-backofficeRoutes.put("/rol/:id", async (req, res) => {
+backofficeRoutesRol.put("/:id", async (req, res) => {
   const rolId = Number(req.params.id);
   const { name } = req.body;
 
@@ -48,7 +48,7 @@ backofficeRoutes.put("/rol/:id", async (req, res) => {
   res.status(200).json(rolToChange);
 });
 
-backofficeRoutes.delete("/rol", async (req, res) => {
+backofficeRoutesRol.delete("/", async (req, res) => {
   //Ver porque no agarra id
 
   try {
@@ -66,4 +66,4 @@ backofficeRoutes.delete("/rol", async (req, res) => {
   }
 });
 
-export default backofficeRoutes;
+export default backofficeRoutesRol;
