@@ -36,6 +36,20 @@ backofficeRoutesRol.get("/", async (req, res) => {
   }
 });
 
+backofficeRoutesRol.get("/:id", async (req, res) => {
+  const rolId = Number(req.params.id);
+
+  const rolUnique = await prisma.role.findUnique({
+    where: { id: rolId },
+   
+  });
+  if (rolUnique) {
+    res.status(200).send(rolUnique);
+  } else {
+    res.status(404).send("error");
+  }
+});
+
 backofficeRoutesRol.put("/:id", async (req, res) => {
   const rolId = Number(req.params.id);
   const { name } = req.body;
