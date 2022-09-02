@@ -36,7 +36,11 @@ backofficeRoutesRol.get('/', async (req, res) => {
   }
 });
 
-backofficeRoutesRol.put('/:id', async (req, res) => {
+
+
+
+backofficeRoutesRol.put("/:id", async (req, res) => {
+
   const rolId = Number(req.params.id);
   const { name } = req.body;
 
