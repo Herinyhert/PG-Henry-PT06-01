@@ -4,7 +4,7 @@ import categoryRoutes from './category';
 import imageRoutes from './image';
 import backofficeRoutesRol from './Rol';
 import backofficeRoutesOrder from './Order/Order';
-import userRoutes from './user/idex';
+import userRoutes from './user';
 
 const router = Router();
 
