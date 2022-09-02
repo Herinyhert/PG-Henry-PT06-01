@@ -1,7 +1,8 @@
-import { SET_ERROR, GET_ARTICULOS, GET_CATEGORIES, GET_TOTALARTICULOS, GET_DETAIL_PRODUCT } from '../actions/actiontype';
-import {  Articulo, Category}from '../actions';
+import { SET_ERROR, GET_ARTICULOS, GET_CATEGORIES, GET_TOTALARTICULOS, GET_DETAIL_PRODUCT, GET_LOGIN } from '../actions/actiontype';
+import {  Articulo, Category, Login}from '../actions';
 
 export interface ReduxState {
+    login: Login,
     articulos: Articulo[]
     categorias: Category[]
     detailsProduct: Articulo
@@ -16,6 +17,7 @@ interface actionI {
 }
 
 const initialState: ReduxState = {
+    login:null,
     articulos: [],
     categorias: [],
     detailsProduct: undefined ,
@@ -26,6 +28,11 @@ const initialState: ReduxState = {
 
 function rootReducer(state = initialState, action: actionI) {
     switch (action.type) {
+        case GET_LOGIN:
+            return {
+                ...state,
+                login: action.payload,
+            }
 
         case GET_ARTICULOS:
             return {
