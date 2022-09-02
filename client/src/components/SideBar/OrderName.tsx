@@ -3,18 +3,23 @@ import styled from "styled-components";
 
 export interface SideBarProps {
   onDirection: Function;
+
 }
 
-export default function OrderName({ onDirection }: SideBarProps) {  
+export default function OrderName({ onDirection }: SideBarProps) {
+
+  
   return (
     <SideBarContainer>
+
       <Select onChange={(e) => onDirection(e.target.value)}>
         <option disabled selected value="">
           {""}Sort By Name
         </option>
         <option value="asc">A-Z</option>
         <option value="desc">Z-A</option>
-      </Select>    
+      </Select>
+    
     </SideBarContainer>
   );
 }

@@ -2,5 +2,5 @@ import app from "./app"
 
 
 app.listen(3001, ()=>{
-    console.log("ejecutando.....Port:3001")
+    console.log("ejecutando.....")
 })

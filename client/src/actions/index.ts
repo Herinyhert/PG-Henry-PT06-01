@@ -1,6 +1,5 @@
 import axios from "axios";
 import { Dispatch } from "redux";
-import { useNavigate } from "react-router-dom";
 
 import {
   GET_ARTICULOS,
@@ -8,7 +7,6 @@ import {
   GET_CATEGORIES,
   GET_TOTALARTICULOS,
   SET_ERROR,
-  GET_LOGIN,
 } from "./actiontype";
 
 
@@ -24,12 +22,6 @@ export interface Articulo{
     category:Category,
     totalCount:number
 
-}
-
-export interface Login {
-  singin: Boolean;
-  username: String;
-  password: String;
 }
 
 export interface Category {
@@ -85,22 +77,6 @@ export function getCategorias() {
       var json = await axios.get<Category[]>("http://localhost:3001/category");
 
       return dispatch({ type: GET_CATEGORIES, payload: json.data });
-    } catch (error) {
-      return dispatch({ type: SET_ERROR, payload: "error" });
-    }
-  };
-}
-
-export function getLogin(login: any) {
-  return async function (dispatch: Dispatch) {
-    try {
-      let json = await axios.post<Login>("http://localhost:3001/login", login);
-      /* if (json.data.singin) {
-        console.log(json.data);
-        const navigator = useNavigate();
-        navigator("/home");
-      } */
-      return dispatch({ type: GET_LOGIN, payload: json.data });
     } catch (error) {
       return dispatch({ type: SET_ERROR, payload: "error" });
     }
