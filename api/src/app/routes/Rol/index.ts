@@ -1,14 +1,14 @@
-import { Prisma } from "@prisma/client";
-import { Router } from "express";
-import prisma from "../../../db";
+import { Prisma } from '@prisma/client';
+import { Router } from 'express';
+import prisma from '../../../db';
 
 const backofficeRoutesRol = Router();
 
-backofficeRoutesRol.post("/", async (req, res) => {
+backofficeRoutesRol.post('/', async (req, res) => {
   try {
     const { name } = req.body;
 
-    if (typeof name !== "string") {
+    if (typeof name !== 'string') {
       res.status(400).json({ message: `the 'rol' must be a string` });
       return;
     }
@@ -18,39 +18,29 @@ backofficeRoutesRol.post("/", async (req, res) => {
         name: name,
       },
     });
-    console.log("ACA ESTA", newRol);
+    console.log('ACA ESTA', newRol);
     res.status(200).json(newRol);
   } catch (error) {
     res.status(400).json({ message: `post rol fail ${error}` });
     return;
   }
 });
-backofficeRoutesRol.get("/", async (req, res) => {
+backofficeRoutesRol.get('/', async (req, res) => {
   //  const name = req.query.name;
 
   let allRoles = await prisma.role.findMany();
   if (allRoles) {
     res.status(200).send(allRoles);
   } else {
-    res.status(404).send("error");
+    res.status(404).send('error');
   }
 });
 
-backofficeRoutesRol.get("/:id", async (req, res) => {
-  const rolId = Number(req.params.id);
 
-  const rolUnique = await prisma.role.findUnique({
-    where: { id: rolId },
-   
-  });
-  if (rolUnique) {
-    res.status(200).send(rolUnique);
-  } else {
-    res.status(404).send("error");
-  }
-});
+
 
 backofficeRoutesRol.put("/:id", async (req, res) => {
+
   const rolId = Number(req.params.id);
   const { name } = req.body;
 
@@ -62,13 +52,13 @@ backofficeRoutesRol.put("/:id", async (req, res) => {
   res.status(200).json(rolToChange);
 });
 
-backofficeRoutesRol.delete("/", async (req, res) => {
+backofficeRoutesRol.delete('/', async (req, res) => {
   //Ver porque no agarra id
 
   try {
     //const rolId = Number(req.params.id);
     const { name } = req.body;
-    console.log("el id de rol------------" + name);
+    console.log('el id de rol------------' + name);
     let rolToDelete = await prisma.role.delete({
       where: { name: name },
     });
