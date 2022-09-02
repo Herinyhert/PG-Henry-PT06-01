@@ -1,14 +1,12 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import Landing from "./pages/Landing/Landing";
 import Home from "./pages/Home/Home";
 import NavBar from "./components/NavBar/NavBar";
 import ErrorCard from "./components/ErrorCard/ErrorCard";
 import CreateProduct from "./pages/CreateProduct/CreateProduct";
-import Login from "./components/Dashboard/Login/Login";
+import Login from "./components/Login/Login";
 import DetailCardProduct from "./components/CardProduct/DetailCardProduct";
-import Dashboard from "./components/Dashboard/index";
 
 
 
@@ -21,10 +19,10 @@ export default function App() {
           <NavBar /> */}
           {/* <Routes> */}
             <Route path="home" element={<Home />} />
+            <Route path="login" element={<Login />} />
             <Route path="*" element={<ErrorCard/>} />
             <Route path="CreateProduct" element={<CreateProduct/>}/>
-            <Route path="product/:id" element={< DetailCardProduct />} />
-            <Route path="admin" element={< Dashboard/>}/>
+            <Route path="product/:id" element={< DetailCardProduct/>}/>
           {/* </Routes> */}
         {/* </Route> */}
       </Routes>
