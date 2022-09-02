@@ -5,6 +5,7 @@ import imageRoutes from './image';
 import backofficeRoutesRol from './Rol';
 import backofficeRoutesOrder from './Order/Order';
 import userRoutes from './user/idex';
+import login from "./login/index";
 
 const router = Router();
 
@@ -12,6 +13,7 @@ router.use('/product', productRoutes);
 router.use('/category', categoryRoutes);
 router.use('/image', imageRoutes);
 router.use('/user', userRoutes);
+router.use("/login", login);
 router.use('/backoffice/rol', backofficeRoutesRol);
 router.use('/backoffice/order', backofficeRoutesOrder);
 
