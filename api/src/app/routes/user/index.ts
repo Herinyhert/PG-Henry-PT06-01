@@ -32,27 +32,17 @@ userRoutes.post('/', async (req, res, next) => {
       email: email,
     },
   });
-  let exisUsername = await prisma.user.findUnique({
-    where: {
-      username: username,
-    },
-  });
   if (existsEmail) {
     return res
       .status(400)
       .send('There is already a registered user with the email');
-  } else if (exisUsername) {
-    return res
-      .status(400)
-      .send('There is already a registered user with username');
-  } else {
+  }else {
     try {
       const newUser = await prisma.user.create({
         data: {
           name: name,
           surname: surname,
           email: email,
-          username: username,
           password: passwordHash,
         },
       });

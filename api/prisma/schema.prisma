@@ -18,7 +18,7 @@ model Product {
   categoryId   Int
   category     Category       @relation(fields: [categoryId], references: [id])
   order_detail Order_detail[]
-  //orderId      Int
+
 }
 
 model Category {
@@ -38,7 +38,6 @@ model User {
   name     String
   surname  String
   email    String   @unique @db.VarChar(255)
-  username String   @unique @db.VarChar(255)
   password String
   state    Boolean? @default(true) // 1-Activo 0-inactivo
   role     Role     @default(CLIENT)
