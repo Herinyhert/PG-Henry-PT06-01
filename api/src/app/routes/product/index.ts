@@ -4,7 +4,7 @@ import prisma from "../../../db";
 
 const productRoutes = Router();
 
-productRoutes.post("/", async (req, res) => {
+/* productRoutes.post("/", async (req, res) => {
   const { name, brand, categoryId, stock, price, img, state } = req.body;
   if (typeof name !== "string") {
     res.status(400).json({ message: `the 'name' must be a string` });
@@ -46,7 +46,7 @@ productRoutes.post("/", async (req, res) => {
     },
   });
   res.status(200).send(newProduct);
-});
+}); */
 
 productRoutes.get("/", async (req, res) => {
   let {
