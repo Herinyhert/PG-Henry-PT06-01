@@ -4,9 +4,17 @@ import prisma from '../../../db';
 const userRoutes = Router();
 const bcrypt = require('bcrypt');
 
+/* This is a route handler. It is a function that is called when a request is made to the specified
+route. */
 userRoutes.get('/', async (req, res) => {
   try {
+<<<<<<< Updated upstream
     const allUser = await prisma.user.findMany({});
+=======
+    const allUser = await prisma.user.findMany({
+      // include: { role: true },
+    });
+>>>>>>> Stashed changes
     res.status(200).send(allUser);
   } catch (error) {
     res.send(400).send(error);
@@ -54,3 +62,5 @@ userRoutes.post('/', async (req, res, next) => {
 });
 
 export default userRoutes;
+
+

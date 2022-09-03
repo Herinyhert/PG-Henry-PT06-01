@@ -18,7 +18,11 @@ model Product {
   categoryId   Int
   category     Category       @relation(fields: [categoryId], references: [id])
   order_detail Order_detail[]
+<<<<<<< Updated upstream
 
+=======
+  // orderId      Int
+>>>>>>> Stashed changes
 }
 
 model Category {
