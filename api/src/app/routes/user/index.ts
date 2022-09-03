@@ -8,13 +8,11 @@ const bcrypt = require('bcrypt');
 route. */
 userRoutes.get('/', async (req, res) => {
   try {
-<<<<<<< Updated upstream
-    const allUser = await prisma.user.findMany({});
-=======
+
     const allUser = await prisma.user.findMany({
       // include: { role: true },
     });
->>>>>>> Stashed changes
+
     res.status(200).send(allUser);
   } catch (error) {
     res.send(400).send(error);

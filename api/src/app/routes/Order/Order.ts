@@ -17,6 +17,9 @@ backofficeRoutesOrder.post('/', async (req, res) => {
         amount: amount,
         status: status,
         userId: userId,
+        payment_id: "",
+        payment_status: "",
+        payment_type: "",
       },
     });
 
