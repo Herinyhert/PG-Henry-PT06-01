@@ -4,7 +4,7 @@ import prisma from "../../../db";
 
 const productRoutes = Router();
 
-/* productRoutes.post("/", async (req, res) => {
+ productRoutes.post("/", async (req, res) => {
   const { name, brand, categoryId, stock, price, img, state } = req.body;
   if (typeof name !== "string") {
     res.status(400).json({ message: `the 'name' must be a string` });
@@ -46,7 +46,7 @@ const productRoutes = Router();
     },
   });
   res.status(200).send(newProduct);
-}); */
+}); 
 
 productRoutes.get("/", async (req, res) => {
   let {
@@ -136,6 +136,27 @@ productRoutes.get("/:id", async (req, res) => {
   productUnique
     ? res.status(200).send(productUnique)
     : res.status(404).send("no existe id buscado");
+});
+
+productRoutes.put('/:id', async (req, res) => {
+  const productlId = Number(req.params.id);
+  const { name, brand, stock, price, img, state, categoryId } = req.body;
+
+  let productToChange = await prisma.product.update({
+    where: { id: productlId },
+    include: { category: true },
+    data: {
+      name: name,
+      brand: brand,
+      stock: stock,
+      price: price,
+      img: img,
+      state: state,
+      categoryId: categoryId
+    },
+  });
+
+  res.status(200).json(productToChange);
 });
 
 export default productRoutes;
