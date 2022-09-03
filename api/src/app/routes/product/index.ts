@@ -1,6 +1,7 @@
 import { Prisma } from "@prisma/client";
 import { Router } from "express";
 import prisma from "../../../db";
+import passport from "passport";
 
 const productRoutes = Router();
 
