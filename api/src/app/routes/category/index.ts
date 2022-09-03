@@ -50,6 +50,18 @@ categoryRoutes.put("/:id", async (req, res) => {
   res.status(200).json(categoryToChange);
 });
 
-
+categoryRoutes.delete('/:id', async (req, res) => {
+  
+  try {
+    const categoryId = Number(req.params.id);
+   
+    let categoryToDelete = await prisma.category.delete({
+      where: { id: categoryId },
+    });
+    res.json(categoryToDelete);
+  } catch (error) {
+    res.send(`No se pudo eliminar la categoria, ${error}`);
+  }
+});
 
 export default categoryRoutes;
