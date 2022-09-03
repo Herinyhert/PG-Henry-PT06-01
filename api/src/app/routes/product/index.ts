@@ -159,4 +159,19 @@ productRoutes.put('/:id', async (req, res) => {
   res.status(200).json(productToChange);
 });
 
+productRoutes.delete('/:id', async (req, res) => {
+  
+  try {
+    const productId = Number(req.params.id);
+    //const { name } = req.body;
+
+    let productToDelete = await prisma.product.delete({
+      where: { id: productId },
+    });
+    res.json(productToDelete);
+  } catch (error) {
+    res.send(`No se pudo eliminar el producto, ${error}`);
+  }
+});
+
 export default productRoutes;

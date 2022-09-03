@@ -10,10 +10,10 @@ categoryRoutes.post("/", async (req, res) => {
       res.status(400).json({ message: `the 'name' must be a string` });
       return;
     }
-    
+
     const newCategory = await prisma.category.create({
       data: {
-        name: name,
+        name: name
       },
     });
     res.status(200).json(newCategory);
@@ -25,17 +25,31 @@ categoryRoutes.post("/", async (req, res) => {
 });
 
 /////obtengo todas las categorias.
-categoryRoutes.get('/', async (req, res) => {
-    const name = req.query.name;
+categoryRoutes.get("/", async (req, res) => {
+  const name = req.query.name;
 
-    let allCategories = await prisma.category.findMany()
-    if (allCategories) {
-        res.status(200).send(allCategories)
-    } else {
-        res.status(404).send('error');
-    }
-    
+  let allCategories = await prisma.category.findMany();
+  if (allCategories) {
+    res.status(200).send(allCategories);
+  } else {
+    res.status(404).send("error");
+  }
+});
 
-})
+categoryRoutes.put("/:id", async (req, res) => {
+  const categoryId = Number(req.params.id);
+  const { name } = req.body;
 
-export default categoryRoutes
+  let categoryToChange = await prisma.category.update({
+    where: { id: categoryId },
+    data: {
+      name: name
+    },
+  });
+
+  res.status(200).json(categoryToChange);
+});
+
+
+
+export default categoryRoutes;
