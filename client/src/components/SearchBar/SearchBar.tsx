@@ -59,11 +59,9 @@ const SearchBarContainer = styled.body`
   position: relative;
   color: #f0f0f1;
   z-index: 0;
-`;
-
-
+`
 const Input = styled.input`
-  type: "text", // ver si imporatndo bien anda
+  type: "text"; // ver si imporatndo bien anda
   width: 50vw;
   height: 2rem; 
   border-top-left-radius: 0.313rem;
