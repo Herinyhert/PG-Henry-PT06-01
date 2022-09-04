@@ -45,8 +45,7 @@ text-transform: uppercase;
  transition: all .2s;
  position: relative;
  cursor: pointer;
-
-&: hover {
+ &:hover {
   /* box-shadow: 0 0 10px 0  #335d90  inset, 0 0 10px 4px  #335d90 ;
   color: black; */
   transform: translateY(-5px);
@@ -78,4 +77,4 @@ text-transform: uppercase;
 
 
 
-`;
+`

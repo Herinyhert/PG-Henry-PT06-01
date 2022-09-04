@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import Landing from "./pages/Landing/Landing";
@@ -7,9 +8,8 @@ import ErrorCard from "./components/ErrorCard/ErrorCard";
 import CreateProduct from "./pages/CreateProduct/CreateProduct";
 import Login from "./components/Login/Login";
 import Signup from "./components/Signup/Signup";
-
 import DetailCardProduct from "./components/CardProduct/DetailCardProduct";
-
+import Details from './components/CardProduct/DetailCardProduct/Details';
 
 
 export default function App() {
@@ -19,16 +19,18 @@ export default function App() {
         <Route path="/" element={<Landing />} />
         {/* <Route>
           <NavBar /> */}
+
           {/* <Routes> */}
             <Route path="home" element={<Home />} />
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<Signup />} />
-
             <Route path="*" element={<ErrorCard/>} />
             <Route path="CreateProduct" element={<CreateProduct/>}/>
             <Route path="product/:id" element={< DetailCardProduct/>}/>
+            <Route path="detail/:id" element={<Details />} /> 
           {/* </Routes> */}
-        {/* </Route> */}
+
+        
       </Routes>
     </BrowserRouter>
   );

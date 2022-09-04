@@ -26,7 +26,8 @@ export default function DetailCardProduct(){
 
   let detail = useSelector((state: ReduxState) => state.detailsProduct);
   const dispatch = useDispatch<any>();
-  
+
+  console.log(detail)
   useEffect(() => {
     dispatch( detailsProduct(id));
   }, [dispatch]);
@@ -96,7 +97,7 @@ const ContainerDetail = styled.div`
 `;
 
 const ButonToHome = styled.button`
-  font-family: "Kalam", cursive;
+   font-family: "Kalam", cursive;
   font-size: 15px;
   font-size: bold;
   height: 65px;
@@ -115,7 +116,7 @@ const ButonToHome = styled.button`
     box-shadow: 0 0 10px 0 #335d90 inset, 0 0 10px 4px #335d90;
     transform: scale(1.1);
     border: 1px solid rgba(255, 255, 255, 0.3);
-  }
+  } 
 `;
 
 const Tarjeta = styled.div`
