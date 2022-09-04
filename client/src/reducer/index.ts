@@ -23,7 +23,7 @@ const initialState: ReduxState = {
     page: 1,
     pageSize: 12,
     totalCount: 0,
-    token: undefined
+    token: ""
 }
 
 function rootReducer(state = initialState, action: actionI) {
@@ -52,6 +52,7 @@ function rootReducer(state = initialState, action: actionI) {
             }
 
             case POST_SIGNIN:
+             
                 return{
                     ...state,
                     token: action.payload

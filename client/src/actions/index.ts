@@ -124,8 +124,8 @@ export function loginUser(payload){
   return function (dispatch) {
     return axios
    .post("http://localhost:3001/auth/signin", payload )
-  //  .then(res =>{dispatch({type:POST_SIGNIN, payload: res.data})} )
-  .then(res =>{console.log(res.data.token)})
+  .then(res =>{dispatch({type:POST_SIGNIN, payload: res.data.token})} )
+  //.then(res =>{console.log(res.data.token)})
    .catch((error) => {
      dispatch({ type: SET_ERROR, payload: error });
    });
