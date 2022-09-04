@@ -50,8 +50,12 @@ model Order {
   date         DateTime       @default(now())
   status       String
   userId       Int
+  payment_id   String
+  payment_status       String
+  payment_type String
   user         User           @relation(fields: [userId], references: [id])
   order_detail Order_detail[]
+ 
 }
 
 model Order_detail {
@@ -63,3 +67,4 @@ model Order_detail {
   product   Product @relation(fields: [productId], references: [id])
   order     Order   @relation(fields: [orderId], references: [id])
 }
+
