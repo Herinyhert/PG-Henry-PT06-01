@@ -28,6 +28,8 @@ export default function Home() {
 
   const totalCount = useSelector((state1: ReduxState) => state1.totalCount);
 
+  const token = useSelector((state: ReduxState) => state.token);
+
   const dispatch = useDispatch<any>();
 
   useEffect(() => {
@@ -42,6 +44,7 @@ export default function Home() {
         categoryId: state.categoryId
       })
     );
+    
   }, [
     dispatch,
     state.page,
@@ -51,6 +54,8 @@ export default function Home() {
     state.direction,
     state.categoryId
   ]);
+
+  console.log(token)
 
   return (
     <HomeContainer>
