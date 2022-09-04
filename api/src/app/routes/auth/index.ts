@@ -19,7 +19,9 @@ function createToken (user: userInt){
 }
 
 authRouter.post("/signup", async (req, res) => {
+
   const { email, password, name, surname } = req.body;
+  console.log(email)
   if (!name || !surname) {
     res.status(400).send("name y surname");
   }
@@ -48,6 +50,7 @@ authRouter.post("/signup", async (req, res) => {
 
 authRouter.post("/signin", async (req, res) => {
   const { email, password } = req.body;
+  // console.log(email, password)
   if (!email || !password) {
     res.status(400).send("ingrese usuario y contraseña");
   }

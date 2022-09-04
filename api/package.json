@@ -1,48 +1,46 @@
 {
-    "name": "api",
-    "version": "1.0.0",
-    "description": "",
-    "main": "src/index.ts",
-    "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1",
-      "dev": "nodemon src/index.ts"
-    },
-    "author": "",
-    "license": "ISC",
-    "devDependencies": {
-      "@types/cookie-parser": "^1.4.3",
-      "@types/cors": "^2.8.12",
-      "@types/ejs": "^3.1.1",
-      "@types/express": "^4.17.13",
-      "@types/jsonwebtoken": "^8.5.9",
-      "@types/morgan": "^1.9.3",
-      "@types/multer": "^1.4.7",
-      "@types/node": "^18.7.11",
-      "@types/passport": "^1.0.10",
-      "@types/passport-jwt": "^3.0.6",
-      "@types/nodemailer": "^6.4.5",
-      "@types/pg": "^8.6.5",
-      "nodemon": "^2.0.19",
-      "ts-node": "^10.9.1"
-    },
-    "dependencies": {
-      "@prisma/client": "^4.2.1",
-      "bcrypt": "^5.0.1",
-      "cloudinary": "^1.31.0",
-      "cors": "^2.8.5",
-      "dotenv": "^16.0.1",
-      "ejs": "^3.1.8",
-      "express": "^4.18.1",
-      "jsonwebtoken": "^8.5.1",
-      "morgan": "^1.10.0",
-      "multer": "^1.4.5-lts.1",
-      "passport": "^0.6.0",
-      "passport-jwt": "^4.0.0",
-      "nodemailer": "^6.7.8",
-      "prisma": "^4.2.1",
-      "mercadopago": "^1.5.14",
-      "typescript": "^4.7.4"
-    }
+  "name": "api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "prisma migrate dev && nodemon && src/index.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.3",
+    "@types/cors": "^2.8.12",
+    "@types/ejs": "^3.1.1",
+    "@types/express": "^4.17.13",
+    "@types/jsonwebtoken": "^8.5.9",
+    "@types/morgan": "^1.9.3",
+    "@types/multer": "^1.4.7",
+    "@types/node": "^18.7.11",
+    "@types/passport": "^1.0.10",
+    "@types/passport-jwt": "^3.0.6",
+    "@types/nodemailer": "^6.4.5",
+    "@types/pg": "^8.6.5",
+    "nodemon": "^2.0.19",
+    "ts-node": "^10.9.1"
+  },
+  "dependencies": {
+    "@prisma/client": "^4.2.1",
+    "bcrypt": "^5.0.1",
+    "cloudinary": "^1.31.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "ejs": "^3.1.8",
+    "express": "^4.18.1",
+    "jsonwebtoken": "^8.5.1",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "passport": "^0.6.0",
+    "passport-jwt": "^4.0.0",
+    "nodemailer": "^6.7.8",
+    "prisma": "^4.2.1",
+    "typescript": "^4.7.4"
   }
-
+}
 

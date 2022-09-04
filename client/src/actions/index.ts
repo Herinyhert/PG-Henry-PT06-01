@@ -7,21 +7,20 @@ import {
   GET_CATEGORIES,
   GET_TOTALARTICULOS,
   SET_ERROR,
+  POST_SIGNIN
 } from "./actiontype";
 
-
-export interface Articulo{
-    id:number,    
-    name:String,
-    brand:String,    
-    stock: number,
-    price: number,
-    img:string,
-    state:String,
-    categoryId:number,
-    category:Category,
-    totalCount:number
-
+export interface Articulo {
+  id: number;
+  name: String;
+  brand: String;
+  stock: number;
+  price: number;
+  img: string;
+  state: String;
+  categoryId: number;
+  category: Category;
+  totalCount: number;
 }
 
 export interface Category {
@@ -107,4 +106,28 @@ export function detailsProduct(id: String) {
       return dispatch({ type: SET_ERROR, payload: "error" });
     }
   };
+}
+
+export function createUser(payload) {
+  return function (dispatch) {
+       return axios
+      .post("http://localhost:3001/auth/signup", payload )
+      .then((response) => response )
+      .catch((error) => {
+        dispatch({ type: SET_ERROR, payload: error });
+      });
+  };
+}
+
+
+export function loginUser(payload){
+  return function (dispatch) {
+    return axios
+   .post("http://localhost:3001/auth/signin", payload )
+  //  .then(res =>{dispatch({type:POST_SIGNIN, payload: res.data})} )
+  .then(res =>{console.log(res.data.token)})
+   .catch((error) => {
+     dispatch({ type: SET_ERROR, payload: error });
+   });
+};
 }

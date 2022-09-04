@@ -1,4 +1,4 @@
-import { SET_ERROR, GET_ARTICULOS, GET_CATEGORIES, GET_TOTALARTICULOS, GET_DETAIL_PRODUCT } from '../actions/actiontype';
+import { SET_ERROR, GET_ARTICULOS, GET_CATEGORIES, GET_TOTALARTICULOS, GET_DETAIL_PRODUCT, POST_SIGNIN } from '../actions/actiontype';
 import {  Articulo, Category}from '../actions';
 
 export interface ReduxState {
@@ -8,6 +8,7 @@ export interface ReduxState {
     page: number
     pageSize: number
     totalCount: number
+    token:string
 }
 
 interface actionI {
@@ -21,7 +22,8 @@ const initialState: ReduxState = {
     detailsProduct: undefined ,
     page: 1,
     pageSize: 12,
-    totalCount: 0
+    totalCount: 0,
+    token: undefined
 }
 
 function rootReducer(state = initialState, action: actionI) {
@@ -48,6 +50,14 @@ function rootReducer(state = initialState, action: actionI) {
                 ...state,
                 detailsProduct: action.payload                
             }
+
+            case POST_SIGNIN:
+                return{
+                    ...state,
+                    token: action.payload
+
+                }
+
             
         default:
             return state;

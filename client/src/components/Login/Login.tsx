@@ -1,21 +1,47 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import NavBar from '../NavBar/NavBar';
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+// import { Link } from "react-router-dom";
+import Swal from 'sweetalert2'
+import { loginUser } from '../../actions/index';
 
-export default function Login() {
+
+export default function Signup() {
+  const dispatch = useDispatch<any>();
+  const [input, setInput] = useState({
+    email: "",
+    password: "",
+  })
+
+  function handleChange(e){
+    e.preventDefault()
+    // console.log(e.target.value)
+    setInput({
+      ...input,
+    [e.target.name]:e.target.value})
+  }
+
+  function handleSubmit(e){
+      
+    dispatch(loginUser(input))
+   
+  }
+
+  
   return (
 
     <Body>
     <NavBar />
-  <Form action="">
+  <Form onSubmit={(e)=>handleSubmit(e)}>
     <Title>Formulario de inicio de sesión</Title>
     {/* <Input1 type="text" placeholder="Ingrese su nombre"/>
     <Input2 type="text" placeholder="Ingrese su Apellido"/> */}
-    <Input3 type="email" placeholder="Ingrese su Correo" />
-    <Input4 type="password" placeholder="Ingrese su contraseña" />
+    <Input3 type="email" name="email" onChange={(e)=>handleChange(e)} placeholder="Ingrese su Correo" />
+    <Input4 type="password" name="password" onChange={(e)=>handleChange(e)} placeholder="Ingrese su contraseña" />
     <Acuerdo>Estoy de acuerdo con terminos y condiciones</Acuerdo>
-    <Button>Inicio</Button>
+    <Button type="submit">Inicio</Button>
     <Button>Iniciar con Google</Button>
 
     <p>
