@@ -3,11 +3,10 @@ import styled from "styled-components";
 import NavBar from '../NavBar/NavBar';
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-// import { Link } from "react-router-dom";
+
 import Swal from 'sweetalert2'
 import { loginUser } from '../../actions/index';
-import { useSelector } from "react-redux";
-import { ReduxState } from "../../reducer";
+
 
 
 export default function Signup() {
@@ -16,10 +15,6 @@ export default function Signup() {
     email: "",
     password: "",
   })
-
-  const token = useSelector((state: ReduxState) => state.token);
- // console.log(token)
-  localStorage.setItem("user", token)
 
   function handleChange(e){
     e.preventDefault()
@@ -34,8 +29,7 @@ export default function Signup() {
     dispatch(loginUser(input))
    
   }
-  //console.log(Storage)
-
+ 
   
   return (
 

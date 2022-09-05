@@ -1,10 +1,11 @@
 // import { privateDecrypt } from "crypto";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { postProduct } from "../../actions";
 import { postImage } from "../../services/api/postImage";
+import { ReduxState } from '../../reducer/index';
 
 export default function CreateProduct() {
   const dispatch = useDispatch<any>();
@@ -18,6 +19,7 @@ export default function CreateProduct() {
     categoryId: undefined,
   });
 
+  const token = useSelector( (state: ReduxState)=> state.token)
   let [image, setImage] = useState<File>();
 
   function handlechange(e) {
@@ -54,7 +56,8 @@ export default function CreateProduct() {
   }
 
   function handelSubmit(e) {
-    dispatch(postProduct(input));
+    e.preventDefault()
+    dispatch(postProduct(token, input));
   }
 
   return (

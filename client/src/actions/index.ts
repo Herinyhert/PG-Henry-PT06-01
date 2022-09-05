@@ -82,10 +82,10 @@ export function getCategorias() {
   };
 }
 
-export function postProduct(payload) {
+export function postProduct(token, payload) {
   return function (dispatch) {
     return axios
-      .post("http://localhost:3001/product", payload)
+      .post("http://localhost:3001/product", payload, {headers:{authorization: `Bearer ${token}`}})
       .then((response) => response)
       .catch((error) => {
         dispatch({ type: SET_ERROR, payload: error });
