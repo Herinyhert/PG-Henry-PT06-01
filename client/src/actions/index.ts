@@ -58,7 +58,7 @@ export function getArticulos({
           categoryId: categoryId,
         },
       });
-      console.log(json.data[1]);
+      // console.log(json.data[1]);
 
       return [
         dispatch({ type: GET_ARTICULOS, payload: json.data[1] }),

@@ -3,30 +3,23 @@ import styled from "styled-components";
 
 export interface SideBarProps {
   onDirection: Function;
-
 }
 
 export default function OrderPrice({ onDirection }: SideBarProps) {
-
   return (
     <SideBarContainer>
-
-   
-
-      <Select onChange={(e) => onDirection(e.target.value)}>
-        <option disabled selected value="">
+      <Select defaultValue="asc" onChange={(e) => onDirection(e.target.value)}>
+        <option disabled value="asc">
           {""}Sort By Price
         </option>
         <option value="asc">Menor Precio</option>
         <option value="desc">Mayor Precio</option>
       </Select>
-
-
     </SideBarContainer>
   );
 }
 
-const SideBarContainer = styled.body`
+const SideBarContainer = styled.div`
   width: auto;
   height: 2rem;
   border-radius: 0.625rem;
@@ -46,7 +39,6 @@ const SideBarContainer = styled.body`
 `;
 
 const Select = styled.select`
-border-radius: 10px;
-width: 200px;
+  border-radius: 10px;
+  width: 200px;
 `;
-

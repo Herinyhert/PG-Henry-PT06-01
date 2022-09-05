@@ -6,10 +6,6 @@ import Logo from "../../img/Logo.png";
 import { clearState } from '../../actions/index';
 import { useDispatch } from "react-redux";
 
-
-
-
-
 export interface NavBarProps {}
 
 export default function NavBar({}: NavBarProps) {
@@ -24,14 +20,9 @@ export default function NavBar({}: NavBarProps) {
   return (
     <NavBarContainer>
       <div>
-       
         <div>
-        <Img
-          id="logo"
-          src={Logo}
-          alt=""
-        />
-      </div>
+          <Img id="logo" src={Logo} alt="" />
+        </div>
       </div>
       <ContainerButtons>
       <Link to="/Home">
@@ -116,32 +107,32 @@ const Shop = styled.button`
 
 const NavBarContainer = styled.header`
   height: 70px;
-    width: 100vw;
-    /* top: 10px; */
-    display: flex;
-    justify-content: space-between; 
-    align-items: center;
-    padding: 0 20px;
-    background-color:  trasparent ;
-    /* opacity: 0.5; */
-    /* border-radius: 16px; */
-    /* box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); */
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    justify-items: center;
+  width: 100vw;
+  /* top: 10px; */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  background-color: trasparent;
+  /* opacity: 0.5; */
+  /* border-radius: 16px; */
+  /* box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); */
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  justify-items: center;
 
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-    z-index: 0;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  z-index: 0;
 `;
 
 const Img = styled.img`
-width:140px;
-height:140px;
-/* top="10px" */
-margin-top: -11px;
-margin-left: 30px;
-z-index:1;
-          
+  width: 140px;
+  height: 140px;
+  /* top="10px" */
+  margin-top: -11px;
+  margin-left: 30px;
+  z-index: 1;
 `;
-
