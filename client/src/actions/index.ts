@@ -7,7 +7,8 @@ import {
   GET_CATEGORIES,
   GET_TOTALARTICULOS,
   SET_ERROR,
-  POST_SIGNIN
+  POST_SIGNIN,
+  CLEAR_STATE
 } from "./actiontype";
 
 export interface Articulo {
@@ -130,4 +131,12 @@ export function loginUser(payload){
      dispatch({ type: SET_ERROR, payload: error });
    });
 };
+}
+
+export function clearState (){
+  return function(dispatch){
+  dispatch ({
+    type: CLEAR_STATE
+  })
+  }
 }

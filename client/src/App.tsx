@@ -32,7 +32,7 @@ export default function App() {
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<Signup />} />
             <Route path="*" element={<ErrorCard/>} />
-            <Route path="CreateProduct" element={ !user ? <Navigate to="/login" />  : <CreateProduct/>}/>
+            <Route path="CreateProduct" element={ user?.role === "ADMIN" ? <CreateProduct/> : <Navigate to="/login" />   }/>
             <Route path="product/:id" element={< DetailCardProduct/>}/>
             <Route path="detail/:id" element={<Details />} /> 
           {/* </Routes> */}
