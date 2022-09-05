@@ -2,11 +2,25 @@ import React from "react";
 import styled from "styled-components";
 import { FiShoppingCart } from "react-icons/fi";
 import { Link } from "react-router-dom";
-import Logo from "../../img/Logo.png"
+import Logo from "../../img/Logo.png";
+import { clearState } from '../../actions/index';
+import { useDispatch } from "react-redux";
+
+
+
+
 
 export interface NavBarProps {}
 
 export default function NavBar({}: NavBarProps) {
+
+  const dispatch = useDispatch<any>()
+
+  function handleLogout (){
+    localStorage.clear()
+    dispatch(clearState())
+  }
+
   return (
     <NavBarContainer>
       <div>
@@ -20,6 +34,9 @@ export default function NavBar({}: NavBarProps) {
       </div>
       </div>
       <ContainerButtons>
+      <Link to="/Home">
+      <ButtonLogin onClick={handleLogout}>Logout</ButtonLogin>
+      </Link>
       <Link to="/CreateProduct">
         <ButtonLogin>Create</ButtonLogin>
       </Link>
