@@ -109,7 +109,7 @@ productRoutes.get("/", async (req, res) => {
       mode: "insensitive",
     };
   }
-  if (typeof categoryId === "number") {
+  if (categoryId) {
     where.categoryId = filterCategoryId;
   }
 
