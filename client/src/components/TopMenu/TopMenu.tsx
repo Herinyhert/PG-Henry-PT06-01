@@ -19,11 +19,11 @@ export default function TopMenu({ onClickOpcion }: TopMenuProps) {
 
       {arrayPrueba.map((cat, i) =>
         i === 0 ? (
-          <DivLeft onClick={(e) => onClickOpcion(cat.id)}>{cat.name}</DivLeft>
+          <DivLeft key={i} onClick={(e) => onClickOpcion(cat.id)}>{cat.name}</DivLeft>
         ) : i === 9 ? (
-          <DivRight onClick={(e) => onClickOpcion(cat.id)}>{cat.name}</DivRight>
+          <DivRight key={i} onClick={(e) => onClickOpcion(cat.id)}>{cat.name}</DivRight>
         ) : (
-          <Div onClick={(e) => onClickOpcion(cat.id)}> {cat.name} </Div>
+          <Div key={i} onClick={(e) => onClickOpcion(cat.id)}> {cat.name} </Div>
         )
       )}
     </TopMenuContainer>
