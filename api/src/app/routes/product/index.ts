@@ -1,11 +1,12 @@
 import { Prisma } from "@prisma/client";
 import { Router } from "express";
 import prisma from "../../../db";
+//import isAuth from "../../middlewares/isAuth";
 import passport from "passport";
 
 const productRoutes = Router();
 
- productRoutes.post("/", async (req, res) => {
+ productRoutes.post("/",  passport.authenticate('jwt',{session :false}), async (req, res) => {
   const { name, brand, categoryId, stock, price, img, state } = req.body;
   if (typeof name !== "string") {
     res.status(400).json({ message: `the 'name' must be a string` });
