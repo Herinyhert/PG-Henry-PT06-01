@@ -12,10 +12,11 @@ export interface userInt {
   surname: string;
   email: string;
   password: String;
+  role: string;
 }
 
 function createToken (user: userInt){
- return jwt.sign({id: user.id, email: user.email}, config.jwtsecret)
+ return jwt.sign({id: user.id, email: user.email, role: user.role}, config.jwtsecret)
 }
 
 authRouter.post("/signup", async (req, res) => {
@@ -63,6 +64,7 @@ authRouter.post("/signin", async (req, res) => {
     res.status(400).send("el usuario no existe");
   }else{
     if(user.password === password){
+
       res.status(200).json({token: createToken(user)})
     }else{
       res.status(400).send("la contraseña no es valida");
