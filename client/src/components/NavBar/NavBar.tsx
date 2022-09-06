@@ -39,9 +39,11 @@ export default function NavBar({}: NavBarProps) {
         <Link to="/Signup">
           <ButtonLogin>Registrate</ButtonLogin>
         </Link>
+        <Link to="/ShoppingCart">
         <Shop>
           <FiShoppingCart />
         </Shop>
+      </Link>
       </ContainerButtons>
     </NavBarContainer>
   );

@@ -2,6 +2,7 @@ import {
   SET_ERROR,
   GET_ARTICULOS,
   GET_CATEGORIES,
+  SET_DASHBOARDMENU,
   GET_TOTALARTICULOS,
   GET_DETAIL_PRODUCT,
   POST_SIGNIN,
@@ -15,6 +16,7 @@ import { Articulo, Category } from "../actions";
 import jwtdecode from "jwt-decode";
 
 export interface ReduxState {
+  dashboardmenu: String;
   articulos: Articulo[];
   categorias: Category[];
   detailsProduct: Articulo;
@@ -31,6 +33,7 @@ interface actionI {
 }
 
 const initialState: ReduxState = {
+  dashboardmenu: '',
   articulos: [],
   categorias: [],
   detailsProduct: undefined,
@@ -47,6 +50,11 @@ function rootReducer(state: ReduxState, action: actionI) {
       return {
         ...state,
         articulos: action.payload,
+      };
+      case SET_DASHBOARDMENU:
+      return {
+        ...state,
+        dashboardmenu: action.payload,
       };
     case GET_CATEGORIES:
       return {
