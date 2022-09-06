@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Dispatch } from "redux";
+const {REACT_APP_API_URL =  "http://localhost:3001"} = process.env
 
 import {
   GET_ARTICULOS,
@@ -48,7 +49,7 @@ export function getArticulos({
 }: params) {
   return async function (dispatch: Dispatch) {
     try {
-      var json = await axios.get<Articulo[]>("https://app-heroku-db.herokuapp.com/product", {
+      var json = await axios.get<Articulo[]>(REACT_APP_API_URL+"/product", {
         params: {
           page: page,
           pageSize: pageSize,
@@ -74,7 +75,7 @@ export function getArticulos({
 export function getCategorias() {
   return async function (dispatch: Dispatch) {
     try {
-      var json = await axios.get<Category[]>("https://app-heroku-db.herokuapp.com/category");
+      var json = await axios.get<Category[]>(REACT_APP_API_URL+"/category");
 
       return dispatch({ type: GET_CATEGORIES, payload: json.data });
     } catch (error) {
@@ -86,7 +87,7 @@ export function getCategorias() {
 export function postProduct(token, payload) {
   return function (dispatch) {
     return axios
-      .post("https://app-heroku-db.herokuapp.com/product", payload, {headers:{authorization: `Bearer ${token}`}})
+      .post(REACT_APP_API_URL+"/product", payload, {headers:{authorization: `Bearer ${token}`}})
       .then((response) => response)
       .catch((error) => {
         dispatch({ type: SET_ERROR, payload: error });
@@ -99,7 +100,7 @@ export function detailsProduct(id: String) {
   return async function (dispatch: Dispatch) {
     try {
       var json = await axios.get<Articulo[]>(
-        `https://app-heroku-db.herokuapp.com/product/${id}`
+        REACT_APP_API_URL+`/product/${id}`
       );
       //console.log("json action", json);
       return dispatch({ type: GET_DETAIL_PRODUCT, payload: json.data });
@@ -112,7 +113,7 @@ export function detailsProduct(id: String) {
 export function createUser(payload) {
   return function (dispatch) {
        return axios
-      .post("https://app-heroku-db.herokuapp.com/auth/signup", payload )
+      .post(REACT_APP_API_URL+"/auth/signup", payload )
       .then((response) => response )
       .catch((error) => {
         dispatch({ type: SET_ERROR, payload: error });
@@ -124,7 +125,7 @@ export function createUser(payload) {
 export function loginUser(payload){
   return function (dispatch) {
     return axios
-   .post("https://app-heroku-db.herokuapp.com/auth/signin", payload )
+   .post(REACT_APP_API_URL+"/auth/signin", payload )
   .then(res =>{dispatch({type:POST_SIGNIN, payload: res.data.token})} )
   //.then(res =>{console.log(res.data.token)})
    .catch((error) => {
