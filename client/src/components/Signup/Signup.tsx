@@ -93,7 +93,7 @@ display: flex;
   position: absolute;
   max-width: 25%;
   width: 25%;
-  top: 54%;
+  top: 55%;
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 30px;
@@ -125,14 +125,14 @@ display: block;
   height: 40px;
   padding: 5px 6px;
   /* margin-bottom: 15px; */
-  margin: 20px auto;
+  margin: 5px auto;
   border: 3px solid #335d90;
   outline: none;
   border-radius: 1px;
 
   &:hover:focus {
     box-shadow: 0 0 8px 0 #335d90 inset, 0 0 8px 4px #335d90;
-    transform: scale(1.1);
+    /* transform: scale(1.1); */
     border: 1px solid rgba(255, 255, 255, 0.3);
   }
 `;
@@ -142,14 +142,14 @@ const Input2 = styled.input`
   height: 40px;
   padding: 5px 6px;
   /* margin-bottom: 15px; */
-  margin: 20px auto;
+  margin: 5px auto;
   border: 3px solid #335d90;
   outline: none;
   border-radius: 1px;
 
   &:hover:focus {
     box-shadow: 0 0 8px 0 #335d90 inset, 0 0 8px 4px #335d90;
-    transform: scale(1.1);
+    /* transform: scale(1.1); */
     border: 1px solid rgba(255, 255, 255, 0.3);
   }
 `;
@@ -159,14 +159,14 @@ const Input3 = styled.input`
   height: 40px;
   padding: 5px 6px;
   /* margin-bottom: 15px; */
-  margin: 20px auto;
+  margin: 5px auto;
   border: 3px solid #335d90;
   outline: none;
   border-radius: 1px;
 
   &:hover:focus {
     box-shadow: 0 0 8px 0 #335d90 inset, 0 0 8px 4px #335d90;
-    transform: scale(1.1);
+    /* transform: scale(1.1); */
     border: 1px solid rgba(255, 255, 255, 0.3);
   }
 `;
@@ -176,14 +176,14 @@ const Input4 = styled.input`
   height: 40px;
   padding: 5px 6px;
   /* margin-bottom: 15px; */
-  margin: 20px auto;
+  margin: 5px auto;
   border: 3px solid #335d90;
   outline: none;
   border-radius: 1px;
 
   &:hover:focus {
     box-shadow: 0 0 8px 0 #335d90 inset, 0 0 8px 4px #335d90;
-    transform: scale(1.1);
+    /* transform: scale(1.1); */
     border: 1px solid rgba(255, 255, 255, 0.3);
   }
 `;
@@ -192,11 +192,12 @@ const Acuerdo = styled.p`
   text-align: center;
   margin-bottom: 15px;
   font-size: 15px;
+  color: black;
 `;
 
 const Button = styled.button`
   display: block;
-  margin: 20px auto;
+  margin: 10px auto;
   width: 100%;
   height: 40px;
   background-color: #335d90;

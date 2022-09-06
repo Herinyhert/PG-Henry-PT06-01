@@ -18,22 +18,25 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
     if (state === "") {
       // alert("Enter a product to search...")
       Swal.fire({
-        title: "Error!",
-        text: "Enter a product to search...",
-        icon: "error",
-        confirmButtonText: "Return",
-        confirmButtonColor: "#335d90",
-      });
+
+        title: 'Error!',
+        text: 'Introduce un producto para buscar...',
+        icon: 'error',
+        confirmButtonText: 'Volver',
+        confirmButtonColor: '#335d90'
+      })
+
+
     }
     onSearch(state);
   }
 
   return (
     <SearchBarContainer>
-      <Input
-        onChange={handlechange}
-        placeholder="What are you looking for?..."
-      ></Input>
+
+      <Input onChange={ handlechange } placeholder="Encontrá lo que buscás"></Input>
+
+      
 
       <Search onClick={handleclick}>
         <ImSearch />
@@ -61,8 +64,9 @@ const SearchBarContainer = styled.div`
   color: #f0f0f1;
   z-index: 0;
 `;
+
 const Input = styled.input`
-  type: "text"; // ver si imporatndo bien anda
+  type: "text", // ver si imporatndo bien anda
   width: 50vw;
   height: 2rem;
   border-top-left-radius: 0.313rem;
