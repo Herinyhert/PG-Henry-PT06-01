@@ -8,9 +8,12 @@ export interface SideBarProps {
 export default function OrderName({ onDirection }: SideBarProps) {
   return (
     <SideBarContainer>
-      <Select defaultValue="asc" onChange={(e) => onDirection(e.target.value)}>
-        <option disabled value="asc">
-          {""}Sort By Name
+
+
+      <Select onChange={(e) => onDirection(e.target.value)}>
+        <option disabled selected value="">
+          {""}Ordenar por nombre
+
         </option>
         <option value="asc">A-Z</option>
         <option value="desc">Z-A</option>

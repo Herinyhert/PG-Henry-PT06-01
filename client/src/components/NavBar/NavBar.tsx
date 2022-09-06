@@ -21,21 +21,31 @@ export default function NavBar({}: NavBarProps) {
     <NavBarContainer>
       <div>
         <div>
+
+        <Img
+          id="logo"
+          src={Logo}
+          alt=""
+        />
+      </div>
+      
+
           <Img id="logo" src={Logo} alt="" />
         </div>
+
       </div>
       <ContainerButtons>
       <Link to="/Home">
       <ButtonLogin onClick={handleLogout}>Logout</ButtonLogin>
       </Link>
       <Link to="/CreateProduct">
-        <ButtonLogin>Create</ButtonLogin>
+        <ButtonLogin>Crear producto</ButtonLogin>
       </Link>
       <Link to="/Login">
-        <ButtonLogin>Login</ButtonLogin>
+        <ButtonLogin>Ingresá</ButtonLogin>
       </Link>
       <Link to="/Signup">
-        <ButtonLogin>Signup</ButtonLogin>
+        <ButtonLogin>Registrate</ButtonLogin>
       </Link>
         <Shop>
           <FiShoppingCart />
@@ -51,18 +61,20 @@ const ContainerButtons = styled.div`
 `;
 
 const ButtonLogin = styled.button`
-  width: 4rem;
+  width: 5.5rem;
   height: 42px;
   background: transparent;
   border-radius: 0.313rem;
   border: 0.13rem solid black;
+  justify-content: center;
+  align-items: center;
 
   margin-right: 1rem;
-  padding: 5px;
+  padding: 2px;
   display: inline-block;
   -webkit-appearance: none;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 0.8rem;
   color: black;
 
   -webkit-transition: all 150ms ease-in-out;

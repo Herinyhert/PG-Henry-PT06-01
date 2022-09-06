@@ -6,7 +6,7 @@ import { ReduxState } from "../../../reducer";
 import StartRating from "../../StarRating/StarRating";
 import NavBar from "../../NavBar/NavBar";
 import metodo from "../../../img/metodopago.png";
-import logo from "../../../img/Logo.png";
+import logo from '../../../img/Logo.png'
 
 import {
   Container,
@@ -27,8 +27,12 @@ import {
   Button,
   MetodoPago,
   Categoria,
-  Parrafo,
+  Form,
+  Input,
   Img,
+  Parrafo,
+  
+  
 
   /*  ProductoVenta,
   InfoVendedor
@@ -53,11 +57,43 @@ export default function Details() {
         <Panel>
           <Column>
             <Galeria>
-              <img
-                src={detail?.img}
-                //src="https://http2.mlstatic.com/D_NQ_NP_2X_611808-MCO45374942353_032021-F.webp"
-                alt="img"
-              />
+              {/* <img
+             src={detail?.img} 
+              //src="https://http2.mlstatic.com/D_NQ_NP_2X_611808-MCO45374942353_032021-F.webp" 
+              alt="img"
+            /> */}
+            
+              <Form>
+                <h3>Datos del comprador</h3>
+                <Input type="text"
+                  name="name"
+                  placeholder="Ingrese su nombre"/>
+                               
+                <Input
+                  type="text"
+                  name="surname"
+                  placeholder="Ingrese su Apellido"
+                />
+                <Input
+                  type="text"
+                  name="address"
+                  placeholder="Ingrese su Dirección"
+                />
+                <Input 
+                type="string" 
+                name="zip" 
+                placeholder="Ingrese su CP" />
+                <Input
+                  type="text"
+                  name="phone"
+                  placeholder="Ingrese su Teléfono"
+                />
+                <ButtonCarrito>
+          <Button className="carrito">Pagar</Button>
+
+        </ButtonCarrito>
+              </Form>
+              
             </Galeria>
 
             <Info />
@@ -75,7 +111,7 @@ export default function Details() {
               </Price>
               <MetodoPago>
                 <h1>Metodo de Pago</h1>
-                <img src={metodo} alt="Mtodo de Pago" />
+                <img src={metodo} alt="Método de Pago" />
               </MetodoPago>
 
               <StartRating />
@@ -97,13 +133,9 @@ export default function Details() {
               <Categoria>
                 <h5>{`categoria: ${detail?.category.name}`}</h5>
               </Categoria>
-              <Link to="/buy">
-                {" "}
-                <ButtonComprar>
-                  <Button className="comprar">Comprar ahora</Button>
-                </ButtonComprar>
-              </Link>
-
+              <ButtonComprar>
+                <Button className="comprar">Comprar ahora</Button>
+              </ButtonComprar>
               <ButtonCarrito>
                 <Button className="carrito">Agregar al Carrito</Button>
               </ButtonCarrito>
@@ -122,27 +154,41 @@ export default function Details() {
 
 const Info = () => {
   return (
-    
-      <Description>
-        <Img id="logo" src={logo} alt="" />
-        <Parrafo>
-          La evolución no para. Por eso CompuStore es experto en tecnología de
-          la más avanzada. En www.compustore.com te ofrecemos un sitio web
-          renovado para que encuentres la mayor variedad de electrodomésticos,
-          tecno y entretenimiento en tu hogar. Nuestro equipo de expertos está
-          preparado para asesorarte y brindarte todos los días una experiencia
-          de compra personalizada que se adapte a lo que buscás. También
-          contamos con un servicio técnico especializado, con asistencia total
-          en posventa para que disfrutes todos los días de tu producto como si
-          fuera el primero. Además, ofrecemos ofertas especiales, descuentos y
-          planes de financiación para que accedas a eso que tanto querés al
-          precio más accesible y con la mejor cuota. Televisores, Smart TV,
-          Celulares libres, Notebooks, Tablets, Aires Acondicionados, Heladeras,
-          Lavarropas y muchos productos en oferta. Disfrutá de la evolución que
-          sólo te puede brindar CompuStore. ¡Bienvenido a la Superevolución!
-        </Parrafo>
-      </Description>
-   
+    <Description>
+      
+      <Img
+          id="logo"
+          src={logo}
+          alt=""
+        />
+      <Parrafo>La evolución no para.
+
+Por eso CompuStore es experto en tecnología de la más avanzada.
+
+
+
+En www.compustore.com te ofrecemos un sitio web renovado para que encuentres la mayor variedad de electrodomésticos, tecno y entretenimiento en tu hogar.
+
+ 
+
+Nuestro equipo de expertos está preparado para asesorarte y brindarte todos los días una experiencia de compra personalizada que se adapte a lo que buscás. También contamos con un servicio técnico especializado, con asistencia total en posventa para que disfrutes todos los días de tu producto como si fuera el primero.
+
+
+
+Además, ofrecemos ofertas especiales, descuentos y planes de financiación para que accedas a eso que tanto querés al precio más accesible y con la mejor cuota.
+
+ 
+
+Televisores, Smart TV, Celulares libres, Notebooks, Tablets, Aires Acondicionados, Heladeras, Lavarropas y muchos productos en oferta
+
+ 
+
+Disfrutá de la evolución que sólo te puede brindar CompuStore. 
+
+
+
+¡Bienvenido a la Superevolución!</Parrafo>
+    </Description>
   );
 };
 

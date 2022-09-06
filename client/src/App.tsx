@@ -13,7 +13,7 @@ import { useSelector } from 'react-redux';
 import { ReduxState } from './reducer/index';
 import { Navigate } from "react-router-dom";
 import Details from './components/CardProduct/DetailCardProduct/Details';
-
+import Buy from './components/CardProduct/DetailCardProduct/Buy'
 
 
 export default function App() {
@@ -35,6 +35,8 @@ export default function App() {
             <Route path="CreateProduct" element={ user?.role === "ADMIN" ? <CreateProduct/> : <Navigate to="/login" />   }/>
             <Route path="product/:id" element={< DetailCardProduct/>}/>
             <Route path="detail/:id" element={<Details />} /> 
+            <Route path="buy" element={<Buy />} /> 
+
           {/* </Routes> */}
 
         
