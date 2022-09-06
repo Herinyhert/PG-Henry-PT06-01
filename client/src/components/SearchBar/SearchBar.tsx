@@ -1,24 +1,24 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { ImSearch } from "react-icons/im";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 
 export interface SearchBarProps {
-  onSearch: Function
+  onSearch: Function;
 }
 
-export default function SearchBar({onSearch}: SearchBarProps) {
-  
-  const [state, setState] = useState('')
-   
-  function handlechange (e){
-      setState(e.target.value)
+export default function SearchBar({ onSearch }: SearchBarProps) {
+  const [state, setState] = useState("");
+
+  function handlechange(e) {
+    setState(e.target.value);
   }
 
-  function handleclick(){
-    if(state === ""){
+  function handleclick() {
+    if (state === "") {
       // alert("Enter a product to search...")
       Swal.fire({
+
         title: 'Error!',
         text: 'Introduce un producto para buscar...',
         icon: 'error',
@@ -26,22 +26,26 @@ export default function SearchBar({onSearch}: SearchBarProps) {
         confirmButtonColor: '#335d90'
       })
 
+
     }
-      onSearch(state)
+    onSearch(state);
   }
-  
+
   return (
     <SearchBarContainer>
+
       <Input onChange={ handlechange } placeholder="Encontrá lo que buscás"></Input>
 
-      <Search onClick={ handleclick } >
+      
+
+      <Search onClick={handleclick}>
         <ImSearch />
       </Search>
     </SearchBarContainer>
   );
 }
 
-const SearchBarContainer = styled.body`
+const SearchBarContainer = styled.div`
   width: 100vw;
   align-items: center;
   justify-content: center;
@@ -61,23 +65,22 @@ const SearchBarContainer = styled.body`
   z-index: 0;
 `;
 
-
 const Input = styled.input`
   type: "text", // ver si imporatndo bien anda
   width: 50vw;
-  height: 2rem; 
+  height: 2rem;
   border-top-left-radius: 0.313rem;
   border-bottom-left-radius: 0.313rem;
   border: 1px solid black;
   /* display: block; */
   padding: 5px 200px 5px 10px;
-    ::placeholder {
+  ::placeholder {
     color: #bcb8b1;
   }
 `;
 
 const Search = styled.button`
-  width:2.65rem;
+  width: 2.65rem;
   height: 2.74rem;
   /* border-radius: 10px; */
   border-top-right-radius: 0.313rem;
@@ -104,5 +107,3 @@ const Search = styled.button`
 `;
 
 // const DivRight = styled.div`
-  
- 

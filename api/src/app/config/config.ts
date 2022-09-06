@@ -1,3 +1,3 @@
 export default{
-    jwtsecret: process.env.JWT_SECRETE || 'mariano'
+    jwtsecret: process.env.JWT_SECRETE || 'Abacabb22'
 }

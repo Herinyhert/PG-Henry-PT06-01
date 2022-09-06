@@ -5,6 +5,7 @@ import {
   GET_TOTALARTICULOS,
   GET_DETAIL_PRODUCT,
   POST_SIGNIN,
+  CLEAR_STATE
 } from "../actions/actiontype";
 import {
   getLocalstorageState,
@@ -21,7 +22,7 @@ export interface ReduxState {
   pageSize: number;
   totalCount: number;
   token: string;
-  user?: { id: number; email: string; iat: number };
+  user?: { id: number; email: string; iat: number, role: string };
 }
 
 interface actionI {
@@ -78,6 +79,12 @@ function rootReducer(state: ReduxState, action: actionI) {
         token: action.payload,
       };
 
+      case CLEAR_STATE:
+        return {
+          ...state,
+          user: undefined,
+          token: ""
+        };
     default:
       if (!state) {
         const localState = getLocalstorageState();

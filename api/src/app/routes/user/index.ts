@@ -1,14 +1,14 @@
-import { Router } from 'express';
-import prisma from '../../../db';
+import { Role } from "@prisma/client";
+import { Router } from "express";
+import prisma from "../../../db";
 
 const userRoutes = Router();
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 
 /* This is a route handler. It is a function that is called when a request is made to the specified
 route. */
-userRoutes.get('/', async (req, res) => {
+userRoutes.get("/", async (req, res) => {
   try {
-
     const allUser = await prisma.user.findMany({
       // include: { role: true },
     });
@@ -27,7 +27,7 @@ export interface user {
   password: String;
   state: Boolean;
 }
-userRoutes.post('/', async (req, res, next) => {
+userRoutes.post("/", async (req, res, next) => {
   const { name, surname, email, username, password } = req.body;
   //hasheamos el password
   let salt = await bcrypt.genSalt(10);
@@ -41,8 +41,8 @@ userRoutes.post('/', async (req, res, next) => {
   if (existsEmail) {
     return res
       .status(400)
-      .send('There is already a registered user with the email');
-  }else {
+      .send("There is already a registered user with the email");
+  } else {
     try {
       const newUser = await prisma.user.create({
         data: {
@@ -59,6 +59,20 @@ userRoutes.post('/', async (req, res, next) => {
   }
 });
 
+userRoutes.put("/", async (req, res) => {
+  const { email, role } = req.body;
+
+  try {
+    let actualizeUser = await prisma.user.update({
+      where: { email: email },
+      data: {
+        role: role,
+      },
+    });
+
+    res.status(200).send(actualizeUser);
+  } catch (error) {
+    res.send(400).send(error);
+  }
+});
 export default userRoutes;
-
-

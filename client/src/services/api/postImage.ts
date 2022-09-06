@@ -8,7 +8,7 @@ export function postImage(image: File) {
   const formData = new FormData();
   formData.append("image", image);
   return axios.post<PostImageResponse>(
-    "http://localhost:3001/image",
+    "https://app-heroku-db.herokuapp.com/image",
     formData,
     {
       headers: {

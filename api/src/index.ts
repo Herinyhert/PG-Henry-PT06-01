@@ -1,6 +1,8 @@
 import app from "./app"
 
+const { PORT = 3001} = process.env
 
-app.listen(3001, ()=>{
+
+app.listen(PORT, ()=>{
     console.log("ejecutando.....")
 })

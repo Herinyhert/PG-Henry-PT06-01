@@ -2,7 +2,12 @@ import { Router } from "express";
 import { v2 as cloudinary } from "cloudinary";
 import multer from "multer";
 
-const {CLOUDINARY_CLOUD_NAME, CLOUDINARY_APY_KEY, CLOUDINARY_APY_SECRET } = process.env
+const { CLOUDINARY_CLOUD_NAME, CLOUDINARY_APY_KEY, CLOUDINARY_APY_SECRET } =
+  process.env || {
+    CLOUDINARY_CLOUD_NAME: "doe8i28jh",
+    CLOUDINARY_APY_KEY: '526329512755824',
+    CLOUDINARY_APY_SECRET: "vZdSWfjbS-ohvCkvEN8t7UW9S_E",
+  };
 
 const uploader = multer({ dest: "uploads/" });
 

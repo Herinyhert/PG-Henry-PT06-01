@@ -14,7 +14,7 @@ export default function StartRating({}: StartRatingProps) {
         const ratingValue = i + 1;
 
         return (
-          <label>
+          <label key={i}>
             <Input
               type="radio"
               name="rating"
