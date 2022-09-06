@@ -3,50 +3,42 @@ import styled from "styled-components";
 import { FiShoppingCart } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import Logo from "../../img/Logo.png";
-import { clearState } from '../../actions/index';
+import { clearState } from "../../actions/index";
 import { useDispatch } from "react-redux";
 
 export interface NavBarProps {}
 
 export default function NavBar({}: NavBarProps) {
+  const dispatch = useDispatch<any>();
 
-  const dispatch = useDispatch<any>()
-
-  function handleLogout (){
-    localStorage.clear()
-    dispatch(clearState())
+  function handleLogout() {
+    localStorage.clear();
+    dispatch(clearState());
   }
 
   return (
     <NavBarContainer>
       <div>
         <div>
-
-        <Img
-          id="logo"
-          src={Logo}
-          alt=""
-        />
-      </div>
-      
-
           <Img id="logo" src={Logo} alt="" />
         </div>
 
+        <Img id="logo" src={Logo} alt="" />
       </div>
+
       <ContainerButtons>
-      <Link to="/Home">
-      <ButtonLogin onClick={handleLogout}>Logout</ButtonLogin>
-      </Link>
-      <Link to="/CreateProduct">
-        <ButtonLogin>Crear producto</ButtonLogin>
-      </Link>
-      <Link to="/Login">
-        <ButtonLogin>Ingresá</ButtonLogin>
-      </Link>
-      <Link to="/Signup">
-        <ButtonLogin>Registrate</ButtonLogin>
-      </Link>
+        <Link to="/Home">
+          <ButtonLogin onClick={handleLogout}>Logout</ButtonLogin>
+        </Link>
+        <Link to="/CreateProduct">
+          <ButtonLogin>Crear producto</ButtonLogin>
+        </Link>
+        <Link to="/Login">
+          <ButtonLogin>Ingresá</ButtonLogin>
+        </Link>
+        <Link to="/Signup">
+          <ButtonLogin>Registrate</ButtonLogin>
+        </Link>
         <Shop>
           <FiShoppingCart />
         </Shop>
