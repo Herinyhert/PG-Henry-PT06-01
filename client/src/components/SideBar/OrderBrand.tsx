@@ -15,7 +15,7 @@ export default function OrderBrand({ onDirection }: SideBarProps) {
 
       <Select onChange={(e) => onDirection(e.target.value)}>
         <option disabled selected value="">
-          {""}Sort By Brand
+          {""}Ordenar por marca
         </option>
         <option value="asc">A-Z</option>
         <option value="desc">Z-A</option>

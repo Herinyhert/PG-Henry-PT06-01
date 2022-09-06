@@ -14,7 +14,7 @@ export default function OrderName({ onDirection }: SideBarProps) {
 
       <Select onChange={(e) => onDirection(e.target.value)}>
         <option disabled selected value="">
-          {""}Sort By Name
+          {""}Ordenar por nombre
         </option>
         <option value="asc">A-Z</option>
         <option value="desc">Z-A</option>
