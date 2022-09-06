@@ -1,6 +1,5 @@
 import axios from "axios";
 import { Dispatch } from "redux";
-const {REACT_APP_API_URL =  "http://localhost:3001"} = process.env
 
 import {
   GET_ARTICULOS,
@@ -11,6 +10,8 @@ import {
   POST_SIGNIN,
   CLEAR_STATE
 } from "./actiontype";
+
+const {REACT_APP_API_URL =  "http://localhost:3001"} = process.env
 
 export interface Articulo {
   id: number;
