@@ -1,5 +1,7 @@
 import { Router } from "express";
 import prisma from "../../../db";
+const {CLIENT_URL= "http://localhost:3000", API_URL="http://localhost:3001"}  =process.env
+
 
 const mercadoPagoRoutes = Router();
 
@@ -66,9 +68,9 @@ mercadoPagoRoutes.get("/", (req, res) => {
       // success: "http://localhost:3001/mercadopago/pagos",
       // failure: "http://localhost:3001/mercadopago/pagos",
       // pending: "http://localhost:3001/mercadopago/pagos",
-      success: "https://app-heroku-db.herokuapp.com/mercadopago/pagos",
-      failure: "https://app-heroku-db.herokuapp.com/mercadopago/pagos",
-      pending: "https://app-heroku-db.herokuapp.com/mercadopago/pagos",
+      success: API_URL+"/mercadopago/pagos",
+      failure: API_URL+"/mercadopago/pagos",
+      pending: API_URL+"/mercadopago/pagos",
     },
   };
 
@@ -111,7 +113,7 @@ mercadoPagoRoutes.get("/pagos", async (req, res) => {
     },
   });
   //return res.redirect("http://localhost:3000");
-  return res.redirect("https://ecomerce-app-one.vercel.app"); //cambiar esta ruta con la de vercel
+  return res.redirect(CLIENT_URL); //cambiar esta ruta con la de vercel
 });
 
 export default mercadoPagoRoutes;

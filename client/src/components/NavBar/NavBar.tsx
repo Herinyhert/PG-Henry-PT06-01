@@ -50,6 +50,7 @@ const ContainerButtons = styled.div`
   display: inline-flex;
   flex-wrap: wrap;
   justify-content: center;
+  margin-right: 5px;
 `;
 
 const ButtonLogin = styled.button`
@@ -136,7 +137,7 @@ const Img = styled.img`
   width: 140px;
   height: 140px;
   /* top="10px" */
-  margin-top: -11px;
-  margin-left: 30px;
+  margin-top: -80px;
+  margin-left: 20px;
   z-index: 1;
 `;
