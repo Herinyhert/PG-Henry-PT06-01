@@ -63,9 +63,12 @@ mercadoPagoRoutes.get("/", (req, res) => {
       installments: 3, //Cantidad máximo de cuotas
     },
     back_urls: {
-      success: "http://localhost:3001/mercadopago/pagos",
-      failure: "http://localhost:3001/mercadopago/pagos",
-      pending: "http://localhost:3001/mercadopago/pagos",
+      // success: "http://localhost:3001/mercadopago/pagos",
+      // failure: "http://localhost:3001/mercadopago/pagos",
+      // pending: "http://localhost:3001/mercadopago/pagos",
+      success: "https://app-heroku-db.herokuapp.com/mercadopago/pagos",
+      failure: "https://app-heroku-db.herokuapp.com/mercadopago/pagos",
+      pending: "https://app-heroku-db.herokuapp.com/mercadopago/pagos",
     },
   };
 
@@ -107,7 +110,8 @@ mercadoPagoRoutes.get("/pagos", async (req, res) => {
       payment_type: payment_type,
     },
   });
-  return res.redirect("http://localhost:3000");
+  //return res.redirect("http://localhost:3000");
+  return res.redirect("https://ecomerce-app-one.vercel.app"); //cambiar esta ruta con la de vercel
 });
 
 export default mercadoPagoRoutes;
