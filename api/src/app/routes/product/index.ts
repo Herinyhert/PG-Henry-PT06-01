@@ -50,7 +50,7 @@ const productRoutes = Router();
   res.status(200).send(newProduct);
 }); 
 
-productRoutes.get("https://ecomerce-app-one.vercel.app/", async (req, res) => {
+productRoutes.get("/", async (req, res) => {
   let {
     page = 1,
     pageSize = 12,
