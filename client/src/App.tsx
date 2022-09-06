@@ -14,6 +14,9 @@ import { ReduxState } from './reducer/index';
 import { Navigate } from "react-router-dom";
 import Details from './components/CardProduct/DetailCardProduct/Details';
 import Buy from './components/CardProduct/DetailCardProduct/Buy'
+import Dashboard from "./components/Dashboard/index";
+import PruebaCarrito from "./components/PruebaCarrito/PruebaCarrito";
+import ShoppingCart from "./components/PruebaCarrito/ShoppingCart";
 
 
 export default function App() {
@@ -28,8 +31,11 @@ export default function App() {
           <NavBar /> */}
 
           {/* <Routes> */}
+          <Route path="ShoppingCart" element={<ShoppingCart/>}/>
+          <Route path="PruebaCarrito" element={<PruebaCarrito/>}/>
             <Route path="home" element={<Home />} />
             <Route path="login" element={<Login />} />
+            <Route path="admin" element={ user?.role === "ADMIN" ?  <Dashboard /> : <Navigate to="/home"/ >} />
             <Route path="signup" element={<Signup />} />
             <Route path="*" element={<ErrorCard/>} />
             <Route path="CreateProduct" element={ user?.role === "ADMIN" ? <CreateProduct/> : <Navigate to="/login" />   }/>

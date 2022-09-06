@@ -1,7 +1,7 @@
 import { Router } from "express";
 import prisma from "../../../db";
 const {CLIENT_URL= "http://localhost:3000", API_URL="http://localhost:3001"}  =process.env
-
+// 
 
 const mercadoPagoRoutes = Router();
 
@@ -37,14 +37,13 @@ mercadoPagoRoutes.get("/", (req, res) => {
   // let id_orden = req.body.id_orden
 
   //DE 36 A 43 COMENTAR CUANDO ESTE EL FRONT
-  const id_orden = 2;
+  const id_orden = "2";
 
   const carrito = [
-    { title: "Chorizo", quantity: 3, price: 150 },
-    { title: "Morcilla", quantity: 2, price: 200 },
-    { title: "Pan", quantity: 4, price: 200 },
-  ];
-
+    { title: "Teclado", quantity: 3, price: 150 },
+    { title: "Mouse", quantity: 2, price: 200 },
+    { title: "Diskette 5 1/4", quantity: 4, price: 200 }
+]
   const items_ml = carrito.map((i) => ({
     title: i.title,
     unit_price: i.price,
@@ -54,7 +53,8 @@ mercadoPagoRoutes.get("/", (req, res) => {
   // Crea un objeto de preferencia
   let preference = {
     items: items_ml,
-    external_reference: `${id_orden}`, //es una referencia que le pasamos. En este caso el N° Orden.
+    external_reference: id_orden, //es una referencia que le pasamos. En este caso el N° Orden.
+    
     payment_methods: {
       excluded_payment_types: [
         // excluyo el pago por cajero automatico.
@@ -65,12 +65,9 @@ mercadoPagoRoutes.get("/", (req, res) => {
       installments: 3, //Cantidad máximo de cuotas
     },
     back_urls: {
-      // success: "http://localhost:3001/mercadopago/pagos",
-      // failure: "http://localhost:3001/mercadopago/pagos",
-      // pending: "http://localhost:3001/mercadopago/pagos",
-      success: API_URL+"/mercadopago/pagos",
-      failure: API_URL+"/mercadopago/pagos",
-      pending: API_URL+"/mercadopago/pagos",
+      success: API_URL +"/mercadopago/pagos",
+      failure: API_URL +"/mercadopago/pagos",
+      pending: API_URL +"/mercadopago/pagos",
     },
   };
 
@@ -78,11 +75,13 @@ mercadoPagoRoutes.get("/", (req, res) => {
     .create(preference)
 
     .then(function (response: any) {
-      console.info("respondio");
-      //Este valor reemplazará el string"<%= global.id %>" en tu HTML
+      console.info('respondio')
+    
       //global.id = response.body.id;
       console.log(response.body);
-      // res.json({ id: global.id });
+      console.log('eXtErnAlrEfERENCE: ' + response.body.external_reference);
+      
+      res.json({ id: response.body.init_point }); 
     })
     .catch(function (error: any) {
       console.log(error);
@@ -94,16 +93,18 @@ mercadoPagoRoutes.get("/pagos", async (req, res) => {
   console.log("HOLA: " + req.query.payment_id);
   console.log("HOLA: " + req.query.status);
   console.log("HOLA: " + req.query.payment_type);
-  console.log("HOLA: " + req.query.external_reference);
+  console.log(req.query.external_reference);
   console.log("ESTOY EN RUTA/PAGOS ");
 
   const payment_id: any = req.query.payment_id;
   const payment_status: any = req.query.status;
   const payment_type: any = req.query.payment_type;
-  const external_reference: any = req.query.external_reference;
+  const external_reference: any = Number(req.query.external_reference);
 
   console.log(req.query.payment_id);
   console.log(payment_id);
+  console.log('EXTERNAL REFERENCE: ' + external_reference);
+  
   let orderUpdate = await prisma.order.update({
     where: { id: Number(external_reference) },
     data: {
@@ -112,8 +113,7 @@ mercadoPagoRoutes.get("/pagos", async (req, res) => {
       payment_type: payment_type,
     },
   });
-  //return res.redirect("http://localhost:3000");
-  return res.redirect(CLIENT_URL); //cambiar esta ruta con la de vercel
+  return res.redirect( CLIENT_URL+"/PruebaCarrito?paystatus=ok");
 });
 
 export default mercadoPagoRoutes;
