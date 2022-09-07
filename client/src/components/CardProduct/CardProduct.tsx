@@ -93,7 +93,6 @@ const Body = styled.div`
 
 const Name = styled.div`
   font-family: Proxima Nova,-apple-system,Helvetica Neue,Helvetica,Roboto,Arial,sans-serif;
-    sans-serif;
   font-size: 14px;
   /* font-weight: bold; */
   height: 100px;
