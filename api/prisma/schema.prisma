@@ -5,8 +5,6 @@ generator client {
 datasource db {
   provider = "postgres"
   url      = env("DATABASE_URL")
-
-  
 }
 
 model Product {
@@ -20,7 +18,6 @@ model Product {
   categoryId   Int
   category     Category       @relation(fields: [categoryId], references: [id])
   order_detail Order_detail[]
-
 }
 
 model Category {
@@ -36,28 +33,27 @@ enum Role {
 }
 
 model User {
-  id       Int      @id @default(autoincrement())
+  id       Int     @id @default(autoincrement())
   name     String
   surname  String
-  email    String   @unique @db.VarChar(255)
-  password String
-  state    Boolean? @default(true) // 1-Activo 0-inactivo
-  role     Role     @default(CLIENT)
+  email    String  @unique @db.VarChar(255)
+  password String?
+  state    Boolean @default(true) // 1-Activo 0-inactivo
+  role     Role    @default(CLIENT)
   orderU   Order[]
 }
 
 model Order {
-  id           Int            @id @default(autoincrement())
-  amount       Float
-  date         DateTime       @default(now())
-  status       String
-  userId       Int
-  payment_id   String
-  payment_status       String
-  payment_type String
-  user         User           @relation(fields: [userId], references: [id])
-  order_detail Order_detail[]
- 
+  id             Int            @id @default(autoincrement())
+  amount         Float
+  date           DateTime       @default(now())
+  status         String
+  userId         Int
+  payment_id     String
+  payment_status String
+  payment_type   String
+  user           User           @relation(fields: [userId], references: [id])
+  order_detail   Order_detail[]
 }
 
 model Order_detail {
@@ -69,4 +65,3 @@ model Order_detail {
   product   Product @relation(fields: [productId], references: [id])
   order     Order   @relation(fields: [orderId], references: [id])
 }
-

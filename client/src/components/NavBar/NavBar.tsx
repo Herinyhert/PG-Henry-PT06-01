@@ -35,8 +35,8 @@ export default function NavBar({}: NavBarProps) {
        {user?
         <div>hola {user?.email}</div>: null}
         {user?.role === "ADMIN" ? (
-          <Link to="/admin">
-            <ButtonLogin>Admin</ButtonLogin>
+          <Link to="/Home">
+            <ButtonLogin>Home</ButtonLogin>
           </Link>
         ) : null}
         {token ? (
