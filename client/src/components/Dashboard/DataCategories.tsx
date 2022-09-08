@@ -12,9 +12,12 @@ import { useSelector } from "react-redux";
 import { ReduxState } from "../../reducer";
 import { Category } from "../../actions";
 
-import UpdateCategory from "../Dashboard/Dialogs/UpdateCategory";
+import CreateCategory from "../Dashboard/Dialogs/CreateCategory";
 
 import ButtonMUI from "@mui/material/Button";
+
+import { useDispatch } from "react-redux";
+import { getCategorias, deleteCategory } from "../../actions";
 
 
 
@@ -24,6 +27,7 @@ function createData(
 ) {
   return { id, name };
 }
+
 
 export default function DenseTable() {
   const [state, setState] = useState(null);
@@ -36,9 +40,22 @@ export default function DenseTable() {
     }
   );
 
+  function clickDelete(id) {
+    dispatch(deleteCategory(id));
+  }
+
+
+  const dispatch = useDispatch<any>();
+
+  useEffect(() => {
+    dispatch(getCategorias());
+  }, [
+    dispatch
+  ]);
+
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+    <TableContainer component={Paper} sx={{ maxHeight: 440 }}>
+      <Table sx={{ minWidth: 650 }} size="small" stickyHeader aria-label="sticky table">
         <TableHead>
           <TableRow>
             <TableCell>id</TableCell>
@@ -56,11 +73,11 @@ export default function DenseTable() {
               <TableCell align="right">{row.id}</TableCell>
               <TableCell align="right">{row.name}</TableCell>
               <TableCell align="right">
-                <UpdateCategory/>
-              </TableCell>
-              <TableCell align="right">
-                <ButtonMUI variant="outlined">Delete</ButtonMUI>
-              </TableCell>
+                  <CreateCategory category={row} />
+                </TableCell>
+                <TableCell align="right">
+                  <ButtonMUI variant="outlined" onClick={()=>clickDelete(row.id)}>Delete</ButtonMUI>
+                </TableCell>
             </TableRow>
           ))}
         </TableBody>
