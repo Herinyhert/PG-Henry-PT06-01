@@ -142,7 +142,8 @@ export function loginUser(payload){
   .then(res =>{dispatch({type:POST_SIGNIN, payload: res.data.token})} )
   //.then(res =>{console.log(res.data.token)})
    .catch((error) => {
-     dispatch({ type: SET_ERROR, payload: error });
+     dispatch({ type: SET_ERROR, payload: error.response.data });
+    //  .catch(res =>{console.log(res.response.data)})
    });
 };
 }

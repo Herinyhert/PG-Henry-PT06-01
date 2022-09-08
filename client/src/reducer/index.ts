@@ -6,7 +6,7 @@ import {
   GET_TOTALARTICULOS,
   GET_DETAIL_PRODUCT,
   POST_SIGNIN,
-  CLEAR_STATE
+  CLEAR_STATE,
 } from "../actions/actiontype";
 import {
   getLocalstorageState,
@@ -24,7 +24,8 @@ export interface ReduxState {
   pageSize: number;
   totalCount: number;
   token: string;
-  user?: { id: number; email: string; iat: number, role: string };
+  user?: { id: number; email: string; iat: number; role: string };
+  error: string;
 }
 
 interface actionI {
@@ -33,7 +34,7 @@ interface actionI {
 }
 
 const initialState: ReduxState = {
-  dashboardmenu: '',
+  dashboardmenu: "",
   articulos: [],
   categorias: [],
   detailsProduct: undefined,
@@ -42,6 +43,7 @@ const initialState: ReduxState = {
   totalCount: 0,
   token: "",
   user: undefined,
+  error: "",
 };
 
 function rootReducer(state: ReduxState, action: actionI) {
@@ -51,7 +53,7 @@ function rootReducer(state: ReduxState, action: actionI) {
         ...state,
         articulos: action.payload,
       };
-      case SET_DASHBOARDMENU:
+    case SET_DASHBOARDMENU:
       return {
         ...state,
         dashboardmenu: action.payload,
@@ -87,12 +89,18 @@ function rootReducer(state: ReduxState, action: actionI) {
         token: action.payload,
       };
 
-      case CLEAR_STATE:
-        return {
-          ...state,
-          user: undefined,
-          token: ""
-        };
+    case CLEAR_STATE:
+      return {
+        ...state,
+        user: undefined,
+        token: "",
+      };
+    case SET_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
     default:
       if (!state) {
         const localState = getLocalstorageState();
@@ -110,6 +118,7 @@ function rootReducer(state: ReduxState, action: actionI) {
           token: localState?.token,
         };
       }
+
       return state;
   }
 }
