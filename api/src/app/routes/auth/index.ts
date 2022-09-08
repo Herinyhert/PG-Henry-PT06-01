@@ -59,6 +59,7 @@ authRouter.post('/signin', async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
     res.status(400).send('ingrese usuario y contraseña');
+    return
   }
   const user = await prisma.user.findUnique({
     where: {
@@ -67,11 +68,13 @@ authRouter.post('/signin', async (req, res) => {
   });
   if (!user) {
     res.status(400).send('el usuario no existe');
+    return
   } else {
     // revisar el pasword------/
     const passworCorrecto = await bcrypt.compare(password, user.password);
     if (!passworCorrecto) {
       res.status(400).send('Password Incorrecto');
+      return
     } else {
       res.status(200).json({token: createToken(user)})
     }

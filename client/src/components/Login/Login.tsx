@@ -1,62 +1,72 @@
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import styled from "styled-components";
-import NavBar from '../NavBar/NavBar';
+import NavBar from "../NavBar/NavBar";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 
-import Swal from 'sweetalert2'
-import { loginUser } from '../../actions/index';
-
-
+import Swal from "sweetalert2";
+import { loginUser } from "../../actions/index";
+import { useSelector } from "react-redux";
+import { ReduxState } from "../../reducer";
 
 export default function Signup() {
   const dispatch = useDispatch<any>();
   const [input, setInput] = useState({
     email: "",
     password: "",
-  })
+  });
 
-  function handleChange(e){
-    e.preventDefault()
-    // console.log(e.target.value)
+  const user = useSelector((state: ReduxState) => state.user);
+
+  function handleChange(e) {
+    e.preventDefault();
     setInput({
       ...input,
-    [e.target.name]:e.target.value})
+      [e.target.name]: e.target.value,
+    });
   }
 
-  function handleSubmit(e){
-    e.preventDefault()
-    dispatch(loginUser(input))
-   
+  function handleSubmit(e) {
+    e.preventDefault();
+    dispatch(loginUser(input));
   }
- 
-  
+
   return (
-
-    <Body>
-    <NavBar />
-  <Form onSubmit={(e)=>handleSubmit(e)}>
-    <Title>Formulario de inicio de sesión</Title>
-    {/* <Input1 type="text" placeholder="Ingrese su nombre"/>
+    <div>
+      {user?.role === "CLIENT" ? (
+        <Navigate to={"/home"} />
+      ) : user?.role === "ADMIN" ? (
+        <Navigate to={"/admin"} />
+      ) : (
+        <Body>
+          <NavBar />
+          <Form onSubmit={(e) => handleSubmit(e)}>
+            <Title>Formulario de inicio de sesión</Title>
+            {/* <Input1 type="text" placeholder="Ingrese su nombre"/>
     <Input2 type="text" placeholder="Ingrese su Apellido"/> */}
-    <Input3 type="email" name="email" onChange={(e)=>handleChange(e)} placeholder="Ingrese su Correo" />
-    <Input4 type="password" name="password" onChange={(e)=>handleChange(e)} placeholder="Ingrese su contraseña" />
-    <Acuerdo>Estoy de acuerdo con terminos y condiciones</Acuerdo>
-    <Button type="submit">Inicio</Button>
-    <Button>Iniciar con Google</Button>
+            <Input3
+              type="email"
+              name="email"
+              onChange={(e) => handleChange(e)}
+              placeholder="Ingrese su Correo"
+            />
+            <Input4
+              type="password"
+              name="password"
+              onChange={(e) => handleChange(e)}
+              placeholder="Ingrese su contraseña"
+            />
+            <Acuerdo>Estoy de acuerdo con terminos y condiciones</Acuerdo>
+            <Button type="submit">Inicio</Button>
+            <Button>Iniciar con Google</Button>
 
-    <p>
-      <a href="/Signup" >¿No tienes cuenta?</a>
-    </p>
-          
-    
-  </Form>
-</Body>
-
-
-
-
-
+            <p>
+              <a href="/Signup">¿No tienes cuenta?</a>
+            </p>
+          </Form>
+        </Body>
+      )}
+    </div>
 
     // <FormLogin>
     //   <Link to="/Home">
@@ -85,7 +95,7 @@ const Body = styled.div`
 `;
 
 const Form = styled.form`
-display: flex;
+  display: flex;
   flex-direction: column;
   align-items: center;
   position: absolute;
@@ -110,11 +120,10 @@ const Title = styled.h1`
   margin: auto;
   padding: auto;
   color: #335d90;
-  
+
   text-transform: uppercase;
   justify-content: center;
   align-items: center;
-
 `;
 
 // const Input1 = styled.input`
@@ -201,14 +210,7 @@ const p = styled.link`
   text-align: center;
   margin-top: 15px;
   font-weight: bolder;
-  
 `;
-
-
-
-
-
-
 
 // const InputLogin = styled.input`
 // height: 1.5rem;
@@ -225,7 +227,7 @@ const p = styled.link`
 //   border: none;
 //   color: white;
 //   letter-spacing: 0.1rem;
-  
+
 //   text-align: center;
 //   text-decoration: none;
 //   display: inline-block;
@@ -245,7 +247,7 @@ const p = styled.link`
 //   align-items: center;
 //   display: grid;
 //   text-align: left;
-//   margin: auto; 
+//   margin: auto;
 //   margin-top: 2rem;
 //   padding: 1rem;
 //   //padding-left: 1rem;

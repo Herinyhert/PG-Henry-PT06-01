@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import Logo from "../../img/Logo.png";
 import { clearState } from "../../actions/index";
 import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { ReduxState } from "../../reducer";
 
 export interface NavBarProps {}
 
@@ -15,6 +17,9 @@ export default function NavBar({}: NavBarProps) {
     localStorage.clear();
     dispatch(clearState());
   }
+
+  const token = useSelector((state: ReduxState) => state.token);
+  const user = useSelector((state: ReduxState) => state.user);
 
   return (
     <NavBarContainer>
@@ -27,23 +32,27 @@ export default function NavBar({}: NavBarProps) {
       </div>
 
       <ContainerButtons>
-        <Link to="/Home">
-          <ButtonLogin onClick={handleLogout}>Logout</ButtonLogin>
-        </Link>
-        <Link to="/CreateProduct">
-          <ButtonLogin>Crear producto</ButtonLogin>
-        </Link>
-        <Link to="/Login">
-          <ButtonLogin>Ingresá</ButtonLogin>
-        </Link>
-        <Link to="/Signup">
-          <ButtonLogin>Registrate</ButtonLogin>
-        </Link>
+       {user?
+        <div>hola {user?.email}</div>: null}
+        {user?.role === "ADMIN" ? (
+          <Link to="/admin">
+            <ButtonLogin>Admin</ButtonLogin>
+          </Link>
+        ) : null}
+        {token ? (
+          <Link to="/Home">
+            <ButtonLogin onClick={handleLogout}>Logout</ButtonLogin>
+          </Link>
+        ) : (
+          <Link to="/Login">
+            <ButtonLogin>Ingresá</ButtonLogin>
+          </Link>
+        )}
         <Link to="/ShoppingCart">
-        <Shop>
-          <FiShoppingCart />
-        </Shop>
-      </Link>
+          <Shop>
+            <FiShoppingCart />
+          </Shop>
+        </Link>
       </ContainerButtons>
     </NavBarContainer>
   );
