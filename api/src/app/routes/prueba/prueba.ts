@@ -1,9 +1,9 @@
 import { Router } from "express";
-import passport from "passport";
+import auth from "../../middlewares/passport";
 
 const pruebaRoutes = Router()
 
-pruebaRoutes.get('/', passport.authenticate('jwt',{session :false}), (req, res)=>{
+pruebaRoutes.get('/', auth.authenticate('jwt',{session :false}), (req, res)=>{
     res.send('ando')
 } )
 

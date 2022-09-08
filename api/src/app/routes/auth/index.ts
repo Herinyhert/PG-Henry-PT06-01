@@ -1,25 +1,21 @@
 import { Router } from 'express';
-import { Express } from 'express';
 import prisma from '../../../db';
-import jwt from 'jsonwebtoken';
-import config from '../../config/config';
+import jwt, { JwtPayload } from 'jsonwebtoken';
+import auth from '../../middlewares/passport';
 const bcrypt = require('bcrypt');
 
 const authRouter = Router();
 
-export interface userInt {
+export interface TokenPayload {
   id: Number;
-  name: string;
-  surname: string;
   email: string;
-  password: String;
   role: string;
 }
 
-function createToken(user: userInt) {
+function createToken({id,email,role}: TokenPayload) {
   return jwt.sign(
-    { id: user.id, email: user.email, role: user.role },
-    config.jwtsecret
+    { id: id, email: email, role: role },
+    process.env.JWT_SECRETE || 'Abacabb22',
   );
 }
 
@@ -86,5 +82,11 @@ authRouter.post('/signin', async (req, res) => {
     } */
   }
 });
+
+authRouter.get('/google', auth.authenticate('google', {scope:['profile', 'email']}))
+
+authRouter.get('/google/success', auth.authenticate('google',{session :false}), (req,res)=>{
+  res.status(200).json({token: createToken(req.user as TokenPayload)})
+})
 
 export default authRouter;
