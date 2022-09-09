@@ -114,11 +114,13 @@ export default function DenseTable() {
           </TableBody>
         </Table>
       </TableContainer>
-      <Paginado
-        onPageChange={(page) => setState({ ...state, page })}
-        totalCount={totalCount}
-        pageSize={state.pageSize}
-      />
+      <div style={{width:'100%'}} >
+        <Paginado
+          onPageChange={(page) => setState({ ...state, page })}
+          totalCount={totalCount}
+          pageSize={state.pageSize}
+        />
+      </div>
     </>
   );
 }
