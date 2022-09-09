@@ -5,8 +5,10 @@ import {
   GET_ARTICULOS,
   GET_DETAIL_PRODUCT,
   GET_CATEGORIES,
+  DELETE_CATEGORY,
   GET_TOTALARTICULOS,
   SET_DASHBOARDMENU,
+  DELETE_PRODUCT,
   SET_ERROR,
   POST_SIGNIN,
   CLEAR_STATE
@@ -85,6 +87,31 @@ export function getCategorias() {
     }
   };
 }
+export function deleteCategory(id) {
+  return async function (dispatch: Dispatch) {
+    try {
+      var json = await axios.delete<Category[]>(
+        REACT_APP_API_URL + `/category/${id}`
+      );
+
+      return dispatch({ type: DELETE_CATEGORY, payload: json.data });
+    } catch (error) {
+      return dispatch({ type: SET_ERROR, payload: "error" });
+    }
+  };
+}
+
+export function deleteProduct(id) {
+  return async function (dispatch: Dispatch) {
+    try {
+      var json = await axios.delete<Category[]>(REACT_APP_API_URL + `/product/${id}`);
+
+      return dispatch({ type: DELETE_PRODUCT, payload: json.data });
+    } catch (error) {
+      return dispatch({ type: SET_ERROR, payload: "error" });
+    }
+  };
+}
 
 export function setDashboardMenu(payload) {
   return async function (dispatch: Dispatch) {
@@ -101,6 +128,17 @@ export function postProduct(token, payload) {
   return function (dispatch) {
     return axios
       .post(REACT_APP_API_URL+"/product", payload, {headers:{authorization: `Bearer ${token}`}})
+      .then((response) => response)
+      .catch((error) => {
+        dispatch({ type: SET_ERROR, payload: error });
+      });
+  };
+}
+
+export function postCategory(token, payload) {
+  return function (dispatch) {
+    return axios
+      .post(REACT_APP_API_URL+"/category", payload, {headers:{authorization: `Bearer ${token}`}})
       .then((response) => response)
       .catch((error) => {
         dispatch({ type: SET_ERROR, payload: error });

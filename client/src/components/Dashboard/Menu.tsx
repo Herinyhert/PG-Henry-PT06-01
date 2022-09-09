@@ -24,13 +24,13 @@ export default function TypographyMenu() {
   return (
     <Paper sx={{ width: 230 }}>
       <MenuList>
-        <MenuItem onClick={() => handleChange('products')}>
+        <MenuItem onClick={() => handleChange("products")}>
           <ListItemIcon>
             <SendIcon fontSize="small" />
           </ListItemIcon>
           <Typography variant="inherit">Products</Typography>
         </MenuItem>
-        <MenuItem onClick={() => handleChange('categories')}>
+        <MenuItem onClick={() => handleChange("categories")}>
           <ListItemIcon>
             <PriorityHighIcon fontSize="small" />
           </ListItemIcon>
@@ -42,6 +42,14 @@ export default function TypographyMenu() {
           </ListItemIcon>
           <Typography variant="inherit" noWrap>
             Users
+          </Typography>
+        </MenuItem>
+        <MenuItem>
+          <ListItemIcon>
+            <DraftsIcon fontSize="small" />
+          </ListItemIcon>
+          <Typography variant="inherit" noWrap>
+            Orders
           </Typography>
         </MenuItem>
       </MenuList>
