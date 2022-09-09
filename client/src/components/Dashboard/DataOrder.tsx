@@ -10,12 +10,12 @@ import Paper from "@mui/material/Paper";
 
 import { useDispatch, useSelector } from "react-redux";
 import { ReduxState } from "../../reducer";
-import { getArticulos, deleteProduct } from "../../actions";
-import Paginado from "../../components/Paginado/Paginado";
+import { getArticulos, deleteProduct, getOrders } from "../../actions";
+import Paginado from "../Paginado/Paginado";
 import ButtonMUI from "@mui/material/Button";
 
 //import UpdateProduct from "../Dashboard/Dialogs/UpdateProduct";
-import CreateProduct from "../Dashboard/Dialogs/CreateProduct";
+import CreateProduct from "./Dialogs/CreateProduct";
 
 
 
@@ -48,13 +48,12 @@ export default function DenseTable() {
 
   useEffect(() => {
     dispatch(
-      getArticulos({
+      getOrders({
         page: state.page,
         pageSize: state.pageSize,
         name: state.name,
         order: state.order,
-        direction: state.direction,
-        categoryId: state.categoryId,
+        direction: state.direction
       })
     );
   }, [

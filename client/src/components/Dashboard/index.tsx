@@ -4,6 +4,9 @@ import { CssBaseline } from "@mui/material";
 // import { Route, Routes, useLocation } from "react-router-dom";
 import DataProduct from "./DataProduct";
 import DataCategories from "./DataCategories";
+import DataUser from "./DataUser";
+import DataOrder from "./DataOrder";
+
 import Menu from "./Menu";
 
 import Box from "@mui/material/Box";
@@ -17,6 +20,8 @@ import { ReduxState } from "../../reducer";
 
 import CreateProduct from "../Dashboard/Dialogs/CreateProduct";
 import CreateCategory from "../Dashboard/Dialogs/CreateCategory";
+import CreateUser from "../Dashboard/Dialogs/CreateUser";
+import CreateOrder from "../Dashboard/Dialogs/CreateOrder";
 import SearchBar from "../../components/SearchBar/SearchBar";
 
 import { getArticulos, getCategorias, Articulo } from "../../actions";
@@ -45,8 +50,16 @@ function Dashboard() {
     },
     categoryInit: {
       id: 0,
-      name:null
-    }
+      name: null,
+    },
+    userInit: {
+      id: 0,
+      name: null,
+    },
+    orderInit: {
+      id: 0,
+      name: null,
+    },
   });
 
   const dispatch = useDispatch<any>();
@@ -82,6 +95,32 @@ function Dashboard() {
 
   const dashboardmenu = useSelector((state: ReduxState) => state.dashboardmenu);
 
+  const getComponentRouter = (root: String, props: any) => {
+    switch (root) {
+      case "products":
+        return <CreateProduct articulo={props.articuloInit} />;
+      case "categories":
+        return <CreateCategory category={props.categoryInit} />;
+      case "users":
+        return <CreateUser user={props.userInit} />;
+      case "orders":
+        return <CreateOrder articulo={props.articuloInit} />;
+    }
+  }
+
+  const getDataComponentRouter = (root: String) => {
+    switch (root) {
+      case "products":
+        return <DataProduct />;
+      case "categories":
+        return <DataCategories />;
+      case "users":
+        return <DataUser />;
+      case "orders":
+        return <DataOrder />;
+    }
+  };
+
   return (
     <>
       <Body>
@@ -102,11 +141,9 @@ function Dashboard() {
                   </Grid>
                   <Grid item xs={8}></Grid>
                   <Grid item xs={2}>
-                    {dashboardmenu === "products" ? (
-                      <CreateProduct articulo={state.articuloInit} />
-                    ) : (
-                      <CreateCategory category={state.categoryInit} />
-                    )}
+                    {                      
+                      getComponentRouter(dashboardmenu,state)                    
+                    }
                   </Grid>
                 </Grid>
               </Box>
@@ -118,11 +155,9 @@ function Dashboard() {
                     <Menu />
                   </Grid>
                   <Grid item xs>
-                    {dashboardmenu === "products" ? (
-                      <DataProduct />
-                    ) : (
-                      <DataCategories />
-                    )}
+                    {                                 
+                      getDataComponentRouter(dashboardmenu)             
+                    }
                   </Grid>
                 </Grid>
               </Box>

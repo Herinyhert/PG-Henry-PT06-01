@@ -36,7 +36,7 @@ export default function TypographyMenu() {
           </ListItemIcon>
           <Typography variant="inherit">Categories</Typography>
         </MenuItem>
-        <MenuItem>
+        <MenuItem onClick={() => handleChange("users")}>
           <ListItemIcon>
             <DraftsIcon fontSize="small" />
           </ListItemIcon>
@@ -44,7 +44,7 @@ export default function TypographyMenu() {
             Users
           </Typography>
         </MenuItem>
-        <MenuItem>
+        <MenuItem onClick={() => handleChange("orders")}>
           <ListItemIcon>
             <DraftsIcon fontSize="small" />
           </ListItemIcon>
