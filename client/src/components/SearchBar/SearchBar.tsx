@@ -33,11 +33,7 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
 
   return (
     <SearchBarContainer>
-
       <Input onChange={ handlechange } placeholder="Encontrá lo que buscás"></Input>
-
-      
-
       <Search onClick={handleclick}>
         <ImSearch />
       </Search>

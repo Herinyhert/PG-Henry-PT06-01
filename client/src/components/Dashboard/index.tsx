@@ -1,3 +1,5 @@
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { CssBaseline } from "@mui/material";
 // import { Route, Routes, useLocation } from "react-router-dom";
 import DataProduct from "./DataProduct";
@@ -9,16 +11,67 @@ import Grid from "@mui/material/Grid";
 
 import styled from "styled-components";
 import NavBar from "../NavBar/NavBar";
-import React, { useState } from "react";
 
 import { useSelector } from "react-redux";
 import { ReduxState } from "../../reducer";
 
 import CreateProduct from "../Dashboard/Dialogs/CreateProduct";
 import CreateCategory from "../Dashboard/Dialogs/CreateCategory";
+import SearchBar from "../../components/SearchBar/SearchBar";
+
+import { getArticulos, getCategorias, Articulo } from "../../actions";
+
 
 function Dashboard() {
   const [open, setOpen] = React.useState(false);
+  const [state, setState] = useState({
+    page: 1,
+    pageSize: 12,
+    name: undefined,
+    order: undefined,
+    direction: undefined,
+    categoryId: undefined,
+    articuloInit: {
+      id: 0,
+      name: null,
+      brand: null,
+      stock: 0,
+      price: 0,
+      img: null,
+      state: null,
+      categoryId: 0,
+      category: { id: 0, name: null },
+      totalCount: 0,
+    },
+    categoryInit: {
+      id: 0,
+      name:null
+    }
+  });
+
+  const dispatch = useDispatch<any>();
+
+  useEffect(() => {
+    dispatch(getCategorias());
+    dispatch(
+      getArticulos({
+        page: state.page,
+        pageSize: state.pageSize,
+        name: state.name,
+        order: state.order,
+        direction: state.direction,
+        categoryId: state.categoryId,
+      })
+    );
+  }, [
+    dispatch,
+    state.page,
+    state.pageSize,
+    state.name,
+    state.order,
+    state.direction,
+    state.categoryId,
+  ]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -28,7 +81,7 @@ function Dashboard() {
   };
 
   const dashboardmenu = useSelector((state: ReduxState) => state.dashboardmenu);
-  
+
   return (
     <>
       <Body>
@@ -36,18 +89,23 @@ function Dashboard() {
         <CssBaseline />
         <Box sx={{ flexGrow: 1 }}>
           <Grid container spacing={2}>
-            <Grid item xs={12}>
-              
-            </Grid>
+            <Grid item xs={12}></Grid>
             <Grid item xs={12}>
               <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={3}>
-                  <Grid item xs={10}></Grid>
+                  <Grid item xs={2}>
+                    <SearchBar
+                      onSearch={(search) =>
+                        setState({ ...state, page: 1, name: search })
+                      }
+                    />
+                  </Grid>
+                  <Grid item xs={8}></Grid>
                   <Grid item xs={2}>
                     {dashboardmenu === "products" ? (
-                      <CreateProduct />
+                      <CreateProduct articulo={state.articuloInit} />
                     ) : (
-                      <CreateCategory />
+                      <CreateCategory category={state.categoryInit} />
                     )}
                   </Grid>
                 </Grid>
