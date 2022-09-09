@@ -2,7 +2,6 @@ import React from "react";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import Landing from "./pages/Landing/Landing";
 import Home from "./pages/Home/Home";
-import NavBar from "./components/NavBar/NavBar";
 import ErrorCard from "./components/ErrorCard/ErrorCard";
 import CreateProduct from "./pages/CreateProduct/CreateProduct";
 import Login from "./components/Login/Login";
@@ -20,7 +19,6 @@ import ShoppingCart from "./components/PruebaCarrito/ShoppingCart";
 export default function App() {
   const user = useSelector((state: ReduxState) => state.user);
 
-  // prettier-ignore
   return (
     <BrowserRouter>
       <Routes>
