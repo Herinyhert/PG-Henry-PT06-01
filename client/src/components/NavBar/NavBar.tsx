@@ -8,9 +8,7 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { ReduxState } from "../../reducer";
 
-export interface NavBarProps {}
-
-export default function NavBar({}: NavBarProps) {
+export default function NavBar() {
   const dispatch = useDispatch<any>();
 
   function handleLogout() {
@@ -124,15 +122,11 @@ const Shop = styled.button`
 const NavBarContainer = styled.header`
   height: 70px;
   width: 100vw;
-  /* top: 10px; */
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
   background-color: trasparent;
-  /* opacity: 0.5; */
-  /* border-radius: 16px; */
-  /* box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); */
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
   border: 1px solid rgba(255, 255, 255, 0.3);
@@ -147,7 +141,6 @@ const NavBarContainer = styled.header`
 const Img = styled.img`
   width: 140px;
   height: 140px;
-  /* top="10px" */
   margin-top: -80px;
   margin-left: 20px;
   z-index: 1;

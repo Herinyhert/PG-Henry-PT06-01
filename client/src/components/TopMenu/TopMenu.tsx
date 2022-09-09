@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { MdComputer } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { ReduxState } from "../../reducer";
 
@@ -82,9 +81,4 @@ const DivLeft = styled(Div)`
 const DivRight = styled(Div)`
   border-top-right-radius: 1rem;
   border-bottom-right-radius: 1rem;
-`;
-
-const Icon = styled.div`
-  font-size: 30px;
-  color: white;
 `;

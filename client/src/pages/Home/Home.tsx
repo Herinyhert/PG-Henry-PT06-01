@@ -12,7 +12,6 @@ import OrderName from "../../components/SideBar/OrderName";
 import OrderPrice from "../../components/SideBar/OrderPrice";
 import OrderBrand from "../../components/SideBar/OrderBrand";
 import NavBar from "../../components/NavBar/NavBar";
-import { Link } from "react-router-dom";
 
 export default function Home() {
   const [state, setState] = useState({
@@ -27,8 +26,6 @@ export default function Home() {
   const allProducts = useSelector((state: ReduxState) => state.articulos);
 
   const totalCount = useSelector((state1: ReduxState) => state1.totalCount);
-
-  const token = useSelector((state: ReduxState) => state.token);
 
   const dispatch = useDispatch<any>();
 
@@ -116,10 +113,6 @@ const HomeContainer = styled.div`
   align-items: center;
   justify-content: center;
   overflow-x: hidden;
-`;
-
-const Welcome = styled.h1`
-  font-size: 3rem;
 `;
 
 const CardsProducts = styled.div`
