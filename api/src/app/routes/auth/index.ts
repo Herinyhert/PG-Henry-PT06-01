@@ -12,10 +12,10 @@ export interface TokenPayload {
   role: string;
 }
 
-function createToken({id,email,role}: TokenPayload) {
+function createToken({ id, email, role }: TokenPayload) {
   return jwt.sign(
     { id: id, email: email, role: role },
-    process.env.JWT_SECRETE || 'Abacabb22',
+    process.env.JWT_SECRETE || 'Abacabb22'
   );
 }
 
@@ -24,12 +24,14 @@ authRouter.post('/signup', async (req, res) => {
   //hasheamos el password
   let salt = await bcrypt.genSalt(10);
   let passwordHash = await bcrypt.hash(password, salt);
-  console.log(email);
-  if (!name || !surname) {
-    res.status(400).send('name y surname');
-  }
-  if (!email || !password) {
-    res.status(400).send('ingrese usuario y contraseña');
+  if (!name) {
+    return res.status(400).json({ msg: 'el nombre es requerido' });
+  } else if (!surname) {
+    return res.status(400).json({ msg: 'el Surname es requerido' });
+  } else if (!/^.{6,30}$/.test(password)) {
+    return res.status(400).json({ msg: 'debe contener de 6 a 12 digitos' });
+  } else if (!/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(email)) {
+    return res.status(400).json({ msg: 'el email es incorrectos' });
   }
   const trueUser = await prisma.user.findUnique({
     where: {
@@ -55,7 +57,7 @@ authRouter.post('/signin', async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
     res.status(400).send('ingrese usuario y contraseña');
-    return
+    return;
   }
   const user = await prisma.user.findUnique({
     where: {
@@ -64,15 +66,15 @@ authRouter.post('/signin', async (req, res) => {
   });
   if (!user) {
     res.status(400).send('el usuario no existe');
-    return
+    return;
   } else {
     // revisar el pasword------/
     const passworCorrecto = await bcrypt.compare(password, user.password);
     if (!passworCorrecto) {
       res.status(400).send('Password Incorrecto');
-      return
+      return;
     } else {
-      res.status(200).json({token: createToken(user)})
+      res.status(200).json({ token: createToken(user) });
     }
     /* if(user.password === password){
 
@@ -83,16 +85,23 @@ authRouter.post('/signin', async (req, res) => {
   }
 });
 
-authRouter.get('/google', auth.authenticate('google', {scope:['profile', 'email']}))
+authRouter.get(
+  '/google',
+  auth.authenticate('google', { scope: ['profile', 'email'] })
+);
 
-authRouter.get('/google/success', auth.authenticate('google',{session :false}), (req,res)=>{
-  // res.status(200).json({token: createToken(req.user as TokenPayload)})
-  const token = createToken(req.user as TokenPayload)
-  return res.redirect(`http://localhost:3000/checkgoogle/${token}`)
-})
+authRouter.get(
+  '/google/success',
+  auth.authenticate('google', { session: false }),
+  (req, res) => {
+    // res.status(200).json({token: createToken(req.user as TokenPayload)})
+    const token = createToken(req.user as TokenPayload);
+    return res.redirect(`http://localhost:3000/checkgoogle/${token}`);
+  }
+);
 
-authRouter.post('/google/logout', (req,res, next)=>{
- console.log(req)
-})
+authRouter.post('/google/logout', (req, res, next) => {
+  console.log(req);
+});
 
 export default authRouter;
