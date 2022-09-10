@@ -1,3 +1,5 @@
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { CssBaseline } from "@mui/material";
 import DataProduct from "./DataProduct";
 import DataCategories from "./DataCategories";
@@ -11,9 +13,7 @@ import Grid from "@mui/material/Grid";
 
 import styled from "styled-components";
 import NavBar from "../NavBar/NavBar";
-import React, { useState } from "react";
 
-import { useSelector } from "react-redux";
 import { ReduxState } from "../../reducer";
 
 import CreateProduct from "../Dashboard/Dialogs/CreateProduct";
