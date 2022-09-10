@@ -8,7 +8,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useDispatch, useSelector } from "react-redux";
 import { ReduxState } from "../../reducer";
-import { getArticulos, getCategorias } from "../../actions";
+import { getArticulos, deleteProduct } from "../../actions";
 import Paginado from "../../components/Paginado/Paginado";
 import ButtonMUI from "@mui/material/Button";
 import CreateProduct from "../Dashboard/Dialogs/CreateProduct";
@@ -24,14 +24,10 @@ export default function DenseTable() {
     categoryId: undefined,
   });
   const allProducts = useSelector((state: ReduxState) => state.articulos);
-  console.log(allProducts);
-
   const totalCount = useSelector((state1: ReduxState) => state1.totalCount);
-
   const dispatch = useDispatch<any>();
 
   useEffect(() => {
-    dispatch(getCategorias());
     dispatch(
       getArticulos({
         page: state.page,
