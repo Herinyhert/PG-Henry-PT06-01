@@ -1,4 +1,4 @@
-import { Link, Navigate } from "react-router-dom";
+import { Navigate, Link } from "react-router-dom";
 import styled from "styled-components";
 import NavBar from "../NavBar/NavBar";
 import React, { useState } from "react";
@@ -31,6 +31,10 @@ export default function Signup() {
     dispatch(loginUser(input));
   }
 
+  function redirect() {
+   window.location.href='http://localhost:3001/auth/google'
+  }
+
   return (
     <div>
       {user?.role === "CLIENT" ? (
@@ -58,8 +62,10 @@ export default function Signup() {
             />
             <Acuerdo>Estoy de acuerdo con terminos y condiciones</Acuerdo>
             <Button type="submit">Inicio</Button>
-            <Button>Iniciar con Google</Button>
+ 
+            <Button onClick={redirect} >Iniciar con Google</Button>
 
+            {/*  */}
             <p>
               <a href="/Signup">¿No tienes cuenta?</a>
             </p>

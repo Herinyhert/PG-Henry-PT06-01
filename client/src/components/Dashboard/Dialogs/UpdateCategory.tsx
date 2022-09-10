@@ -14,21 +14,22 @@ export default function FormDialog() {
     setOpen(true);
   };
 
-  const handleSubmit = () => {
-    setOpen(false);
-  };
-
   const handleClose = () => {
     setOpen(false);
   };
 
+  const handleSubmit = () => {
+    setOpen(false);
+  };
+
+
   return (
     <div>
-      <Button variant="outlined" fullWidth onClick={handleClickOpen}>
-        Create
+      <Button variant="outlined" onClick={handleClickOpen}>
+        Update
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>New Category</DialogTitle>
+        <DialogTitle>Update Category</DialogTitle>
         <DialogContent>
           <TextField
             autoFocus

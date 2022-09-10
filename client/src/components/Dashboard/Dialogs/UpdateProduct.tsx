@@ -12,7 +12,6 @@ import AttachFileIcon from "@mui/icons-material/AttachFile";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { postProduct } from "../../../actions";
 import { postImage } from "../../../services/api/postImage";
 import { ReduxState } from "../../../reducer/index";
 
@@ -22,6 +21,9 @@ import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 
 export default function FormDialog() {
+  let categories = useSelector((state: ReduxState) => state.categorias);
+
+  const [open, setOpen] = React.useState(false);
   const dispatch = useDispatch<any>();
   const [input, setInput] = useState({
     name: "",
@@ -33,12 +35,8 @@ export default function FormDialog() {
     categoryId: undefined,
   });
 
-    const token = useSelector((state: ReduxState) => state.token);
-    let categories = useSelector((state: ReduxState) => state.categorias);
-  let [image, setImage] = useState<File>();
-
-    function handlechange(e) {
-      console.log(e.target);
+  function handlechange(e) {
+    console.log(e.target);
     if (e.target.name === "price") {
       setInput({
         ...input,
@@ -57,54 +55,35 @@ export default function FormDialog() {
     }
   }
 
-  async function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
-      setImage(e.target.files[0]);
-      handlePostImage();
-  }
-
-  async function handlePostImage( /* e */ ) {
-    /* e.preventDefault(); */
-      const url = await postImage(image);
-      console.log(url)
-    setInput({
-      ...input,
-      img: url,
-    });
-  }
-
-    function handelSubmit(e) {
-      console.log(input)
+  function handelSubmit(e) {
+    console.log(input);
     e.preventDefault();
-    dispatch(postProduct(token, input));
+   // dispatch(putProduct(input));
   }
-  const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
   };
 
-  /* const [state, setStatus] = React.useState("");
-  const handleChange = (event: SelectChangeEvent) => {
-    setStatus(event.target.value);
-  }; */
-    
-    const handleClose = () => {
-      setOpen(false);
-    };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  
 
   return (
     <div>
       <Button variant="outlined" fullWidth onClick={handleClickOpen}>
-        Create
+        Update
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>New Product</DialogTitle>
+        <DialogTitle>Update Product</DialogTitle>
         <IconButton color="primary" component="label">
           <input
             type="file"
             accept="image/*"
             hidden
-            onChange={(e) => handleImageChange(e)}
+            // onChange={(e) => handleImageChange(e)}
           />
           <AttachFileIcon fontSize="medium" />
         </IconButton>
@@ -198,6 +177,32 @@ export default function FormDialog() {
           <Button onClick={handelSubmit}>Save</Button>
         </DialogActions>
       </Dialog>
+
+      {/* <Button variant="outlined" onClick={handleClickOpen}>
+        Update
+      </Button>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Subscribe</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            To subscribe to this website, please enter your email address here.
+            We will send updates occasionally.
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Email Address"
+            type="email"
+            fullWidth
+            variant="standard"
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleClose}>Subscribe</Button>
+        </DialogActions>
+      </Dialog> */}
     </div>
   );
 }

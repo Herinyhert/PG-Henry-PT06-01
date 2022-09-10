@@ -10,13 +10,11 @@ import Paper from "@mui/material/Paper";
 
 import { useDispatch, useSelector } from "react-redux";
 import { ReduxState } from "../../reducer";
-import { getArticulos, deleteProduct } from "../../actions";
+import { getArticulos, getCategorias } from "../../actions";
 import Paginado from "../../components/Paginado/Paginado";
 import ButtonMUI from "@mui/material/Button";
 
-//import UpdateProduct from "../Dashboard/Dialogs/UpdateProduct";
-import CreateProduct from "../Dashboard/Dialogs/CreateProduct";
-
+import UpdateProduct from "../Dashboard/Dialogs/UpdateProduct";
 
 
 function createData(
@@ -41,12 +39,14 @@ export default function DenseTable() {
     categoryId: undefined,
   });
   const allProducts = useSelector((state: ReduxState) => state.articulos);
+  console.log(allProducts);
 
   const totalCount = useSelector((state1: ReduxState) => state1.totalCount);
 
   const dispatch = useDispatch<any>();
 
   useEffect(() => {
+    dispatch(getCategorias());
     dispatch(
       getArticulos({
         page: state.page,
@@ -67,18 +67,20 @@ export default function DenseTable() {
     state.categoryId,
   ]);
 
-  function clickDelete(id) {
-        dispatch(deleteProduct(id));
+
+  function clickUpdate(){
+    
   }
   return (
     <>
-      <TableContainer component={Paper} sx={{ maxHeight: 440 }}>
-        <Table
-          sx={{ minWidth: 650 }}
-          size="small"
-          stickyHeader
-          aria-label="sticky table"
-        >
+      <Paginado
+        onPageChange={(page) => setState({ ...state, page })}
+        totalCount={totalCount}
+        pageSize={state.pageSize}
+      />
+
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
           <TableHead>
             <TableRow>
               <TableCell>Name</TableCell>
@@ -104,23 +106,16 @@ export default function DenseTable() {
                 <TableCell align="right">{row.price}</TableCell>
                 <TableCell align="right">{row.state}</TableCell>
                 <TableCell align="right">
-                  <CreateProduct articulo={row} />
+                  <UpdateProduct/>
                 </TableCell>
                 <TableCell align="right">
-                  <ButtonMUI variant="outlined" onClick={()=>clickDelete(row.id)}>Delete</ButtonMUI>
+                  <ButtonMUI variant="outlined">Delete</ButtonMUI>
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
-      <div style={{width:'100%'}} >
-        <Paginado
-          onPageChange={(page) => setState({ ...state, page })}
-          totalCount={totalCount}
-          pageSize={state.pageSize}
-        />
-      </div>
     </>
   );
 }

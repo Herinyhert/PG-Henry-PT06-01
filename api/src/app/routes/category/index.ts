@@ -5,22 +5,17 @@ const categoryRoutes = Router();
 
 categoryRoutes.post("/", async (req, res) => {
   try {
-    const { id, name } = req.body;
+    const { name } = req.body;
     if (typeof name !== "string") {
       res.status(400).json({ message: `the 'name' must be a string` });
       return;
     }
 
-    const newCategory = await prisma.category.upsert({
-      where: { id: id },
-      update: {
-        name: name,
-      },
-      create: {
-        name: name,
+    const newCategory = await prisma.category.create({
+      data: {
+        name: name
       },
     });
-
     res.status(200).json(newCategory);
   } catch (error) {
     console.log("post category fail", error);
