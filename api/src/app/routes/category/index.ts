@@ -14,9 +14,9 @@ categoryRoutes.post("/", async (req, res) => {
     const newCategory = await prisma.category.upsert({
       where: { id: id },
       update: {
-        name: name,	
-      },	
-      create: {	
+        name: name,
+      },
+      create: {
         name: name,
       },
     });
