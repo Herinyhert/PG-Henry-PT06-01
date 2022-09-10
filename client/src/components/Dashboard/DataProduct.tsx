@@ -13,6 +13,7 @@ import Paginado from "../../components/Paginado/Paginado";
 import ButtonMUI from "@mui/material/Button";
 import CreateProduct from "../Dashboard/Dialogs/CreateProduct";
 
+
 export default function DenseTable() {
   const [state, setState] = useState({
     page: 1,
@@ -23,9 +24,7 @@ export default function DenseTable() {
     categoryId: undefined,
   });
   const allProducts = useSelector((state: ReduxState) => state.articulos);
-
   const totalCount = useSelector((state1: ReduxState) => state1.totalCount);
-
   const dispatch = useDispatch<any>();
 
   useEffect(() => {
@@ -48,6 +47,7 @@ export default function DenseTable() {
     state.direction,
     state.categoryId,
   ]);
+
 
   function clickDelete(id) {
     dispatch(deleteProduct(id));

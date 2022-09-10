@@ -15,11 +15,12 @@ import {
   SET_ERROR,
   POST_SIGNIN,
   CLEAR_STATE,
+  GET_GOOGLE,
   GET_ORDERS,
   GET_TOTALORDERS,
 } from "./actiontype";
 
-const { REACT_APP_API_URL = "http://localhost:3001" } = process.env
+const { REACT_APP_API_URL = "http://localhost:3001" } = process.env;
 
 export interface User {
   id: number;
@@ -50,8 +51,6 @@ export interface OrderDetails {
   price: number;
   quantity: number;
 }
-
-
 
 export interface Articulo {
   id: number;
@@ -101,19 +100,22 @@ export function getOrders({
   pageSize,
   name,
   order,
-  direction
+  direction,
 }: paramsOrders) {
   return async function (dispatch: Dispatch) {
     try {
-      var json = await axios.get<Orders[]>(REACT_APP_API_URL + "/backoffice/order", {
-        params: {
-          page: page,
-          pageSize: pageSize,
-          name: name,
-          order: order,
-          direction: direction
-        },
-      });
+      var json = await axios.get<Orders[]>(
+        REACT_APP_API_URL + "/backoffice/order",
+        {
+          params: {
+            page: page,
+            pageSize: pageSize,
+            name: name,
+            order: order,
+            direction: direction,
+          },
+        }
+      );
       // console.log(json.data[1]);
 
       return [
@@ -137,7 +139,7 @@ export function getArticulos({
 }: params) {
   return async function (dispatch: Dispatch) {
     try {
-      var json = await axios.get<Articulo[]>(REACT_APP_API_URL+"/product", {
+      var json = await axios.get<Articulo[]>(REACT_APP_API_URL + "/product", {
         params: {
           page: page,
           pageSize: pageSize,
@@ -163,9 +165,7 @@ export function getArticulos({
 export function deleteUser(id) {
   return async function (dispatch: Dispatch) {
     try {
-      var json = await axios.delete<User[]>(
-        REACT_APP_API_URL + `/user/${id}`
-      );
+      var json = await axios.delete<User[]>(REACT_APP_API_URL + `/user/${id}`);
 
       return dispatch({ type: DELETE_USER, payload: json.data });
     } catch (error) {
@@ -179,7 +179,7 @@ export function getUsers({
   pageSize,
   name,
   order,
-  direction
+  direction,
 }: paramsUser) {
   return async function (dispatch: Dispatch) {
     try {
@@ -189,7 +189,7 @@ export function getUsers({
           pageSize: pageSize,
           name: name,
           order: order,
-          direction: direction
+          direction: direction,
         },
       });
       // console.log(json.data[1]);
@@ -205,12 +205,10 @@ export function getUsers({
   };
 }
 
-
-
 export function getCategorias() {
   return async function (dispatch: Dispatch) {
     try {
-      var json = await axios.get<Category[]>(REACT_APP_API_URL+"/category");
+      var json = await axios.get<Category[]>(REACT_APP_API_URL + "/category");
 
       return dispatch({ type: GET_CATEGORIES, payload: json.data });
     } catch (error) {
@@ -218,6 +216,7 @@ export function getCategorias() {
     }
   };
 }
+
 export function deleteCategory(id) {
   return async function (dispatch: Dispatch) {
     try {
@@ -247,18 +246,19 @@ export function deleteProduct(id) {
 export function setDashboardMenu(payload) {
   return async function (dispatch: Dispatch) {
     try {
-
       return dispatch({ type: SET_DASHBOARDMENU, payload: payload });
     } catch (error) {
       return dispatch({ type: SET_ERROR, payload: "error" });
     }
   };
-};
+}
 
 export function postProduct(token, payload) {
   return function (dispatch) {
     return axios
-      .post(REACT_APP_API_URL+"/product", payload, {headers:{authorization: `Bearer ${token}`}})
+      .post(REACT_APP_API_URL + "/product", payload, {
+        headers: { authorization: `Bearer ${token}` },
+      })
       .then((response) => response)
       .catch((error) => {
         dispatch({ type: SET_ERROR, payload: error });
@@ -282,7 +282,9 @@ export function postUser(token, payload) {
 export function postCategory(token, payload) {
   return function (dispatch) {
     return axios
-      .post(REACT_APP_API_URL+"/category", payload, {headers:{authorization: `Bearer ${token}`}})
+      .post(REACT_APP_API_URL + "/category", payload, {
+        headers: { authorization: `Bearer ${token}` },
+      })
       .then((response) => response)
       .catch((error) => {
         dispatch({ type: SET_ERROR, payload: error });
@@ -295,7 +297,7 @@ export function detailsProduct(id: String) {
   return async function (dispatch: Dispatch) {
     try {
       var json = await axios.get<Articulo[]>(
-        REACT_APP_API_URL+`/product/${id}`
+        REACT_APP_API_URL + `/product/${id}`
       );
       //console.log("json action", json);
       return dispatch({ type: GET_DETAIL_PRODUCT, payload: json.data });
@@ -307,33 +309,42 @@ export function detailsProduct(id: String) {
 
 export function createUser(payload) {
   return function (dispatch) {
-       return axios
-      .post(REACT_APP_API_URL+"/auth/signup", payload )
-      .then((response) => response )
+    return axios
+      .post(REACT_APP_API_URL + "/auth/signup", payload)
+      .then((response) => response)
       .catch((error) => {
         dispatch({ type: SET_ERROR, payload: error });
       });
   };
 }
 
-
-export function loginUser(payload){
+export function loginUser(payload) {
   return function (dispatch) {
-    return axios
-   .post(REACT_APP_API_URL+"/auth/signin", payload )
-  .then(res =>{dispatch({type:POST_SIGNIN, payload: res.data.token})} )
-  //.then(res =>{console.log(res.data.token)})
-   .catch((error) => {
-     dispatch({ type: SET_ERROR, payload: error.response.data });
-    //  .catch(res =>{console.log(res.response.data)})
-   });
-};
+    return (
+      axios
+        .post(REACT_APP_API_URL + "/auth/signin", payload)
+        .then((res) => {
+          dispatch({ type: POST_SIGNIN, payload: res.data.token });
+        })
+        //.then(res =>{console.log(res.data.token)})
+        .catch((error) => {
+          dispatch({ type: SET_ERROR, payload: error.response.data });
+          //  .catch(res =>{console.log(res.response.data)})
+        })
+    );
+  };
 }
 
-export function clearState (){
-  return function(dispatch){
-  dispatch ({
-    type: CLEAR_STATE
-  })
-  }
+export function loginGoogle(token) {
+  return function (dispatch) {
+    dispatch({ type: GET_GOOGLE, payload: token });
+  };
+}
+
+export function clearState() {
+  return function (dispatch) {
+    dispatch({
+      type: CLEAR_STATE,
+    });
+  };
 }

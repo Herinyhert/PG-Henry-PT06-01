@@ -12,7 +12,7 @@ import { setDashboardMenu } from "../../actions";
 
 export default function TypographyMenu() {
   const dispatch = useDispatch<any>();
-  
+
   function handleChange(e: String) {
     dispatch(setDashboardMenu(e));
   }

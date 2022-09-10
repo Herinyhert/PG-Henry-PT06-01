@@ -5,17 +5,17 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { Category } from "../../../actions";
-import { postCategory } from "../../../actions";
+import { Category, postCategory } from "../../../actions";
 import { useDispatch, useSelector } from "react-redux";
-import { ReduxState } from "../../../reducer/index";
+import { ReduxState } from "../../../reducer";
 
 export interface CardCategoryProps {
   category: Category;
 }
 
+
 export default function FormDialog({ category }: CardCategoryProps) {
-    const dispatch = useDispatch<any>();
+  const dispatch = useDispatch<any>();
   const [open, setOpen] = React.useState(false);
   const [input, setInput] = useState({
     id: category.id,
@@ -33,18 +33,19 @@ export default function FormDialog({ category }: CardCategoryProps) {
     setOpen(false);
     e.preventDefault();
     dispatch(postCategory(token, input));
-  }
+  };
 
   const handleClose = () => {
     setOpen(false);
   };
+  
 
   function handlechange(e) {    
-      setInput({
-        ...input,
-        [e.target.name]: e.target.value,
-      });
-  }
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+    });
+}
 
   return (
     <div>

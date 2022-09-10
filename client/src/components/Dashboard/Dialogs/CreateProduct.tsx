@@ -8,7 +8,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import IconButton from "@mui/material/IconButton";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import { useDispatch, useSelector } from "react-redux";
-import { postProduct } from "../../../actions";
+import { Articulo, postProduct } from "../../../actions";
 import { postImage } from "../../../services/api/postImage";
 import { ReduxState } from "../../../reducer/index";
 
@@ -16,8 +16,6 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-
-import { Articulo } from "../../../actions";
 
 export interface CardProductProps {
   articulo: Articulo;
@@ -39,8 +37,8 @@ export default function FormDialog({ articulo }: CardProductProps) {
   const token = useSelector((state: ReduxState) => state.token);
   let categories = useSelector((state: ReduxState) => state.categorias);
 
-  function handlechange(e) {
-    console.log(e.target);
+    function handlechange(e) {
+      console.log(e.target);
     if (e.target.name === "price") {
       setInput({
         ...input,
@@ -72,8 +70,8 @@ export default function FormDialog({ articulo }: CardProductProps) {
     });
   }
 
-  function handelSubmit(e) {
-    console.log(input);
+    function handelSubmit(e) {
+      console.log(input)
     e.preventDefault();
     dispatch(postProduct(token, input));
   }
@@ -82,6 +80,7 @@ export default function FormDialog({ articulo }: CardProductProps) {
   const handleClickOpen = () => {
     setOpen(true);
   };
+
 
   const handleClose = () => {
     setOpen(false);

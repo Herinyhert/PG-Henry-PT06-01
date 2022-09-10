@@ -86,7 +86,13 @@ authRouter.post('/signin', async (req, res) => {
 authRouter.get('/google', auth.authenticate('google', {scope:['profile', 'email']}))
 
 authRouter.get('/google/success', auth.authenticate('google',{session :false}), (req,res)=>{
-  res.status(200).json({token: createToken(req.user as TokenPayload)})
+  // res.status(200).json({token: createToken(req.user as TokenPayload)})
+  const token = createToken(req.user as TokenPayload)
+  return res.redirect(`http://localhost:3000/checkgoogle/${token}`)
+})
+
+authRouter.post('/google/logout', (req,res, next)=>{
+ console.log(req)
 })
 
 export default authRouter;

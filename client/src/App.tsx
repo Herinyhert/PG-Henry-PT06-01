@@ -15,25 +15,28 @@ import Buy from "./components/CardProduct/DetailCardProduct/Buy";
 import Dashboard from "./components/Dashboard/index";
 import PruebaCarrito from "./components/PruebaCarrito/PruebaCarrito";
 import ShoppingCart from "./components/PruebaCarrito/ShoppingCart";
+import CheckGoogle from "./components/Login/CheckGoogle";
 
 export default function App() {
   const user = useSelector((state: ReduxState) => state.user);
 
+  // prettier-ignore
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Landing />} />
-        <Route path="ShoppingCart" element={<ShoppingCart/>}/>
-        <Route path="PruebaCarrito" element={<PruebaCarrito/>}/>
+        <Route path="ShoppingCart" element={<ShoppingCart />} />
+        <Route path="PruebaCarrito" element={<PruebaCarrito />} />
         <Route path="home" element={<Home />} />
         <Route path="login" element={<Login />} />
-        <Route path="admin" element={ user?.role === "ADMIN" ?  <Dashboard /> : <Navigate to="/home" />} />
+        <Route path="admin" element={user?.role === "ADMIN" ? <Dashboard /> : <Navigate to="/home" />} />
         <Route path="signup" element={<Signup />} />
-        <Route path="*" element={<ErrorCard/>} />
-        <Route path="CreateProduct" element={ user?.role === "ADMIN" ? <CreateProduct/> : <Navigate to="/login" />   }/>
-        <Route path="product/:id" element={< DetailCardProduct/>}/>
-        <Route path="detail/:id" element={<Details />} /> 
-        <Route path="buy" element={<Buy />} /> 
+        <Route path="*" element={<ErrorCard />} />
+        <Route path="CreateProduct" element={user?.role === "ADMIN" ? <CreateProduct /> : <Navigate to="/login" />} />
+        <Route path="product/:id" element={<DetailCardProduct />} />
+        <Route path="detail/:id" element={<Details />} />
+        <Route path="buy" element={<Buy />} />
+        <Route path="checkgoogle/:token" element={<CheckGoogle />} />
       </Routes>
     </BrowserRouter>
   );

@@ -14,6 +14,7 @@ import {
   GET_DETAIL_PRODUCT,
   POST_SIGNIN,
   CLEAR_STATE,
+  GET_GOOGLE
 } from "../actions/actiontype";
 import {
   getLocalstorageState,
@@ -132,6 +133,19 @@ function rootReducer(state: ReduxState, action: actionI) {
       return {
         ...state,
         error: action.payload,
+      };
+    case GET_GOOGLE:
+      setLocalstorageState({ token: action.payload });
+      let usergoogle
+      try {
+        usergoogle = jwtdecode(action.payload);
+      } catch (error) {
+        console.warn(error);
+      }
+      return {
+        ...state,
+        user: usergoogle,
+        token: action.payload,
       };
 
     default:

@@ -24,6 +24,7 @@ export default function DenseTable() {
     return createData(item.id, item.name);
   });
 
+
   function clickDelete(id) {
     dispatch(deleteCategory(id));
   }
@@ -59,6 +60,7 @@ export default function DenseTable() {
               <TableCell align="right">{row.id}</TableCell>
               <TableCell align="right">{row.name}</TableCell>
               <TableCell align="right">
+
                 <CreateCategory category={row} />
               </TableCell>
               <TableCell align="right">

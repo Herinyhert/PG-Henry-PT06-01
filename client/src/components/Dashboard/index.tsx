@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { CssBaseline } from "@mui/material";
 import DataProduct from "./DataProduct";
 import DataCategories from "./DataCategories";
@@ -14,7 +14,6 @@ import Grid from "@mui/material/Grid";
 import styled from "styled-components";
 import NavBar from "../NavBar/NavBar";
 
-import { useSelector } from "react-redux";
 import { ReduxState } from "../../reducer";
 
 import CreateProduct from "../Dashboard/Dialogs/CreateProduct";
@@ -24,7 +23,6 @@ import CreateOrder from "../Dashboard/Dialogs/CreateOrder";
 import SearchBar from "../../components/SearchBar/SearchBar";
 
 import { getArticulos, getCategorias } from "../../actions";
-
 
 function Dashboard() {
   const [state, setState] = useState({
@@ -84,7 +82,7 @@ function Dashboard() {
     state.categoryId,
   ]);
 
-   const dashboardmenu = useSelector((state: ReduxState) => state.dashboardmenu);
+  const dashboardmenu = useSelector((state: ReduxState) => state.dashboardmenu);
 
   const getComponentRouter = (root: String, props: any) => {
     switch (root) {
@@ -97,7 +95,7 @@ function Dashboard() {
       case "orders":
         return <CreateOrder articulo={props.articuloInit} />;
     }
-  }
+  };
 
   const getDataComponentRouter = (root: String) => {
     switch (root) {
@@ -132,9 +130,7 @@ function Dashboard() {
                   </Grid>
                   <Grid item xs={8}></Grid>
                   <Grid item xs={2}>
-                    {                      
-                      getComponentRouter(dashboardmenu,state)                    
-                    }
+                    {getComponentRouter(dashboardmenu, state)}
                   </Grid>
                 </Grid>
               </Box>
@@ -146,9 +142,7 @@ function Dashboard() {
                     <Menu />
                   </Grid>
                   <Grid item xs>
-                    {                                 
-                      getDataComponentRouter(dashboardmenu)             
-                    }
+                    {getDataComponentRouter(dashboardmenu)}
                   </Grid>
                 </Grid>
               </Box>
