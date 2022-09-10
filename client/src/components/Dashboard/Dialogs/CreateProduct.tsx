@@ -8,7 +8,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import IconButton from "@mui/material/IconButton";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import { useDispatch, useSelector } from "react-redux";
-import { postProduct } from "../../../actions";
+import { Articulo, postProduct } from "../../../actions";
 import { postImage } from "../../../services/api/postImage";
 import { ReduxState } from "../../../reducer/index";
 
@@ -17,16 +17,21 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
-export default function FormDialog() {
+export interface CardProductProps {
+  articulo: Articulo;
+}
+
+export default function FormDialog({ articulo }: CardProductProps) {
   const dispatch = useDispatch<any>();
   const [input, setInput] = useState({
-    name: "",
-    brand: "",
-    img: "",
-    state: "",
-    price: undefined,
-    stock: undefined,
-    categoryId: undefined,
+    id: articulo.id,
+    name: articulo.name,
+    brand: articulo.brand,
+    img: articulo.img,
+    state: articulo.state,
+    price: articulo.price,
+    stock: articulo.stock,
+    categoryId: articulo.category.id,
   });
 
   const token = useSelector((state: ReduxState) => state.token);
@@ -84,7 +89,7 @@ export default function FormDialog() {
   return (
     <div>
       <Button variant="outlined" fullWidth onClick={handleClickOpen}>
-        Create
+        {articulo.id ? "Update" : "Create"}
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>New Product</DialogTitle>
@@ -106,6 +111,7 @@ export default function FormDialog() {
             label="Name"
             type="text"
             fullWidth
+            value={input.name}
             variant="standard"
             onChange={(e) => handlechange(e)}
           />
@@ -116,6 +122,7 @@ export default function FormDialog() {
             name="price"
             label="Precio"
             type="number"
+            value={input.price}
             fullWidth
             variant="standard"
             onChange={(e) => handlechange(e)}
@@ -127,6 +134,7 @@ export default function FormDialog() {
             name="stock"
             label="Stock"
             type="number"
+            value={input.stock}
             fullWidth
             variant="standard"
             onChange={(e) => handlechange(e)}
@@ -137,6 +145,7 @@ export default function FormDialog() {
             id="brand"
             name="brand"
             label="brand"
+            value={input.brand}
             type="text"
             fullWidth
             variant="standard"
@@ -150,6 +159,7 @@ export default function FormDialog() {
               id="categoryId"
               name="categoryId"
               label="categoryId"
+              value={input.categoryId}
               onChange={handlechange}
             >
               <MenuItem value="">
@@ -174,8 +184,8 @@ export default function FormDialog() {
               <MenuItem value="">
                 <em>None</em>
               </MenuItem>
-              <MenuItem value="true">Active</MenuItem>
-              <MenuItem value="false">Inactive</MenuItem>
+              <MenuItem value="A">Active</MenuItem>
+              <MenuItem value="I">Inactive</MenuItem>
             </Select>
           </FormControl>
         </DialogContent>
