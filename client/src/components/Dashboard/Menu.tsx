@@ -12,7 +12,7 @@ import { setDashboardMenu } from "../../actions";
 
 export default function TypographyMenu() {
   const dispatch = useDispatch<any>();
-  
+
   function handleChange(e: String) {
     dispatch(setDashboardMenu(e));
   }
@@ -20,13 +20,13 @@ export default function TypographyMenu() {
   return (
     <Paper sx={{ width: 230 }}>
       <MenuList>
-        <MenuItem onClick={() => handleChange('products')}>
+        <MenuItem onClick={() => handleChange("products")}>
           <ListItemIcon>
             <SendIcon fontSize="small" />
           </ListItemIcon>
           <Typography variant="inherit">Products</Typography>
         </MenuItem>
-        <MenuItem onClick={() => handleChange('categories')}>
+        <MenuItem onClick={() => handleChange("categories")}>
           <ListItemIcon>
             <PriorityHighIcon fontSize="small" />
           </ListItemIcon>
