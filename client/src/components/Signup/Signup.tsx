@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-// import { Link } from "react-router-dom";
 import styled from "styled-components";
 import NavBar from '../NavBar/NavBar';
 import { createUser } from '../../actions/index';
@@ -18,7 +17,6 @@ export default function Signup() {
 
   function handleChange(e){
     e.preventDefault()
-    // console.log(e.target.value)
     setInput({
       ...input,
     [e.target.name]:e.target.value})
@@ -36,18 +34,7 @@ export default function Signup() {
       })
   }
 
-  // Swal.fire({
-  //   position: 'top-end',
-  //   icon: 'success',
-  //   title: 'Your work has been saved',
-  //   showConfirmButton: false,
-  //   timer: 1500
-  // })
-
-
   return (
-    
-    // <p>Holaaaaaaaa</p>
     <Body>
         <NavBar />
       <Form onSubmit={(e)=>handleSubmit(e)}>
@@ -70,18 +57,9 @@ export default function Signup() {
   );
 }
 
-// *{
-//     padding: 0;
-//     margin: 0;
-//     box-sizing: border-box;
-
-// }
 const Body = styled.div`
   width: 100%;
   height: 100vh;
-  /* background: #335d90;
-  background: linear-gradient(#335d90, 80%, #11e95b); */
-  /* font-family: "Roboto", sans-serif; */
   margin: 0;
   box-sizing: border-box;
 `;
@@ -107,8 +85,6 @@ display: flex;
 const Title = styled.h1`
   position: absoluta;
   font-size: 18px;
-  /* margin-bottom: 15px;
-  padding-bottom: 7px; */
   margin: auto;
   padding: auto;
   color: #335d90;
@@ -124,7 +100,6 @@ display: block;
   width: 95%;
   height: 40px;
   padding: 5px 6px;
-  /* margin-bottom: 15px; */
   margin: 5px auto;
   border: 3px solid #335d90;
   outline: none;
@@ -132,7 +107,6 @@ display: block;
 
   &:hover:focus {
     box-shadow: 0 0 8px 0 #335d90 inset, 0 0 8px 4px #335d90;
-    /* transform: scale(1.1); */
     border: 1px solid rgba(255, 255, 255, 0.3);
   }
 `;
@@ -141,7 +115,6 @@ const Input2 = styled.input`
   width: 95%;
   height: 40px;
   padding: 5px 6px;
-  /* margin-bottom: 15px; */
   margin: 5px auto;
   border: 3px solid #335d90;
   outline: none;
@@ -149,7 +122,6 @@ const Input2 = styled.input`
 
   &:hover:focus {
     box-shadow: 0 0 8px 0 #335d90 inset, 0 0 8px 4px #335d90;
-    /* transform: scale(1.1); */
     border: 1px solid rgba(255, 255, 255, 0.3);
   }
 `;
@@ -158,7 +130,6 @@ const Input3 = styled.input`
   width: 95%;
   height: 40px;
   padding: 5px 6px;
-  /* margin-bottom: 15px; */
   margin: 5px auto;
   border: 3px solid #335d90;
   outline: none;
@@ -166,7 +137,6 @@ const Input3 = styled.input`
 
   &:hover:focus {
     box-shadow: 0 0 8px 0 #335d90 inset, 0 0 8px 4px #335d90;
-    /* transform: scale(1.1); */
     border: 1px solid rgba(255, 255, 255, 0.3);
   }
 `;
@@ -175,7 +145,6 @@ const Input4 = styled.input`
   width: 95%;
   height: 40px;
   padding: 5px 6px;
-  /* margin-bottom: 15px; */
   margin: 5px auto;
   border: 3px solid #335d90;
   outline: none;
@@ -183,7 +152,6 @@ const Input4 = styled.input`
 
   &:hover:focus {
     box-shadow: 0 0 8px 0 #335d90 inset, 0 0 8px 4px #335d90;
-    /* transform: scale(1.1); */
     border: 1px solid rgba(255, 255, 255, 0.3);
   }
 `;
@@ -211,11 +179,4 @@ const Button = styled.button`
     transform: scale(1.1);
     border: 1px solid rgba(255, 255, 255, 0.3);
   }
-`;
-
-const p = styled.link`
-  text-align: center;
-  margin-top: 15px;
-  font-weight: bolder;
-  
 `;

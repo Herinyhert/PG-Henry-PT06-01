@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { FaStar } from "react-icons/fa";
-import { start } from "repl";
 
-export interface StartRatingProps {}
-export default function StartRating({}: StartRatingProps) {
+export default function StartRating() {
   const [rating, setRating] = useState(null);
   const [hover, setHover] = useState(null);
 

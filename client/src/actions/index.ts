@@ -6,15 +6,59 @@ import {
   GET_ARTICULOS,
   GET_DETAIL_PRODUCT,
   GET_CATEGORIES,
+
+
+  GET_USERS,
+  DELETE_CATEGORY,
+  DELETE_USER,
+
   GET_TOTALARTICULOS,
+  GET_TOTALUSERS,
   SET_DASHBOARDMENU,
   SET_ERROR,
   POST_SIGNIN,
   CLEAR_STATE,
+
   GET_GOOGLE
+
+  GET_ORDERS,
+  GET_TOTALORDERS,
+
 } from "./actiontype";
 
-const {REACT_APP_API_URL =  "http://localhost:3001"} = process.env
+const { REACT_APP_API_URL = "http://localhost:3001" } = process.env
+
+export interface User {
+  id: number;
+  name: String;
+  surname: String;
+  email: String;
+  password: String;
+  state: String;
+  role: String;
+}
+
+export interface Orders {
+  id: number;
+  amount: number;
+  date: Date;
+  status: String;
+  userId: number;
+  payment_id: number;
+  payment_status: String;
+  payment_type: String;
+  order_detail: OrderDetails[];
+}
+
+export interface OrderDetails {
+  id: number;
+  orderId: number;
+  productId: number;
+  price: number;
+  quantity: number;
+}
+
+
 
 export interface Articulo {
   id: number;
@@ -34,6 +78,22 @@ export interface Category {
   name: String;
 }
 
+export interface paramsOrders {
+  page: number;
+  pageSize: number;
+  name: string;
+  order: string;
+  direction: string;
+}
+
+export interface paramsUser {
+  page: number;
+  pageSize: number;
+  name: string;
+  order: string;
+  direction: string;
+}
+
 export interface params {
   page: number;
   pageSize: number;
@@ -41,6 +101,37 @@ export interface params {
   order: string;
   direction: string;
   categoryId: number;
+}
+
+export function getOrders({
+  page,
+  pageSize,
+  name,
+  order,
+  direction
+}: paramsOrders) {
+  return async function (dispatch: Dispatch) {
+    try {
+      var json = await axios.get<Orders[]>(REACT_APP_API_URL + "/backoffice/order", {
+        params: {
+          page: page,
+          pageSize: pageSize,
+          name: name,
+          order: order,
+          direction: direction
+        },
+      });
+      // console.log(json.data[1]);
+
+      return [
+        dispatch({ type: GET_ORDERS, payload: json.data[1] }),
+        dispatch({ type: GET_TOTALORDERS, payload: json.data[0] }),
+      ];
+      //
+    } catch (error) {
+      return dispatch({ type: SET_ERROR, payload: "error" });
+    }
+  };
 }
 
 export function getArticulos({
@@ -76,6 +167,53 @@ export function getArticulos({
   };
 }
 
+export function deleteUser(id) {
+  return async function (dispatch: Dispatch) {
+    try {
+      var json = await axios.delete<User[]>(
+        REACT_APP_API_URL + `/user/${id}`
+      );
+
+      return dispatch({ type: DELETE_USER, payload: json.data });
+    } catch (error) {
+      return dispatch({ type: SET_ERROR, payload: "error" });
+    }
+  };
+}
+
+export function getUsers({
+  page,
+  pageSize,
+  name,
+  order,
+  direction
+}: paramsUser) {
+  return async function (dispatch: Dispatch) {
+    try {
+      var json = await axios.get<User[]>(REACT_APP_API_URL + "/user", {
+        params: {
+          page: page,
+          pageSize: pageSize,
+          name: name,
+          order: order,
+          direction: direction
+        },
+      });
+      // console.log(json.data[1]);
+
+      return [
+        dispatch({ type: GET_USERS, payload: json.data[1] }),
+        dispatch({ type: GET_TOTALUSERS, payload: json.data[0] }),
+      ];
+      //
+    } catch (error) {
+      return dispatch({ type: SET_ERROR, payload: "error" });
+    }
+  };
+}
+
+
+
 export function getCategorias() {
   return async function (dispatch: Dispatch) {
     try {
@@ -103,6 +241,31 @@ export function postProduct(token, payload) {
   return function (dispatch) {
     return axios
       .post(REACT_APP_API_URL+"/product", payload, {headers:{authorization: `Bearer ${token}`}})
+      .then((response) => response)
+      .catch((error) => {
+        dispatch({ type: SET_ERROR, payload: error });
+      });
+  };
+}
+
+
+export function postUser(token, payload) {
+  return function (dispatch) {
+    return axios
+      .post(REACT_APP_API_URL + "/user", payload, {
+        headers: { authorization: `Bearer ${token}` },
+      })
+      .then((response) => response)
+      .catch((error) => {
+        dispatch({ type: SET_ERROR, payload: error });
+      });
+  };
+}
+
+export function postCategory(token, payload) {
+  return function (dispatch) {
+    return axios
+      .post(REACT_APP_API_URL+"/category", payload, {headers:{authorization: `Bearer ${token}`}})
       .then((response) => response)
       .catch((error) => {
         dispatch({ type: SET_ERROR, payload: error });

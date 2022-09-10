@@ -73,7 +73,7 @@ export default function ShoppingCart () {
                 <DivUnidad>
                 <img src="https://http2.mlstatic.com/D_NQ_NP_2X_954133-MLA44482330199_012021-F.webp" alt="img" width="80px"/>
                 <h3>Producto1</h3>
-                <Cantidad type="number" min="1"></Cantidad>
+                <Cantidad type="number" min="0" defaultValue="1"></Cantidad>
                 <Unidad>$15.158,00</Unidad>
                 </DivUnidad>
                 <Decision>
@@ -87,7 +87,7 @@ export default function ShoppingCart () {
             <img src="https://http2.mlstatic.com/D_NQ_NP_2X_987666-MLA49810390770_042022-F.webp" alt="img" width="80px"/>
                 <h3>Producto2</h3>
                 
-                <Cantidad type="number" min="1"></Cantidad>
+                <Cantidad type="number" min="0" defaultValue="1"></Cantidad>
                 <Unidad>$9310,00</Unidad>
                 </DivUnidad>
                 <Decision>
@@ -101,7 +101,7 @@ export default function ShoppingCart () {
             <DivUnidad>
             <img src="https://http2.mlstatic.com/D_NQ_NP_2X_755227-MLA46955175344_082021-F.webp" alt="img" width="80px"/>
                 <h3>Producto3</h3>
-                <Cantidad type="number" min="1"></Cantidad>
+                <Cantidad type="number" min="0" defaultValue="1"></Cantidad>
                 <Unidad>$1599,00</Unidad>
                 </DivUnidad>
                 <Decision>
