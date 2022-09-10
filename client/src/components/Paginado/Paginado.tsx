@@ -4,7 +4,6 @@ import styled from 'styled-components';
 
 export default function Paginado({ totalCount, pageSize, onPageChange }) {
   return (
-    <div style={{width:'100%'}} >
     <ContainerPage>
     
       {Array.from(
@@ -19,7 +18,6 @@ export default function Paginado({ totalCount, pageSize, onPageChange }) {
       ))}
      
     </ContainerPage>
-    </div>
   )
 }
 

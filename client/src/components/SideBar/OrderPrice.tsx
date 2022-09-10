@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import styled from "styled-components";
 
 export interface SideBarProps {
@@ -8,14 +7,9 @@ export interface SideBarProps {
 export default function OrderPrice({ onDirection }: SideBarProps) {
   return (
     <SideBarContainer>
-
-
-   
-
-      <Select onChange={(e) => onDirection(e.target.value)}>
-        <option disabled selected value="">
+      <Select defaultValue="" onChange={(e) => onDirection(e.target.value)}>
+        <option disabled value="">
           {""}Ordenar por precio
-
         </option>
         <option value="asc">Menor Precio</option>
         <option value="desc">Mayor Precio</option>

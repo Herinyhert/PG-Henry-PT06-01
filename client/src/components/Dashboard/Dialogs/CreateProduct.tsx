@@ -1,17 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import IconButton from "@mui/material/IconButton";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
-
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
 import { postProduct } from "../../../actions";
 import { postImage } from "../../../services/api/postImage";
 import { ReduxState } from "../../../reducer/index";
@@ -19,7 +15,7 @@ import { ReduxState } from "../../../reducer/index";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Select from "@mui/material/Select";
 
 import { Articulo } from "../../../actions";
 
@@ -42,7 +38,6 @@ export default function FormDialog({ articulo }: CardProductProps) {
 
   const token = useSelector((state: ReduxState) => state.token);
   let categories = useSelector((state: ReduxState) => state.categorias);
-  //let [image, setImage] = useState<File>();
 
   function handlechange(e) {
     console.log(e.target);
@@ -65,12 +60,10 @@ export default function FormDialog({ articulo }: CardProductProps) {
   }
 
   async function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
-    //setImage(e.target.files[0]);
     handlePostImage(e.target.files[0]);
   }
 
   async function handlePostImage(images:File) {
-    /* e.preventDefault(); */
     const url = await postImage(images);
     console.log(url);
     setInput({
@@ -89,11 +82,6 @@ export default function FormDialog({ articulo }: CardProductProps) {
   const handleClickOpen = () => {
     setOpen(true);
   };
-
-  /* const [state, setStatus] = React.useState("");
-  const handleChange = (event: SelectChangeEvent) => {
-    setStatus(event.target.value);
-  }; */
 
   const handleClose = () => {
     setOpen(false);
@@ -128,8 +116,6 @@ export default function FormDialog({ articulo }: CardProductProps) {
             variant="standard"
             onChange={(e) => handlechange(e)}
           />
-
-          {/* <Button onClick={(e) => handlePostImage(e)}>Subir Imagen</Button> */}
           <TextField
             autoFocus
             margin="dense"
@@ -154,7 +140,6 @@ export default function FormDialog({ articulo }: CardProductProps) {
             variant="standard"
             onChange={(e) => handlechange(e)}
           />
-
           <TextField
             autoFocus
             margin="dense"
