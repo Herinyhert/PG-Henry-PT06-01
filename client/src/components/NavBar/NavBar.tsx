@@ -18,7 +18,8 @@ export default function NavBar() {
 
   const token = useSelector((state: ReduxState) => state.token);
   const user = useSelector((state: ReduxState) => state.user);
-
+  let productosCarrito = JSON.parse(localStorage.getItem("carrito"));
+ 
   return (
     <NavBarContainer>
       <div>
@@ -30,8 +31,7 @@ export default function NavBar() {
       </div>
 
       <ContainerButtons>
-       {user?
-        <div>hola {user?.email}</div>: null}
+        {user ? <div>hola {user?.email}</div> : null}
         {user?.role === "ADMIN" ? (
           <Link to="/Home">
             <ButtonLogin>Home</ButtonLogin>
@@ -48,6 +48,7 @@ export default function NavBar() {
         )}
         <Link to="/ShoppingCart">
           <Shop>
+            <Numerito>{productosCarrito?.length} </Numerito>
             <FiShoppingCart />
           </Shop>
         </Link>
@@ -144,4 +145,18 @@ const Img = styled.img`
   margin-top: -80px;
   margin-left: 20px;
   z-index: 1;
+`;
+
+const Numerito = styled.div`
+  font-size: 12px;
+  position: absolute;
+  z-index: 1;
+  width: fit-content;
+  height: fit-content;
+  border-radius: 9999px;
+  background-color: black;
+  color: white;
+  margin: auto;
+  padding-left: 6px;
+  padding-right: 6px;
 `;
