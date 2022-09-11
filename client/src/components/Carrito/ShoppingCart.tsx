@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
 import { Link } from "react-router-dom";
 import { Articulo, ArticuloCarrito } from "../../actions";
 import NavBar from "../NavBar/NavBar";
@@ -27,10 +26,13 @@ import {
 } from "./stylesCart";
 import { ButtonsWayToShop } from "./styles";
 import { ButtonCantidad, ButtonDelete } from './stylesCart';
+import { Orders, postOrder } from '../../actions/index';
+import { useNavigate} from "react-router-dom";
 
 export default function ShoppingCart() {
   let detail = useSelector((state: ReduxState) => state.detailsProduct);
-
+  const dispatch = useDispatch<any>()
+  const history = useNavigate()
   let detalle: ArticuloCarrito = {
     id: detail?.id,
     name: detail?.name,
@@ -95,7 +97,21 @@ export default function ShoppingCart() {
   }
 
   const index = productosCarrito?.findIndex((art) => art.id === detalle.id);
-  const controllerDisabledButon = productosCarrito[index]?.totalCount <= 1;
+  const controllerDisabledButon = productosCarrito[index]?.totalCount === 1;
+
+  const ordenPorEnviar = {
+    amount: preciofinal,
+    userId: 1,
+    status: "Abierto"
+  }
+
+  function sendOrderToDB(e){
+    // console.log(ordenPorEnviar)
+    e.preventDefault();
+    dispatch(postOrder(ordenPorEnviar))
+    
+    history("/pagar")
+  }
 
   return (
     <>
@@ -156,8 +172,8 @@ export default function ShoppingCart() {
                 </Button>
               </ButtonCompra>
               <ButtonCompra>
-                <Button>
-                  <Link to="/pagar">Finalizar compra</Link>
+                <Button onClick={(e)=>{sendOrderToDB(e)}}>
+                 Finalizar compra
                 </Button>
               </ButtonCompra>
             </DivResumen>
