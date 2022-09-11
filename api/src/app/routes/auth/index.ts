@@ -2,6 +2,7 @@ import { Router } from 'express';
 import prisma from '../../../db';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import auth from '../../middlewares/passport';
+import axios from 'axios'
 const bcrypt = require('bcrypt');
 
 const authRouter = Router();
@@ -47,7 +48,7 @@ authRouter.post('/signup', async (req, res) => {
         password: passwordHash,
       },
     });
-    res.status(200).send(newUser);
+    axios.post(`http://localhost:3001/mail/confirm?email=${newUser.email}&name=${newUser.name}&surname=${newUser.surname}`)
   } else {
     res.status(400).send('el usuario ya existe');
   }
@@ -90,15 +91,11 @@ authRouter.get(
   auth.authenticate('google', { scope: ['profile', 'email'] })
 );
 
-authRouter.get(
-  '/google/success',
-  auth.authenticate('google', { session: false }),
-  (req, res) => {
-    // res.status(200).json({token: createToken(req.user as TokenPayload)})
-    const token = createToken(req.user as TokenPayload);
-    return res.redirect(`http://localhost:3000/checkgoogle/${token}`);
-  }
-);
+authRouter.get('/google/success', auth.authenticate('google',{session :false}), (req,res)=>{
+  // res.status(200).json({token: createToken(req.user as TokenPayload)})
+  const token = createToken(req.user as TokenPayload)
+  return res.redirect(`http://localhost:3000/checkgoogle/${token}`)
+})
 
 authRouter.post('/google/logout', (req, res, next) => {
   console.log(req);

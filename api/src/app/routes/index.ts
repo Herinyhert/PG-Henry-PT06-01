@@ -7,6 +7,9 @@ import userRoutes from './user';
 import authRouter from './auth';
 import pruebaRoutes from './prueba/prueba';
 import mercadoPagoRoutes from './mercadopago';
+import accountRoutes from './mails/confirmaccount';
+
+
 
 
 const router = Router();
@@ -19,5 +22,6 @@ router.use('/backoffice/order', backofficeRoutesOrder);
 router.use('/auth', authRouter)
 router.use('/prueba', pruebaRoutes)
 router.use('/mercadopago', mercadoPagoRoutes)
+router.use('/mail', accountRoutes)
 
 export default router;

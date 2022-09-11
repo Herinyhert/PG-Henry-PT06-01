@@ -1,5 +1,6 @@
 import { Strategy } from "passport-google-oauth20";
 import prisma from "../../../../db";
+import axios from 'axios'
 import passport from "..";
 
 const googleStrategy =  new Strategy(
@@ -27,6 +28,7 @@ const googleStrategy =  new Strategy(
         email: email,
       },
     })
+    axios.post(`http://localhost:3001/mail/confirm?email=${email}&name=${profile.name?.givenName}&surname=${profile.name?.familyName}`)
    }
    return done(null, user);
   }
