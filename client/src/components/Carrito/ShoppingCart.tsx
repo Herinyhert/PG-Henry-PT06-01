@@ -109,6 +109,7 @@ export default function ShoppingCart() {
     // console.log(ordenPorEnviar)
     e.preventDefault();
     dispatch(postOrder(ordenPorEnviar))
+    
     history("/pagar")
   }
 
