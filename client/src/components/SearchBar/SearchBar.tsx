@@ -90,19 +90,20 @@ const Search = styled.button`
   -webkit-appearance: none;
   cursor: pointer;
   font-size: 3vh;
-  /* background-color: red; */
-  box-shadow: 0 0 40px 40px #335d90 inset, 0 0 0 0 #335d90;
+  background-color: #335d90;
+  /* box-shadow: 0 0 40px 40px #335d90 inset, 0 0 0 0 #335d90;
   -webkit-transition: all 150ms ease-in-out;
-  transition: all 150ms ease-in-out;
+  transition: all 150ms ease-in-out; */
   color: white;
-  &:hover,
-  &:focus {
-    box-shadow: 0 0 10px 0 #335d90 inset, 0 0 10px 4px #335d90;
-    color: #335d90;
+  &:hover{
+    /* box-shadow: 0 0 10px 0 #335d90 inset, 0 0 10px 4px #335d90;
+    color: #335d90; */
+    background-color: #183659;
   }
   &:active {
-    box-shadow: 0 0 10px 0 #335d90 inset, 0 0 10px 4px #335d90;
-    color: #335d90;
+    /* box-shadow: 0 0 10px 0 #335d90 inset, 0 0 10px 4px #335d90;
+    color: #335d90; */
+    background-color:#183659 ;
   }
 `;
 

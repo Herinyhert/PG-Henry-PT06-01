@@ -14,8 +14,11 @@ import Details from "./components/CardProduct/DetailCardProduct/Details";
 import Buy from "./components/CardProduct/DetailCardProduct/Buy";
 import Dashboard from "./components/Dashboard/index";
 import PruebaCarrito from "./components/PruebaCarrito/PruebaCarrito";
-import ShoppingCart from "./components/PruebaCarrito/ShoppingCart";
+import ShoppingCart from "./components/Carrito/ShoppingCart";
 import CheckGoogle from "./components/Login/CheckGoogle";
+import Pagar from "./components/Carrito/Pagar";
+import ResultadoCompra from "./components/Carrito/ResultadoCompra";
+import Terminos from "./components/Signup/Terminos";
 
 export default function App() {
   const user = useSelector((state: ReduxState) => state.user);
@@ -37,6 +40,9 @@ export default function App() {
         <Route path="detail/:id" element={<Details />} />
         <Route path="buy" element={<Buy />} />
         <Route path="checkgoogle/:token" element={<CheckGoogle />} />
+        <Route path="resultadocompra" element={<ResultadoCompra />} /> 
+        <Route path="Pagar" element={<Pagar/>}/>
+        <Route path="terminos-y-condiciones" element={<Terminos/>} />
       </Routes>
     </BrowserRouter>
   );
