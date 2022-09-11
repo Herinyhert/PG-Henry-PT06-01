@@ -31,12 +31,33 @@ export default function NavBar() {
       </div>
 
       <ContainerButtons>
-        {user ? <div>hola {user?.email}</div> : null}
+      <Encabezado>
+      {user ? (
+            <Saludo>
+              Hola
+              <Nombre>{user?.email}</Nombre>
+            </Saludo>
+          ) : null}
+        </Encabezado>
         {user?.role === "ADMIN" ? (
           <Link to="/Home">
             <ButtonLogin>Home</ButtonLogin>
           </Link>
         ) : null}
+        {user?.role === "ADMIN" ? (
+          <Link to="/Admin">
+            <ButtonLogin>Admin</ButtonLogin>
+          </Link>
+        ) : null}
+        {token ? (
+          <Link to="/Home">
+            <ButtonLogin onClick={handleLogout}>Logout</ButtonLogin>
+          </Link>
+        ) : (
+          <Link to="/Signup">
+            <ButtonSignup>Creá tu cuenta</ButtonSignup>
+          </Link>
+        )}
         {token ? (
           <Link to="/Home">
             <ButtonLogin onClick={handleLogout}>Logout</ButtonLogin>
@@ -56,6 +77,28 @@ export default function NavBar() {
     </NavBarContainer>
   );
 }
+
+const Encabezado = styled.div`
+  border-right: 1px solid #000;
+  padding-right: 10px;
+  margin-right: 10px;
+  font-size: 14px;
+`;
+
+
+
+const Saludo = styled.div`
+  justify-content: center;
+  align-items: center;
+`;
+
+const Nombre = styled.div`
+
+`;
+
+
+
+
 const ContainerButtons = styled.div`
   display: inline-flex;
   flex-wrap: wrap;
@@ -63,53 +106,86 @@ const ContainerButtons = styled.div`
   margin-right: 5px;
 `;
 
-const ButtonLogin = styled.button`
+const ButtonSignup = styled.button`
   width: 5.5rem;
-  height: 42px;
+  height: 40px;
   background: transparent;
-  border-radius: 0.313rem;
-  border: 0.13rem solid black;
   justify-content: center;
   align-items: center;
-
-  margin-right: 1rem;
+  border: none;
+  margin: 0 0.5rem;
   padding: 2px;
-  display: inline-block;
-  -webkit-appearance: none;
   cursor: pointer;
   font-size: 0.8rem;
+  font-family: "Proxima Nova", -apple-system, Roboto, Arial, sans-serif;
   color: black;
+  text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0% 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 2px;
+  transition: background-size 0.3s;
 
   -webkit-transition: all 150ms ease-in-out;
   transition: all 150ms ease-in-out;
   &:hover,
   &:focus {
-    box-shadow: 0 0 10px 0 #335d90 inset, 0 0 10px 4px #335d90;
+    /* box-shadow: 0 0 10px 0 #335d90 inset, 0 0 10px 4px #335d90;
     background-color: white;
-    color: #335d90;
+    color: #335d90; */
+    background-size: 100% 2px;
   }
-  &:active {
+  /* &:active {
     box-shadow: 0 0 10px 0 #335d90 inset, 0 0 10px 4px #335d90;
+  } */
+`;
+
+const ButtonLogin = styled.button`
+  width: 3.5rem;
+  height: 40px;
+  background: transparent;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  margin: 0 0.5rem;
+  padding: 2px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-family: "Proxima Nova", -apple-system, Roboto, Arial, sans-serif;
+  color: black;
+  text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0% 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 2px;
+  transition: background-size 0.3s;
+
+  -webkit-transition: all 150ms ease-in-out;
+  transition: all 150ms ease-in-out;
+  &:hover,
+  &:focus {
+    background-size: 100% 2px;
   }
 `;
 
 const Shop = styled.button`
-  width: 3rem;
+   width: 3rem;
   height: 42px;
   background: transparent;
-  border-radius: 0.313rem;
+  /* border-radius: 0.313rem; */
   margin-right: 2rem;
   padding: 5px;
   display: inline-block;
   -webkit-appearance: none;
-  border: 0.13rem solid black;
+  /* border: 0.13rem solid black; */
+  border: none;
   cursor: pointer;
   font-size: 25px;
   color: black;
 
   -webkit-transition: all 150ms ease-in-out;
   transition: all 150ms ease-in-out;
-  &:hover,
+  /* &:hover,
   &:focus {
     box-shadow: 0 0 10px 0 #335d90 inset, 0 0 10px 4px #335d90;
     background-color: white;
@@ -117,7 +193,7 @@ const Shop = styled.button`
   }
   &:active {
     box-shadow: 0 0 10px 0 #335d90 inset, 0 0 10px 4px #335d90;
-  }
+  } */
 `;
 
 const NavBarContainer = styled.header`
@@ -156,7 +232,9 @@ const Numerito = styled.div`
   border-radius: 9999px;
   background-color: black;
   color: white;
-  margin: auto;
+  margin: auto 20px;
   padding-left: 6px;
   padding-right: 6px;
+  /* top: 3px;
+    right: 3px; */
 `;
