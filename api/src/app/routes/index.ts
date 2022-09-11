@@ -8,6 +8,11 @@ import authRouter from './auth';
 import pruebaRoutes from './prueba/prueba';
 import mercadoPagoRoutes from './mercadopago';
 
+import backofficeRoutesUser from "./backoffice/User";
+import backofficeRoutesCategory from "./backoffice/Category";
+import backofficeRoutesProduct from "./backoffice/Product";
+import backofficeRoutesOrders from "./backoffice/Orders";
+
 
 const router = Router();
 
@@ -19,5 +24,10 @@ router.use('/backoffice/order', backofficeRoutesOrder);
 router.use('/auth', authRouter)
 router.use('/prueba', pruebaRoutes)
 router.use('/mercadopago', mercadoPagoRoutes)
+
+router.use("/backoffice/user", backofficeRoutesUser);
+router.use("/backoffice/category", backofficeRoutesCategory);
+router.use("/backoffice/product", backofficeRoutesProduct);
+router.use("/backoffice/orders", backofficeRoutesOrders);
 
 export default router;

@@ -22,7 +22,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 
-import { Articulo } from "../../../actions";
+import { Order } from "../../../actions";
 
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
@@ -30,40 +30,71 @@ import FolderIcon from "@mui/icons-material/Folder";
 import FormHelperText from "@mui/material/FormHelperText";
 
 export interface CardProductProps {
-  articulo: Articulo;
+  order: Order;
   stateC: any;
 }
 
 export default function FormDialog({
-  articulo = {
+  order = {
     id: 0,
-    name: null,
-    brand: null,
-    stock: 0,
-    price: 0,
-    img: null,
-    state: null,
-    categoryId: 0,
-    category: { id: 0, name: null },
-    totalCount: 0,
+    amount: 0,
+    date: Date(),
+    status: '',
+    userId: 0,
+    payment_id: 0,
+    payment_status: '',
+    payment_type: '',
+    order_detail: {
+      id: 0,
+      orderId: 0,
+      productId: 0,
+      price: 0,
+      quantity: 0,
+      product: {
+        id: 0,
+        name: '',
+        brand: '',
+        stock: 0,
+        price: 0,
+        img: '',
+        state: '',
+        categoryId: 0,
+        category: {
+          id: 0,
+          name: ''
+        }
+      }
+    },
+    user: {
+      id: 0,
+      name: '',
+      surname: '',
+      email: '',
+      password: '',
+      state: '',
+      role: ''
+    } 
   },
   stateC,
 }: CardProductProps) {
   const dispatch = useDispatch<any>();
   const [input, setInput] = useState({
-    id: articulo.id || 0,
-    name: articulo.name || "",
-    brand: articulo.brand || "",
-    img: articulo.img || "",
-    state: articulo.state || "",
-    price: articulo.price || 0,
-    stock: articulo.stock || 0,
-    categoryId: articulo.category.id || 0,
+    id: order.id || 0,
+    name: order.name || "",
+    brand: order.brand || "",
+    img: order.img || "",
+    state: order.state || "",
+    price: order.price || 0,
+    stock: order.stock || 0,
+    categoryId: order.category.id || 0,
     errors: null,
   });
 
   const token = useSelector((state: ReduxState) => state.token);
-  let categories = useSelector((state: ReduxState) => state.categorias);
+  const categories = useSelector((state: ReduxState) => state.categorias);
+  const allProducts = useSelector((state: ReduxState) => state.articulos);
+  const allUser = useSelector((state: ReduxState) => state.users);
+
 
   function validation(e) {
     let errors = {};

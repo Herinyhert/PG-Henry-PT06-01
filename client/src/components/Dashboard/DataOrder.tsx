@@ -10,26 +10,11 @@ import Paper from "@mui/material/Paper";
 
 import { useDispatch, useSelector } from "react-redux";
 import { ReduxState } from "../../reducer";
-import { getArticulos, deleteProduct, getOrders } from "../../actions";
+import {  deleteProduct, getOrdersBO } from "../../actions";
 import Paginado from "../Paginado/Paginado";
 import ButtonMUI from "@mui/material/Button";
 
-//import UpdateProduct from "../Dashboard/Dialogs/UpdateProduct";
-import CreateProduct from "./Dialogs/CreateProduct";
-
-
-
-function createData(
-  id: number,
-  name: string,
-  brand: String,
-  category: String,
-  stock: number,
-  price: number,
-  state: String
-) {
-  return { id, name, brand, category, stock, price, state };
-}
+//import CreateOrder from "./Dialogs/CreateOrder";
 
 export default function DenseTable() {
   const [state, setState] = useState({
@@ -37,18 +22,16 @@ export default function DenseTable() {
     pageSize: 12,
     name: undefined,
     order: undefined,
-    direction: undefined,
-    categoryId: undefined,
+    direction: undefined
   });
-  const allProducts = useSelector((state: ReduxState) => state.articulos);
-
-  const totalCount = useSelector((state1: ReduxState) => state1.totalCount);
+  const allOrders = useSelector((state: ReduxState) => state.ordersBO);
+  const totalOrders = useSelector((state1: ReduxState) => state1.totalOrders);
 
   const dispatch = useDispatch<any>();
 
   useEffect(() => {
     dispatch(
-      getOrders({
+      getOrdersBO({
         page: state.page,
         pageSize: state.pageSize,
         name: state.name,
@@ -62,67 +45,74 @@ export default function DenseTable() {
     state.pageSize,
     state.name,
     state.order,
-    state.direction,
-    state.categoryId,
+    state.direction
   ]);
 
   function clickDelete(id) {
         dispatch(deleteProduct(id));
   }
+
   return (
     <>
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
-        <TableContainer component={Paper} sx={{ maxHeight: 440 }}>
+        <TableContainer component={Paper} sx={{ maxHeight: 440, maxWidth:1100}}>
           <Table
             sx={{ minWidth: 650 }}
             size="small"
             stickyHeader
-            aria-label="sticky table"
-          >
+            aria-label="sticky table">
             <TableHead>
               <TableRow>
-                <TableCell>Name</TableCell>
-                <TableCell align="right">Brand</TableCell>
-                <TableCell align="right">Category</TableCell>
-                <TableCell align="right">Stock</TableCell>
-                <TableCell align="right">Price</TableCell>
-                <TableCell align="right">State</TableCell>
+                <TableCell>orderId</TableCell>
+                <TableCell align="right">Amount</TableCell>
+                <TableCell align="right">Date</TableCell>
+                <TableCell align="right">Status</TableCell>
+                <TableCell align="right">User</TableCell>
+                <TableCell align="right">Payment ID</TableCell>
+                <TableCell align="right">Payment Status</TableCell>
+                <TableCell align="right">Payment Type</TableCell>
+                <TableCell align="right">Details Orders</TableCell>
                 <TableCell align="right">Update</TableCell>
                 <TableCell align="right">Delete</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {allProducts.map((row) => (
-                <TableRow
-                  key={row.id}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <TableCell align="right">{row.name}</TableCell>
-                  <TableCell align="right">{row.brand}</TableCell>
-                  <TableCell align="right">{row.category.name}</TableCell>
-                  <TableCell align="right">{row.stock}</TableCell>
-                  <TableCell align="right">{row.price}</TableCell>
-                  <TableCell align="right">{row.state}</TableCell>
-                  <TableCell align="right">
-                    <CreateProduct articulo={row} />
-                  </TableCell>
-                  <TableCell align="right">
-                    <ButtonMUI
-                      variant="outlined"
-                      onClick={() => clickDelete(row.id)}
-                    >
-                      Delete
-                    </ButtonMUI>
-                  </TableCell>
-                </TableRow>
-              ))}
+              {allOrders.map((row) => {
+                console.log(row);
+                return (
+                  <TableRow
+                    key={row.id}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+                    <TableCell align="right">{row.id}</TableCell>
+                    <TableCell align="right">{row.amount}</TableCell>
+                    <TableCell align="right">{row.date.toString()}</TableCell>
+                    <TableCell align="right">{row.status}</TableCell>
+                    <TableCell align="right">{row.user.email}{" "}{row.user.name}</TableCell>
+                    <TableCell align="right">{row.payment_id}</TableCell>
+                    <TableCell align="right">{row.payment_status}</TableCell>
+                    <TableCell align="right">{row.payment_type}</TableCell>
+                    <TableCell align="right">{row.order_detail[0].orderId}{" "}{row.order_detail[0].product?.name}{" "}{row.order_detail[0].price}{" "}{row.order_detail[0].quantity}</TableCell>
+                    <TableCell align="right">
+                      {/* <CreateOrder order={row} stateC={state} /> */}
+                    </TableCell>
+                    <TableCell align="right">
+                      <ButtonMUI
+                        variant="outlined"
+                        onClick={() => clickDelete(row.id)}
+                      >
+                        Delete
+                      </ButtonMUI>
+                    </TableCell>
+                  </TableRow>
+                )
+              })}
             </TableBody>
           </Table>
         </TableContainer>
       </Paper>
       <Paginado
         onPageChange={(page) => setState({ ...state, page })}
-        totalCount={totalCount}
+        totalCount={totalOrders}
         pageSize={state.pageSize}
       />
     </>

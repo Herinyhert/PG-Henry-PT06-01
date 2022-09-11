@@ -1,25 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { Category, postCategory } from "../../../actions";
+import { Category } from "../../../actions";
+import { postCategoryBO, getCategorias } from "../../../actions";
 import { useDispatch, useSelector } from "react-redux";
-import { ReduxState } from "../../../reducer";
+import { ReduxState } from "../../../reducer/index";
 
 export interface CardCategoryProps {
   category: Category;
+  stateC: any;
 }
 
-
-export default function FormDialog({ category }: CardCategoryProps) {
+export default function FormDialog({
+  category = { id: 0, name: null },
+  stateC,
+}: CardCategoryProps) {
   const dispatch = useDispatch<any>();
   const [open, setOpen] = React.useState(false);
   const [input, setInput] = useState({
-    id: category.id,
-    name: category.name,
+    id: category.id||0,
+    name: category.name||'',
+    errors: null,
   });
 
   const token = useSelector((state: ReduxState) => state.token);
@@ -28,24 +34,46 @@ export default function FormDialog({ category }: CardCategoryProps) {
     setOpen(true);
   };
 
-  function handleSubmit(e) {
-    console.log(input);
-    setOpen(false);
+  function validation(e: any) {
+    let errors = {};
+    if (e) {
+      if (e.target.name === "name" && e.target.value === "") {
+        errors["name"] = { action: { error: true }, message: "required" };
+      }
+    } else {
+      if (input.name === "") {
+        errors["name"] = { action: { error: true }, message: "required" };
+      }
+    }
+
+    return errors;
+  }
+
+  async function handleSubmit(e) {
     e.preventDefault();
-    dispatch(postCategory(token, input));
-  };
+    const errors = validation(null);
+    setInput({
+      ...input,
+      errors: errors,
+    });
+    if (Object.getOwnPropertyNames(errors).length === 0) {
+      await dispatch(postCategoryBO(token, input));
+      await dispatch(getCategorias());
+      handleClose();
+    }
+  }
 
   const handleClose = () => {
     setOpen(false);
   };
-  
 
-  function handlechange(e) {    
+  function handlechange(e) {
     setInput({
       ...input,
       [e.target.name]: e.target.value,
+      errors: validation(e),
     });
-}
+  }
 
   return (
     <div>
@@ -56,9 +84,10 @@ export default function FormDialog({ category }: CardCategoryProps) {
         <DialogTitle>New Category</DialogTitle>
         <DialogContent>
           <TextField
+            {...input.errors?.name?.action}
             autoFocus
             margin="dense"
-            id="category"
+            id="name"
             label="Category"
             name="name"
             type="text"
@@ -66,6 +95,7 @@ export default function FormDialog({ category }: CardCategoryProps) {
             variant="standard"
             value={input.name}
             onChange={(e) => handlechange(e)}
+            helperText={input.errors?.name?.message}
           />
         </DialogContent>
         <DialogActions>

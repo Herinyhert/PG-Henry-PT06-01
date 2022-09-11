@@ -10,7 +10,7 @@ import Paper from "@mui/material/Paper";
 
 import { useDispatch, useSelector } from "react-redux";
 import { ReduxState } from "../../reducer";
-import { getUsers, deleteUser } from "../../actions";
+import { getUsersBO, deleteUserBO } from "../../actions";
 import Paginado from "../Paginado/Paginado";
 import ButtonMUI from "@mui/material/Button";
 
@@ -28,14 +28,13 @@ export default function DenseTable() {
   });
 
   const allUser = useSelector((state: ReduxState) => state.users);
-
-  const totalCount = useSelector((state1: ReduxState) => state1.totalCount);
+  const totalUser = useSelector((state1: ReduxState) => state1.totalUser);
 
   const dispatch = useDispatch<any>();
 
   useEffect(() => {
     dispatch(
-      getUsers({
+      getUsersBO({
         page: state.page,
         pageSize: state.pageSize,
         name: state.name,
@@ -52,8 +51,17 @@ export default function DenseTable() {
     state.direction
   ]);
 
-  function clickDelete(id) {
-        dispatch(deleteUser(id));
+  async function clickDelete(id) {
+    await dispatch(deleteUserBO(id));
+    await dispatch(
+      getUsersBO({
+        page: state.page,
+        pageSize: 12,
+        name: "",
+        order: "id",
+        direction: "desc",
+      })
+    );
   }
   return (
     <>
@@ -92,7 +100,7 @@ export default function DenseTable() {
                   </TableCell>
                   <TableCell align="right">{row.role}</TableCell>
                   <TableCell align="right">
-                    <CreateUser user={row} />
+                    <CreateUser user={row} stateC={state} />
                   </TableCell>
                   <TableCell align="right">
                     <ButtonMUI
@@ -110,7 +118,7 @@ export default function DenseTable() {
       </Paper>
       <Paginado
         onPageChange={(page) => setState({ ...state, page })}
-        totalCount={totalCount}
+        totalCount={totalUser}
         pageSize={state.pageSize}
       />
     </>
