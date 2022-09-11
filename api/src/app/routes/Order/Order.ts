@@ -126,7 +126,7 @@ backofficeRoutesOrder.post('/checkout', async (req, res, next) => {
   // send mail with defined transport object
   let info = await transporter.sendMail({
     from: '"CompuStore 💻🛒👍" <compustorehenry@gmail.com>', // sender address
-    to: "marianosarniguet@gmail.com", // list of receivers
+    to: "caribosio72@gmail.com", // list of receivers
     subject: "Hola!!! Su compra fue realizada con Exito! ✔", // Subject line
     // text: "Felicitaciones. Su compra fue realizada con éxito!. Cualquier duda comuníquese por este medio. Muchas gracias.", // plain text body
     html:  // html body

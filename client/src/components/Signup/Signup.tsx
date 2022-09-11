@@ -78,7 +78,11 @@ export default function Signup() {
         <NavBar />
 
       <Form onSubmit={/* (e)=>handleSubmit(e) */ formik.handleSubmit}>
-        <Title>Formulario de Registro </Title>
+        {/* <Title>Formulario de Registro </Title> */}
+        <Saludo>
+        ¡Hola! Registrate en nuestro sitio para obtener todos los beneficios.
+
+        </Saludo>
         <Input1 type="text"
         name="name" 
       /*   onChange={(e)=>handleChange(e)} */
@@ -124,10 +128,10 @@ export default function Signup() {
             {formik.touched.password && formik.errors.password ? (
             <Span>{formik.errors.password}</Span>
           ) : null}
-        <Acuerdo>Estoy de acuerdo con terminos y condiciones</Acuerdo>
+        <Acuerdo>Acepto los <a href="/terminos-y-condiciones">términos y condiciones</a></Acuerdo>
 
         <Button type="submit">Registrarse</Button>
-        <Button>Iniciar con Google</Button>
+        {/* <Button>Iniciar con Google</Button> */}
         
 
         <P>
