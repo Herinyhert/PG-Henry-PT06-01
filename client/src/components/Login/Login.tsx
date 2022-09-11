@@ -1,4 +1,4 @@
-import { Navigate, Link } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import styled from "styled-components";
 import NavBar from "../NavBar/NavBar";
 import React, { useState } from "react";
@@ -30,7 +30,7 @@ export default function Signup() {
   }
 
   function redirect() {
-   window.location.href='http://localhost:3001/auth/google'
+    window.location.href = "http://localhost:3001/auth/google";
   }
 
   return (
@@ -43,7 +43,10 @@ export default function Signup() {
         <Body>
           <NavBar />
           <Form onSubmit={(e) => handleSubmit(e)}>
-            <Title>Formulario de inicio de sesión</Title>
+            <Saludo>
+              ¡Hola! Para seguir, ingresá los datos con los que te registraste.
+            </Saludo>
+
             <Input3
               type="email"
               name="email"
@@ -56,15 +59,14 @@ export default function Signup() {
               onChange={(e) => handleChange(e)}
               placeholder="Ingrese su contraseña"
             />
-            <Acuerdo>Estoy de acuerdo con terminos y condiciones</Acuerdo>
-            <Button type="submit">Inicio</Button>
- 
-            <Button onClick={redirect} >Iniciar con Google</Button>
+            <Recuerdo>¿Olvidaste tu contraseña?</Recuerdo>
+            <Button type="submit">Ingresar</Button>
 
-            {/*  */}
-            <p>
-              <a href="/Signup">¿No tienes cuenta?</a>
-            </p>
+            <Button onClick={redirect}>Iniciar con Google</Button>
+
+            <P>
+              <a href="/Signup">¿No tienes cuenta? Registrate</a>
+            </P>
           </Form>
         </Body>
       )}
@@ -86,12 +88,13 @@ const Form = styled.form`
   position: absolute;
   max-width: 25%;
   width: 25%;
-  top: 50%;
+  top: 55%;
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 50px;
   box-shadow: 0 1rem 1rem rgba(0, 0, 0, 0.3);
-  background-color: rgba(255, 255, 255, 0.1);
+  /* background-color: rgba(255, 255, 255, 0.1); */
+  background-color: #ffffff;
   backdrop-filter: blur(1rem);
   border-radius: 10px;
   color: #fff;
@@ -109,19 +112,26 @@ const Title = styled.h1`
   align-items: center;
 `;
 
+const Saludo = styled.div`
+  color: black;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 25px;
+`;
+
 const Input3 = styled.input`
   display: block;
   width: 95%;
   height: 40px;
   padding: 5px 6px;
-  margin: 5px auto;
-  border: 3px solid #335d90;
+  margin: 10px auto;
+  border: 1px solid black;
   outline: none;
-  border-radius: 1px;
-
-  &:hover:focus {
-    box-shadow: 0 0 8px 0 #335d90 inset, 0 0 8px 4px #335d90;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 5px;
+  background-color: inherit;
+  &:focus {
+    border: 2px solid #335d90;
   }
 `;
 const Input4 = styled.input`
@@ -129,22 +139,24 @@ const Input4 = styled.input`
   width: 95%;
   height: 40px;
   padding: 5px 6px;
-  margin: 5px auto;
-  border: 3px solid #335d90;
+  /* margin-bottom: 15px; */
+  margin: 10px auto;
+  border: 1px solid black;
   outline: none;
-  border-radius: 1px;
-
-  &:hover:focus {
-    box-shadow: 0 0 8px 0 #335d90 inset, 0 0 8px 4px #335d90;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 5px;
+  background-color: inherit;
+  &:focus {
+    border: 2px solid #335d90;
   }
 `;
 
-const Acuerdo = styled.p`
+const Recuerdo = styled.p`
   text-align: center;
   margin-bottom: 15px;
+  margin-top: 15px;
+
   font-size: 15px;
-  color: black;
+  color: #335d90;
 `;
 
 const Button = styled.button`
@@ -159,8 +171,20 @@ const Button = styled.button`
   color: #fff;
 
   &:hover {
-    box-shadow: 0 0 8px 0 #335d90 inset, 0 0 8px 4px #335d90;
+    /* box-shadow: 0 0 8px 0 #335d90 inset, 0 0 8px 4px #335d90;
     transform: scale(1.1);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.3); */
+    background-color: #183659;
+  }
+`;
+
+const P = styled.div`
+  text-align: center;
+  margin-top: 15px;
+  font-weight: bolder;
+
+  > a {
+    text-decoration: none;
+    color: #335d90;
   }
 `;
