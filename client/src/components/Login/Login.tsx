@@ -6,6 +6,8 @@ import { useDispatch } from "react-redux";
 import { loginUser } from "../../actions/index";
 import { useSelector } from "react-redux";
 import { ReduxState } from "../../reducer";
+import { BsGoogle } from "react-icons/bs";
+
 
 export default function Signup() {
   const dispatch = useDispatch<any>();
@@ -60,9 +62,13 @@ export default function Signup() {
               placeholder="Ingrese su contraseña"
             />
             <Recuerdo>¿Olvidaste tu contraseña?</Recuerdo>
-            <Button type="submit">Ingresar</Button>
+            <Button type="submit">Iniciar sesión</Button>
+            <O> O continuar con</O>
 
-            <Button onClick={redirect}>Iniciar con Google</Button>
+            <Button onClick={redirect}>
+              <DivIcon><BsGoogle/></DivIcon>
+              
+              Iniciar sesión con Google</Button>
 
             <P>
               <a href="/Signup">¿No tienes cuenta? Registrate</a>
@@ -160,8 +166,12 @@ const Recuerdo = styled.p`
 `;
 
 const Button = styled.button`
-  display: block;
-  margin: 10px auto;
+display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  /* display: block;
+  margin: 10px auto; */
   width: 100%;
   height: 40px;
   background-color: #335d90;
@@ -178,6 +188,7 @@ const Button = styled.button`
   }
 `;
 
+
 const P = styled.div`
   text-align: center;
   margin-top: 15px;
@@ -187,4 +198,18 @@ const P = styled.div`
     text-decoration: none;
     color: #335d90;
   }
+`;
+
+
+const DivIcon=styled.div`
+  display: inline-block;
+  margin-right: 15px;
+  font-size: 20px;
+  color: #fff;
+`;
+
+const O = styled.div`
+font-size: 15px;
+color: black;
+margin: 10px 0;
 `;
