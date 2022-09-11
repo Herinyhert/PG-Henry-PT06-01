@@ -38,18 +38,22 @@ export default function Signup() {
     <Body>
         <NavBar />
       <Form onSubmit={(e)=>handleSubmit(e)}>
-        <Title>Formulario de Registro </Title>
+        {/* <Title>Formulario de Registro </Title> */}
+        <Saludo>
+        ¡Hola! Registrate en nuestro sitio para obtener todos los beneficios.
+        </Saludo>
         <Input1 type="text" name="name" onChange={(e)=>handleChange(e)} placeholder="Ingrese su nombre"/>
         <Input2 type="text" name="surname" onChange={(e)=>handleChange(e)} placeholder="Ingrese su Apellido"/>
         <Input3 type="email" name="email" onChange={(e)=>handleChange(e)} placeholder="Ingrese su Correo" />
         <Input4 type="password" name="password" onChange={(e)=>handleChange(e)} placeholder="Ingrese su contraseña" />
-        <Acuerdo>Estoy de acuerdo con terminos y condiciones</Acuerdo>
+        <Acuerdo>Acepto los <a href="/terminos-y-condiciones">términos y condiciones</a></Acuerdo>
         <Button type="submit">Registrarse</Button>
         <Button>Iniciar con Google</Button>
+        
 
-        <p>
+        <P>
           <a href="/Login" >¿Ya tienes cuenta?</a>
-        </p>
+        </P>
               
         
       </Form>
@@ -76,7 +80,8 @@ display: flex;
   transform: translate(-50%, -50%);
   padding: 30px;
   box-shadow: 0 1rem 1rem rgba(0, 0, 0, 0.3);
-  background-color: rgba(255, 255, 255, 0.1);
+  /* background-color: rgba(255, 255, 255, 0.1); */
+  background-color: #ffffff;
   backdrop-filter: blur(1rem);
   border-radius: 10px;
   color: #fff;
@@ -95,34 +100,40 @@ const Title = styled.h1`
 
 `;
 
-const Input1 = styled.input`
-display: block;
-  width: 95%;
-  height: 40px;
-  padding: 5px 6px;
-  margin: 5px auto;
-  border: 3px solid #335d90;
-  outline: none;
-  border-radius: 1px;
-
-  &:hover:focus {
-    box-shadow: 0 0 8px 0 #335d90 inset, 0 0 8px 4px #335d90;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-  }
+const Saludo = styled.div`
+  color: black;
+  font-size: 20px;
+  font-weight: bold;
+ text-align: center;
+ margin-bottom: 10px;
 `;
-const Input2 = styled.input`
+
+const Input1 = styled.input`
  display: block;
   width: 95%;
   height: 40px;
   padding: 5px 6px;
-  margin: 5px auto;
-  border: 3px solid #335d90;
+  margin: 10px auto;
+  border: 1px solid black;
   outline: none;
-  border-radius: 1px;
-
-  &:hover:focus {
-    box-shadow: 0 0 8px 0 #335d90 inset, 0 0 8px 4px #335d90;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 5px;
+  background-color: inherit;
+  &:focus {
+    border: 2px solid #335d90;
+}
+`;
+const Input2 = styled.input`
+  display: block;
+  width: 95%;
+  height: 40px;
+  padding: 5px 6px;
+  margin: 10px auto;
+  border: 1px solid black;
+  outline: none;
+  border-radius: 5px;
+  background-color: inherit;
+  &:focus {
+    border: 2px solid #335d90;
   }
 `;
 const Input3 = styled.input`
@@ -130,29 +141,29 @@ const Input3 = styled.input`
   width: 95%;
   height: 40px;
   padding: 5px 6px;
-  margin: 5px auto;
-  border: 3px solid #335d90;
+  margin: 10px auto;
+  border: 1px solid black;
   outline: none;
-  border-radius: 1px;
-
-  &:hover:focus {
-    box-shadow: 0 0 8px 0 #335d90 inset, 0 0 8px 4px #335d90;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 5px;
+  background-color: inherit;
+  &:focus {
+    border: 2px solid #335d90;
   }
 `;
 const Input4 = styled.input`
-  display: block;
+   display: block;
   width: 95%;
   height: 40px;
   padding: 5px 6px;
-  margin: 5px auto;
-  border: 3px solid #335d90;
   outline: none;
   border-radius: 1px;
-
-  &:hover:focus {
-    box-shadow: 0 0 8px 0 #335d90 inset, 0 0 8px 4px #335d90;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+  margin: 10px auto;
+  border: 1px solid black;
+  outline: none;
+  border-radius: 5px;
+  background-color: inherit;
+  &:focus {
+    border: 2px solid #335d90;
   }
 `;
 
@@ -161,6 +172,10 @@ const Acuerdo = styled.p`
   margin-bottom: 15px;
   font-size: 15px;
   color: black;
+  > a {
+    color: #335d90;
+    text-decoration: none;
+  }
 `;
 
 const Button = styled.button`
@@ -175,8 +190,20 @@ const Button = styled.button`
   color: #fff;
 
   &:hover {
-    box-shadow: 0 0 8px 0 #335d90 inset, 0 0 8px 4px #335d90;
+    /* box-shadow: 0 0 8px 0 #335d90 inset, 0 0 8px 4px #335d90;
     transform: scale(1.1);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.3); */
+    background-color:#183659 ;
+  }
+`;
+
+const P = styled.div`
+  text-align: center;
+  margin-top: 15px;
+  font-weight: bolder;
+  
+  > a {
+  text-decoration:none;
+  color: #335d90;
   }
 `;
