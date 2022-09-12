@@ -4,6 +4,7 @@ import metodo from "../../../img/metodopago.png";
 import logo from "../../../img/Logo.png";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useLocation, useParams } from "react-router-dom";
 
 import {
   Container,
@@ -39,51 +40,50 @@ export default function Buy() {
     id: string;
   }
 
+  //const { order } = useParams();
+  const search = useLocation().search;
+  const order = new URLSearchParams(search).get('order');
+
+  console.log("use params: ", order);
+  
   const carrito = JSON.parse(localStorage.getItem("carrito"));
   let preciofinal = 0;
   preciofinal = carrito?.reduce((sum, b) => sum + Number(b.precioTotal), 0);
 
   const items_ml = carrito.map((i) => ({
-    img: i.img,
     name: i.name,
     price: i.price,
     quantity: i.totalCount,
     totalPrice: i.precioTotal,
+    img: i.img,
+
   }));
 
-  console.log ("ITEMS ML: " + JSON.stringify(carrito))
+  const orderNro = order;
   const [datos, setDatos] = useState("");
+
+
+
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/mercadopago", carrito)
-      // {
-      //   params:[{
+      .post("http://localhost:3001/mercadopago",
+        {
+          carrito: JSON.stringify(items_ml),
+          order: orderNro
+        }
+      )
 
-      //     carrito: "JSON.stringify(items_ml)"
-      //   }
-
-      //   ]
-        
-      // }
-    //  )
-      
       .then((data) => {
         setDatos(data.data.id);
         console.info("Contenido de data:", data);
-
-        // console.log('DATOS' + datos.id)
       })
       .catch((err) => console.error(err));
   }, []);
 
-
-
   // function handlerSubmit() {
   //     window.location.assign("https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=1191162786-887db42c-eb06-405d-b0f6-bb12389b2dbd")
-
   // }
-
 
 
 
@@ -133,9 +133,9 @@ export default function Buy() {
             {/*  <InfoProducto/> */}
             <Producto>
               {items_ml.map((it, i) => (
-                <ul key={i}>              
+                <ul key={i}>
                   <li>
-                  <img height="30px" width="30px" src={it.img} alt="imagen producto" />
+                    <img height="30px" width="30px" src={it.img} alt="imagen producto" />
                     <b>    {it.name}</b>
                   </li>
                   <li>Cantidad:  {it.quantity}</li>

@@ -11,6 +11,8 @@ import {
 import NavBar from "../NavBar/NavBar";
 import { ReduxState } from "../../reducer";
 import { AiOutlineDelete } from "react-icons/ai";
+import axios from "axios";
+
 
 import {
   Container,
@@ -33,6 +35,7 @@ import {
 import { ButtonsWayToShop } from "./styles";
 import { ButtonCantidad, ButtonDelete } from "./stylesCart";
 
+const { REACT_APP_API_URL = "http://localhost:3001" } = process.env;
 export default function ShoppingCart() {
   let detail = useSelector((state: ReduxState) => state.detailsProduct);
   const user = useSelector((state: ReduxState) => state.user);
@@ -72,6 +75,7 @@ export default function ShoppingCart() {
   }
 
   const [articulo, setArticulo] = useState([productosCarrito]);
+  const [nroOrder, setNroOrder] = useState("")
 
   function handlerCantidadItem(detalle, signo: string) {
     setArticulo(detalle);
@@ -83,8 +87,8 @@ export default function ShoppingCart() {
     signo === "+"
       ? (carritoAux[index].totalCount = carritoAux[index].totalCount + 1)
       : signo === "-"
-      ? (carritoAux[index].totalCount = carritoAux[index].totalCount - 1)
-      : (carritoAux[index].totalCount = carritoAux[index].totalCount);
+        ? (carritoAux[index].totalCount = carritoAux[index].totalCount - 1)
+        : (carritoAux[index].totalCount = carritoAux[index].totalCount);
     carritoAux[index].precioTotal =
       carritoAux[index].price * carritoAux[index].totalCount;
     localStorage.setItem("carrito", JSON.stringify(carritoAux));
@@ -111,23 +115,41 @@ export default function ShoppingCart() {
 
   const ordenPorEnviar = {
     amount: preciofinal,
-    userId: user?.id,
+    // userId: user?.id,
+    userId: 1,
     status: "Abierto",
     carritoOrden: carritoOrden,
   };
-  console.log("quierover",ordenPorEnviar.userId);
-  
+  console.log("quierover", ordenPorEnviar.userId);
 
-  function sendOrderToDB(e) {
+
+  async function  sendOrderToDB(e) {
     // console.log(ordenPorEnviar)
-    e.preventDefault();
-    if(user?.id){
-      dispatch(postOrder(ordenPorEnviar, token1));
-      history("/pagar")
-    } else {
-      history("/login")
-    }
+    //CON CONTROL DE SESION
+    // e.preventDefault();
+    // if(user?.id){
+    //   dispatch(postOrder(ordenPorEnviar, token1));
+    //   history("/pagar")
+    // } else {
+    //   history("/login")
+    // }
+
+    // dispatch(postOrder(ordenPorEnviar, token1))
+    // .then((response)=>console.log(response));
+    // history("/pagar")
+
+    
+     var order = await axios .post(REACT_APP_API_URL + "/backoffice/order", ordenPorEnviar     
+      )
+    
+     history("/pagar?order=" + order.data.id)
+      
+      
+
   }
+
+  console.log("Estoy aca afuera : "  + nroOrder);
+  
 
   return (
     <>
