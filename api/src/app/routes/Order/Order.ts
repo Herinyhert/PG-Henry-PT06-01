@@ -3,11 +3,18 @@ import prisma from "../../../db";
 import nodemailer from "nodemailer";
 import ejs from "ejs";
 
+export interface ArticuloCarrito {
+  id: number;
+  price: number;
+  totalCount: number;
+}
+
 const backofficeRoutesOrder = Router();
 
 backofficeRoutesOrder.post("/", async (req, res) => {
   try {
-    const { amount, status, userId, productId, price, quantity } = req.body;
+    const { amount, status, userId, carritoOrden } = req.body;
+    console.log("no se por cual intento vamos---------------------------------------------------------", userId);
 
     const newOrder = await prisma.order.create({
       data: {
@@ -17,9 +24,13 @@ backofficeRoutesOrder.post("/", async (req, res) => {
         payment_id: "", //id del pago
         payment_status: "", //estado del pago
         payment_type: "", //tipo del pago
-        order_detail: {
-          create: [{ productId, price, quantity }],
-        },
+        order_detail:
+          {
+            createMany: {
+              data: carritoOrden,
+            },
+          },
+
       },
     });
 
@@ -29,32 +40,6 @@ backofficeRoutesOrder.post("/", async (req, res) => {
     return;
   }
 });
-
-// backofficeRoutesOrder.post('/orderDetail', async (req, res) => {
-//   try {
-//     const { price, productId, quantity } = req.body;
-
-//     const newOrderDetail = await prisma.order_detail.create({
-//       data: {
-//         orderId:{
-
-//         },
-//         productId: productId,
-//         price: price,
-//         quantity: quantity,
-//         },
-//         include:{
-
-//         }
-
-//     });
-
-//     res.status(200).json(newOrderDetail);
-//   } catch (error) {
-//     res.status(400).json({ message: `post orderDetail fail ${error}` });
-//     return;
-//   }
-// });
 
 backofficeRoutesOrder.get("/", async (req, res) => {
   //  const id = req.query.name;

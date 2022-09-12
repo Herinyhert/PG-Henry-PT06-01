@@ -364,13 +364,13 @@ export function clearState() {
   };
 }
 
-export function postOrder <Orders> ( payload){
+export function postOrder <Orders> (payload, token){
   return function (dispatch) {
        return axios
       .post(REACT_APP_API_URL + "/backoffice/order", payload
-      // , {
-      //   headers: { authorization: `Bearer ${token}` },
-      // } a ver para agregar el token de user, por ahora esta hardcodeado el user
+      , {
+        headers: { authorization: `Bearer ${token}` },
+      }
       )
       .then((response) => response)
       .catch((error) => {
@@ -379,17 +379,17 @@ export function postOrder <Orders> ( payload){
   };
 }
 
-export function postOrderDetail <Order_detail> ( payload){
-  return function (dispatch) {
-       return axios
-      .post(REACT_APP_API_URL + "/backoffice/order/orderDetail", payload
-      // , {
-      //   headers: { authorization: `Bearer ${token}` },
-      // } a ver para agregar el token de user, por ahora esta hardcodeado el user
-      )
-      .then((response) => response)
-      .catch((error) => {
-        dispatch({ type: SET_ERROR, payload: error });
-      });
-  };
-}
+// export function postOrderDetail <Order_detail> ( payload){
+//   return function (dispatch) {
+//        return axios
+//       .post(REACT_APP_API_URL + "/backoffice/order/orderDetail", payload
+//       // , {
+//       //   headers: { authorization: `Bearer ${token}` },
+//       // } a ver para agregar el token de user, por ahora esta hardcodeado el user
+//       )
+//       .then((response) => response)
+//       .catch((error) => {
+//         dispatch({ type: SET_ERROR, payload: error });
+//       });
+//   };
+// }
