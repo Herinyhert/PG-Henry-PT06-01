@@ -45,7 +45,7 @@ accountRoutes.post('/confirm', (req, res) => {
         <table class="one-column" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-spacing:0; border-left:1px solid #e8e7e5; border-right:1px solid #e8e7e5; border-bottom:1px solid #e8e7e5; padding: 10px" bg="#FFFFFF">
           
           <div width="350" height="150" align="center" style="-moz-border-radius: 30px; -webkit-border-radius: 30px; border-radius: 50%;">
-            <a href="www.google.com" style="width:250; display:block; text-decoration:none; border:0; text-align:center; font-weight:bold;font-size:18px; font-family: Arial, sans-serif; color: #ffffff" class="button_link">
+            
                 <img src="http://www.pickmaid.com/dubai/assets/images/success-icon.png" width="60" height="60" style="padding-top:5px" alt="" border="0"/>
             </a>
           </div>
@@ -54,8 +54,7 @@ accountRoutes.post('/confirm', (req, res) => {
               <td align="center" style="padding:0px 40px 40px 40px"><p style="color:#262626; font-size:32px; text-align:center; font-family: Verdana, Geneva, sans-serif">Hola! <br>  ${namemail} ${surnamemail} </p>
                   <b style="color:#000000; font-size:16px; text-align:left; font-family: Verdana, Geneva, sans-serif; line-height:22px ">
                   Felicitaciones!!!</b><br/>
-                  Su Compra fue realizada con exito!</br>
-                  Cualquier duda comuniquese por este medio. Muchas gracias.
+                  Tu cuenta en Compustore fue creada con exito y ya está activa para que puedas comenzar a comprar. <br>
                   <br />
                </p></td>
           </tr>

@@ -30,31 +30,7 @@ backofficeRoutesOrder.post("/", async (req, res) => {
   }
 });
 
-// backofficeRoutesOrder.post('/orderDetail', async (req, res) => {
-//   try {
-//     const { price, productId, quantity } = req.body;
 
-//     const newOrderDetail = await prisma.order_detail.create({
-//       data: {
-//         orderId:{
-
-//         },
-//         productId: productId,
-//         price: price,
-//         quantity: quantity,
-//         },
-//         include:{
-
-//         }
-
-//     });
-
-//     res.status(200).json(newOrderDetail);
-//   } catch (error) {
-//     res.status(400).json({ message: `post orderDetail fail ${error}` });
-//     return;
-//   }
-// });
 
 backofficeRoutesOrder.get("/", async (req, res) => {
   //  const id = req.query.name;
@@ -112,21 +88,13 @@ backofficeRoutesOrder.delete("/:id", async (req, res) => {
   }
 });
 
-/* Creating a transport object that will be used to send the email. */
-// var transport = {
-//   host: 'smtp.gmail.com',
-//   auth: {
-//       user: 'compustorehenry@gmail.com',
-//       pass: "dnybnopwvxliapcc"
-//   }
-// }
+backofficeRoutesOrder.post("/checkout", async (req, res) => {
+  
+  const { email, name, surname } = req.query;
+  const mail = String(email);
+  const namemail = String(name);
+  const surnamemail = String(surname);
 
-//valor predeterminado
-
-backofficeRoutesOrder.post("/checkout", async (req, res, next) => {
-  // const [datauser, products] = req.body
-
-  // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     auth: {
@@ -135,18 +103,9 @@ backofficeRoutesOrder.post("/checkout", async (req, res, next) => {
     },
   });
 
-  transporter.verify((error: any, success: any) => {
-    if (error) {
-      console.log(error);
-    } else {
-      console.log("Server is ready to take messages");
-    }
-  });
-
-  // send mail with defined transport object
-  let info = await transporter.sendMail({
-    from: '"CompuStore 💻🛒👍" <compustorehenry@gmail.com>', // sender address
-    to: "caribosio72@gmail.com", // list of receivers
+  let mailOption = {
+    from: "compustorehenry@gmail.com",
+    to: mail, // list of receivers
     subject: "Hola!!! Su compra fue realizada con Exito! ✔", // Subject line
     // text: "Felicitaciones. Su compra fue realizada con éxito!. Cualquier duda comuníquese por este medio. Muchas gracias.", // plain text body
     // html body
@@ -177,7 +136,7 @@ backofficeRoutesOrder.post("/checkout", async (req, res, next) => {
           </div>
         
           <tr>
-              <td align="center" style="padding:0px 40px 40px 40px"><p style="color:#262626; font-size:32px; text-align:center; font-family: Verdana, Geneva, sans-serif">Hola! <br> <%= name %></p>
+              <td align="center" style="padding:0px 40px 40px 40px"><p style="color:#262626; font-size:32px; text-align:center; font-family: Verdana, Geneva, sans-serif">Hola! <br> ${namemail} ${surnamemail}></p>
                   <b style="color:#000000; font-size:16px; text-align:left; font-family: Verdana, Geneva, sans-serif; line-height:22px ">
                   Felicitaciones!!!</b><br/>
                   Su Compra fue realizada con exito!</br>
@@ -258,50 +217,19 @@ backofficeRoutesOrder.post("/checkout", async (req, res, next) => {
         
     </wrapper>
   </container>
-
-
     `,
+    };
+  
+  transporter.sendMail(mailOption, (error, info) => {
+    if (error) {
+      res.status(500).send(error.message);
+    } else {
+      res.status(200).json(email);
+    }
   });
-
-  console.log("Message sent: %s", info.messageId);
-  // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
-
-  // Preview only available when sending through an Ethereal account
-  console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-  // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
-
-  // main().catch(console.error);
-
-  // var name = req.body.nombre
-  //var email = req.body.dataUser.email
-  // var message = req.body.message
-
-  // const ejs = require("ejs");
-
-  // ejs.renderFile(__dirname + "/Checkout.ejs", function (err:any, data:any) {
-  //     if (err) {
-  //         console.log(err);
-  //     } else {
-  //         var mainOptions = {
-  //             from: 'compustorehenry@gmail.com',
-  //             to: email,
-  //             subject: `Hola!!! Su compra fue realizada con Exito!`,
-  //             html: data
-  //         };
-  //         console.log("html data ======================>", mainOptions.html);
-
-  //         await transporter.sendMail(mainOptions, function (err:any, info: any) {
-  //             if (err) {
-  //                 res.json({
-  //                     msg: 'fail'
-  //                 })
-  //             } else {
-  //                 res.json({
-  //                     msg: 'success'
-  //                 })
-  //             }
-  //         });
-  //     }
-  // });
 });
+
+// main().catch(console.error);
+
+
 export default backofficeRoutesOrder;
