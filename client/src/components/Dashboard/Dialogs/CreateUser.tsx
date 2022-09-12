@@ -21,54 +21,117 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 
-import { User, postUser } from "../../../actions";
+import { User, postUserBO, getUsersBO } from "../../../actions";
+
+import FormHelperText from "@mui/material/FormHelperText";
 
 
 export interface CardUserProps {
   user: User;
+  stateC: any;
 }
 
-export default function FormDialog({ user }: CardUserProps) {
+export default function FormDialog({
+  user = {
+    id: null,
+    name: '',
+    surname: '',
+    email: '',
+    password: '',
+    state: '',
+    role: '',
+  },
+  stateC,
+}: CardUserProps) {
   const dispatch = useDispatch<any>();
   const [input, setInput] = useState({
-    id: user.id,
-    name: user.name,
-    surname: user.surname,
-    email: user.email,
-    password: null,
-    state: user.state,
-    role: user.role,
+    id: user.id||0,
+    name: user.name||'',
+    surname: user.surname||'',
+    email: user.email||'',
+    password: '',
+    state: user.state||'',
+    role: user.role||'',
+    errors: null,
   });
 
   const token = useSelector((state: ReduxState) => state.token);
   let categories = useSelector((state: ReduxState) => state.categorias);
-  //let [image, setImage] = useState<File>();
 
   function handlechange(e) {
-    
-      setInput({
-        ...input,
-        [e.target.name]: e.target.value,
-      });
-  }
-
-  /* async function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
-    handlePostImage(e.target.files[0]);
-  }
-
-  async function handlePostImage(images:File) {
-    const url = await postImage(images);
-    console.log(url);
     setInput({
       ...input,
-      img: url,
+      [e.target.name]: e.target.value,
     });
-  } */
-
-  function handelSubmit(e) {
-    e.preventDefault();
-    dispatch(postUser(token, input));
   }
+
+  function validation(e) {
+    let errors = {};
+    if (e) {
+      if (e.target.name === "name" && e.target.value === "") {
+        errors["name"] = { action: { error: true }, message: "required" };
+      }
+      if (e.target.name === "surname" && e.target.value === "") {
+        errors["surname"] = { action: { error: true }, message: "required" };
+      }
+      if (e.target.name === "email" && e.target.value === "") {
+        errors["email"] = { action: { error: true }, message: "required" };
+      }
+      if (e.target.name === "password" && e.target.value === "") {
+        errors["password"] = { action: { error: true }, message: "required" };
+      }
+      if (e.target.name === "state" && e.target.value === "") {
+        errors["state"] = { action: { error: true }, message: "required" };
+      }
+      if (e.target.name === "role" && e.target.value === "") {
+        errors["role"] = { action: { error: true }, message: "required" };
+      }
+    } else {
+      if (input.name === "") {
+        errors["name"] = { action: { error: true }, message: "required" };
+      }
+      if (input.surname === "") {
+        errors["surname"] = { action: { error: true }, message: "required" };
+      }
+      if (input.email === "") {
+        errors["email"] = { action: { error: true }, message: "required" };
+      }
+      if (input.password === "" && !user.id) {
+        errors["password"] = { action: { error: true }, message: "required" };
+      }
+      if (input.state === '') {
+        errors["state"] = { action: { error: true }, message: "required" };
+      }
+      if (input.role === "") {
+        errors["role"] = { action: { error: true }, message: "required" };
+      }
+    }
+
+    return errors;
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const errors = validation(null);
+    setInput({
+      ...input,
+      errors: errors,
+    });
+    if (Object.getOwnPropertyNames(errors).length === 0) {
+      await dispatch(postUserBO(token, input));
+      await dispatch(
+        getUsersBO({
+          page: stateC.page,
+          pageSize: 12,
+          name: "",
+          order: "id",
+          direction: "desc",
+        })
+      );
+      handleClose();
+    }
+  }
+
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -91,17 +154,9 @@ export default function FormDialog({ user }: CardUserProps) {
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>New Product</DialogTitle>
-        {/* <IconButton color="primary" component="label">
-          <input
-            type="file"
-            accept="image/*"
-            hidden
-            onChange={(e) => handleImageChange(e)}
-          />
-          <AttachFileIcon fontSize="medium" />
-        </IconButton> */}
         <DialogContent>
           <TextField
+            {...input.errors?.name?.action}
             autoFocus
             margin="dense"
             id="name"
@@ -112,10 +167,12 @@ export default function FormDialog({ user }: CardUserProps) {
             value={input.name}
             variant="standard"
             onChange={(e) => handlechange(e)}
+            helperText={input.errors?.name?.message}
           />
 
           {/* <Button onClick={(e) => handlePostImage(e)}>Subir Imagen</Button> */}
           <TextField
+            {...input.errors?.surname?.action}
             autoFocus
             margin="dense"
             id="surname"
@@ -126,8 +183,10 @@ export default function FormDialog({ user }: CardUserProps) {
             fullWidth
             variant="standard"
             onChange={(e) => handlechange(e)}
+            helperText={input.errors?.surname?.message}
           />
           <TextField
+            {...input.errors?.email?.action}
             autoFocus
             margin="dense"
             id="email"
@@ -138,9 +197,11 @@ export default function FormDialog({ user }: CardUserProps) {
             fullWidth
             variant="standard"
             onChange={(e) => handlechange(e)}
+            helperText={input.errors?.email?.message}
           />
 
           <TextField
+            {...input.errors?.password?.action}
             autoFocus
             margin="dense"
             id="password"
@@ -151,9 +212,14 @@ export default function FormDialog({ user }: CardUserProps) {
             fullWidth
             variant="standard"
             onChange={(e) => handlechange(e)}
+            helperText={input.errors?.password?.message}
           />
 
-          <FormControl sx={{ m: 1, width: "100%" }} size="small">
+          <FormControl
+            sx={{ m: 1, width: "100%" }}
+            size="small"
+            {...input.errors?.state?.action}
+          >
             <InputLabel id="state">State</InputLabel>
             <Select
               labelId="state"
@@ -169,8 +235,13 @@ export default function FormDialog({ user }: CardUserProps) {
               <MenuItem value="true">Active</MenuItem>
               <MenuItem value="false">Inactive</MenuItem>
             </Select>
+            <FormHelperText>{input.errors?.categoryId?.message}</FormHelperText>
           </FormControl>
-          <FormControl sx={{ m: 1, width: "100%" }} size="small">
+          <FormControl
+            sx={{ m: 1, width: "100%" }}
+            size="small"
+            {...input.errors?.role?.action}
+          >
             <InputLabel id="state">Rol</InputLabel>
             <Select
               labelId="role"
@@ -186,11 +257,12 @@ export default function FormDialog({ user }: CardUserProps) {
               <MenuItem value="ADMIN">ADMIN</MenuItem>
               <MenuItem value="CLIENT">CLIENT</MenuItem>
             </Select>
+            <FormHelperText>{input.errors?.role?.message}</FormHelperText>
           </FormControl>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handelSubmit}>Save</Button>
+          <Button onClick={handleSubmit}>Save</Button>
         </DialogActions>
       </Dialog>
     </div>

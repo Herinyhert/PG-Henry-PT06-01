@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import MenuList from "@mui/material/MenuList";
 import MenuItem from "@mui/material/MenuItem";
 import Paper from "@mui/material/Paper";
@@ -7,12 +8,15 @@ import DraftsIcon from "@mui/icons-material/Drafts";
 import SendIcon from "@mui/icons-material/Send";
 import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { ReduxState } from "../../reducer";
 import { setDashboardMenu } from "../../actions";
 
 export default function TypographyMenu() {
   const dispatch = useDispatch<any>();
+  const [status, setStatus] = useState(null);
 
+  
   function handleChange(e: String) {
     dispatch(setDashboardMenu(e));
   }
