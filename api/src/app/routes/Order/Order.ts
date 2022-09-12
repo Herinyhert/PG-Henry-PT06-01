@@ -1,25 +1,25 @@
-import { Router } from 'express';
-import prisma from '../../../db';
-import nodemailer from 'nodemailer';
-import ejs  from "ejs";
-
-
-
+import { Router } from "express";
+import prisma from "../../../db";
+import nodemailer from "nodemailer";
+import ejs from "ejs";
 
 const backofficeRoutesOrder = Router();
 
-backofficeRoutesOrder.post('/', async (req, res) => {
+backofficeRoutesOrder.post("/", async (req, res) => {
   try {
-    const { amount, status, userId } = req.body;
+    const { amount, status, userId, productId, price, quantity } = req.body;
 
     const newOrder = await prisma.order.create({
       data: {
-        amount: amount,
-        status: status,
-        userId: userId,
-        payment_id: "",
-        payment_status: "",
-        payment_type: "",
+        amount: amount, //importe de la orden
+        status: status, //estado de la orden (abierta-cerrada)
+        userId: userId, //id del usuario
+        payment_id: "", //id del pago
+        payment_status: "", //estado del pago
+        payment_type: "", //tipo del pago
+        order_detail: {
+          create: [{ productId, price, quantity }],
+        },
       },
     });
 
@@ -30,18 +30,44 @@ backofficeRoutesOrder.post('/', async (req, res) => {
   }
 });
 
-backofficeRoutesOrder.get('/', async (req, res) => {
+// backofficeRoutesOrder.post('/orderDetail', async (req, res) => {
+//   try {
+//     const { price, productId, quantity } = req.body;
+
+//     const newOrderDetail = await prisma.order_detail.create({
+//       data: {
+//         orderId:{
+
+//         },
+//         productId: productId,
+//         price: price,
+//         quantity: quantity,
+//         },
+//         include:{
+
+//         }
+
+//     });
+
+//     res.status(200).json(newOrderDetail);
+//   } catch (error) {
+//     res.status(400).json({ message: `post orderDetail fail ${error}` });
+//     return;
+//   }
+// });
+
+backofficeRoutesOrder.get("/", async (req, res) => {
   //  const id = req.query.name;
 
   let allOrders = await prisma.order.findMany();
   if (allOrders) {
     res.status(200).send(allOrders);
   } else {
-    res.status(404).send('error');
+    res.status(404).send("error");
   }
 });
 
-backofficeRoutesOrder.get('/:id', async (req, res) => {
+backofficeRoutesOrder.get("/:id", async (req, res) => {
   const orderId = Number(req.params.id);
 
   const orderUnique = await prisma.order.findUnique({
@@ -51,11 +77,11 @@ backofficeRoutesOrder.get('/:id', async (req, res) => {
   if (orderUnique) {
     res.status(200).send(orderUnique);
   } else {
-    res.status(404).send('error');
+    res.status(404).send("error");
   }
 });
 
-backofficeRoutesOrder.put('/:id', async (req, res) => {
+backofficeRoutesOrder.put("/:id", async (req, res) => {
   const orderlId = Number(req.params.id);
   const { amount, status } = req.body;
 
@@ -70,7 +96,7 @@ backofficeRoutesOrder.put('/:id', async (req, res) => {
   res.status(200).json(orderToChange);
 });
 
-backofficeRoutesOrder.delete('/:id', async (req, res) => {
+backofficeRoutesOrder.delete("/:id", async (req, res) => {
   //PROBAR CUANDO ESTE LISTA LA RUTA DE USER
 
   try {
@@ -86,7 +112,6 @@ backofficeRoutesOrder.delete('/:id', async (req, res) => {
   }
 });
 
-
 /* Creating a transport object that will be used to send the email. */
 // var transport = {
 //   host: 'smtp.gmail.com',
@@ -96,30 +121,25 @@ backofficeRoutesOrder.delete('/:id', async (req, res) => {
 //   }
 // }
 
-  //valor predeterminado
+//valor predeterminado
 
-
-
-
-backofficeRoutesOrder.post('/checkout', async (req, res, next) => {
+backofficeRoutesOrder.post("/checkout", async (req, res, next) => {
   // const [datauser, products] = req.body
-
-  
 
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-  auth: {
-      user: 'compustorehenry@gmail.com',
-      pass: "dnybnopwvxliapcc"
+    host: "smtp.gmail.com",
+    auth: {
+      user: "compustorehenry@gmail.com",
+      pass: "dnybnopwvxliapcc",
     },
   });
 
-  transporter.verify((error:any, success: any) => {
+  transporter.verify((error: any, success: any) => {
     if (error) {
-        console.log(error);
+      console.log(error);
     } else {
-        console.log('Server is ready to take messages');
+      console.log("Server is ready to take messages");
     }
   });
 
@@ -129,8 +149,8 @@ backofficeRoutesOrder.post('/checkout', async (req, res, next) => {
     to: "caribosio72@gmail.com", // list of receivers
     subject: "Hola!!! Su compra fue realizada con Exito! ✔", // Subject line
     // text: "Felicitaciones. Su compra fue realizada con éxito!. Cualquier duda comuníquese por este medio. Muchas gracias.", // plain text body
-    html:  // html body
-    `
+    // html body
+    html: `
     <wrapper class="header">
     <container>
       <row class="collapse">
@@ -241,7 +261,6 @@ backofficeRoutesOrder.post('/checkout', async (req, res, next) => {
 
 
     `,
-  
   });
 
   console.log("Message sent: %s", info.messageId);
@@ -251,12 +270,7 @@ backofficeRoutesOrder.post('/checkout', async (req, res, next) => {
   console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
   // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
 
-
-// main().catch(console.error);
-
-
-
-
+  // main().catch(console.error);
 
   // var name = req.body.nombre
   //var email = req.body.dataUser.email
@@ -289,6 +303,5 @@ backofficeRoutesOrder.post('/checkout', async (req, res, next) => {
   //         });
   //     }
   // });
-
-})
+});
 export default backofficeRoutesOrder;
