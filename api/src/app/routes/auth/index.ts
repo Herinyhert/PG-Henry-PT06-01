@@ -2,7 +2,8 @@ import { Router } from 'express';
 import prisma from '../../../db';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import auth from '../../middlewares/passport';
-import axios from 'axios'
+import sendemail from '../../controller/enviomail';
+import validateuser from '../../controller/validateuser';
 const bcrypt = require('bcrypt');
 
 const authRouter = Router();
@@ -46,9 +47,19 @@ authRouter.post('/signup', async (req, res) => {
         surname: surname,
         email: email,
         password: passwordHash,
+        state: false
       },
     });
-    axios.post(`http://localhost:3001/mail/confirm?email=${newUser.email}&name=${newUser.name}&surname=${newUser.surname}`)
+    const user = await prisma.user.findUnique({
+      where: {
+        email: email,
+      },
+    });
+    if(user){
+      const token = createToken({id: user.id, email: user.email, role: user.role})
+      validateuser({email: user.email, token: token})
+    }
+    // sendemail({email:newUser.email, name:newUser.name, surname: newUser.surname })
   } else {
     res.status(400).send('el usuario ya existe');
   }
