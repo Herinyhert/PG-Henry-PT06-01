@@ -12,6 +12,8 @@ import OrderName from "../../components/SideBar/OrderName";
 import OrderPrice from "../../components/SideBar/OrderPrice";
 import OrderBrand from "../../components/SideBar/OrderBrand";
 import NavBar from "../../components/NavBar/NavBar";
+import Carousel from '../../components/Carousel/Carousel';
+
 
 export default function Home() {
   const [state, setState] = useState({
@@ -57,6 +59,7 @@ export default function Home() {
   return (
     <HomeContainer>
       <NavBar />
+      <Carousel/>
       <SearchBar
         onSearch={(search) => setState({ ...state, page: 1, name: search })}
       />
