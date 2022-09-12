@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
-import { Link } from "react-router-dom";
-import { Articulo, ArticuloCarrito } from "../../actions";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  Orders,
+  postOrder,
+  Articulo,
+  ArticuloCarrito,
+  // postOrderDetail,
+} from "../../actions";
 import NavBar from "../NavBar/NavBar";
 import { ReduxState } from "../../reducer";
-import {AiOutlineDelete} from "react-icons/ai";
+import { AiOutlineDelete } from "react-icons/ai";
 
 import {
   Container,
@@ -26,11 +31,14 @@ import {
   DivNombreColumnas,
 } from "./stylesCart";
 import { ButtonsWayToShop } from "./styles";
-import { ButtonCantidad, ButtonDelete } from './stylesCart';
+import { ButtonCantidad, ButtonDelete } from "./stylesCart";
 
 export default function ShoppingCart() {
   let detail = useSelector((state: ReduxState) => state.detailsProduct);
-
+  const user = useSelector((state: ReduxState) => state.user);
+  const token1 = useSelector((state: ReduxState) => state.token);
+  const dispatch = useDispatch<any>();
+  const history = useNavigate();
   let detalle: ArticuloCarrito = {
     id: detail?.id,
     name: detail?.name,
@@ -44,6 +52,12 @@ export default function ShoppingCart() {
     totalCount: 1,
     precioTotal: detail?.price,
   };
+
+  // export interface OrdenCarrito {
+  //   productId: number;
+  //   price: number;
+  //   quantity: number;
+  // }
 
   let preciofinal = 0;
   let productosCarrito = JSON.parse(localStorage.getItem("carrito"));
@@ -63,39 +77,57 @@ export default function ShoppingCart() {
     setArticulo(detalle);
 
     const index = productosCarrito.findIndex((art) => art.id === detalle.id);
-    let precioUnitario = detail.price;
+    //let precioUnitario = detail.price;
 
     let carritoAux = JSON.parse(localStorage.getItem("carrito"));
     signo === "+"
       ? (carritoAux[index].totalCount = carritoAux[index].totalCount + 1)
-      : (carritoAux[index].totalCount = carritoAux[index].totalCount - 1);
+      : signo === "-"
+      ? (carritoAux[index].totalCount = carritoAux[index].totalCount - 1)
+      : (carritoAux[index].totalCount = carritoAux[index].totalCount);
     carritoAux[index].precioTotal =
       carritoAux[index].price * carritoAux[index].totalCount;
     localStorage.setItem("carrito", JSON.stringify(carritoAux));
   }
 
   function handlerDelete(detalle) {
-    //en esta funcion defino el poder elimiar un articulo de carrito
     setArticulo(detalle);
 
-    //me guardo lo que tengo en LocalStorage(LS) en una variable
     let carritoDelete = JSON.parse(localStorage.getItem("carrito"));
-    //creo otra variable para recorrer la posicion dentro de la variable anterior
     let carritoIndex = carritoDelete.findIndex((el) => el.id === detalle.id);
-    // utlizo el metodo splice para eliminar el elemento encontrado
     carritoDelete.splice(carritoIndex, 1);
-    //console.log("quiero eliminar este", carritoIndex)
-    //cargo de nuevo al LS la variable con la nueva informacion
     localStorage.setItem("carrito", JSON.stringify(carritoDelete));
-
-    //en resumidas cuentas esto es lo que hago paso a paso, me esta dando error ya que me dice que no reconoce el metodo splice, espero que con esto les sirva
-    //para orientar y puedan sacarlo, los veo a la noche cuando vuelva, les deseo un hermoso y maravilloso día, y que diosito les de bastante sabiduria para
-    //sacar este problema adelante
-    // Grande Herinyert!! (espero que este bien escrito!!)
   }
 
   const index = productosCarrito?.findIndex((art) => art.id === detalle.id);
-  const controllerDisabledButon = productosCarrito[index]?.totalCount <= 1;
+  const controllerDisabledButon = productosCarrito[index]?.totalCount === 1;
+  const carritoOrden = productosCarrito.map(p => {
+    return {
+      productId: p.id,
+      price: p.price,
+      quantity: p.totalCount,
+    };
+  });
+
+  const ordenPorEnviar = {
+    amount: preciofinal,
+    userId: user?.id,
+    status: "Abierto",
+    carritoOrden: carritoOrden,
+  };
+  console.log("quierover",ordenPorEnviar.userId);
+  
+
+  function sendOrderToDB(e) {
+    // console.log(ordenPorEnviar)
+    e.preventDefault();
+    if(user?.id){
+      dispatch(postOrder(ordenPorEnviar, token1));
+      history("/pagar")
+    } else {
+      history("/login")
+    }
+  }
 
   return (
     <>
@@ -126,7 +158,7 @@ export default function ShoppingCart() {
                   <h3>{p.name}</h3>
                   <ContainerCantidad>
                     <ButtonCantidad
-                      disabled={controllerDisabledButon}
+                      /*disabled={controllerDisabledButon}*/
                       onClick={() => handlerCantidadItem(p, "-")}
                     >
                       -
@@ -139,7 +171,7 @@ export default function ShoppingCart() {
                   <Unidad>${p.price?.toFixed(2)}</Unidad>
                   <Unidad>${p.precioTotal?.toFixed(2)}</Unidad>
                   <ButtonDelete onClick={() => handlerDelete(p)}>
-                    <AiOutlineDelete/>
+                    <AiOutlineDelete />
                   </ButtonDelete>
                 </DivUnidad>
                 <Decision></Decision>
@@ -156,8 +188,12 @@ export default function ShoppingCart() {
                 </Button>
               </ButtonCompra>
               <ButtonCompra>
-                <Button>
-                  <Link to="/pagar">Finalizar compra</Link>
+                <Button
+                  onClick={(e) => {
+                    sendOrderToDB(e);
+                  }}
+                >
+                  Finalizar compra
                 </Button>
               </ButtonCompra>
             </DivResumen>

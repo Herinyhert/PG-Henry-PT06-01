@@ -44,6 +44,7 @@ export default function Buy() {
   preciofinal = carrito?.reduce((sum, b) => sum + Number(b.precioTotal), 0);
 
   const items_ml = carrito.map((i) => ({
+    img: i.img,
     name: i.name,
     price: i.price,
     quantity: i.totalCount,

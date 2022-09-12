@@ -385,8 +385,6 @@ export function clearState() {
     });
   };
 }
-
-
 ////////////back office jvqh//////////////////////////////////////////////////////////////////////
 export function postProductBO(token, payload) {
   return function (dispatch) {
