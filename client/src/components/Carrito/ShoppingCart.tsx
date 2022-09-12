@@ -6,7 +6,7 @@ import {
   postOrder,
   Articulo,
   ArticuloCarrito,
-  postOrderDetail,
+  // postOrderDetail,
 } from "../../actions";
 import NavBar from "../NavBar/NavBar";
 import { ReduxState } from "../../reducer";
@@ -35,6 +35,8 @@ import { ButtonCantidad, ButtonDelete } from "./stylesCart";
 
 export default function ShoppingCart() {
   let detail = useSelector((state: ReduxState) => state.detailsProduct);
+  const user = useSelector((state: ReduxState) => state.user);
+  const token1 = useSelector((state: ReduxState) => state.token);
   const dispatch = useDispatch<any>();
   const history = useNavigate();
   let detalle: ArticuloCarrito = {
@@ -50,6 +52,12 @@ export default function ShoppingCart() {
     totalCount: 1,
     precioTotal: detail?.price,
   };
+
+  // export interface OrdenCarrito {
+  //   productId: number;
+  //   price: number;
+  //   quantity: number;
+  // }
 
   let preciofinal = 0;
   let productosCarrito = JSON.parse(localStorage.getItem("carrito"));
@@ -93,29 +101,32 @@ export default function ShoppingCart() {
 
   const index = productosCarrito?.findIndex((art) => art.id === detalle.id);
   const controllerDisabledButon = productosCarrito[index]?.totalCount === 1;
+  const carritoOrden = productosCarrito.map(p => {
+    return {
+      productId: p.id,
+      price: p.price,
+      quantity: p.totalCount,
+    };
+  });
 
   const ordenPorEnviar = {
     amount: preciofinal,
-    userId: 1,
+    userId: user?.id,
     status: "Abierto",
-    productId: detalle.id,
-    price: detalle.precioTotal,
-    quantity: detalle.totalCount,
+    carritoOrden: carritoOrden,
   };
-
-  // const ordenDetalladaPorEnviar = {
-  //   productId: detalle.id,
-  //   price: detalle.precioTotal,
-  //   quantity: detalle.totalCount,
-  // }
+  console.log("quierover",ordenPorEnviar.userId);
+  
 
   function sendOrderToDB(e) {
     // console.log(ordenPorEnviar)
     e.preventDefault();
-    dispatch(postOrder(ordenPorEnviar));
-    // dispatch(postOrderDetail(ordenDetalladaPorEnviar)),
-
-    history("/pagar");
+    if(user?.id){
+      dispatch(postOrder(ordenPorEnviar, token1));
+      history("/pagar")
+    } else {
+      history("/login")
+    }
   }
 
   return (

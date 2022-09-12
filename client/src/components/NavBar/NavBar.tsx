@@ -12,7 +12,7 @@ export default function NavBar() {
   const dispatch = useDispatch<any>();
 
   function handleLogout() {
-    localStorage.clear();
+    localStorage.removeItem("ecommerce")
     dispatch(clearState());
   }
 
