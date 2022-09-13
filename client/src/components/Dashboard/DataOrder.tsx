@@ -13,6 +13,7 @@ import { ReduxState } from "../../reducer";
 import {  deleteProduct, getOrdersBO } from "../../actions";
 import Paginado from "../Paginado/Paginado";
 import ButtonMUI from "@mui/material/Button";
+import ViewDetails from "../Dashboard/Dialogs/ViewDetails";
 
 //import CreateOrder from "./Dialogs/CreateOrder";
 
@@ -22,10 +23,12 @@ export default function DenseTable() {
     pageSize: 12,
     name: undefined,
     order: undefined,
-    direction: undefined
+    direction: undefined,
+    userId: null
   });
   const allOrders = useSelector((state: ReduxState) => state.ordersBO);
   const totalOrders = useSelector((state1: ReduxState) => state1.totalOrders);
+  const user = useSelector((state: ReduxState) => state.user);
 
   const dispatch = useDispatch<any>();
 
@@ -36,7 +39,8 @@ export default function DenseTable() {
         pageSize: state.pageSize,
         name: state.name,
         order: state.order,
-        direction: state.direction
+        direction: state.direction,
+        userId: user.role==='CLIENT'?user.id:0
       })
     );
   }, [
@@ -45,7 +49,8 @@ export default function DenseTable() {
     state.pageSize,
     state.name,
     state.order,
-    state.direction
+    state.direction,
+    state.userId
   ]);
 
   function clickDelete(id) {
@@ -71,8 +76,7 @@ export default function DenseTable() {
                 <TableCell align="right">Payment ID</TableCell>
                 <TableCell align="right">Payment Status</TableCell>
                 <TableCell align="right">Payment Type</TableCell>
-                <TableCell align="right">Details Orders</TableCell>
-                <TableCell align="right">Update</TableCell>
+                <TableCell align="right">View Details</TableCell>
                 <TableCell align="right">Delete</TableCell>
               </TableRow>
             </TableHead>
@@ -91,9 +95,9 @@ export default function DenseTable() {
                     <TableCell align="right">{row.payment_id}</TableCell>
                     <TableCell align="right">{row.payment_status}</TableCell>
                     <TableCell align="right">{row.payment_type}</TableCell>
-                    <TableCell align="right">{row.order_detail[0].orderId}{" "}{row.order_detail[0].product?.name}{" "}{row.order_detail[0].price}{" "}{row.order_detail[0].quantity}</TableCell>
                     <TableCell align="right">
-                      {/* <CreateOrder order={row} stateC={state} /> */}
+                         
+                       <ViewDetails viewdetails={row?.order_detail} stateC={state} /> 
                     </TableCell>
                     <TableCell align="right">
                       <ButtonMUI

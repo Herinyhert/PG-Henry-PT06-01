@@ -1,4 +1,4 @@
-import { Role } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { Router } from "express";
 import prisma from "../../../db";
 
@@ -114,6 +114,7 @@ userRoutes.get("/", async (req, res) => {
     name,
     order = "id",
     direction = "desc",
+    filter
   } = req.query;
 
   const pageNumber = Number(page);
@@ -149,27 +150,33 @@ userRoutes.get("/", async (req, res) => {
     return;
   }
 
+  const where: Prisma.UserWhereInput = {};
+  if (filter) {
+    const filter_field = String(filter).split("-")[0];
+    const filter_val = String(filter).split("-")[1];
+    if (filter_field === "state" && filter_val !== "null") {
+      where.state = Boolean(filter_val);
+    }
+  }
+  if (name) {
+    if (name !== "") {
+      where.name = {
+        contains: String(name),
+        mode: "insensitive",
+      };
+    }
+  }
+
   const searchuser = await prisma.user.findMany({
     skip: (pageNumber - 1) * pageSizeNumber,
     take: pageSizeNumber,
-    where: {
-      email: {
-        mode: "insensitive", // Default value: default
-      },
-      name: {
-        mode: "insensitive", // Default mode
-      },
-    },
+    where: where,
     orderBy: { [order]: direction },
     include: { orderU: true },
   });
 
   const totalCuantity = await prisma.user.count({
-    where: {
-      name: {
-        equals: name, // Default mode
-      },
-    },
+    where: where,
   });
   console.log(searchuser);
 
