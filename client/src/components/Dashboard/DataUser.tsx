@@ -17,6 +17,12 @@ import ButtonMUI from "@mui/material/Button";
 //import UpdateProduct from "../Dashboard/Dialogs/UpdateProduct";
 import CreateUser from "./Dialogs/CreateUser";
 
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import InputLabel from "@mui/material/InputLabel";
+
+
 
 export default function DenseTable() {
   const [state, setState] = useState({
@@ -24,13 +30,31 @@ export default function DenseTable() {
     pageSize: 12,
     name: undefined,
     order: undefined,
-    direction: undefined
+    direction: undefined,
+    filter:null
   });
 
   const allUser = useSelector((state: ReduxState) => state.users);
   const totalUser = useSelector((state1: ReduxState) => state1.totalUser);
 
   const dispatch = useDispatch<any>();
+
+  async function handlechangeFilter(e) {
+    setState({
+      ...state,
+      ["filter"]: [e.target.name] + "-" + e.target.value,
+    });
+    await dispatch(
+      getUsersBO({
+        page: state.page,
+        pageSize: 12,
+        name: state.name,
+        order: "id",
+        direction: "desc",
+        filter: [e.target.name] + "-" + e.target.value,
+      })
+    );
+  }
 
   useEffect(() => {
     dispatch(
@@ -39,7 +63,8 @@ export default function DenseTable() {
         pageSize: state.pageSize,
         name: state.name,
         order: state.order,
-        direction: state.direction
+        direction: state.direction,
+        filter: state.filter
       })
     );
   }, [
@@ -48,7 +73,8 @@ export default function DenseTable() {
     state.pageSize,
     state.name,
     state.order,
-    state.direction
+    state.direction,
+    state.filter
   ]);
 
   async function clickDelete(id) {
@@ -60,6 +86,7 @@ export default function DenseTable() {
         name: "",
         order: "id",
         direction: "desc",
+        filter:state.filter
       })
     );
   }
@@ -79,7 +106,24 @@ export default function DenseTable() {
                 <TableCell align="right">Surname</TableCell>
                 <TableCell align="right">Password</TableCell>
                 <TableCell align="right">Email</TableCell>
-                <TableCell align="right">State</TableCell>
+                <TableCell align="right">
+                  <FormControl sx={{ m: 1, width: "100%" }} size="small">
+                    <InputLabel id="state">State</InputLabel>
+                    <Select
+                      labelId="state"
+                      id="state"
+                      name="state"
+                      label="state"
+                      onChange={handlechangeFilter}
+                    >
+                      <MenuItem value={null} selected>
+                        <em>All</em>
+                      </MenuItem>
+                      <MenuItem value="Active">Active</MenuItem>
+                      <MenuItem value="Inactive">Inactive</MenuItem>
+                    </Select>
+                  </FormControl>
+                </TableCell>
                 <TableCell align="right">Rol</TableCell>
                 <TableCell align="right">Update</TableCell>
                 <TableCell align="right">Delete</TableCell>

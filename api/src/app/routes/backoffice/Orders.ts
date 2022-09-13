@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client";
 import { Router } from "express";
 import prisma from "../../../db";
 
@@ -33,6 +34,7 @@ backofficeRoutesOrders.get("/", async (req, res) => {
     status,
     order = "id",
     direction = "desc",
+    userId
   } = req.query;
 
   const pageNumber = Number(page);
@@ -65,26 +67,27 @@ backofficeRoutesOrders.get("/", async (req, res) => {
     return;
   }
 
+  const where: Prisma.OrderWhereInput = {};
+  if (Number(userId)>0) {
+    where.userId = Number(userId);
+  }
+
   const searchorder = await prisma.order.findMany({
     skip: (pageNumber - 1) * pageSizeNumber,
     take: pageSizeNumber,
-    where: {
-      status: {
-        mode: "insensitive", // Default value: default
+    where: where,
+    orderBy: { [order]: direction },
+    include: {
+      user: true,
+      order_detail: {
+        include: { product: {include:{ category:true}} },
       },
     },
-    orderBy: { [order]: direction },
-    include: { user: true, order_detail: { include: { product:true } } },
   });
 
   const totalCuantity = await prisma.order.count({
-    where: {
-      status: {
-        equals: status, // Default mode
-      },
-    },
+    where: where,
   });
-  console.log(searchorder);
 
   res.status(200).json([totalCuantity, searchorder]);
 });

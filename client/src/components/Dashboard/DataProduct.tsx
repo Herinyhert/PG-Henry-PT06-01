@@ -10,11 +10,18 @@ import Paper from "@mui/material/Paper";
 
 import { useDispatch, useSelector } from "react-redux";
 import { ReduxState } from "../../reducer";
-import { getArticulos, deleteProductBO } from "../../actions";
+import { getArticulos, deleteProductBO,getArticulosBO } from "../../actions";
 import Paginado from "../../components/Paginado/Paginado";
 import ButtonMUI from "@mui/material/Button";
 import CreateProduct from "../Dashboard/Dialogs/CreateProduct";
 
+import Avatar from "@mui/material/Avatar";
+import Stack from "@mui/material/Stack";
+
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 
 
 function createData(
@@ -37,6 +44,7 @@ export default function DenseTable() {
     order: undefined,
     direction: undefined,
     categoryId: undefined,
+    filter: null
   });
   const allProducts = useSelector((state: ReduxState) => state.articulos);
   const totalCount = useSelector((state1: ReduxState) => state1.totalCount);
@@ -44,13 +52,14 @@ export default function DenseTable() {
 
   useEffect(() => {
     dispatch(
-      getArticulos({
+      getArticulosBO({
         page: state.page,
         pageSize: state.pageSize,
         name: state.name,
         order: state.order,
         direction: state.direction,
         categoryId: state.categoryId,
+        filter: null
       })
     );
   }, [
@@ -66,16 +75,35 @@ export default function DenseTable() {
    async function clickDelete(id) {
      await dispatch(deleteProductBO(id));
      await dispatch(
-       getArticulos({
+       getArticulosBO({
          page: state.page,
          pageSize: 12,
          name: state.name,
          order: "id",
          direction: "desc",
          categoryId: state.categoryId,
+         filter: state.filter
        })
      );
-   }
+  }
+  
+  async function handlechangeFilter(e) {
+     setState({
+       ...state,
+       ['filter']: [e.target.name]+'-'+e.target.value ,
+     });
+     await dispatch(
+       getArticulosBO({
+         page: state.page,
+         pageSize: 12,
+         name: state.name,
+         order: "id",
+         direction: "desc",
+         categoryId: state.categoryId,
+         filter: [e.target.name] + "-" + e.target.value,
+       })
+     );
+  }
 
   
   return (
@@ -90,12 +118,33 @@ export default function DenseTable() {
           >
             <TableHead>
               <TableRow>
+                <TableCell>Img</TableCell>
                 <TableCell>Name</TableCell>
                 <TableCell align="right">Brand</TableCell>
                 <TableCell align="right">Category</TableCell>
                 <TableCell align="right">Stock</TableCell>
                 <TableCell align="right">Price</TableCell>
-                <TableCell align="right">State</TableCell>
+                <TableCell align="right">
+                  <FormControl
+                    sx={{ m: 1, width: "100%" }}
+                    size="small"
+                  >
+                    <InputLabel id="state">State</InputLabel>
+                    <Select
+                      labelId="state"
+                      id="state"
+                      name="state"
+                      label="state"
+                      onChange={handlechangeFilter}
+                    >
+                      <MenuItem value={null} selected>
+                        <em>All</em>
+                      </MenuItem>
+                      <MenuItem value="Active">Active</MenuItem>
+                      <MenuItem value="Inactive">Inactive</MenuItem>
+                    </Select>                    
+                  </FormControl>
+                </TableCell>
                 <TableCell align="right">Update</TableCell>
                 <TableCell align="right">Delete</TableCell>
               </TableRow>
@@ -106,6 +155,15 @@ export default function DenseTable() {
                   key={row.id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
+                  <TableCell align="right">
+                    <Stack direction="row" spacing={2}>
+                      <Avatar
+                        alt="Remy Sharp"
+                        src={row.img}
+                        sx={{ width: 56, height: 56 }}
+                      ></Avatar>
+                    </Stack>
+                  </TableCell>
                   <TableCell align="right">{row.name}</TableCell>
                   <TableCell align="right">{row.brand}</TableCell>
                   <TableCell align="right">{row.category.name}</TableCell>
