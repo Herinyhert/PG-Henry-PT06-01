@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import styled from "styled-components";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -6,13 +7,27 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+
 import { useDispatch, useSelector } from "react-redux";
 import { ReduxState } from "../../reducer";
-import { getArticulos, deleteProduct } from "../../actions";
+import { getArticulos, deleteProductBO } from "../../actions";
 import Paginado from "../../components/Paginado/Paginado";
 import ButtonMUI from "@mui/material/Button";
 import CreateProduct from "../Dashboard/Dialogs/CreateProduct";
 
+
+
+function createData(
+  id: number,
+  name: string,
+  brand: String,
+  category: String,
+  stock: number,
+  price: number,
+  state: String
+) {
+  return { id, name, brand, category, stock, price, state };
+}
 
 export default function DenseTable() {
   const [state, setState] = useState({
@@ -48,10 +63,21 @@ export default function DenseTable() {
     state.categoryId,
   ]);
 
+   async function clickDelete(id) {
+     await dispatch(deleteProductBO(id));
+     await dispatch(
+       getArticulos({
+         page: state.page,
+         pageSize: 12,
+         name: state.name,
+         order: "id",
+         direction: "desc",
+         categoryId: state.categoryId,
+       })
+     );
+   }
 
-  function clickDelete(id) {
-    dispatch(deleteProduct(id));
-  }
+  
   return (
     <>
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
@@ -87,7 +113,7 @@ export default function DenseTable() {
                   <TableCell align="right">{row.price}</TableCell>
                   <TableCell align="right">{row.state}</TableCell>
                   <TableCell align="right">
-                    <CreateProduct articulo={row} />
+                    <CreateProduct articulo={row} stateC={state} />
                   </TableCell>
                   <TableCell align="right">
                     <ButtonMUI
@@ -111,3 +137,21 @@ export default function DenseTable() {
     </>
   );
 }
+
+const Button = styled.button`
+  display: block;
+  margin: 20px auto;
+  width: 100%;
+  height: 40px;
+  background-color: #335d90;
+  border: none;
+  cursor: pointer;
+  border-radius: 20px;
+  color: #fff;
+
+  &:hover {
+    box-shadow: 0 0 8px 0 #335d90 inset, 0 0 8px 4px #335d90;
+    transform: scale(1.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+`;

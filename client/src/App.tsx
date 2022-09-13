@@ -19,6 +19,7 @@ import CheckGoogle from "./components/Login/CheckGoogle";
 import Pagar from "./components/Carrito/Pagar";
 import ResultadoCompra from "./components/Carrito/ResultadoCompra";
 import Terminos from "./components/Signup/Terminos";
+import CheckMail from "./components/Login/CheckMail";
 
 export default function App() {
   const user = useSelector((state: ReduxState) => state.user);
@@ -43,6 +44,7 @@ export default function App() {
         <Route path="resultadocompra" element={<ResultadoCompra />} /> 
         <Route path="Pagar" element={<Pagar/>}/>
         <Route path="terminos-y-condiciones" element={<Terminos/>} />
+        <Route path="login/checkmail/:token" element={<CheckMail/>}/>
       </Routes>
     </BrowserRouter>
   );

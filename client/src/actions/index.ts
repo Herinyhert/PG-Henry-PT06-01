@@ -22,6 +22,28 @@ import {
 
 const { REACT_APP_API_URL = "http://localhost:3001" } = process.env;
 
+export interface OrdersBO {
+  id: number;
+  amount: number;
+  date: Date;
+  status: String;
+  userId: number;
+  payment_id: number;
+  payment_status: String;
+  payment_type: String;
+  order_detail: OrderDetailsBO[];
+  user: User;
+}
+
+export interface OrderDetailsBO {
+  id: number;
+  orderId: number;
+  productId: number;
+  price: number;
+  quantity: number;
+  product: Articulo;
+}
+
 export interface User {
   id: number;
   name: String;
@@ -363,15 +385,13 @@ export function clearState() {
     });
   };
 }
-
-export function postOrder <Orders> ( payload){
+////////////back office jvqh//////////////////////////////////////////////////////////////////////
+export function postProductBO(token, payload) {
   return function (dispatch) {
-       return axios
-      .post(REACT_APP_API_URL + "/backoffice/order", payload
-      // , {
-      //   headers: { authorization: `Bearer ${token}` },
-      // } a ver para agregar el token de user, por ahora esta hardcodeado el user
-      )
+    return axios
+      .post(REACT_APP_API_URL + "/backoffice/product", payload, {
+        headers: { authorization: `Bearer ${token}` },
+      })
       .then((response) => response)
       .catch((error) => {
         dispatch({ type: SET_ERROR, payload: error });
@@ -379,17 +399,138 @@ export function postOrder <Orders> ( payload){
   };
 }
 
-export function postOrderDetail <Order_detail> ( payload){
+export function deleteProductBO(id) {
+  return async function (dispatch: Dispatch) {
+    try {
+      var json = await axios.delete<Category[]>(
+        REACT_APP_API_URL + `/backoffice/product/${id}`
+      );
+
+      return dispatch({ type: DELETE_PRODUCT, payload: json.data });
+    } catch (error) {
+      return dispatch({ type: SET_ERROR, payload: "error" });
+    }
+  };
+}
+
+export function getUsersBO({
+  page,
+  pageSize,
+  name,
+  order,
+  direction,
+}: paramsUser) {
+  return async function (dispatch: Dispatch) {
+    try {
+      var json = await axios.get<User[]>(REACT_APP_API_URL + "/backoffice/user", {
+        params: {
+          page: page,
+          pageSize: pageSize,
+          name: name,
+          order: order,
+          direction: direction,
+        },
+      });
+      // console.log(json.data[1]);
+
+      return [
+        dispatch({ type: GET_USERS, payload: json.data[1] }),
+        dispatch({ type: GET_TOTALUSERS, payload: json.data[0] }),
+      ];
+      //
+    } catch (error) {
+      return dispatch({ type: SET_ERROR, payload: "error" });
+    }
+  };
+}
+
+export function postUserBO(token, payload) {
   return function (dispatch) {
-       return axios
-      .post(REACT_APP_API_URL + "/backoffice/order/orderDetail", payload
-      // , {
-      //   headers: { authorization: `Bearer ${token}` },
-      // } a ver para agregar el token de user, por ahora esta hardcodeado el user
+    return axios
+      .post(REACT_APP_API_URL + "/backoffice/user", payload, {
+        headers: { authorization: `Bearer ${token}` },
+      })
+      .then((response) => {
+        //response
+        console.log(response)
+        
+      }
       )
+      .catch((error) => {
+        console.log(error)
+        dispatch({ type: SET_ERROR, payload: error });
+      });
+  };
+}
+
+export function deleteUserBO(id) {
+  return async function (dispatch: Dispatch) {
+    try {
+      var json = await axios.delete<User[]>(REACT_APP_API_URL + `/backoffice/user/${id}`);
+
+      return dispatch({ type: DELETE_USER, payload: json.data });
+    } catch (error) {
+      return dispatch({ type: SET_ERROR, payload: "error" });
+    }
+  };
+}
+
+export function postCategoryBO(token, payload) {
+  return function (dispatch) {
+    return axios
+      .post(REACT_APP_API_URL + "/backoffice/category", payload, {
+        headers: { authorization: `Bearer ${token}` },
+      })
       .then((response) => response)
       .catch((error) => {
         dispatch({ type: SET_ERROR, payload: error });
       });
   };
 }
+
+export function deleteCategoryBO(id) {
+  return async function (dispatch: Dispatch) {
+    try {
+      var json = await axios.delete<Category[]>(
+        REACT_APP_API_URL + `/backoffice/category/${id}`
+      );
+
+      return dispatch({ type: DELETE_CATEGORY, payload: json.data });
+    } catch (error) {
+      return dispatch({ type: SET_ERROR, payload: "error" });
+    }
+  };
+}
+
+export function getOrdersBO({
+  page,
+  pageSize,
+  name,
+  order,
+  direction,
+}: paramsOrders) {
+  return async function (dispatch: Dispatch) {
+    try {
+      var json = await axios.get<OrdersBO[]>(
+        REACT_APP_API_URL + "/backoffice/orders",
+        {
+          params: {
+            page: page,
+            pageSize: pageSize,
+            name: name,
+            order: order,
+            direction: direction,
+          },
+        }
+      );
+      return [
+        dispatch({ type: GET_ORDERS, payload: json.data[1] }),
+        dispatch({ type: GET_TOTALORDERS, payload: json.data[0] }),
+      ];
+      //
+    } catch (error) {
+      return dispatch({ type: SET_ERROR, payload: "error" });
+    }
+  };
+}
+//////////////////////back office/////////////////////////////////////////////////////////////////
