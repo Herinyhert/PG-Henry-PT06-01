@@ -16,6 +16,8 @@ import {
   CLEAR_STATE,
   GET_GOOGLE,
   GET_DETAIL_USER,
+  REGISTRO_EXITOSO
+
 } from "../actions/actiontype";
 import {
   getLocalstorageState,
@@ -23,6 +25,7 @@ import {
 } from "../utils/localstorage";
 import { Articulo, Category, User, Orders, OrdersBO } from "../actions";
 import jwtdecode from "jwt-decode";
+import { string } from "yup";
 
 export interface ReduxState {
   ordersBO: OrdersBO[];
@@ -40,7 +43,9 @@ export interface ReduxState {
   totalOrders: number;
   token: string;
   user?: { id: number; email: string; iat: number; role: string };
-  error: string;
+  error:string;
+  mensaje:string;
+  useregistrado:boolean;
 }
 
 interface actionI {
@@ -64,11 +69,21 @@ const initialState: ReduxState = {
   totalOrders: 0,
   token: "",
   user: undefined,
-  error: "",
+  error: null,
+  mensaje:null,
+  useregistrado:null
 };
 
 function rootReducer(state: ReduxState, action: actionI) {
   switch (action.type) {
+    case REGISTRO_EXITOSO:
+      return{
+        ...state,
+        mensaje:action.payload,
+        useregistrado:true
+      }
+
+
     case GET_ARTICULOS:
       return {
         ...state,
