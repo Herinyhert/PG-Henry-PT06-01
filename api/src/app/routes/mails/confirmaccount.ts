@@ -1,7 +1,8 @@
+import { UserState } from '@prisma/client';
 import { Router } from 'express';
 import jwtdecode from "jwt-decode";
 import prisma from '../../../db';
-import sendemail from '../../controller/enviomail';
+import sendemail from '../../services/enviomail';
 
 const accountRoutes = Router()
 
@@ -171,7 +172,7 @@ accountRoutes.post('/confirmtrue/', async (req,res)=>{
     await prisma.user.update({
       where: { email: usertoken.email },
       data: {
-        state: true,
+        state: UserState.ACTIVE,
       },
     });
     sendemail({email: user.email, name: user.name, surname: user.surname})

@@ -1,4 +1,4 @@
-import { Prisma } from "@prisma/client";
+import { Prisma, UserState } from "@prisma/client";
 import { Router } from "express";
 import prisma from "../../../db";
 
@@ -17,57 +17,57 @@ export interface user {
   state: Boolean;
 }
 
-userRoutes.post("/", async (req, res, next) => {
-  const { id, name, surname, email, password, state, role } = req.body;
-  //hasheamos el password
-  /* let passwordHash = await bcryptjs.hash(password, 10); // hasheo pasword */
-  let passUpdate;
-  let passwordHash = null;
-  let existsEmail;
+// userRoutes.post("/", async (req, res, next) => {
+//   const { id, name, surname, email, password, state, role } = req.body;
+//   //hasheamos el password
+//   /* let passwordHash = await bcryptjs.hash(password, 10); // hasheo pasword */
+//   let passUpdate;
+//   let passwordHash = null;
+//   let existsEmail;
 
-  if (password) {
-    let salt = await bcrypt.genSalt(10);
-    passwordHash = await bcrypt.hash(password, salt);
-    passUpdate = passwordHash;
-  } else {
-    existsEmail = await prisma.user.findFirst({
-      where: {
-        id: id,
-      },
-    });
-    if (!existsEmail) {
-      return res
-        .status(400)
-        .send("There is already a registered user with the email");
-    }
-    passUpdate = existsEmail?.password;
-  }
+//   if (password) {
+//     let salt = await bcrypt.genSalt(10);
+//     passwordHash = await bcrypt.hash(password, salt);
+//     passUpdate = passwordHash;
+//   } else {
+//     existsEmail = await prisma.user.findFirst({
+//       where: {
+//         id: id,
+//       },
+//     });
+//     if (!existsEmail) {
+//       return res
+//         .status(400)
+//         .send("There is already a registered user with the email");
+//     }
+//     passUpdate = existsEmail?.password;
+//   }
 
-  try {
-    const newUser = await prisma.user.upsert({
-      where: { id: id },
-      update: {
-        name: name,
-        surname: surname,
-        email: email,
-        state: Boolean(state),
-        password: passUpdate,
-        role: role,
-      },
-      create: {
-        name: name,
-        surname: surname,
-        email: email,
-        state: Boolean(state),
-        password: passUpdate,
-        role: role,
-      },
-    });
-    res.status(200).send(newUser);
-  } catch (error) {
-    return next(error);
-  }
-  /*let existsEmail = await prisma.user.findFirst({
+//   try {
+//     const newUser = await prisma.user.upsert({
+//       where: { id: id },
+//       update: {
+//         name: name,
+//         surname: surname,
+//         email: email,
+//         state: Boolean(state),
+//         password: passUpdate,
+//         role: role,
+//       },
+//       create: {
+//         name: name,
+//         surname: surname,
+//         email: email,
+//         state: Boolean(state),
+//         password: passUpdate,
+//         role: role,
+//       },
+//     });
+//     res.status(200).send(newUser);
+//   } catch (error) {
+//     return next(error);
+//   }
+/*let existsEmail = await prisma.user.findFirst({
     where: {
       email: email,
     },
@@ -91,7 +91,7 @@ userRoutes.post("/", async (req, res, next) => {
       return next(error);
     }
   }*/
-});
+// });
 
 userRoutes.delete("/:id", async (req, res) => {
   try {
@@ -114,7 +114,7 @@ userRoutes.get("/", async (req, res) => {
     name,
     order = "id",
     direction = "desc",
-    filter
+    filter,
   } = req.query;
 
   const pageNumber = Number(page);
@@ -154,8 +154,13 @@ userRoutes.get("/", async (req, res) => {
   if (filter) {
     const filter_field = String(filter).split("-")[0];
     const filter_val = String(filter).split("-")[1];
-    if (filter_field === "state" && filter_val !== "null") {
-      where.state = Boolean(filter_val);
+    if (
+      filter_field === "state" &&
+      (filter_val === UserState.ACTIVE ||
+        filter_val === UserState.BLOCKED ||
+        filter_val === UserState.NOTCONFIRMED)
+    ) {
+      where.state = filter_val;
     }
   }
   if (name) {

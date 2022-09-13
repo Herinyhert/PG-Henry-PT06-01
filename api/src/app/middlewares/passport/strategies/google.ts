@@ -1,7 +1,8 @@
 import { Strategy } from "passport-google-oauth20";
 import prisma from "../../../../db";
 import passport from "..";
-import sendemail from "../../../controller/enviomail";
+import sendemail from "../../../services/enviomail";
+import { UserState } from "@prisma/client";
 
 const googleStrategy = new Strategy(
   {
@@ -26,6 +27,7 @@ const googleStrategy = new Strategy(
           name: profile.name?.givenName || "",
           surname: profile.name?.familyName || "",
           email: email,
+          state: UserState.ACTIVE
         },
       });
       const name = String(profile.name?.givenName);
