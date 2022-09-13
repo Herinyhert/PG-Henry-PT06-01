@@ -15,6 +15,7 @@ import {
   POST_SIGNIN,
   CLEAR_STATE,
   GET_GOOGLE,
+  GET_DETAIL_USER,
 } from "../actions/actiontype";
 import {
   getLocalstorageState,
@@ -27,6 +28,7 @@ export interface ReduxState {
   ordersBO: OrdersBO[];
   orders: Orders[];
   users: User[];
+  detailsUser: User;
   dashboardmenu: String;
   articulos: Articulo[];
   categorias: Category[];
@@ -50,6 +52,7 @@ const initialState: ReduxState = {
   ordersBO:[],
   orders: [],
   users: [],
+  detailsUser: undefined,
   dashboardmenu: "",
   articulos: [],
   categorias: [],
@@ -81,6 +84,11 @@ function rootReducer(state: ReduxState, action: actionI) {
         ...state,
         users: action.payload,
       };
+      case GET_DETAIL_USER:
+        return {
+          ...state,
+          detailsUser: action.payload,
+        };
     case GET_CATEGORIES:
       return {
         ...state,
@@ -108,7 +116,6 @@ function rootReducer(state: ReduxState, action: actionI) {
         totalOrders: action.payload,
       };
     case GET_DETAIL_PRODUCT:
-      //console.log("reducer action33",state.detailsProduct);
       return {
         ...state,
         detailsProduct: action.payload,

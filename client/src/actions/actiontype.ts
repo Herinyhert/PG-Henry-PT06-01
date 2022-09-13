@@ -13,6 +13,7 @@ export const SET_DASHBOARDMENU = "SET_DASHBOARDMENU";
 export const GET_GOOGLE = "GET_GOOGLE";
 
 export const GET_USERS = "GET_USERS";
+export const GET_DETAIL_USER = "GET_DETAIL_USER";
 export const GET_TOTALUSERS = "GET_TOTALUSERS";
 export const DELETE_USER = "DELETE_USER";
 

@@ -20,6 +20,7 @@ export default function validateuser ({name, surname, email, token}: ConfirmMail
       let mailOption={
           from: 'compustorehenry@gmail.com',
           to: email,
+
           subject: "Bienvenido a CompuStore - Importante: completemos la configuración de su cuenta ✔",
           text: `http://localhost:3000/login/checkmail/${token}`,
           html:`
@@ -92,6 +93,7 @@ Ya casi está listo para comenzar a utilizar la App de CompuStore. Simplemente h
     
   </container>
   </div> `
+
       
       }
   
