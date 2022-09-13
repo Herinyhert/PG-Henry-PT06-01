@@ -26,6 +26,7 @@ export default function Signup() {
 
   const formik = useFormik({
     initialValues: {
+
       name: '',
       surname: '',
       email: '',
@@ -159,8 +160,8 @@ const Form = styled.form`
   flex-direction: column;
   align-items: center;
   position: absolute;
-  max-width: 25%;
-  width: 25%;
+  /* max-width: 25%; */
+  width: 40%;
   top: 55%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -283,8 +284,10 @@ const Button = styled.button`
 `;
 
 const Span = styled.span`
-  color: red;
+color:red;
+font-size: 10px;
 `;
+
 
 const P = styled.div`
   text-align: center;
