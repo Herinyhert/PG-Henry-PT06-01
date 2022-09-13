@@ -23,6 +23,7 @@ import CreateCategory from "../Dashboard/Dialogs/CreateCategory";
 import CreateUser from "../Dashboard/Dialogs/CreateUser";
 /* import CreateOrder from "../Dashboard/Dialogs/CreateOrder"; */
 import SearchBar from "../../components/SearchBar/SearchBar";
+import Paper from "@mui/material/Paper";
 
 import { getArticulos, getCategorias, Articulo } from "../../actions";
 
@@ -123,53 +124,62 @@ function Dashboard() {
 
   return (
     <>
-      <Body>
-        <NavBar />
-        <CssBaseline />
-        <Box sx={{ flexGrow: 1 }}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}></Grid>
-            <Grid item xs={12}>
-              <Box sx={{ flexGrow: 1 }}>
-                <Grid container spacing={3}>
-                  <Grid item xs={2}>
-                    <SearchBar
-                      onSearch={(search) =>
-                        setState({ ...state, page: 1, name: search })
-                      }
-                    />
-                  </Grid>
-                  <Grid item xs={8}></Grid>
-                  <Grid item xs={2}>
-                    {                      
-                      getComponentRouter(dashboardmenu,state)                    
-                    }
-                  </Grid>
-                </Grid>
-              </Box>
-            </Grid>
-            <Grid item xs={12}>
-              <Box sx={{ flexGrow: 1 }}>
-                <Grid container spacing={3}>
-                  <Grid item xs={2}>
-                    <Menu />
-                  </Grid>
-                  <Grid item xs>
-                    {                                 
-                      getDataComponentRouter(dashboardmenu)             
-                    }
-                  </Grid>
-                </Grid>
-              </Box>
-            </Grid>
+      <NavBar />
+      <CssBaseline />
+      <Box sx={{ flexGrow: 1 }}>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <Paper
+              sx={{
+                height: 50,
+                width: '100%'
+              }}
+            />
           </Grid>
-        </Box>
-      </Body>
+          <Grid item xs={12}>
+            <Box sx={{ flexGrow: 1 }}>
+              <Grid container spacing={3}>
+                <Grid item xs={2}>
+                  <SearchBar
+                    onSearch={(search) =>
+                      setState({ ...state, page: 1, name: search })
+                    }
+                  />
+                </Grid>
+                <Grid item xs={8}></Grid>
+                <Grid item xs={2}>
+                  {getComponentRouter(dashboardmenu, state)}
+                </Grid>
+              </Grid>
+            </Box>
+          </Grid>
+          <Grid item xs={12}>
+            <Box sx={{ flexGrow: 1 }}>
+              <Grid container spacing={3}>
+                <Grid item xs={2}>
+                  <Menu />
+                </Grid>
+                <Grid item xs>
+                  {getDataComponentRouter(dashboardmenu)}
+                </Grid>
+              </Grid>
+            </Box>
+          </Grid>
+        </Grid>
+      </Box>
     </>
   );
 }
 
 export default Dashboard;
+
+const HomeContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow-x: hidden;
+`;
 
 const Body = styled.div`
   width: 100%;

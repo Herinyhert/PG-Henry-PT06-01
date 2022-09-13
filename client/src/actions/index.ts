@@ -19,6 +19,7 @@ import {
   GET_ORDERS,
   GET_TOTALORDERS,
   GET_DETAIL_USER,
+  REGISTRO_EXITOSO
 } from "./actiontype";
 
 const { REACT_APP_API_URL = "http://localhost:3001" } = process.env;
@@ -113,6 +114,7 @@ export interface paramsOrders {
   name: string;
   order: string;
   direction: string;
+  userId: number;
 }
 
 export interface paramsUser {
@@ -121,6 +123,17 @@ export interface paramsUser {
   name: string;
   order: string;
   direction: string;
+  filter: string
+}
+
+export interface paramsArtBO {
+  page: number;
+  pageSize: number;
+  name: string;
+  order: string;
+  direction: string;
+  categoryId: number;
+  filter: any;
 }
 
 export interface params {
@@ -361,9 +374,19 @@ export function createUser(payload) {
   return function (dispatch) {
     return axios
       .post(REACT_APP_API_URL + "/auth/signup", payload)
-      .then((response) => response)
+      .then((response) => /* response */
+         dispatch({
+          type: REGISTRO_EXITOSO,
+          payload:response.data.msg
+         })
+      )
       .catch((error) => {
-        dispatch({ type: SET_ERROR, payload: error });
+         /* const alerta ={
+          msg:error.response.data.msg
+        }   */
+        const alerta = error.response.data.msg 
+        dispatch({ type: SET_ERROR, payload:  alerta});
+        console.log(alerta)
       });
   };
 }
@@ -432,6 +455,7 @@ export function getUsersBO({
   name,
   order,
   direction,
+  filter
 }: paramsUser) {
   return async function (dispatch: Dispatch) {
     try {
@@ -444,6 +468,7 @@ export function getUsersBO({
             name: name,
             order: order,
             direction: direction,
+            filter:filter
           },
         }
       );
@@ -524,6 +549,7 @@ export function getOrdersBO({
   name,
   order,
   direction,
+  userId
 }: paramsOrders) {
   return async function (dispatch: Dispatch) {
     try {
@@ -536,12 +562,48 @@ export function getOrdersBO({
             name: name,
             order: order,
             direction: direction,
+            userId: userId,
           },
         }
       );
       return [
         dispatch({ type: GET_ORDERS, payload: json.data[1] }),
         dispatch({ type: GET_TOTALORDERS, payload: json.data[0] }),
+      ];
+      //
+    } catch (error) {
+      return dispatch({ type: SET_ERROR, payload: "error" });
+    }
+  };
+}
+
+export function getArticulosBO({
+  page,
+  pageSize,
+  name,
+  order,
+  direction,
+  categoryId,
+  filter
+}: paramsArtBO) {
+  return async function (dispatch: Dispatch) {
+    try {
+      var json = await axios.get<Articulo[]>(REACT_APP_API_URL + "/backoffice/product", {
+        params: {
+          page: page,
+          pageSize: pageSize,
+          name: name,
+          order: order,
+          direction: direction,
+          categoryId: categoryId,
+          filter: filter
+        },
+      });
+      // console.log(json.data[1]);
+
+      return [
+        dispatch({ type: GET_ARTICULOS, payload: json.data[1] }),
+        dispatch({ type: GET_TOTALARTICULOS, payload: json.data[0] }),
       ];
       //
     } catch (error) {

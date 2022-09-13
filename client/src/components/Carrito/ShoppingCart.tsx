@@ -35,6 +35,7 @@ export default function ShoppingCart() {
   const token1 = useSelector((state: ReduxState) => state.token);
   const dispatch = useDispatch<any>();
   const history = useNavigate();
+
   let detalle: ArticuloCarrito = {
     id: detail?.id,
     name: detail?.name,
@@ -103,21 +104,68 @@ export default function ShoppingCart() {
     status: "Abierto",
     carritoOrden: carritoOrden,
   };
-  console.log("quierover", ordenPorEnviar.userId);
+  //console.log("quierover", ordenPorEnviar.userId);
+
+  async function verificarSiHayOrderAbierta() {
+    console.log("estoy aaaccccaaa");
+    const orderCheck = await axios.get(
+      REACT_APP_API_URL + "/backoffice/order/checkorder/" + user.id
+    );
+
+    console.log("te quiero encontrar", orderCheck);
+    if (orderCheck.data === "") {
+      return "sin ordenes abiertas";
+    } else {
+      return orderCheck.data.id;
+    }
+  }
+
+  async function actualizarOrder(checkOrderUser, ordenPorEnviar) {
+    // ACTULIZAR TABLA ORDER
+    const actualizado = await axios.put(
+      REACT_APP_API_URL + "/backoffice/order/" + checkOrderUser,
+      {
+        amount: ordenPorEnviar.amount,
+        status: ordenPorEnviar.status,
+        carritoOrden: ordenPorEnviar.carritoOrden,
+      }
+    );
+
+    console.log("actualizado: " + actualizado);
+  }
+
+  async function eliminarProductos(numeroOder) {
+    const eliminado = await axios.delete(
+      REACT_APP_API_URL + "/backoffice/order/orderProduct/" + numeroOder
+    );
+    console.log("emininado: " + eliminado);
+  }
 
   async function sendOrderToDB(e) {
+    //BOTON FINALIZA COMPRA
     e.preventDefault();
+
     if (user?.id) {
-      var order = await axios.post(
-        REACT_APP_API_URL + "/backoffice/order",
-        ordenPorEnviar,
-        {
-          headers: { authorization: `Bearer ${token1}` },
-        }
-      );
-      history("/pagar?order=" + order.data.id);
-    }else{
-      history("/login")
+      const checkOrderUser = await verificarSiHayOrderAbierta(); // verifica si hay orden abierta
+      console.log("checkOrderUser: " + checkOrderUser);
+
+      if (checkOrderUser === "sin ordenes abiertas") {
+        var order = await axios.post(
+          REACT_APP_API_URL + "/backoffice/order",
+          ordenPorEnviar,
+          {
+            headers: { authorization: `Bearer ${token1}` },
+          }
+        );
+        history("/pagar?order=" + order.data.id);
+        //console.log("vamos avanzando", order);
+      } else {
+        eliminarProductos(checkOrderUser);
+        actualizarOrder(checkOrderUser, ordenPorEnviar);
+        history("/pagar?order=" + checkOrderUser);
+      }
+    } else {
+      history("/login");
     }
   }
 

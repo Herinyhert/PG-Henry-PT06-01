@@ -16,12 +16,12 @@ export default function TypographyMenu() {
   const dispatch = useDispatch<any>();
   const [status, setStatus] = useState(null);
 
-  
-  function handleChange(e: String) {
+  const rol = useSelector((state: ReduxState) => state.user.role);
+  function handleChange(e: String) {    
     dispatch(setDashboardMenu(e));
   }
 
-  return (
+  return rol === "ADMIN" ? (
     <Paper sx={{ width: 230 }}>
       <MenuList>
         <MenuItem onClick={() => handleChange("products")}>
@@ -44,6 +44,19 @@ export default function TypographyMenu() {
             Users
           </Typography>
         </MenuItem>
+        <MenuItem onClick={() => handleChange("orders")}>
+          <ListItemIcon>
+            <DraftsIcon fontSize="small" />
+          </ListItemIcon>
+          <Typography variant="inherit" noWrap>
+            Orders
+          </Typography>
+        </MenuItem>
+      </MenuList>
+    </Paper>
+  ) : (
+    <Paper sx={{ width: 230 }}>
+      <MenuList>
         <MenuItem onClick={() => handleChange("orders")}>
           <ListItemIcon>
             <DraftsIcon fontSize="small" />

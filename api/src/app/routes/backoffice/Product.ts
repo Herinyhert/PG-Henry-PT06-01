@@ -77,6 +77,7 @@ productRoutes.get("/", async (req, res) => {
     order = "id",
     direction = "desc",
     categoryId,
+    filter
   } = req.query;
 
   const pageNumber = Number(page);
@@ -121,7 +122,14 @@ productRoutes.get("/", async (req, res) => {
     return;
   }
 
-  const where: Prisma.ProductWhereInput = {};
+  const where: Prisma.ProductWhereInput = { };
+  if (filter) {
+    const filter_field = String(filter).split('-')[0];
+    const filter_val = String(filter).split("-")[1];
+    if (filter_field === "state" && filter_val!=='null') {
+      where.state = String(filter_val);
+    }    
+  }
   if (name) {
     where.name = {
       contains: name,
@@ -131,6 +139,8 @@ productRoutes.get("/", async (req, res) => {
   if (categoryId) {
     where.categoryId = filterCategoryId;
   }
+
+  
 
   const searchproducts = await prisma.product.findMany({
     skip: (pageNumber - 1) * pageSizeNumber,

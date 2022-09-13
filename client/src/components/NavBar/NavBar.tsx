@@ -45,6 +45,11 @@ export default function NavBar() {
             <ButtonLogin>Admin</ButtonLogin>
           </Link>
         ) : null}
+        {user?.role === "CLIENT" ? (
+          <Link to="/History">
+            <ButtonLogin>History</ButtonLogin>
+          </Link>
+        ) : null}
         {token ? (
           <Link to="/Home">
             <ButtonLogin onClick={handleLogout}>Logout</ButtonLogin>
