@@ -14,7 +14,7 @@ const backofficeRoutesOrder = Router();
 backofficeRoutesOrder.post("/", async (req, res) => {
   try {
     const { amount, status, userId, carritoOrden } = req.body;
-    console.log("no se por cual intento vamos---------------------------------------------------------", userId);
+    //console.log("no se por cual intento vamos---------------------------------------------------------", userId);
 
     const newOrder = await prisma.order.create({
       data: {

@@ -18,6 +18,7 @@ import {
   GET_GOOGLE,
   GET_ORDERS,
   GET_TOTALORDERS,
+  GET_DETAIL_USER,
 } from "./actiontype";
 
 const { REACT_APP_API_URL = "http://localhost:3001" } = process.env;
@@ -87,7 +88,6 @@ export interface Articulo {
   totalCount: number;
 }
 
-
 export interface ArticuloCarrito {
   id: number;
   name: String;
@@ -99,7 +99,7 @@ export interface ArticuloCarrito {
   categoryId: number;
   category: Category;
   totalCount: number;
-  precioTotal: number;  
+  precioTotal: number;
 }
 
 export interface Category {
@@ -242,6 +242,17 @@ export function getUsers({
   };
 }
 
+export function getUserID(id) {
+  return async function (dispatch: Dispatch) {
+    try {
+      var json = await axios.get<User[]>(REACT_APP_API_URL + `/user/${id}`);
+      return dispatch({ type: GET_DETAIL_USER, payload: json.data });
+    } catch (error) {
+      return dispatch({ type: SET_ERROR, payload: "error" });
+    }
+  };
+}
+
 export function getCategorias() {
   return async function (dispatch: Dispatch) {
     try {
@@ -271,7 +282,9 @@ export function deleteCategory(id) {
 export function deleteProduct(id) {
   return async function (dispatch: Dispatch) {
     try {
-      var json = await axios.delete<Category[]>(REACT_APP_API_URL + `/product/${id}`);
+      var json = await axios.delete<Category[]>(
+        REACT_APP_API_URL + `/product/${id}`
+      );
 
       return dispatch({ type: DELETE_PRODUCT, payload: json.data });
     } catch (error) {
@@ -422,15 +435,18 @@ export function getUsersBO({
 }: paramsUser) {
   return async function (dispatch: Dispatch) {
     try {
-      var json = await axios.get<User[]>(REACT_APP_API_URL + "/backoffice/user", {
-        params: {
-          page: page,
-          pageSize: pageSize,
-          name: name,
-          order: order,
-          direction: direction,
-        },
-      });
+      var json = await axios.get<User[]>(
+        REACT_APP_API_URL + "/backoffice/user",
+        {
+          params: {
+            page: page,
+            pageSize: pageSize,
+            name: name,
+            order: order,
+            direction: direction,
+          },
+        }
+      );
       // console.log(json.data[1]);
 
       return [
@@ -452,12 +468,10 @@ export function postUserBO(token, payload) {
       })
       .then((response) => {
         //response
-        console.log(response)
-        
-      }
-      )
+        console.log(response);
+      })
       .catch((error) => {
-        console.log(error)
+        console.log(error);
         dispatch({ type: SET_ERROR, payload: error });
       });
   };
@@ -466,7 +480,9 @@ export function postUserBO(token, payload) {
 export function deleteUserBO(id) {
   return async function (dispatch: Dispatch) {
     try {
-      var json = await axios.delete<User[]>(REACT_APP_API_URL + `/backoffice/user/${id}`);
+      var json = await axios.delete<User[]>(
+        REACT_APP_API_URL + `/backoffice/user/${id}`
+      );
 
       return dispatch({ type: DELETE_USER, payload: json.data });
     } catch (error) {

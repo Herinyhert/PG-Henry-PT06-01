@@ -3,9 +3,10 @@ import NavBar from "../NavBar/NavBar";
 import metodo from "../../../img/metodopago.png";
 import logo from "../../../img/Logo.png";
 import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import axios from "axios";
 import { useLocation, useParams } from "react-router-dom";
-
+import { getUserID } from "../../actions"
 import {
   Container,
   Panel,
@@ -34,6 +35,8 @@ import {
   InfoVendedor
  */
 } from "./styles";
+import { useSelector } from "react-redux";
+import { ReduxState } from "../../reducer";
 
 export default function Buy() {
   interface datos {
@@ -43,8 +46,9 @@ export default function Buy() {
   //const { order } = useParams();
   const search = useLocation().search;
   const order = new URLSearchParams(search).get('order');
-
-  console.log("use params: ", order);
+  let userDetallado = useSelector((state: ReduxState) => state.detailsUser);
+  //console.log("use params: ", order);
+  console.log("holaaa", userDetallado);
   
   const carrito = JSON.parse(localStorage.getItem("carrito"));
   let preciofinal = 0;
@@ -56,12 +60,11 @@ export default function Buy() {
     quantity: i.totalCount,
     totalPrice: i.precioTotal,
     img: i.img,
-
   }));
 
   const orderNro = order;
   const [datos, setDatos] = useState("");
-
+  const dispatch = useDispatch()
 
 
 
@@ -106,12 +109,18 @@ export default function Buy() {
                   type="text"
                   name="name"
                   placeholder="Ingrese su nombre"
+                  // value={userDetallado?.name}
                 />
 
                 <Input
                   type="text"
                   name="surname"
                   placeholder="Ingrese su Apellido"
+                  // value={
+                  //   userDetallado
+                  //   ?userDetallado.surname
+                  //   :""
+                  // }
                 />
                 <Input
                   type="text"
