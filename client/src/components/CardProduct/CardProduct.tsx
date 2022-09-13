@@ -39,17 +39,18 @@ export default function CardProduct({ articulo }: CardProductProps) {
 
 const CardLink = styled(Link)`
   text-decoration: none;
-  color: #333333;
+  /* color: #333333; */
+  color: black;
 `;
 
 const Tarjeta = styled.div`
   width: 240px;
-  height: 450px;
+  height: 460px;
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.5);
-  margin: 15px;
+  margin: 10px;
   border-radius: 10px;
-  padding-top: 35px;
+  padding-top: 25px;
   border: 1px solid rgba(209, 213, 219, 0.3);
   z-index: 0;
   justify-items: center;
@@ -76,6 +77,7 @@ const Name = styled.div`
   font-size: 14px;
   height: 100px;
   margin: 8px;
+  color: black;
   text-transform: lowercase;
   ::first-letter {
     text-transform: uppercase;
@@ -88,6 +90,7 @@ const Price = styled.span`
   line-height: 1;
   font-family: Proxima Nova, -apple-system, Helvetica Neue, Helvetica, Roboto,
     Arial, sans-serif;
+    color: black;
 `;
 
 const Start = styled.div`
