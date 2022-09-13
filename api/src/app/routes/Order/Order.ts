@@ -41,6 +41,42 @@ backofficeRoutesOrder.post("/", async (req, res) => {
   }
 });
 
+//ACTUALIZA LA ORDEN Y SUS PRODUCTOS PARA CUANDO HAY UNA ORDEN ABIERTA. 
+// backofficeRoutesOrder.put("/:idorder", async (req, res) => {
+//   const orderId = Number(req.params.idorder)
+//   try {
+//     const { amount, status, userId, carritoOrden } = req.body;
+//     //console.log("no se por cual intento vamos---------------------------------------------------------", userId);
+
+//     const newOrder = await prisma.order.upsert({
+//       where: {
+//         id: orderId,
+//       },
+//       // update: {
+//       //   amount: amount, //importe de la orden
+//         // status: status, //estado de la orden (abierta-cerrada)
+//         // userId: userId, //id del usuario
+//         // payment_id: "", //id del pago
+//         // payment_status: "", //estado del pago
+//         // payment_type: "", //tipo del pago
+//         // order_detail:
+//         //   {
+//         //     createMany: {
+//         //       data: carritoOrden,
+//         //     },
+//         //   },
+//       }
+
+//       },
+//     });
+    
+//     res.status(200).json(newOrder);
+//   } catch (error) {
+//     res.status(400).json({ message: `post Order fail ${error}` });
+//     return;
+//   }
+// });
+
 backofficeRoutesOrder.get("/", async (req, res) => {
   //  const id = req.query.name;
 
@@ -50,6 +86,21 @@ backofficeRoutesOrder.get("/", async (req, res) => {
   } else {
     res.status(404).send("error");
   }
+});
+
+// buscar ORDER con estado Abierto DE USUARIO PASADO. 
+backofficeRoutesOrder.get("/checkorder/:iduser", async (req, res) => {
+    
+    const userId = Number(req.params.iduser);
+    const orderUnique = await prisma.order.findFirst({
+      where: { userId: userId, status: "Abierto" },
+    });
+  
+    orderUnique
+      ? res.status(200).send(orderUnique)
+      : res.send(400).send("no se reconoce el usuario");
+
+
 });
 
 backofficeRoutesOrder.get("/:id", async (req, res) => {
