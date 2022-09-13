@@ -19,6 +19,17 @@ userRoutes.get("/", async (req, res) => {
   }
 });
 
+userRoutes.get("/:id", async (req, res) => {
+  const userId = Number(req.params.id);
+  const userUnique = await prisma.user.findUnique({
+    where: { id: userId },
+  });
+
+  userUnique
+    ? res.status(200).send(userUnique)
+    : res.send(400).send("no se reconoce el usuario");
+});
+
 export interface user {
   name: string;
   surname: string;

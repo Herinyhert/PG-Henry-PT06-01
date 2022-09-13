@@ -1,18 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  Orders,
-  // postOrder,
-  Articulo,
-  ArticuloCarrito,
-  // postOrderDetail,
-} from "../../actions";
+import { Orders, Articulo, ArticuloCarrito } from "../../actions";
 import NavBar from "../NavBar/NavBar";
 import { ReduxState } from "../../reducer";
 import { AiOutlineDelete } from "react-icons/ai";
 import axios from "axios";
-
 
 import {
   Container,
@@ -56,12 +49,6 @@ export default function ShoppingCart() {
     precioTotal: detail?.price,
   };
 
-  // export interface OrdenCarrito {
-  //   productId: number;
-  //   price: number;
-  //   quantity: number;
-  // }
-
   let preciofinal = 0;
   let productosCarrito = JSON.parse(localStorage.getItem("carrito"));
   preciofinal = productosCarrito?.reduce(
@@ -69,26 +56,23 @@ export default function ShoppingCart() {
     0
   );
 
-  //let carrito = JSON.parse(localStorage.getItem('carrito'));
   if (!productosCarrito) {
     productosCarrito = [];
   }
 
   const [articulo, setArticulo] = useState([productosCarrito]);
-  const [nroOrder, setNroOrder] = useState("")
 
   function handlerCantidadItem(detalle, signo: string) {
     setArticulo(detalle);
 
     const index = productosCarrito.findIndex((art) => art.id === detalle.id);
-    //let precioUnitario = detail.price;
 
     let carritoAux = JSON.parse(localStorage.getItem("carrito"));
     signo === "+"
       ? (carritoAux[index].totalCount = carritoAux[index].totalCount + 1)
       : signo === "-"
-        ? (carritoAux[index].totalCount = carritoAux[index].totalCount - 1)
-        : (carritoAux[index].totalCount = carritoAux[index].totalCount);
+      ? (carritoAux[index].totalCount = carritoAux[index].totalCount - 1)
+      : (carritoAux[index].totalCount = carritoAux[index].totalCount);
     carritoAux[index].precioTotal =
       carritoAux[index].price * carritoAux[index].totalCount;
     localStorage.setItem("carrito", JSON.stringify(carritoAux));
@@ -105,7 +89,7 @@ export default function ShoppingCart() {
 
   const index = productosCarrito?.findIndex((art) => art.id === detalle.id);
   const controllerDisabledButon = productosCarrito[index]?.totalCount === 1;
-  const carritoOrden = productosCarrito.map(p => {
+  const carritoOrden = productosCarrito.map((p) => {
     return {
       productId: p.id,
       price: p.price,
@@ -115,41 +99,27 @@ export default function ShoppingCart() {
 
   const ordenPorEnviar = {
     amount: preciofinal,
-    // userId: user?.id,
-    userId: 1,
+    userId: user?.id,
     status: "Abierto",
     carritoOrden: carritoOrden,
   };
   console.log("quierover", ordenPorEnviar.userId);
 
-
-  async function  sendOrderToDB(e) {
-    // console.log(ordenPorEnviar)
-    //CON CONTROL DE SESION
-    // e.preventDefault();
-    // if(user?.id){
-    //   dispatch(postOrder(ordenPorEnviar, token1));
-    //   history("/pagar")
-    // } else {
-    //   history("/login")
-    // }
-
-    // dispatch(postOrder(ordenPorEnviar, token1))
-    // .then((response)=>console.log(response));
-    // history("/pagar")
-
-    
-     var order = await axios .post(REACT_APP_API_URL + "/backoffice/order", ordenPorEnviar     
-      )
-    
-     history("/pagar?order=" + order.data.id)
-      
-      
-
+  async function sendOrderToDB(e) {
+    e.preventDefault();
+    if (user?.id) {
+      var order = await axios.post(
+        REACT_APP_API_URL + "/backoffice/order",
+        ordenPorEnviar,
+        {
+          headers: { authorization: `Bearer ${token1}` },
+        }
+      );
+      history("/pagar?order=" + order.data.id);
+    }else{
+      history("/login")
+    }
   }
-
-  console.log("Estoy aca afuera : "  + nroOrder);
-  
 
   return (
     <>
