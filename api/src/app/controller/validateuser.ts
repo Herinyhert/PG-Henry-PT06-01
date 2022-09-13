@@ -19,7 +19,9 @@ export default function validateuser ({email, token}: ConfirmMail){
           from: 'compustorehenry@gmail.com',
           to: email,
           subject: "Hola!!! Su cuenta fue creada con Exito! ✔",
-          text: `http://localhost:3000/login/checkmail/${token}`
+
+          text: `http://localhost:3001/mail/confirmtrue?token=${token}`
+
       
       }
   
