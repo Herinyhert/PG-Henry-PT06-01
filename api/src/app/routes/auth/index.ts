@@ -2,8 +2,10 @@ import { Router } from 'express';
 import prisma from '../../../db';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import auth from '../../middlewares/passport';
+
 import sendemail from '../../controller/enviomail';
 import validateuser from '../../controller/validateuser';
+
 const bcrypt = require('bcrypt');
 
 const authRouter = Router();
@@ -49,7 +51,11 @@ authRouter.post('/signup', async (req, res) => {
         password: passwordHash,
         state: false
       },
-    });
+      
+    }
+    );
+    res.status(200).send({msg:'usuario creado exitoso'})
+
     const user = await prisma.user.findUnique({
       where: {
         email: email,
@@ -60,8 +66,9 @@ authRouter.post('/signup', async (req, res) => {
       validateuser({email: user.email, token: token})
     }
     // sendemail({email:newUser.email, name:newUser.name, surname: newUser.surname })
+
   } else {
-    res.status(400).send('el usuario ya existe');
+    res.status(400).json({msg:'el usuario ya existe'});
   }
 });
 

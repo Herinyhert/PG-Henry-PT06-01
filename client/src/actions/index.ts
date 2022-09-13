@@ -19,6 +19,7 @@ import {
   GET_ORDERS,
   GET_TOTALORDERS,
   GET_DETAIL_USER,
+  REGISTRO_EXITOSO
 } from "./actiontype";
 
 const { REACT_APP_API_URL = "http://localhost:3001" } = process.env;
@@ -361,9 +362,19 @@ export function createUser(payload) {
   return function (dispatch) {
     return axios
       .post(REACT_APP_API_URL + "/auth/signup", payload)
-      .then((response) => response)
+      .then((response) => /* response */
+         dispatch({
+          type: REGISTRO_EXITOSO,
+          payload:response.data.msg
+         })
+      )
       .catch((error) => {
-        dispatch({ type: SET_ERROR, payload: error });
+         /* const alerta ={
+          msg:error.response.data.msg
+        }   */
+        const alerta = error.response.data.msg 
+        dispatch({ type: SET_ERROR, payload:  alerta});
+        console.log(alerta)
       });
   };
 }
