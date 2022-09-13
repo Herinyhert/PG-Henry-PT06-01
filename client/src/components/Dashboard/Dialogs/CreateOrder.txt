@@ -13,7 +13,7 @@ import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { postProductBO, getArticulos } from "../../../actions";
+import { postProductBO, getArticulos, OrdersBO } from "../../../actions";
 import { postImage } from "../../../services/api/postImage";
 import { ReduxState } from "../../../reducer/index";
 
@@ -22,15 +22,13 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 
-import { Order } from "../../../actions";
-
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 import FolderIcon from "@mui/icons-material/Folder";
 import FormHelperText from "@mui/material/FormHelperText";
 
-export interface CardProductProps {
-  order: Order;
+export interface CardOrderProps {
+  order: OrdersBO;
   stateC: any;
 }
 
@@ -38,45 +36,48 @@ export default function FormDialog({
   order = {
     id: 0,
     amount: 0,
-    date: Date(),
-    status: '',
+    date: '',
+    status: "",
     userId: 0,
     payment_id: 0,
-    payment_status: '',
-    payment_type: '',
-    order_detail: {
-      id: 0,
-      orderId: 0,
-      productId: 0,
-      price: 0,
-      quantity: 0,
-      product: {
+    payment_status: "",
+    payment_type: "",
+    order_detail: [
+      {
         id: 0,
-        name: '',
-        brand: '',
-        stock: 0,
+        orderId: 0,
+        productId: 0,
         price: 0,
-        img: '',
-        state: '',
-        categoryId: 0,
-        category: {
+        quantity: 0,
+        product: {
           id: 0,
-          name: ''
-        }
-      }
-    },
+          name: "",
+          brand: "",
+          stock: 0,
+          price: 0,
+          img: "",
+          state: "",
+          categoryId: 0,
+          category: {
+            id: 0,
+            name: "",
+          },
+          totalCount: 0
+        },
+      },
+    ],
     user: {
       id: 0,
-      name: '',
-      surname: '',
-      email: '',
-      password: '',
-      state: '',
-      role: ''
-    } 
+      name: "",
+      surname: "",
+      email: "",
+      password: "",
+      state: "",
+      role: "",
+    },
   },
   stateC,
-}: CardProductProps) {
+}: CardOrderProps) {
   const dispatch = useDispatch<any>();
   const [input, setInput] = useState({
     id: order.id || 0,
@@ -94,7 +95,6 @@ export default function FormDialog({
   const categories = useSelector((state: ReduxState) => state.categorias);
   const allProducts = useSelector((state: ReduxState) => state.articulos);
   const allUser = useSelector((state: ReduxState) => state.users);
-
 
   function validation(e) {
     let errors = {};
@@ -199,7 +199,7 @@ export default function FormDialog({
   return (
     <div>
       <Button variant="outlined" fullWidth onClick={handleClickOpen}>
-        {articulo.id ? "Update" : "Create"}
+        {order.id ? "Update" : "Create"}
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>New Product</DialogTitle>

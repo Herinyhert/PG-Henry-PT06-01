@@ -33,7 +33,8 @@ export default function App() {
         <Route path="PruebaCarrito" element={<PruebaCarrito />} />
         <Route path="home" element={<Home />} />
         <Route path="login" element={<Login />} />
-        <Route path="admin" element={user?.role === "ADMIN" ? <Dashboard /> : <Navigate to="/home" />} />
+        <Route path="admin" element={user?.role === "ADMIN" ? <div><Dashboard /> </div> : <Navigate to="/home" />} />
+        <Route path="history" element={user?.role === "CLIENT" ? <div><Dashboard /> </div>: <Navigate to="/home" />} />
         <Route path="signup" element={<Signup />} />
         <Route path="*" element={<ErrorCard />} />
         <Route path="CreateProduct" element={user?.role === "ADMIN" ? <CreateProduct /> : <Navigate to="/login" />} />

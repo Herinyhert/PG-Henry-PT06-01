@@ -126,6 +126,7 @@ export default function FormDialog({
           name: "",
           order: "id",
           direction: "desc",
+          filter: null
         })
       );
       handleClose();
