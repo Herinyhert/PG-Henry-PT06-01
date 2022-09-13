@@ -24,16 +24,14 @@ backofficeRoutesOrder.post("/", async (req, res) => {
         payment_id: "", //id del pago
         payment_status: "", //estado del pago
         payment_type: "", //tipo del pago
-        order_detail:
-          {
-            createMany: {
-              data: carritoOrden,
-            },
+        order_detail: {
+          createMany: {
+            data: carritoOrden,
           },
-
+        },
       },
     });
-    
+
     res.status(200).json(newOrder);
   } catch (error) {
     res.status(400).json({ message: `post Order fail ${error}` });
@@ -41,41 +39,6 @@ backofficeRoutesOrder.post("/", async (req, res) => {
   }
 });
 
-//ACTUALIZA LA ORDEN Y SUS PRODUCTOS PARA CUANDO HAY UNA ORDEN ABIERTA. 
-// backofficeRoutesOrder.put("/:idorder", async (req, res) => {
-//   const orderId = Number(req.params.idorder)
-//   try {
-//     const { amount, status, userId, carritoOrden } = req.body;
-//     //console.log("no se por cual intento vamos---------------------------------------------------------", userId);
-
-//     const newOrder = await prisma.order.upsert({
-//       where: {
-//         id: orderId,
-//       },
-//       // update: {
-//       //   amount: amount, //importe de la orden
-//         // status: status, //estado de la orden (abierta-cerrada)
-//         // userId: userId, //id del usuario
-//         // payment_id: "", //id del pago
-//         // payment_status: "", //estado del pago
-//         // payment_type: "", //tipo del pago
-//         // order_detail:
-//         //   {
-//         //     createMany: {
-//         //       data: carritoOrden,
-//         //     },
-//         //   },
-//       }
-
-//       },
-//     });
-    
-//     res.status(200).json(newOrder);
-//   } catch (error) {
-//     res.status(400).json({ message: `post Order fail ${error}` });
-//     return;
-//   }
-// });
 
 backofficeRoutesOrder.get("/", async (req, res) => {
   //  const id = req.query.name;
@@ -88,19 +51,20 @@ backofficeRoutesOrder.get("/", async (req, res) => {
   }
 });
 
-// buscar ORDER con estado Abierto DE USUARIO PASADO. 
+// buscar ORDER con estado Abierto DE USUARIO PASADO.
 backofficeRoutesOrder.get("/checkorder/:iduser", async (req, res) => {
-    
-    const userId = Number(req.params.iduser);
-    const orderUnique = await prisma.order.findFirst({
-      where: { userId: userId, status: "Abierto" },
-    });
-  
-    orderUnique
-      ? res.status(200).send(orderUnique)
-      : res.send(400).send("no se reconoce el usuario");
+  const userId = Number(req.params.iduser);
+  const orderUnique = await prisma.order.findFirst({
+    where: { userId: userId, status: "Abierto" },
+  });
 
-
+  orderUnique;
+  try {
+    res.status(200).send(orderUnique);
+  } catch (error) {
+    res.status(400).json({ message: `no esxiste order ${error}` });
+    return;
+  }
 });
 
 backofficeRoutesOrder.get("/:id", async (req, res) => {
@@ -119,13 +83,18 @@ backofficeRoutesOrder.get("/:id", async (req, res) => {
 
 backofficeRoutesOrder.put("/:id", async (req, res) => {
   const orderlId = Number(req.params.id);
-  const { amount, status } = req.body;
+  const { amount, status, carritoOrden } = req.body;
 
   let orderToChange = await prisma.order.update({
     where: { id: orderlId },
     data: {
       amount: amount,
       status: status,
+      order_detail: {
+        createMany: {
+          data: carritoOrden,
+        },
+      },
     },
   });
 
@@ -145,6 +114,21 @@ backofficeRoutesOrder.delete("/:id", async (req, res) => {
     res.json(orderToDelete);
   } catch (error) {
     res.send(`No se pudo eliminar la orden, ${error}`);
+  }
+});
+
+backofficeRoutesOrder.delete("/orderProduct/:id", async (req, res) => {
+  //borra los articulos de la orden relacionada
+
+  try {
+    const orderId = Number(req.params.id);
+
+    let productToDelete = await prisma.order_detail.deleteMany({
+      where: { orderId: orderId },
+    });
+    res.json(productToDelete);
+  } catch (error) {
+    res.send(`No se pudo eliminar el producto, ${error}`);
   }
 });
 
