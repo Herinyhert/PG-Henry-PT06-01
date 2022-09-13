@@ -92,8 +92,8 @@ const Form = styled.form`
   flex-direction: column;
   align-items: center;
   position: absolute;
-  max-width: 25%;
-  width: 25%;
+  /* max-width: 25%; */
+  width: 40%;
   top: 55%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -204,6 +204,7 @@ const P = styled.div`
 const DivIcon=styled.div`
   display: inline-block;
   margin-right: 15px;
+  margin-bottom: 5px;
   font-size: 20px;
   color: #fff;
 `;

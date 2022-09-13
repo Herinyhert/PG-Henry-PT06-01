@@ -57,7 +57,7 @@ authRouter.post('/signup', async (req, res) => {
     });
     if(user){
       const token = createToken({id: user.id, email: user.email, role: user.role})
-      validateuser({email: user.email, token: token})
+      validateuser({name: user.name, surname: user.surname, email: user.email, token: token})
     }
     // sendemail({email:newUser.email, name:newUser.name, surname: newUser.surname })
   } else {

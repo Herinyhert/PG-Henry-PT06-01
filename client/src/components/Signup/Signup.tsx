@@ -38,9 +38,9 @@ export default function Signup() {
         Swal.fire({
             position: 'top-end',
             icon: 'success',
-            title: 'Su registración fue exitosa',
+            title: 'Por favor, revise su casilla de correo electrónico para validar su cuenta',
             showConfirmButton: false,
-            timer: 1500,
+            timer: 2000,
           })
         
         }
@@ -156,8 +156,8 @@ display: flex;
   flex-direction: column;
   align-items: center;
   position: absolute;
-  max-width: 25%;
-  width: 25%;
+  /* max-width: 25%; */
+  width: 40%;
   top: 55%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -283,7 +283,9 @@ const Button = styled.button`
 
 const Span = styled.span`
 color:red;
-`
+font-size: 10px;
+`;
+
 
 const P = styled.div`
   text-align: center;
