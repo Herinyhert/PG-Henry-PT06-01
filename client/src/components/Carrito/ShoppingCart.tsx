@@ -105,6 +105,23 @@ export default function ShoppingCart() {
   };
   console.log("quierover", ordenPorEnviar.userId);
 
+  async function verificarSiHayOrderAbierta (){
+    console.log("estoy aaaccccaaa" )
+    const orderCheck = await axios.get(
+      REACT_APP_API_URL + "/backoffice/order/checkorder/" +  user.id)
+      
+      if (orderCheck.data.userId){
+        return orderCheck.data.id
+  }
+}
+
+  // async function actualizarOrder (orderId) {
+
+  //   const actualizado = await axios put
+
+
+
+  // }
   async function sendOrderToDB(e) {
     e.preventDefault();
     if (user?.id) {
@@ -115,6 +132,12 @@ export default function ShoppingCart() {
           headers: { authorization: `Bearer ${token1}` },
         }
       );
+
+      const checkOrderUser = verificarSiHayOrderAbierta();
+
+      // actualizarOrder (checkOrderUser)
+
+        
       history("/pagar?order=" + order.data.id);
     }else{
       history("/login")
