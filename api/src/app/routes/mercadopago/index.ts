@@ -56,6 +56,7 @@ mercadoPagoRoutes.post("/", (req, res) => {
       ],
       installments: 3, //Cantidad máximo de cuotas
     },
+    auto_return: "approved",
     back_urls: {
       success: API_URL + "/mercadopago/pagos",
       failure: API_URL + "/mercadopago/pagos",

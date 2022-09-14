@@ -170,8 +170,8 @@ export default function Buy() {
               {!datos ? (
                 <p>....</p>
               ) : (
-                <ButtonCarrito as="a" href={datos} target="_blank">
-                  <Button>Pagar</Button>
+                <ButtonCarrito as="a" href={datos} target="_parent">
+                  <Button >Pagar</Button>
                 </ButtonCarrito>
               )}
             </Producto>
