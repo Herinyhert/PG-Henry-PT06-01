@@ -23,7 +23,7 @@ export default function NavBar() {
   return (
     <NavBarContainer>
       <div>
-        <Img id="logo" src={Logo} alt="" />
+        <Img id="logo" src={Logo} alt=""/>
       </div>
       <ContainerButtons>
         <Encabezado>
@@ -73,11 +73,11 @@ const NavBarContainer = styled.header`
   /* overflow: hidden; */
   position: fixed;
   top: 0;
-
+  overflow-x: hidden;
   display: inline-flex;
   flex-wrap: wrap;
   /* justify-content: center; */
-  height: 70px;
+  height: 100px;
   width: 100vw;
   /* display: flex; */
   justify-content: space-between;
@@ -107,7 +107,7 @@ const ContainerButtons = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  margin-right: 5px;
+  margin-right: 0px;
 `;
 
 const Encabezado = styled.div`

@@ -43,7 +43,7 @@ export interface OrderDetailsBO {
   productId: number;
   price: number;
   quantity: number;
-  product: Articulo;
+  product: ArticuloBO;
 }
 
 export interface User {
@@ -74,6 +74,20 @@ export interface OrderDetails {
   productId: number;
   price: number;
   quantity: number;
+}
+
+export interface ArticuloBO {
+  id: number;
+  name: String;
+  brand: String;
+  stock: number;
+  price: number;
+  priceSpecial: number;
+  img: string;
+  state: String;
+  categoryId: number;
+  category: Category;
+  totalCount: number;
 }
 
 export interface Articulo {

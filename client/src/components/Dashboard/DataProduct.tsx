@@ -23,19 +23,6 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 
-
-function createData(
-  id: number,
-  name: string,
-  brand: String,
-  category: String,
-  stock: number,
-  price: number,
-  state: String
-) {
-  return { id, name, brand, category, stock, price, state };
-}
-
 export default function DenseTable() {
   const [state, setState] = useState({
     page: 1,
@@ -46,7 +33,7 @@ export default function DenseTable() {
     categoryId: undefined,
     filter: null
   });
-  const allProducts = useSelector((state: ReduxState) => state.articulos);
+  const allProducts = useSelector((state: ReduxState) => state.articulosbo);
   const totalCount = useSelector((state1: ReduxState) => state1.totalCount);
   const dispatch = useDispatch<any>();
 
@@ -168,7 +155,7 @@ export default function DenseTable() {
                   <TableCell align="right">{row.brand}</TableCell>
                   <TableCell align="right">{row.category.name}</TableCell>
                   <TableCell align="right">{row.stock}</TableCell>
-                  <TableCell align="right">{row.price}</TableCell>
+                  <TableCell align="right">${row.price}{` / `}${row.priceSpecial}</TableCell>
                   <TableCell align="right">{row.state}</TableCell>
                   <TableCell align="right">
                     <CreateProduct articulo={row} stateC={state} />

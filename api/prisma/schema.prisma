@@ -13,6 +13,7 @@ model Product {
   brand        String
   stock        Int
   price        Float
+  priceSpecial Float          @default(0)
   img          String
   state        String
   categoryId   Int

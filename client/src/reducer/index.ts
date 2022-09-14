@@ -23,7 +23,7 @@ import {
   getLocalstorageState,
   setLocalstorageState,
 } from "../utils/localstorage";
-import { Articulo, Category, User, Orders, OrdersBO } from "../actions";
+import { ArticuloBO, Articulo, Category, User, Orders, OrdersBO } from "../actions";
 import jwtdecode from "jwt-decode";
 import { string } from "yup";
 
@@ -34,6 +34,7 @@ export interface ReduxState {
   detailsUser: User;
   dashboardmenu: String;
   articulos: Articulo[];
+  articulosbo: ArticuloBO[];
   categorias: Category[];
   detailsProduct: Articulo;
   page: number;
@@ -43,9 +44,9 @@ export interface ReduxState {
   totalOrders: number;
   token: string;
   user?: { id: number; email: string; iat: number; role: string };
-  error:string;
-  mensaje:string;
-  useregistrado:boolean;
+  error: string;
+  mensaje: string;
+  useregistrado: boolean;
 }
 
 interface actionI {
@@ -54,12 +55,13 @@ interface actionI {
 }
 
 const initialState: ReduxState = {
-  ordersBO:[],
+  ordersBO: [],
   orders: [],
   users: [],
   detailsUser: undefined,
   dashboardmenu: "",
   articulos: [],
+  articulosbo: [],
   categorias: [],
   detailsProduct: undefined,
   page: 1,
@@ -70,8 +72,8 @@ const initialState: ReduxState = {
   token: "",
   user: undefined,
   error: null,
-  mensaje:null,
-  useregistrado:null
+  mensaje: null,
+  useregistrado: null,
 };
 
 function rootReducer(state: ReduxState, action: actionI) {
@@ -88,6 +90,7 @@ function rootReducer(state: ReduxState, action: actionI) {
       return {
         ...state,
         articulos: action.payload,
+        articulosbo: action.payload,
       };
     case SET_DASHBOARDMENU:
       return {
