@@ -3,10 +3,13 @@ import styled from "styled-components";
 import { FiShoppingCart } from "react-icons/fi";
 import { Link, useLocation } from "react-router-dom";
 import Logo from "../../img/Logo.png";
-import { clearState } from "../../actions/index";
+import { clearState, getUserID } from "../../actions/index";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { ReduxState } from "../../reducer";
+import {useEffect} from 'react';
+import {BsPerson, BsPersonX} from "react-icons/bs";
+import {RiHome2Line} from "react-icons/ri";
 
 export default function NavBar() {
   const dispatch = useDispatch<any>();
@@ -18,24 +21,34 @@ export default function NavBar() {
   const location = useLocation();
 
   const user = useSelector((state: ReduxState) => state.user);
+  const user2 = useSelector((state: ReduxState)=> state.detailsUser)
   let productosCarrito = JSON.parse(localStorage.getItem("carrito"));
 
+ useEffect(()=>{
+  if(user){
+    dispatch(getUserID(user?.id))
+  }
+ },[])
+   
   return (
     <NavBarContainer>
       <div>
+        <Link to="/home">
         <Img id="logo" src={Logo} alt=""/>
+        </Link>
       </div>
       <ContainerButtons>
         <Encabezado>
           {user ? (
             <Saludo>
               Hola
-              <Nombre>{user?.email}</Nombre>
+              <Nombre>{user2?.name}</Nombre>
             </Saludo>
           ) : null}
         </Encabezado>
         {location.pathname !== "/home" && (
           <Link to="/home">
+             <RiHome2Line/>
             <ButtonLogin>Home</ButtonLogin>
           </Link>
         )}
@@ -46,15 +59,17 @@ export default function NavBar() {
         )}
         {user?.role === "CLIENT" ? (
           <Link to="/history">
-            <ButtonLogin>History</ButtonLogin>
+            <ButtonLogin>Mis compras</ButtonLogin>
           </Link>
         ) : null}
         {user ? (
           <Link to="/home">
+            <BsPersonX/>
             <ButtonLogin onClick={handleLogout}>Logout</ButtonLogin>
           </Link>
         ) : (
           <Link to="/Login">
+            <BsPerson/> 
             <ButtonLogin>Ingresá</ButtonLogin>
           </Link>
         )}
@@ -77,7 +92,7 @@ const NavBarContainer = styled.header`
   display: inline-flex;
   flex-wrap: wrap;
   /* justify-content: center; */
-  height: 100px;
+  height: 4.6rem;
   width: 100vw;
   /* display: flex; */
   justify-content: space-between;
