@@ -61,7 +61,7 @@ export default function Signup() {
               onChange={(e) => handleChange(e)}
               placeholder="Ingrese su contraseña"
             />
-            <Recuerdo>¿Olvidaste tu contraseña?</Recuerdo>
+            <Recuerdo >¿Olvidaste tu contraseña?</Recuerdo>
             <Button type="submit">Iniciar sesión</Button>
             <O> O continuar con</O>
 
