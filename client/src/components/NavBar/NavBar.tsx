@@ -15,7 +15,7 @@ export default function NavBar() {
     dispatch(clearState());
   }
 
-  const location = useLocation()
+  const location = useLocation();
 
   const user = useSelector((state: ReduxState) => state.user);
   let productosCarrito = JSON.parse(localStorage.getItem("carrito"));
@@ -25,7 +25,6 @@ export default function NavBar() {
       <div>
         <Img id="logo" src={Logo} alt="" />
       </div>
-
       <ContainerButtons>
         <Encabezado>
           {user ? (
@@ -35,16 +34,16 @@ export default function NavBar() {
             </Saludo>
           ) : null}
         </Encabezado>
-        { location.pathname !== '/home' &&
+        {location.pathname !== "/home" && (
           <Link to="/home">
             <ButtonLogin>Home</ButtonLogin>
           </Link>
-        }
-        {location.pathname !== '/admin' && user?.role === 'ADMIN' &&
+        )}
+        {location.pathname !== "/admin" && user?.role === "ADMIN" && (
           <Link to="/admin">
             <ButtonLogin>Admin</ButtonLogin>
           </Link>
-        }
+        )}
         {user?.role === "CLIENT" ? (
           <Link to="/history">
             <ButtonLogin>History</ButtonLogin>
@@ -56,8 +55,8 @@ export default function NavBar() {
           </Link>
         ) : (
           <Link to="/Login">
-          <ButtonLogin>Ingresá</ButtonLogin>
-        </Link>
+            <ButtonLogin>Ingresá</ButtonLogin>
+          </Link>
         )}
         <Link to="/ShoppingCart">
           <Shop>
@@ -74,7 +73,7 @@ const NavBarContainer = styled.header`
   /* overflow: hidden; */
   position: fixed;
   top: 0;
-  
+
   display: inline-flex;
   flex-wrap: wrap;
   /* justify-content: center; */
@@ -90,12 +89,10 @@ const NavBarContainer = styled.header`
   border: 1px solid rgba(255, 255, 255, 0.3);
   justify-items: center;
 
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
-    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
     rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
   z-index: 1;
 `;
-
 
 const Img = styled.img`
   width: 140px;
@@ -112,7 +109,6 @@ const ContainerButtons = styled.div`
   align-items: center;
   margin-right: 5px;
 `;
-
 
 const Encabezado = styled.div`
   border-right: 1px solid #000;
@@ -189,8 +185,23 @@ const ButtonSignup = styled.button`
   /* &:active {
     box-shadow: 0 0 10px 0 #335d90 inset, 0 0 10px 4px #335d90;
   } */
-`;
+  `;
 
+  const Numerito = styled.div`
+    font-size: 12px;
+    position: absolute;
+    z-index: 1;
+    width: fit-content;
+    height: fit-content;
+    border-radius: 9999px;
+    background-color: black;
+    color: white;
+    margin: auto 20px;
+    padding-left: 6px;
+    padding-right: 6px;
+    /* top: 3px;
+      right: 3px; */
+  `;
 const Shop = styled.button`
   width: 3rem;
   height: 42px;
@@ -209,7 +220,8 @@ const Shop = styled.button`
 
   -webkit-transition: all 150ms ease-in-out;
   transition: all 150ms ease-in-out;
-  /* &:hover,
+`;
+/* &:hover,
   &:focus {
     box-shadow: 0 0 10px 0 #335d90 inset, 0 0 10px 4px #335d90;
     background-color: white;
@@ -217,21 +229,33 @@ const Shop = styled.button`
   }
   &:active {
     box-shadow: 0 0 10px 0 #335d90 inset, 0 0 10px 4px #335d90;
-  } */
+  }
+
+const NavBarContainer = styled.header`
+  height: 70px;
+  width: 100vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  background-color: trasparent;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  justify-items: center;
+
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 10px 20px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  z-index: 0;
+  
 `;
 
-const Numerito = styled.div`
-  font-size: 12px;
-  position: absolute;
+const Img = styled.img`
+  width: 140px;
+  height: 140px;
+  margin-top: -80px;
+  margin-left: 20px;
   z-index: 1;
-  width: fit-content;
-  height: fit-content;
-  border-radius: 9999px;
-  background-color: black;
-  color: white;
-  margin: auto 20px;
-  padding-left: 6px;
-  padding-right: 6px;
-  /* top: 3px;
-    right: 3px; */
 `;
+*/

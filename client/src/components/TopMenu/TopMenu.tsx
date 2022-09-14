@@ -18,11 +18,18 @@ export default function TopMenu({ onClickOpcion }: TopMenuProps) {
 
       {arrayPrueba.map((cat, i) =>
         i === 0 ? (
-          <DivLeft key={i} onClick={(e) => onClickOpcion(cat.id)}>{cat.name}</DivLeft>
+          <DivLeft key={i} onClick={(e) => onClickOpcion(cat.id)}>
+            {cat.name}
+          </DivLeft>
         ) : i === 9 ? (
-          <DivRight key={i} onClick={(e) => onClickOpcion(cat.id)}>{cat.name}</DivRight>
+          <DivRight key={i} onClick={(e) => onClickOpcion(cat.id)}>
+            {cat.name}
+          </DivRight>
         ) : (
-          <Div key={i} onClick={(e) => onClickOpcion(cat.id)}> {cat.name} </Div>
+          <Div key={i} onClick={(e) => onClickOpcion(cat.id)}>
+            {" "}
+            {cat.name}{" "}
+          </Div>
         )
       )}
     </TopMenuContainer>
@@ -39,6 +46,7 @@ const TopMenuContainer = styled.header`
   align-items: center;
   justify-content: space-between;
   margin-top: 5vh;
+  
 `;
 
 const Div = styled.div`
