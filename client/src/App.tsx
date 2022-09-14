@@ -48,10 +48,8 @@ export default function App() {
         <Route path="Pagar" element={<Pagar/>}/>
         <Route path="terminos-y-condiciones" element={<Terminos/>} />
         <Route path="login/checkmail/:token" element={<CheckMail/>}/>
-        <Route path="login/checkmail/changepassword" element={<ChangePassword/>}/>
+        <Route path="login/checkmail/changepassword/:token" element={<ChangePassword/>}/>
         <Route path="login/checkmail/enviochangepassword" element={<EnvioChangePassword/>}/>
-       
-       
 
       </Routes>
     </BrowserRouter>

@@ -1,16 +1,39 @@
 
+import axios from "axios";
+import { useState } from "react";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import NavBar from "../NavBar/NavBar";
 
 
 export default function ChangePassword() {
-  
+  const {token}= useParams<{token: string}>();
+  const [input, setInput] = useState({
+    password: "",
+    passwordconfirm:""
+  });
+
+  function handleChange(e) {
+    e.preventDefault();
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+    });
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    axios.post(`http://localhost:3001/auth/confirmnewpassword?token=${token}`,{
+      password: input.password,
+      passwordconfirm: input.passwordconfirm
+    })
+  }
 
   return (
     
        <Body>
           <NavBar />
-          <Form >
+          <Form onSubmit={(e) => handleSubmit(e)}>
             <Title>
               Restablecer su contraseña
             </Title>
@@ -19,14 +42,15 @@ export default function ChangePassword() {
               type="password"
               name="password"
               id= "password"
+              onChange={(e) => handleChange(e)}
               placeholder="Ingrese su nueva contraseña"
             />
             
             <Input4
               type="password"
-              name="password"
-                id= "password"
-              
+              name="passwordconfirm"
+                id= "passwordconfirm"
+                onChange={(e) => handleChange(e)}
               placeholder="Confirme su nueva contraseña"
             />
             
