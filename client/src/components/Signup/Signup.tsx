@@ -7,6 +7,7 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { useSelector } from 'react-redux';
 import { ReduxState } from '../../reducer';
+import swal from 'sweetalert2';
 
 export default function Signup() {
   const dispatch = useDispatch<any>();
@@ -17,10 +18,26 @@ export default function Signup() {
   // verifico si existe un cambio en mi state
   useEffect(()=>{
     if(mensaje){
-      alert(mensaje)
+      swal.fire({
+        title: 'Exito',
+        text:`${mensaje}`,
+        icon: 'success',
+        position:'center',
+        timer: 5000,
+        timerProgressBar:true
+      });
+
     }
     if(error){
-      alert(error)
+      swal.fire({
+        title: 'Error',
+        text:`${error}`,
+        icon: 'error',
+        position:'center',
+        timer: 5000,
+        timerProgressBar:true
+      });
+      window.location.reload();
     }
   },[error,mensaje])
 
@@ -174,17 +191,17 @@ const Form = styled.form`
   color: #fff;
 `;
 
-const Title = styled.h1`
-  position: absoluta;
-  font-size: 18px;
-  margin: auto;
-  padding: auto;
-  color: #335d90;
+// const Title = styled.h1`
+//   position: absoluta;
+//   font-size: 18px;
+//   margin: auto;
+//   padding: auto;
+//   color: #335d90;
 
-  text-transform: uppercase;
-  justify-content: center;
-  align-items: center;
-`;
+//   text-transform: uppercase;
+//   justify-content: center;
+//   align-items: center;
+// `;
 
 const Saludo = styled.div`
   color: black;
