@@ -100,7 +100,7 @@ const Start = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   > span {
-    color: #d0d2d1
+    color: #d0d2d1;
     margin-left: 50px;
   }
 `;

@@ -12,16 +12,16 @@ import OrderName from "../../components/SideBar/OrderName";
 import OrderPrice from "../../components/SideBar/OrderPrice";
 import OrderBrand from "../../components/SideBar/OrderBrand";
 import NavBar from "../../components/NavBar/NavBar";
-import Carousel from '../../components/Carousel/Carousel';
-
+import Carousel from "../../components/Carousel/Carousel";
+import SideBar from "../../components/SideBar/SideBar";
 
 export default function Home() {
   const [state, setState] = useState({
     page: 1,
     pageSize: 12,
     name: undefined,
-    order: undefined,
-    direction: undefined,
+    order: "name",
+    direction: "asc",
     categoryId: undefined,
   });
 
@@ -43,78 +43,42 @@ export default function Home() {
         categoryId: state.categoryId,
       })
     );
-  }, [
-    dispatch,
-    state.page,
-    state.pageSize,
-    state.name,
-    state.order,
-    state.direction,
-    state.categoryId,
-  ]);
+  }, [dispatch, state.page, state.pageSize, state.name, state.order, state.direction, state.categoryId]);
 
   return (
-    <HomeContainer>
+    <div>
       <NavBar />
-      <Carousel/>
-      <SearchBar
-        onSearch={(search) => setState({ ...state, page: 1, name: search })}
-      />
-      <TopMenu
-        onClickOpcion={(categoryid) =>
-          setState({ ...state, page: 1, categoryId: categoryid })
-        }
-      />
-      <Ordenamientos>
-        <OrderName
-          onDirection={(direction) =>
-            setState({ ...state, page: 1, order: "name", direction: direction })
-          }
-        />
-
-        <OrderPrice
-          onDirection={(direction) =>
-            setState({
-              ...state,
-              page: 1,
-              order: "price",
-              direction: direction,
-            })
-          }
-        />
-        <OrderBrand
-          onDirection={(direction) =>
-            setState({
-              ...state,
-              page: 1,
-              order: "brand",
-              direction: direction,
-            })
-          }
-        />
-      </Ordenamientos>
-      <Paginado
-        onPageChange={(page) => setState({ ...state, page })}
-        totalCount={totalCount}
-        pageSize={state.pageSize}
-      />
-      <CardsProducts>
-        {allProducts.map((art) => (
-          // <Link to={`/product/${art.id}`}>
-          <CardProduct key={art.id} articulo={art} />
-          // </Link>
-        ))}
-      </CardsProducts>
-    </HomeContainer>
+      <Carousel />
+      <HomeContainer>
+        <SideBar homeState={state} filterOreder={(FOState) => setState({ ...state, page: 1, ...FOState })} />
+        {/* <SearchBar onSearch={(search) => setState({ ...state, page: 1, name: search })} />
+        <TopMenu onClickOpcion={(categoryid) => setState({ ...state, page: 1, categoryId: categoryid })} />
+        <Ordenamientos>
+          <OrderName onDirection={(direction) => setState({ ...state, page: 1, order: "name", direction: direction })} />
+          <OrderPrice onDirection={(direction) => setState({ ...state, page: 1, order: "price", direction: direction })} />
+          <OrderBrand onDirection={(direction) => setState({ ...state, page: 1, order: "brand", direction: direction })} />
+        </Ordenamientos> */}
+        <CardsProducts>
+          {allProducts.map((art) => (
+            <CardProduct key={art.id} articulo={art} />
+          ))}
+          {totalCount > state.pageSize ? (
+            <Paginado onPageChange={(page) => setState({ ...state, page })} totalCount={totalCount} pageSize={state.pageSize} />
+          ) : (
+            ""
+          )}
+        </CardsProducts>
+      </HomeContainer>
+    </div>
   );
 }
 
 const HomeContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  overflow-x: hidden;
+  flex-direction: row;
+  /* align-items: center; */
+  /* justify-content: center; */
+  /* overflow-x: hidden; */
 `;
 
 const CardsProducts = styled.div`
@@ -122,6 +86,7 @@ const CardsProducts = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   margin-bottom: 30px;
+  width: 100%;
 `;
 
 const Ordenamientos = styled.div`
