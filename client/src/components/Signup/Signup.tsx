@@ -191,17 +191,17 @@ const Form = styled.form`
   color: #fff;
 `;
 
-const Title = styled.h1`
-  position: absoluta;
-  font-size: 18px;
-  margin: auto;
-  padding: auto;
-  color: #335d90;
+// const Title = styled.h1`
+//   position: absoluta;
+//   font-size: 18px;
+//   margin: auto;
+//   padding: auto;
+//   color: #335d90;
 
-  text-transform: uppercase;
-  justify-content: center;
-  align-items: center;
-`;
+//   text-transform: uppercase;
+//   justify-content: center;
+//   align-items: center;
+// `;
 
 const Saludo = styled.div`
   color: black;
