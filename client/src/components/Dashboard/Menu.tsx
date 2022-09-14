@@ -15,28 +15,30 @@ import { setDashboardMenu } from "../../actions";
 export default function TypographyMenu() {
   const dispatch = useDispatch<any>();
   const [status, setStatus] = useState(null);
+  const [selectedIndex, setSelectedIndex] = React.useState(1);
 
   const rol = useSelector((state: ReduxState) => state.user.role);
-  function handleChange(e: String) {    
-    dispatch(setDashboardMenu(e));
+  function handleChange(e: React.MouseEvent<HTMLElement>, index: number,itemMenu:string) {
+    setSelectedIndex(index);
+    dispatch(setDashboardMenu(itemMenu));
   }
 
   return rol === "ADMIN" ? (
     <Paper sx={{ width: 230 }}>
       <MenuList>
-        <MenuItem onClick={() => handleChange("products")}>
+        <MenuItem selected={1 === selectedIndex} onClick={(e) => handleChange(e, 1,"products")}>
           <ListItemIcon>
             <SendIcon fontSize="small" />
           </ListItemIcon>
           <Typography variant="inherit">Products</Typography>
         </MenuItem>
-        <MenuItem onClick={() => handleChange("categories")}>
+        <MenuItem selected={2 === selectedIndex}onClick={(e) => handleChange(e, 2, "categories")}>
           <ListItemIcon>
             <PriorityHighIcon fontSize="small" />
           </ListItemIcon>
           <Typography variant="inherit">Categories</Typography>
         </MenuItem>
-        <MenuItem onClick={() => handleChange("users")}>
+        <MenuItem selected={3 === selectedIndex} onClick={(e) => handleChange(e, 3, "users")}>
           <ListItemIcon>
             <DraftsIcon fontSize="small" />
           </ListItemIcon>
@@ -44,7 +46,7 @@ export default function TypographyMenu() {
             Users
           </Typography>
         </MenuItem>
-        <MenuItem onClick={() => handleChange("orders")}>
+        <MenuItem selected={4 === selectedIndex} onClick={(e) => handleChange(e, 4, "orders")}>
           <ListItemIcon>
             <DraftsIcon fontSize="small" />
           </ListItemIcon>
@@ -57,7 +59,7 @@ export default function TypographyMenu() {
   ) : (
     <Paper sx={{ width: 230 }}>
       <MenuList>
-        <MenuItem onClick={() => handleChange("orders")}>
+        <MenuItem selected={1 === selectedIndex} onClick={(e) => handleChange(e, 1, "orders")}>
           <ListItemIcon>
             <DraftsIcon fontSize="small" />
           </ListItemIcon>

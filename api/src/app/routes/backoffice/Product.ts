@@ -9,7 +9,7 @@ const productRoutes = Router();
 productRoutes.post(
   "/",
   /* passport.authenticate('jwt',{session :false}), */ async (req, res) => {
-    const { id, name, brand, categoryId, stock, price, img, state } = req.body;
+    const { id, name, brand, categoryId, stock, price, priceSpecial, img, state } = req.body;
     if (typeof name !== "string") {
       res.status(400).json({ message: `the 'name' must be a string` });
       return;
@@ -41,6 +41,7 @@ productRoutes.post(
         categoryId: categoryId,
         stock: Number(stock),
         price: Number(price),
+        priceSpecial: Number(priceSpecial),
         img: img,
         state: state,
       },
@@ -50,6 +51,7 @@ productRoutes.post(
         categoryId: categoryId,
         stock: Number(stock),
         price: Number(price),
+        priceSpecial: Number(priceSpecial),
         img: img,
         state: state,
       },

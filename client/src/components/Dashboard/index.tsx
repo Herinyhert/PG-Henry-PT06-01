@@ -22,7 +22,7 @@ import CreateProduct from "../Dashboard/Dialogs/CreateProduct";
 import CreateCategory from "../Dashboard/Dialogs/CreateCategory";
 import CreateUser from "../Dashboard/Dialogs/CreateUser";
 /* import CreateOrder from "../Dashboard/Dialogs/CreateOrder"; */
-import SearchBar from "../../components/SearchBar/SearchBar";
+import SearchBar from "../../components/SearchBar/SearchBarBO";
 import Paper from "@mui/material/Paper";
 
 import { getArticulos, getCategorias, Articulo } from "../../actions";
@@ -131,25 +131,26 @@ function Dashboard() {
           <Grid item xs={12}>
             <Paper
               sx={{
-                height: 50,
-                width: '100%'
+                height: 100,
+                width: "100%",
               }}
             />
           </Grid>
           <Grid item xs={12}>
             <Box sx={{ flexGrow: 1 }}>
               <Grid container spacing={3}>
-                <Grid item xs={2}>
+                <Grid item xs={12}>
                   <SearchBar
                     onSearch={(search) =>
                       setState({ ...state, page: 1, name: search })
                     }
+                    componentRender={getComponentRouter(dashboardmenu, state)}
                   />
                 </Grid>
-                <Grid item xs={8}></Grid>
+                {/* <Grid item xs={8}></Grid>
                 <Grid item xs={2}>
                   {getComponentRouter(dashboardmenu, state)}
-                </Grid>
+                </Grid> */}
               </Grid>
             </Box>
           </Grid>

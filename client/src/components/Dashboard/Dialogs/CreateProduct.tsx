@@ -22,7 +22,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 
-import { Articulo } from "../../../actions";
+import { ArticuloBO } from "../../../actions";
 
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
@@ -30,7 +30,7 @@ import FolderIcon from "@mui/icons-material/Folder";
 import FormHelperText from "@mui/material/FormHelperText";
 
 export interface CardProductProps {
-  articulo: Articulo;
+  articulo: ArticuloBO;
   stateC: any;
 }
 
@@ -41,6 +41,7 @@ export default function FormDialog({
     brand: null,
     stock: 0,
     price: 0,
+    priceSpecial: 0,
     img: null,
     state: null,
     categoryId: 0,
@@ -57,6 +58,7 @@ export default function FormDialog({
     img: articulo.img || "",
     state: articulo.state || "",
     price: articulo.price || 0,
+    priceSpecial: articulo.priceSpecial || 0,
     stock: articulo.stock || 0,
     categoryId: articulo.category.id || 0,
     errors: null,
@@ -167,7 +169,12 @@ export default function FormDialog({
 
   return (
     <div>
-      <Button variant="outlined" fullWidth onClick={handleClickOpen}>
+      <Button
+        color="info"
+        variant="contained"
+        fullWidth
+        onClick={handleClickOpen}
+      >
         {articulo.id ? "Update" : "Create"}
       </Button>
       <Dialog open={open} onClose={handleClose}>
@@ -224,6 +231,20 @@ export default function FormDialog({
             variant="standard"
             onChange={handlechange}
             helperText={input.errors?.price?.message}
+          />
+          <TextField
+            {...input.errors?.priceSpecial?.action}
+            autoFocus
+            margin="dense"
+            id="priceSpecial"
+            name="priceSpecial"
+            label="priceSpecial"
+            type="number"
+            value={input.priceSpecial}
+            fullWidth
+            variant="standard"
+            onChange={handlechange}
+            helperText={input.errors?.priceSpecial?.message}
           />
           <TextField
             {...input.errors?.stock?.action}

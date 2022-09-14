@@ -150,7 +150,8 @@ export default function FormDialog({
 
   return (
     <div>
-      <Button variant="outlined" fullWidth onClick={handleClickOpen}>
+      
+      <Button color="info" variant="contained" fullWidth onClick={handleClickOpen}>
         {user.id ? "Update" : "Create"}
       </Button>
       <Dialog open={open} onClose={handleClose}>
