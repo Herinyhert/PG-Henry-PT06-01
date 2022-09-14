@@ -37,6 +37,7 @@ export default function Signup() {
         timer: 5000,
         timerProgressBar:true
       });
+      window.location.reload();
     }
   },[error,mensaje])
 
