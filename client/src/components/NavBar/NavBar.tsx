@@ -7,9 +7,9 @@ import { clearState, getUserID } from "../../actions/index";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { ReduxState } from "../../reducer";
-import {useEffect} from 'react';
-import {BsPerson, BsPersonX} from "react-icons/bs";
-import {RiHome2Line} from "react-icons/ri";
+import { useEffect } from "react";
+import { BsPerson, BsPersonX } from "react-icons/bs";
+import { RiHome2Line } from "react-icons/ri";
 
 export default function NavBar() {
   const dispatch = useDispatch<any>();
@@ -21,20 +21,20 @@ export default function NavBar() {
   const location = useLocation();
 
   const user = useSelector((state: ReduxState) => state.user);
-  const user2 = useSelector((state: ReduxState)=> state.detailsUser)
+  const user2 = useSelector((state: ReduxState) => state.detailsUser);
   let productosCarrito = JSON.parse(localStorage.getItem("carrito"));
 
- useEffect(()=>{
-  if(user){
-    dispatch(getUserID(user?.id))
-  }
- },[])
-   
+  useEffect(() => {
+    if (user) {
+      dispatch(getUserID(user?.id));
+    }
+  }, []);
+
   return (
     <NavBarContainer>
       <div>
         <Link to="/home">
-        <Img id="logo" src={Logo} alt=""/>
+          <Img id="logo" src={Logo} alt="" />
         </Link>
       </div>
       <ContainerButtons>
@@ -48,29 +48,39 @@ export default function NavBar() {
         </Encabezado>
         {location.pathname !== "/home" && (
           <Link to="/home">
-             <RiHome2Line/>
-            <ButtonLogin>Home</ButtonLogin>
+            <DivButtonsNavBar>
+              <RiHome2Line />
+              <ButtonLogin>Home</ButtonLogin>
+            </DivButtonsNavBar>
           </Link>
         )}
         {location.pathname !== "/admin" && user?.role === "ADMIN" && (
           <Link to="/admin">
+             <DivButtonsNavBar>
             <ButtonLogin>Admin</ButtonLogin>
+            </DivButtonsNavBar>
           </Link>
         )}
         {user?.role === "CLIENT" ? (
           <Link to="/history">
+            <DivButtonsNavBar>
             <ButtonLogin>Mis compras</ButtonLogin>
+            </DivButtonsNavBar>
           </Link>
         ) : null}
         {user ? (
           <Link to="/home">
-            <BsPersonX/>
-            <ButtonLogin onClick={handleLogout}>Logout</ButtonLogin>
+            <DivButtonsNavBar>
+              <BsPersonX />
+              <ButtonLogin onClick={handleLogout}>Logout</ButtonLogin>
+            </DivButtonsNavBar>
           </Link>
         ) : (
           <Link to="/Login">
-            <BsPerson/> 
-            <ButtonLogin>Ingresá</ButtonLogin>
+            <DivButtonsNavBar>
+              <BsPerson />
+              <ButtonLogin>Ingresá</ButtonLogin>
+            </DivButtonsNavBar>
           </Link>
         )}
         <Link to="/ShoppingCart">
@@ -83,6 +93,16 @@ export default function NavBar() {
     </NavBarContainer>
   );
 }
+
+const DivButtonsNavBar = styled.div`
+align-items:center;
+font-size: 1.5rem;
+justify-content: center;
+margin-left: 1rem;
+margin-right: 1px;
+margin-bottom: 25px;
+color: black;
+`;
 
 const NavBarContainer = styled.header`
   /* overflow: hidden; */
@@ -104,7 +124,8 @@ const NavBarContainer = styled.header`
   border: 1px solid rgba(255, 255, 255, 0.3);
   justify-items: center;
 
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
     rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
   z-index: 1;
 `;
@@ -122,7 +143,7 @@ const ContainerButtons = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  margin-right: 0px;
+  margin-right: 1.5rem;
 `;
 
 const Encabezado = styled.div`
@@ -131,6 +152,7 @@ const Encabezado = styled.div`
   margin-right: 10px;
   font-size: 14px;
   margin-bottom: 25px;
+  width: 4rem;
 `;
 
 const Saludo = styled.div`
@@ -141,14 +163,15 @@ const Saludo = styled.div`
 const Nombre = styled.div``;
 
 const ButtonLogin = styled.button`
-  width: 3.5rem;
+  /* width: 3.5rem; */
+  width: fit-content;
   height: 40px;
   background: transparent;
   justify-content: center;
   align-items: center;
   border: none;
-  margin: 0 0.5rem 24px;
-  padding: 2px;
+  //margin: 0 0.5rem 24px;
+  padding: 3px;
   cursor: pointer;
   font-size: 0.8rem;
   font-family: "Proxima Nova", -apple-system, Roboto, Arial, sans-serif;
@@ -200,23 +223,23 @@ const ButtonSignup = styled.button`
   /* &:active {
     box-shadow: 0 0 10px 0 #335d90 inset, 0 0 10px 4px #335d90;
   } */
-  `;
+`;
 
-  const Numerito = styled.div`
-    font-size: 12px;
-    position: absolute;
-    z-index: 1;
-    width: fit-content;
-    height: fit-content;
-    border-radius: 9999px;
-    background-color: black;
-    color: white;
-    margin: auto 20px;
-    padding-left: 6px;
-    padding-right: 6px;
-    /* top: 3px;
+const Numerito = styled.div`
+  font-size: 12px;
+  position: absolute;
+  z-index: 1;
+  width: fit-content;
+  height: fit-content;
+  border-radius: 9999px;
+  background-color: black;
+  color: white;
+  margin: auto 20px;
+  padding-left: 6px;
+  padding-right: 6px;
+  /* top: 3px;
       right: 3px; */
-  `;
+`;
 const Shop = styled.button`
   width: 3rem;
   height: 42px;
