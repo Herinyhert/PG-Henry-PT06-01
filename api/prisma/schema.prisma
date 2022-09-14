@@ -32,13 +32,19 @@ enum Role {
   ADMIN
 }
 
+enum UserState {
+  ACTIVE
+  BLOCKED
+  NOTCONFIRMED
+}
+
 model User {
   id       Int     @id @default(autoincrement())
   name     String
   surname  String
   email    String  @unique @db.VarChar(255)
   password String?
-  state    Boolean @default(true) // 1-Activo 0-inactivo
+  state    UserState  @default(NOTCONFIRMED)
   role     Role    @default(CLIENT)
   orderU   Order[]
 }

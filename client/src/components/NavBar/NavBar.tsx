@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { FiShoppingCart } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Logo from "../../img/Logo.png";
 import { clearState } from "../../actions/index";
 import { useDispatch } from "react-redux";
@@ -12,11 +12,11 @@ export default function NavBar() {
   const dispatch = useDispatch<any>();
 
   function handleLogout() {
-    localStorage.removeItem("ecommerce")
     dispatch(clearState());
   }
 
-  const token = useSelector((state: ReduxState) => state.token);
+  const location = useLocation()
+
   const user = useSelector((state: ReduxState) => state.user);
   let productosCarrito = JSON.parse(localStorage.getItem("carrito"));
 
@@ -35,38 +35,29 @@ export default function NavBar() {
             </Saludo>
           ) : null}
         </Encabezado>
-        {user?.role === "ADMIN" ? (
-          <Link to="/Home">
+        { location.pathname !== '/home' &&
+          <Link to="/home">
             <ButtonLogin>Home</ButtonLogin>
           </Link>
-        ) : null}
-        {user?.role === "ADMIN" ? (
-          <Link to="/Admin">
+        }
+        {location.pathname !== '/admin' && user?.role === 'ADMIN' &&
+          <Link to="/admin">
             <ButtonLogin>Admin</ButtonLogin>
           </Link>
-        ) : null}
+        }
         {user?.role === "CLIENT" ? (
-          <Link to="/History">
+          <Link to="/history">
             <ButtonLogin>History</ButtonLogin>
           </Link>
         ) : null}
-        {token ? (
-          <Link to="/Home">
-            <ButtonLogin onClick={handleLogout}>Logout</ButtonLogin>
-          </Link>
-        ) : (
-          <Link to="/Signup">
-            <ButtonSignup>Creá tu cuenta</ButtonSignup>
-          </Link>
-        )}
-        {token ? (
-          <Link to="/Home">
+        {user ? (
+          <Link to="/home">
             <ButtonLogin onClick={handleLogout}>Logout</ButtonLogin>
           </Link>
         ) : (
           <Link to="/Login">
-            <ButtonLogin>Ingresá</ButtonLogin>
-          </Link>
+          <ButtonLogin>Ingresá</ButtonLogin>
+        </Link>
         )}
         <Link to="/ShoppingCart">
           <Shop>
