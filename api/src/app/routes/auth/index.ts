@@ -2,9 +2,8 @@ import { Router } from 'express';
 import prisma from '../../../db';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import auth from '../../middlewares/passport';
-
-import sendemail from '../../controller/enviomail';
-import validateuser from '../../controller/validateuser';
+import validateuser from '../../services/validateuser';
+import { UserState } from '@prisma/client'
 
 const bcrypt = require('bcrypt');
 
@@ -49,7 +48,7 @@ authRouter.post('/signup', async (req, res) => {
         surname: surname,
         email: email,
         password: passwordHash,
-        state: false
+        state: UserState.NOTCONFIRMED
       },
       
     }
@@ -63,7 +62,7 @@ authRouter.post('/signup', async (req, res) => {
     });
     if(user){
       const token = createToken({id: user.id, email: user.email, role: user.role})
-      validateuser({email: user.email, token: token})
+      validateuser({name: user.name, surname: user.surname, email: user.email, token: token})
     }
     // sendemail({email:newUser.email, name:newUser.name, surname: newUser.surname })
 
@@ -86,7 +85,9 @@ authRouter.post('/signin', async (req, res) => {
   if (!user) {
     res.status(400).send('el usuario no existe');
     return;
-  } else {
+  }else if(user.state === UserState.NOTCONFIRMED){
+    res.status(400).send('usuario no confirmado')
+  }else {
     // revisar el pasword------/
     const passworCorrecto = await bcrypt.compare(password, user.password);
     if (!passworCorrecto) {

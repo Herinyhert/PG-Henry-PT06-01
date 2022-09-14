@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { FiShoppingCart } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Logo from "../../img/Logo.png";
 import { clearState } from "../../actions/index";
 import { useDispatch } from "react-redux";
@@ -12,11 +12,11 @@ export default function NavBar() {
   const dispatch = useDispatch<any>();
 
   function handleLogout() {
-    localStorage.removeItem("ecommerce")
     dispatch(clearState());
   }
 
-  const token = useSelector((state: ReduxState) => state.token);
+  const location = useLocation();
+
   const user = useSelector((state: ReduxState) => state.user);
   let productosCarrito = JSON.parse(localStorage.getItem("carrito"));
 
@@ -25,7 +25,6 @@ export default function NavBar() {
       <div>
         <Img id="logo" src={Logo} alt=""/>
       </div>
-
       <ContainerButtons>
         <Encabezado>
           {user ? (
@@ -35,32 +34,23 @@ export default function NavBar() {
             </Saludo>
           ) : null}
         </Encabezado>
-        {user?.role === "ADMIN" ? (
-          <Link to="/Home">
+        {location.pathname !== "/home" && (
+          <Link to="/home">
             <ButtonLogin>Home</ButtonLogin>
           </Link>
-        ) : null}
-        {user?.role === "ADMIN" ? (
-          <Link to="/Admin">
+        )}
+        {location.pathname !== "/admin" && user?.role === "ADMIN" && (
+          <Link to="/admin">
             <ButtonLogin>Admin</ButtonLogin>
           </Link>
-        ) : null}
+        )}
         {user?.role === "CLIENT" ? (
-          <Link to="/History">
+          <Link to="/history">
             <ButtonLogin>History</ButtonLogin>
           </Link>
         ) : null}
-        {token ? (
-          <Link to="/Home">
-            <ButtonLogin onClick={handleLogout}>Logout</ButtonLogin>
-          </Link>
-        ) : (
-          <Link to="/Signup">
-            <ButtonSignup>Creá tu cuenta</ButtonSignup>
-          </Link>
-        )}
-        {token ? (
-          <Link to="/Home">
+        {user ? (
+          <Link to="/home">
             <ButtonLogin onClick={handleLogout}>Logout</ButtonLogin>
           </Link>
         ) : (
@@ -99,12 +89,10 @@ const NavBarContainer = styled.header`
   border: 1px solid rgba(255, 255, 255, 0.3);
   justify-items: center;
 
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
-    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
     rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
   z-index: 1;
 `;
-
 
 const Img = styled.img`
   width: 140px;
@@ -121,7 +109,6 @@ const ContainerButtons = styled.div`
   align-items: center;
   margin-right: 0px;
 `;
-
 
 const Encabezado = styled.div`
   border-right: 1px solid #000;
@@ -198,8 +185,23 @@ const ButtonSignup = styled.button`
   /* &:active {
     box-shadow: 0 0 10px 0 #335d90 inset, 0 0 10px 4px #335d90;
   } */
-`;
+  `;
 
+  const Numerito = styled.div`
+    font-size: 12px;
+    position: absolute;
+    z-index: 1;
+    width: fit-content;
+    height: fit-content;
+    border-radius: 9999px;
+    background-color: black;
+    color: white;
+    margin: auto 20px;
+    padding-left: 6px;
+    padding-right: 6px;
+    /* top: 3px;
+      right: 3px; */
+  `;
 const Shop = styled.button`
   width: 3rem;
   height: 42px;
@@ -218,7 +220,8 @@ const Shop = styled.button`
 
   -webkit-transition: all 150ms ease-in-out;
   transition: all 150ms ease-in-out;
-  /* &:hover,
+`;
+/* &:hover,
   &:focus {
     box-shadow: 0 0 10px 0 #335d90 inset, 0 0 10px 4px #335d90;
     background-color: white;
@@ -226,21 +229,33 @@ const Shop = styled.button`
   }
   &:active {
     box-shadow: 0 0 10px 0 #335d90 inset, 0 0 10px 4px #335d90;
-  } */
+  }
+
+const NavBarContainer = styled.header`
+  height: 70px;
+  width: 100vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  background-color: trasparent;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  justify-items: center;
+
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 10px 20px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  z-index: 0;
+  
 `;
 
-const Numerito = styled.div`
-  font-size: 12px;
-  position: absolute;
+const Img = styled.img`
+  width: 140px;
+  height: 140px;
+  margin-top: -80px;
+  margin-left: 20px;
   z-index: 1;
-  width: fit-content;
-  height: fit-content;
-  border-radius: 9999px;
-  background-color: black;
-  color: white;
-  margin: auto 20px;
-  padding-left: 6px;
-  padding-right: 6px;
-  /* top: 3px;
-    right: 3px; */
 `;
+*/

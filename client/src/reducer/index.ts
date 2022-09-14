@@ -154,7 +154,8 @@ function rootReducer(state: ReduxState, action: actionI) {
       };
 
     case CLEAR_STATE:
-      return {
+    setLocalstorageState({token:undefined})  
+    return {
         ...state,
         user: undefined,
         token: "",
