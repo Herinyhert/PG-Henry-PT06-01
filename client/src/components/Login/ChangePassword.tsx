@@ -4,13 +4,14 @@ import styled from "styled-components";
 import NavBar from "../NavBar/NavBar";
 import { useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import Swal from "sweetalert2";
 
 
 
 export default function ChangePassword() {
   
    const [showPwd, setShowPwd] = useState(false)
-    const [showPwd2, setShowPwd2] = useState(false)
+   const [showPwd2, setShowPwd2] = useState(false)
 
 function handleShowPwd(e) {
     // e.preventDefault()
@@ -41,7 +42,15 @@ function handleShowPwd(e) {
     axios.post(`http://localhost:3001/auth/confirmnewpassword?token=${token}`,{
       password: input.password,
       passwordconfirm: input.passwordconfirm
+      
     })
+    Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: 'Contraseña cambiada con éxito',
+        showConfirmButton: false,
+        timer: 2000
+        })
   }
 
   return (
@@ -50,8 +59,6 @@ function handleShowPwd(e) {
           <NavBar />
           <Form onSubmit={(e) => handleSubmit(e)}>
             <Title>
-              Restablecer su contraseña
-            </Title>
               Restablecer tu contraseña
             </Title>
             <Div1>
