@@ -1,6 +1,7 @@
+import axios from "axios";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import NavBar from "../NavBar/NavBar";
-
 import { useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 
@@ -15,17 +16,42 @@ function handleShowPwd(e) {
     // e.preventDefault()
     setShowPwd(!showPwd)
   }
-
-  function handleShowPwd2(e) {
+  
+   function handleShowPwd2(e) {
     // e.preventDefault()
     setShowPwd2(!showPwd2)
     }
 
-    return (
-      <Body>
-        <NavBar />
-        <Form>
-        <Title>
+  const {token}= useParams<{token: string}>();
+  const [input, setInput] = useState({
+    password: "",
+    passwordconfirm:""
+  });
+
+  function handleChange(e) {
+    e.preventDefault();
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+    });
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    axios.post(`http://localhost:3001/auth/confirmnewpassword?token=${token}`,{
+      password: input.password,
+      passwordconfirm: input.passwordconfirm
+    })
+  }
+
+  return (
+    
+       <Body>
+          <NavBar />
+          <Form onSubmit={(e) => handleSubmit(e)}>
+            <Title>
+              Restablecer su contraseña
+            </Title>
               Restablecer tu contraseña
             </Title>
             <Div1>
@@ -35,6 +61,8 @@ function handleShowPwd(e) {
               id= "password"
               placeholder="Ingresa tu nueva contraseña"
             //   id="password"
+
+              onChange={(e) => handleChange(e)}
             />
             <Icon3 onClick = {handleShowPwd}>
               {showPwd ? <AiFillEye color="black"/>
@@ -44,10 +72,13 @@ function handleShowPwd(e) {
             <Div1>
             <Input4
               type={showPwd2 ? "text" : "password"}
-              name="password"
-              id= "password"
+              name="passwordconfirm"
+                id= "passwordconfirm"
               placeholder="Ingresa tu nueva contraseña"
             //   id="password"
+ 
+                onChange={(e) => handleChange(e)}
+              
             />
             <Icon4 onClick={handleShowPwd2}>
               {showPwd2 ? <AiFillEye color="black"/>
