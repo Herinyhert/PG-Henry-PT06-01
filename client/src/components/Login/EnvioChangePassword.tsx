@@ -39,8 +39,9 @@ export default function EnvioChangePassword() {
             <Input3
               type="email"
               name="email"
+              placeholder="Ingresá tu Correo"
               onChange={(e) => handleChange(e)}
-              placeholder="Ingrese su Correo"
+
             />
            
             

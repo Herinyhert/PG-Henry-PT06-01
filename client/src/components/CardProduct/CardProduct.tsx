@@ -124,4 +124,4 @@ const CarritoImgButoon = styled.button`
   background-color: white;
   font-size: 20px;
   cursor: pointer;
-`;
+  `;

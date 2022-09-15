@@ -1,12 +1,27 @@
-
 import axios from "axios";
-import { useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import NavBar from "../NavBar/NavBar";
+import { useState } from "react";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+
 
 
 export default function ChangePassword() {
+  
+   const [showPwd, setShowPwd] = useState(false)
+    const [showPwd2, setShowPwd2] = useState(false)
+
+function handleShowPwd(e) {
+    // e.preventDefault()
+    setShowPwd(!showPwd)
+  }
+  
+   function handleShowPwd2(e) {
+    // e.preventDefault()
+    setShowPwd2(!showPwd2)
+    }
+
   const {token}= useParams<{token: string}>();
   const [input, setInput] = useState({
     password: "",
@@ -37,23 +52,40 @@ export default function ChangePassword() {
             <Title>
               Restablecer su contraseña
             </Title>
-
+              Restablecer tu contraseña
+            </Title>
+            <Div1>
             <Input3
-              type="password"
+              type={showPwd ? "text" : "password"}
               name="password"
               id= "password"
+              placeholder="Ingresa tu nueva contraseña"
+            //   id="password"
+
               onChange={(e) => handleChange(e)}
-              placeholder="Ingrese su nueva contraseña"
             />
-            
+            <Icon3 onClick = {handleShowPwd}>
+              {showPwd ? <AiFillEye color="black"/>
+               : <AiFillEyeInvisible color="black"/>}
+            </Icon3>
+            </Div1>
+            <Div1>
             <Input4
-              type="password"
+              type={showPwd2 ? "text" : "password"}
               name="passwordconfirm"
                 id= "passwordconfirm"
+              placeholder="Ingresa tu nueva contraseña"
+            //   id="password"
+ 
                 onChange={(e) => handleChange(e)}
-              placeholder="Confirme su nueva contraseña"
+              
             />
-            
+            <Icon4 onClick={handleShowPwd2}>
+              {showPwd2 ? <AiFillEye color="black"/>
+               : <AiFillEyeInvisible color="black"/>}
+            </Icon4>
+            </Div1>
+          
             <Button >Restablecer la contraseña</Button>
             
           </Form>
@@ -66,11 +98,17 @@ const Body = styled.div`
   width: 100%;
   height: 100vh;
   margin: 0;
-  box-sizing: border-box;
+  /* box-sizing: border-box; */
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
 `;
 
 const Form = styled.form`
-  display: flex;
+  display: inline-flex;
+  
+  justify-content: center;
+  /* display: flex; */
   flex-direction: column;
   align-items: center;
   position: absolute;
@@ -100,9 +138,20 @@ const Title = styled.h1`
   align-items: center;
 `;
 
+const Div1 = styled.div`
+display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%;
+
+`;
+
 const Input3 = styled.input`
+position: relative;
   display: block;
-  width: 95%;
+  width: 120%;
   height: 40px;
   padding: 5px 6px;
   margin: 10px auto;
@@ -114,9 +163,20 @@ const Input3 = styled.input`
     border: 2px solid #335d90;
   }
 `;
+
+const Icon3 = styled.div`
+position: absolute;
+cursor: pointer;
+/* top: 29%; */
+right: 5%;
+justify-content: right;
+align-items: right;
+
+
+`;
 const Input4 = styled.input`
   display: block;
-  width: 95%;
+  width: 100%;
   height: 40px;
   padding: 5px 6px;
   /* margin-bottom: 15px; */
@@ -128,6 +188,15 @@ const Input4 = styled.input`
   &:focus {
     border: 2px solid #335d90;
   }
+`;
+
+const Icon4 = styled.div`
+position: absolute;
+cursor: pointer;
+/* top: 29%; */
+right: 5%;
+justify-content: right;
+align-items: right;
 `;
 
 const Button = styled.button`
@@ -150,5 +219,3 @@ display: inline-flex;
    background-color: #183659;
   }
 `;
-
-
