@@ -61,7 +61,7 @@ Ya casi está listo para comenzar a utilizar la App de CompuStore. Simplemente h
                   <table border="0" cellpadding="0" cellspacing="0" style="Margin:0 auto;">
                       <tr>
                           <td width="250" height="60" align="center" bgcolor="#2f9780" style="-moz-border-radius: 30px; -webkit-border-radius: 30px; border-radius: 30px;">
-                              <a href="http://localhost:3000/login/checkmail/${token}" style="width:250; display:block; text-decoration:none; border:0; text-align:center; font-weight:bold;font-size:18px; font-family: Arial, sans-serif; color: #ffffff" class="button_link">Validar su dirección de correo electrónico
+                              <a href="http://localhost:3000/login/checkmail/${token}" style="width:400; display:block; text-decoration:none; border:0; text-align:center; font-weight:bold;font-size:18px; font-family: Arial, sans-serif; color: #ffffff" class="button_link">Validar su dirección de correo electrónico
                               
                                   </a>
                           </td>
