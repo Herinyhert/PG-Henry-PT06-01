@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import styled from "styled-components";
+import Swal from "sweetalert2";
 import NavBar from "../NavBar/NavBar";
 
 
@@ -22,7 +23,15 @@ export default function EnvioChangePassword() {
   function handleSubmit(e) {
     e.preventDefault();
     axios.get(`http://localhost:3001/auth/resetpassword?email=${input.email}`)
+    Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: 'Revisá tu correo para restablecer su contraseña',
+        showConfirmButton: false,
+        timer: 2500
+      })
   }
+  
 
   return (
     
