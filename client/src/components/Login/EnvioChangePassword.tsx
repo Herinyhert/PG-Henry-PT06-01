@@ -20,7 +20,7 @@ export default function EnvioChangePassword() {
             <Input3
               type="email"
               name="email"
-              placeholder="Ingrese su Correo"
+              placeholder="Ingresá tu Correo"
             />
            
             
