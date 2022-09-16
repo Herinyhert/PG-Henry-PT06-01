@@ -88,7 +88,7 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
-              placeholder="Search…"
+              placeholder="Buscar...."
               inputProps={{ "aria-label": "search" }}
               onChange={handlechange}
               value={state}

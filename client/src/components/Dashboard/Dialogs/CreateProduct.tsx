@@ -154,6 +154,18 @@ export default function FormDialog({
           categoryId: stateC.categoryId,
         })
       );
+       setInput({
+         id: 0,
+         name: "",
+         brand: "",
+         img: "",
+         state: "",
+         price: 0,
+         priceSpecial: 0,
+         stock: 0,
+         categoryId: 0,
+         errors: null,
+       });
       handleClose();
     }
   }
@@ -175,10 +187,10 @@ export default function FormDialog({
         fullWidth
         onClick={handleClickOpen}
       >
-        {articulo.id ? "Update" : "Create"}
+        {articulo.id ? "Actualizar" : "Crear"}
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>New Product</DialogTitle>
+        <DialogTitle>{articulo.id ? "Actualizar Categoria" : "Nueva Categoria"}</DialogTitle>
         <IconButton
           color={input.img !== "" ? "primary" : "error"}
           component="label"
@@ -208,7 +220,7 @@ export default function FormDialog({
             margin="dense"
             id="name"
             name="name"
-            label="Name"
+            label="Nombre"
             type="text"
             fullWidth
             value={input.name}
@@ -217,7 +229,6 @@ export default function FormDialog({
             helperText={input.errors?.name?.message}
           />
 
-          {/* <Button onClick={(e) => handlePostImage(e)}>Subir Imagen</Button> */}
           <TextField
             {...input.errors?.price?.action}
             autoFocus
@@ -238,7 +249,7 @@ export default function FormDialog({
             margin="dense"
             id="priceSpecial"
             name="priceSpecial"
-            label="priceSpecial"
+            label="Precio Especial"
             type="number"
             value={input.priceSpecial}
             fullWidth
@@ -252,7 +263,7 @@ export default function FormDialog({
             margin="dense"
             id="stock"
             name="stock"
-            label="Stock"
+            label="Cantidad"
             type="number"
             value={input.stock}
             fullWidth
@@ -267,7 +278,7 @@ export default function FormDialog({
             margin="dense"
             id="brand"
             name="brand"
-            label="brand"
+            label="Marca"
             value={input.brand}
             type="text"
             fullWidth
@@ -286,7 +297,7 @@ export default function FormDialog({
               labelId="category"
               id="categoryId"
               name="categoryId"
-              label="categoryId"
+              label="ID Categoria"
               value={input.categoryId}
               onChange={handlechange}
             >
@@ -311,21 +322,21 @@ export default function FormDialog({
               id="state"
               name="state"
               value={input.state}
-              label="state"
+              label="Estado"
               onChange={handlechange}
             >
               <MenuItem value="" selected>
-                <em>None</em>
+                <em>Seleccione...</em>
               </MenuItem>
-              <MenuItem value="Active">Active</MenuItem>
-              <MenuItem value="Inactive">Inactive</MenuItem>
+              <MenuItem value="Active">Activo</MenuItem>
+              <MenuItem value="Inactive">Inactivo</MenuItem>
             </Select>
             <FormHelperText>{input.errors?.state?.message}</FormHelperText>
           </FormControl>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handelSubmit}>Save</Button>
+          <Button onClick={handleClose}>Cancelar</Button>
+          <Button onClick={handelSubmit}>Salvar</Button>
         </DialogActions>
       </Dialog>
     </div>
