@@ -67,11 +67,13 @@ export default function FormDialog({
           filter: stateC.filter,
         })
       );
-      setInput({
-        id: 0,
-        name: '',
-        errors: null,
-      });
+      if (input.id <= 0) {
+        setInput({
+          id: 0,
+          name: '',
+          errors: null,
+        });
+      }
       handleClose();
     }
   }

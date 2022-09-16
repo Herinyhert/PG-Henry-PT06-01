@@ -140,17 +140,20 @@ export default function FormDialog({
           userId: userprop.role ==='CLIENT'? userprop.id : null,
         })
       );
-      setInput({
-        id: 0,
-        name: "",
-        surname: "",
-        email: "",
-        password: "",
-        state: "",
-        role: "",
-        errors: null,
-        showPassword: false,
-      });
+      if (input.id<=0) {
+        setInput({
+          id: 0,
+          name: "",
+          surname: "",
+          email: "",
+          password: "",
+          state: "",
+          role: "",
+          errors: null,
+          showPassword: false,
+        });
+      }
+      
       handleClose();
     }
   }

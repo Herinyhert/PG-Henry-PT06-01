@@ -154,18 +154,20 @@ export default function FormDialog({
           categoryId: stateC.categoryId,
         })
       );
-       setInput({
-         id: 0,
-         name: "",
-         brand: "",
-         img: "",
-         state: "",
-         price: 0,
-         priceSpecial: 0,
-         stock: 0,
-         categoryId: 0,
-         errors: null,
-       });
+      if (input.id <= 0) {
+        setInput({
+          id: 0,
+          name: "",
+          brand: "",
+          img: "",
+          state: "",
+          price: 0,
+          priceSpecial: 0,
+          stock: 0,
+          categoryId: 0,
+          errors: null,
+        });
+      }
       handleClose();
     }
   }
