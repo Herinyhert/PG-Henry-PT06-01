@@ -6,6 +6,8 @@ import { useState } from 'react';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import * as Yup from 'yup';
 import { useFormik } from "formik";
+import Swal from "sweetalert2";
+
 
 export default function ChangePassword() {
   const [showPwd, setShowPwd] = useState(false);
@@ -28,7 +30,6 @@ export default function ChangePassword() {
       .oneOf([Yup.ref('password')],"las contraseñas no son iguales")
      }),
      onSubmit:(formData)=>{
-    
     axios.post(`http://localhost:3001/auth/confirmnewpassword?token=${token}`,{
         password: formik.values.password,
         passwordconfirm: formik.values.passwordconfirm
@@ -40,6 +41,10 @@ export default function ChangePassword() {
   })
 
   
+
+   const [showPwd, setShowPwd] = useState(false)
+   const [showPwd2, setShowPwd2] = useState(false)
+
 
 
   function handleShowPwd(e) {
@@ -88,6 +93,35 @@ export default function ChangePassword() {
             name="password"
             id="password"
             placeholder="Ingresa tu nueva contraseña"
+    axios.post(`http://localhost:3001/auth/confirmnewpassword?token=${token}`,{
+      password: input.password,
+      passwordconfirm: input.passwordconfirm
+      
+    })
+    Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: 'Contraseña cambiada con éxito',
+        showConfirmButton: false,
+        timer: 2000
+        })
+  }
+
+  return (
+    
+       <Body>
+          <NavBar />
+          <Form onSubmit={(e) => handleSubmit(e)}>
+            <Title>
+              Restablecer tu contraseña
+            </Title>
+            <Div1>
+            <Input3
+              type={showPwd ? "text" : "password"}
+              name="password"
+              id= "password"
+              placeholder="Ingresa tu nueva contraseña"
+
             //   id="password"
             /* onChange={(e) => handleChange(e)} */
 
