@@ -48,7 +48,7 @@ export default function DenseTable() {
     });
     await dispatch(
       getUsersBO({
-        page: state.page,
+        page: 1,
         pageSize: 12,
         name: state.name,
         order: "id",
@@ -85,7 +85,7 @@ export default function DenseTable() {
     await dispatch(deleteUserBO(id));
     await dispatch(
       getUsersBO({
-        page: state.page,
+        page: 1,
         pageSize: 12,
         name: "",
         order: "id",

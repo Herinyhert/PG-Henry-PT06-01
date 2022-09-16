@@ -131,7 +131,7 @@ export default function FormDialog({
       await dispatch(postUserBO(token, input));
       await dispatch(
         getUsersBO({
-          page: stateC.page,
+          page: 1,
           pageSize: 12,
           name: "",
           order: "id",

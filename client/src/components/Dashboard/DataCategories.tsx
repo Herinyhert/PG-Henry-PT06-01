@@ -76,7 +76,7 @@ export default function DenseTable() {
     await dispatch(deleteCategoryBO(id));
     await dispatch(
       getCategoriasBO({
-        page: state.page,
+        page: 1,
         pageSize: 12,
         name: state.name,
         order: "id",

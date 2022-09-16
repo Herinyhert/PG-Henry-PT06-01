@@ -13,7 +13,7 @@ import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { postProductBO, getArticulos } from "../../../actions";
+import { postProductBO, getArticulosBO } from "../../../actions";
 import { postImage } from "../../../services/api/postImage";
 import { ReduxState } from "../../../reducer/index";
 
@@ -145,13 +145,14 @@ export default function FormDialog({
     if (Object.getOwnPropertyNames(errors).length === 0) {
       await dispatch(postProductBO(token, input));
       await dispatch(
-        getArticulos({
-          page: stateC.page,
+        getArticulosBO({
+          page: 1,
           pageSize: 12,
           name: stateC.name,
           order: "id",
           direction: "desc",
           categoryId: stateC.categoryId,
+          filter: stateC.filter,
         })
       );
       if (input.id <= 0) {

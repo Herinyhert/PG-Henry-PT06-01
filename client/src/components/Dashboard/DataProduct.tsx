@@ -81,9 +81,9 @@ export default function DenseTable() {
        ...state,
        ['filter']: [e.target.name]+'-'+e.target.value ,
      });
-     /* await dispatch(
+     await dispatch(
        getArticulosBO({
-         page: state.page,
+         page: 1,
          pageSize: 12,
          name: state.name,
          order: "id",
@@ -91,7 +91,7 @@ export default function DenseTable() {
          categoryId: state.categoryId,
          filter: [e.target.name] + "-" + e.target.value,
        })
-     ); */
+     );
   }
 
   

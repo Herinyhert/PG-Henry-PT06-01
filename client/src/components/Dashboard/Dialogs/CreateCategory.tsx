@@ -59,7 +59,7 @@ export default function FormDialog({
       await dispatch(postCategoryBO(token, input));
       await dispatch(
         getCategoriasBO({
-          page: stateC.page,
+          page: 1,
           pageSize: 12,
           name: stateC.name,
           order: "id",
