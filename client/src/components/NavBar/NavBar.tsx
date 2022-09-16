@@ -41,7 +41,7 @@ export default function NavBar() {
         <Encabezado>
           {user ? (
             <Saludo>
-              Hola
+              Hola!!!
               <Nombre>{user2?.name}</Nombre>
             </Saludo>
           ) : null}
@@ -93,6 +93,8 @@ export default function NavBar() {
     </NavBarContainer>
   );
 }
+
+// FiShoppingBag  - bolsa de compras
 
 const DivButtonsNavBar = styled.div`
 align-items:center;
@@ -158,7 +160,8 @@ const Encabezado = styled.div`
 const Saludo = styled.div`
   /* justify-content: center;
   align-items: center; */
-`;
+  font-weight: bold;
+  `;
 
 const Nombre = styled.div``;
 

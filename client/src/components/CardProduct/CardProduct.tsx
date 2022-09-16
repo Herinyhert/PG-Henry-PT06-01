@@ -16,10 +16,10 @@ export default function CardProduct({ articulo }: CardProductProps) {
           <img src={articulo.img} width="180" height="127" alt="img" />
         </Body>
         <Footer>
-          {/* <CarritoImgButoon>
+          <CarritoImgButoon>
             <BsCartPlus />
           </CarritoImgButoon>
-          <span>|</span> */}
+          <span>|</span>
 
           <div>
             <Price>${articulo.price.toFixed(2)}</Price>
