@@ -13,7 +13,7 @@ const bcrypt = require('bcrypt');
 const authRouter = Router();
 
 export interface TokenPayload {
-  id: Number;
+  id: number;
   email: string;
   role: string;
 }
@@ -76,6 +76,8 @@ authRouter.post('/signup', async (req, res) => {
 
 authRouter.post('/signin', async (req, res) => {
   const { email, password } = req.body;
+  console.log(email, password);
+  
   if (!email || !password) {
     res.status(400).send('ingrese usuario y contraseña');
     return;

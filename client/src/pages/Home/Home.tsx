@@ -62,6 +62,7 @@ export default function Home() {
   }
 
   return (
+
     <div>
       <head>
         <link rel="stylesheet" href="fontello.css" />
@@ -69,6 +70,7 @@ export default function Home() {
       <NavBar />
       <Carousel />
       <HomeContainer>
+       <ProductBar>
         <SideBar
           homeState={state}
           filterOreder={(FOState) =>
@@ -86,6 +88,7 @@ export default function Home() {
           {allProducts.map((art) => (
             <CardProduct key={art.id} articulo={art} />
           ))}
+
           {totalCount > state.pageSize ? (
             <Paginado
               onPageChange={(page) => setState({ ...state, page })}
@@ -108,18 +111,22 @@ export default function Home() {
           language-code="es"
         ></df-messenger>
 
-       
-       
-        
         `}} />
+         </ProductBar>
+      {totalCount > state.pageSize ? (
+        <Paginado onPageChange={(page) => setState({ ...state, page })} totalCount={totalCount} pageSize={state.pageSize} />
+      ) : (
+        ""
+      )}
       </HomeContainer>
     </div>
+ 
   );
 }
 
 const HomeContainer = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   /* align-items: center; */
   /* justify-content: center; */
   /* overflow-x: hidden; */
@@ -133,11 +140,8 @@ const CardsProducts = styled.div`
   width: 100%;
 `;
 
-const Ordenamientos = styled.div`
-  margin: 1rem;
-  display: inline-flex;
-  flex-wrap: wrap;
-  justify-content: center;
+const ProductBar = styled.div`
+  display: flex;
 `;
 
 const BtnWsp = styled.div`

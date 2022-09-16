@@ -1,22 +1,71 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import StartRating from "../StarRating/StarRating";
-import { Articulo } from "../../actions";
+import { Articulo, ArticuloCarrito } from "../../actions";
 import { BsCartPlus } from "react-icons/bs";
 export interface CardProductProps {
   articulo: Articulo;
 }
 
 export default function CardProduct({ articulo }: CardProductProps) {
-  return (
+  const navigate = useNavigate();
+  const detalle : ArticuloCarrito =   {
+    id: articulo?.id,
+    name:articulo?.name ,
+    brand:articulo?.brand ,
+    stock:articulo?.stock ,
+    price:articulo?.price ,
+    img:articulo?.img ,
+    state:articulo?.state ,
+    categoryId:articulo?.categoryId ,
+    category:articulo?.category ,
+    totalCount: 1,
+    precioTotal: articulo?.price,
+   }
+
+  let carrito = JSON.parse(localStorage.getItem("carrito"));
+  if (!carrito) {
+    carrito = [];
+  }
+
+  //agrega item al carrito
+  function handlerButtonCarrito(e, detalle) {
+    e.preventDefault();
+    console.log(detalle)
+    const index = carrito.findIndex((art) => art.id === detalle.id);
+    if (index === -1) {
+      //agrego
+      localStorage.setItem("item", JSON.stringify(detalle));
+      carrito.push(JSON.parse(localStorage.getItem("item")));
+      localStorage.setItem("carrito", JSON.stringify(carrito));
+      localStorage.setItem("item", JSON.stringify(""));
+
+      navigate("/home");
+    } else {
+      //no agrego sumo.
+      //detalle.totalCount = detalle.totalCount + 1;
+      let carritoAux = JSON.parse(localStorage.getItem("carrito"));
+      carritoAux[index].totalCount = carritoAux[index].totalCount + 1;
+      carritoAux[index].precioTotal =
+        carritoAux[index].price * carritoAux[index].totalCount;
+      localStorage.setItem("carrito", JSON.stringify(carritoAux));
+
+      navigate("/home");
+    }
+  }
+
+   return (
     <CardLink to={`/detail/${articulo.id}`}>
       <Tarjeta>
         <Body>
           <img src={articulo.img} width="180" height="127" alt="img" />
         </Body>
         <Footer>
+
           <CarritoImgButoon>
+
+ 
             <BsCartPlus />
           </CarritoImgButoon>
           <span>|</span>
@@ -90,7 +139,7 @@ const Price = styled.span`
   line-height: 1;
   font-family: Proxima Nova, -apple-system, Helvetica Neue, Helvetica, Roboto,
     Arial, sans-serif;
-    color: black;
+  color: black;
 `;
 
 const Start = styled.div`
@@ -124,4 +173,4 @@ const CarritoImgButoon = styled.button`
   background-color: white;
   font-size: 20px;
   cursor: pointer;
-  `;
+`;

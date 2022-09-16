@@ -59,10 +59,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export interface SearchBarProps {
   onSearch: Function;
-  componentRender: any;
 }
 
-export default function SearchBar({ componentRender,onSearch }: SearchBarProps) {
+export default function SearchBar({ onSearch }: SearchBarProps) {
   const [state, setState] = useState("");
 
   function handlechange(e) {
@@ -73,28 +72,26 @@ export default function SearchBar({ componentRender,onSearch }: SearchBarProps) 
     if (state === "") {
       // alert("Enter a product to search...")
       Swal.fire({
-        title: "Error!",
-        text: "Introduce un producto para buscar...",
-        icon: "error",
+        title: "Info!",
+        text: "Introduce palabra a buscar...",
+        icon: "info",
         confirmButtonText: "Volver",
         confirmButtonColor: "#335d90",
       });
     }
     onSearch(state);
+    setState("");
   }
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" color="default">
-        <Toolbar>
-          {componentRender}
-          <Search>
+    <> <Search>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
-              placeholder="Search…"
+              placeholder="Buscar...."
               inputProps={{ "aria-label": "search" }}
               onChange={handlechange}
+              value={state}
             />
           </Search>
           <IconButton
@@ -105,9 +102,7 @@ export default function SearchBar({ componentRender,onSearch }: SearchBarProps) 
           >
             <SearchIcon />
           </IconButton>
-        </Toolbar>
-      </AppBar>
-    </Box>
+  </>              
   );
 }
 
