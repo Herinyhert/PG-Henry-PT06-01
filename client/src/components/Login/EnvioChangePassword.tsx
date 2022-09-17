@@ -3,10 +3,11 @@ import { useState } from "react";
 import styled from "styled-components";
 import Swal from "sweetalert2";
 import NavBar from "../NavBar/NavBar";
+import { useNavigate } from 'react-router-dom';
 
 
 export default function EnvioChangePassword() {
-  
+  const history = useNavigate();
   
   const [input, setInput] = useState({
     email: "",
@@ -23,13 +24,14 @@ export default function EnvioChangePassword() {
   function handleSubmit(e) {
     e.preventDefault();
     axios.get(`http://localhost:3001/auth/resetpassword?email=${input.email}`)
-    Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: 'Revisá tu correo para restablecer tu contraseña',
-        showConfirmButton: false,
-        timer: 2500
-      })
+    // Swal.fire({
+    //     position: 'top-end',
+    //     icon: 'success',
+    //     title: 'Revisá tu correo para restablecer tu contraseña',
+    //     showConfirmButton: false,
+    //     timer: 2500
+    //   })
+    history("/login/checkmail/checkmailpassword");
   }
   
 
