@@ -1,9 +1,10 @@
-import axios from 'axios';
-import { useParams } from 'react-router-dom';
-import styled from 'styled-components';
-import NavBar from '../NavBar/NavBar';
-import { useState } from 'react';
-import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
+
+import axios from "axios";
+import { useNavigate, useParams } from "react-router-dom";
+import styled from "styled-components";
+import NavBar from "../NavBar/NavBar";
+import { useState } from "react";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import * as Yup from 'yup';
 import { useFormik } from "formik";
 import Swal from "sweetalert2";
@@ -44,6 +45,7 @@ export default function ChangePassword() {
 
    const [showPwd, setShowPwd] = useState(false)
    const [showPwd2, setShowPwd2] = useState(false)
+   const history = useNavigate();
 
 
 
@@ -101,10 +103,11 @@ export default function ChangePassword() {
     Swal.fire({
         position: 'top-end',
         icon: 'success',
-        title: 'Contraseña cambiada con éxito',
+        title: 'Contraseña cambiada con éxito. Ingresa con tu nueva contraseña',
         showConfirmButton: false,
         timer: 2000
         })
+        history('/Login')
   }
 
   return (
