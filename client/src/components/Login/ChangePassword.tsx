@@ -15,11 +15,11 @@ export default function ChangePassword() {
   const validationSchema = Yup.object({
     password: Yup.string()
       .required('Contraseña Requerida')
-      .min(6, 'debe contener al menos 6 Caracteres')
-      .oneOf([Yup.ref('passwordconfirm')], 'las contraseñas no son iguales'),
+      .min(6, 'Debe Contener al Menos 6 Caracteres')
+      .oneOf([Yup.ref('passwordconfirm')], 'Las Contraseñas no son Iguales'),
     passwordconfirm: Yup.string()
       .required('contraseña Requerida')
-      .min(6, 'debe contener al menos 6 Caracteres')
+      .min(6, 'Debe Contener al Menos 6 Caracteres')
       .oneOf([Yup.ref('password')], 'las contraseñas no son iguales'),
   });
 
@@ -135,7 +135,7 @@ setTimeout(() => {
           </Icon4>
         </Div1>
 
-        {!input.password || !input.passwordconfirm ? (
+        {!input.password || !input.passwordconfirm  || input.password !== input.passwordconfirm ? (
           <Button disabled className='inactivo'>Restablecer  Contraseña</Button>
         ) : (
           <Button className='activo'>Restablecer  Contraseña</Button>
