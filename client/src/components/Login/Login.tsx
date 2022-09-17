@@ -60,31 +60,15 @@ export default function Signup() {
               type="email"
               name="email"
               onChange={(e) => handleChange(e)}
-              placeholder="Ingrese su Correo"
+              placeholder="Ingrese su E-mail"
             />
-
-            <Input4
-              type="password"
-              name="password"
-              onChange={(e) => handleChange(e)}
-              placeholder="Ingrese su contraseña"
-            />
-            <Recuerdo >
-            <a href="login/checkmail/enviochangepassword">
-                ¿Olvidaste tu contraseña?
-              </a>
-            {/*   ¿Olvidaste tu contraseña? */}
-              
-              </Recuerdo>
-
             <Div1>
               <Input4
                 type={showPwd2 ? "text" : "password"}
                   id="password"
                   name="password"
                 onChange={(e) => handleChange(e)}
-                placeholder="Ingresa tu nueva contraseña"
-
+                placeholder="Ingresa tu  Contraseña"
               />
               <Icon4 onClick={handleShowPwd2}>
                 {showPwd2 ? (
