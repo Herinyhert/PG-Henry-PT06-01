@@ -26,7 +26,7 @@ export default function EnvioChangePassword() {
     Swal.fire({
         position: 'top-end',
         icon: 'success',
-        title: 'Revisá tu correo para restablecer su contraseña',
+        title: 'Revisá tu correo para restablecer tu contraseña',
         showConfirmButton: false,
         timer: 2500
       })
