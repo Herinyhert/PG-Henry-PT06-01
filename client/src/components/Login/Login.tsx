@@ -7,6 +7,7 @@ import { loginUser } from "../../actions/index";
 import { useSelector } from "react-redux";
 import { ReduxState } from "../../reducer";
 import { BsGoogle } from "react-icons/bs";
+import { resetState } from "../../actions/index";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import * as Yup from 'yup';
 import swal from 'sweetalert2';
@@ -19,10 +20,16 @@ export default function Signup() {
   });
   const user = useSelector((state: ReduxState) => state.user);
   const errorLogin = useSelector((state: ReduxState)=>state.error)
-  console.log(errorLogin)
+
+
+ function nresetState() {
+  dispatch(resetState());
+   // window.location.reload(); 
+  }
+   
+   
 
   useEffect(()=>{
-    
     if(errorLogin ==='Usuario no Existe'){
       swal.fire({
         title: 'Error',
@@ -32,7 +39,7 @@ export default function Signup() {
         timer: 3000,
         timerProgressBar:true
       });
-      window.location.reload(); 
+     nresetState()
    
     }
     if(errorLogin==='Password Incorrecto'){
@@ -44,7 +51,8 @@ export default function Signup() {
         timer: 3000,
         timerProgressBar:true
       });
-      window.location.reload(); 
+      nresetState()
+     
     }
     
   },[errorLogin])
@@ -68,6 +76,7 @@ export default function Signup() {
 
   // Funcion para Validar los Campos
   function validadora(e){
+    e.preventDefault()
     const newInput = {
       ...input,
       [e.target.name]: e.target.value,
