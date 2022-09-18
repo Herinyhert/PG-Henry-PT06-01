@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { FiShoppingBag, FiShoppingCart } from "react-icons/fi";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Logo from "../../img/Logo.png";
 import LogoMobile from "../../img/Logo-mobile.png";
 import { clearState, getUserID } from "../../actions/index";
@@ -13,6 +13,7 @@ import { BsPersonCheck, BsPersonDash } from "react-icons/bs";
 import { RiHome2Line } from "react-icons/ri";
 import SearchBar from "../SearchBar/SearchBar";
 import { FaRegBell } from "react-icons/fa";
+import Link from "../Link";
 
 export default function NavBar() {
   const dispatch = useDispatch<any>();
@@ -35,11 +36,11 @@ export default function NavBar() {
 
   return (
     <NavBarContainer>
-      <Link to="/home">
-        <div>
-          <Img id="logo" src={Logo} alt="" />
-          <ImgMobile id="logo-mobile" src={LogoMobile} alt="" />
-        </div>
+      <Link to="/home" title="Home">
+        {/* <div> */}
+        <Img id="logo" src={Logo} alt="" />
+        <ImgMobile id="logo-mobile" src={LogoMobile} alt="" />
+        {/* </div> */}
       </Link>
       {location.pathname === "/home" && <SearchBar />}
       <ContainerButtons>
@@ -52,7 +53,7 @@ export default function NavBar() {
           </Encabezado>
         ) : null}
         {location.pathname !== "/home" && (
-          <Link to="/home">
+          <Link to="/home" title="Home">
             <DivButtonsNavBar>
               <RiHome2Line style={{ color: "black" }} />
               <ButtonLogin>Home</ButtonLogin>
@@ -60,14 +61,14 @@ export default function NavBar() {
           </Link>
         )}
         {location.pathname !== "/admin" && user?.role === "ADMIN" && (
-          <Link to="/admin">
+          <Link to="/admin" title="admin" >
             <DivButtonsNavBar>
               <ButtonLogin>Admin</ButtonLogin>
             </DivButtonsNavBar>
           </Link>
         )}
         {user?.role === "CLIENT" ? (
-          <Link to="/history">
+          <Link to="/history" title="Mis compras">
             <DivButtonsNavBar>
               <FiShoppingBag />
               <ButtonLoginCompras>Mis compras</ButtonLoginCompras>
@@ -75,25 +76,25 @@ export default function NavBar() {
           </Link>
         ) : null}
         {user ? (
-          <Link to="/home">
+          <Link to="/home" title="Salir">
             <DivButtonsNavBar>
               <BsPersonDash />
-              <ButtonLogin onClick={handleLogout}>Logout</ButtonLogin>
+              <ButtonLogin onClick={handleLogout}>Salir</ButtonLogin>
             </DivButtonsNavBar>
           </Link>
         ) : (
-          <Link to="/Login">
+          <Link to="/Login" title="Ingresá">
             <DivButtonsNavBar>
               <BsPersonCheck style={{ color: "black", content: "center" }} />
               <ButtonLogin>Ingresá</ButtonLogin>
             </DivButtonsNavBar>
           </Link>
         )}
-        <DivButtonsNavBar>
+        <DivButtonsNavBar title="Notificaciones">
           <NumeritoNotif>0</NumeritoNotif>
           <FaRegBell />
         </DivButtonsNavBar>
-        <Link to="/ShoppingCart">
+        <Link to="/ShoppingCart" title="Carrito">
           <DivButtonsNavBar>
             <Numerito>{productosCarrito?.length} </Numerito>
             <FiShoppingCart />
@@ -234,7 +235,7 @@ const ButtonLogin = styled.button`
   width: 3.5rem;
   /* width: fit-content; */
   /* height: 40px; */
-  /* text-decoration:none; */
+  text-decoration: none;
   background: transparent;
   justify-content: center;
   align-items: center;
