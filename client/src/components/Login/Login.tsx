@@ -19,14 +19,11 @@ export default function Signup() {
   });
   const user = useSelector((state: ReduxState) => state.user);
   const errorLogin = useSelector((state: ReduxState)=>state.error)
-console.log(errorLogin)
-  
-
-const [resetState,setResetState]=useState(errorLogin)
-
+  console.log(errorLogin)
 
   useEffect(()=>{
-    if(errorLogin ==='Usuario no existe'){
+    
+    if(errorLogin ==='Usuario no Existe'){
       swal.fire({
         title: 'Error',
         text:'Usuario Ingresado no Existe',
@@ -35,8 +32,8 @@ const [resetState,setResetState]=useState(errorLogin)
         timer: 3000,
         timerProgressBar:true
       });
-   /*    window.location.reload(); */
-   setResetState('')
+      window.location.reload(); 
+   
     }
     if(errorLogin==='Password Incorrecto'){
       swal.fire({
@@ -47,7 +44,7 @@ const [resetState,setResetState]=useState(errorLogin)
         timer: 3000,
         timerProgressBar:true
       });
-      setResetState('')
+      window.location.reload(); 
     }
     
   },[errorLogin])
