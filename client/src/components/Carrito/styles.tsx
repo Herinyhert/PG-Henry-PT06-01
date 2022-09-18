@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   width: 1024px;
-  height: 1024px;
+  height: auto;
   display: flex;
   margin: 90px auto 40px auto;
   flex-direction: column;
@@ -15,10 +15,12 @@ export const Container = styled.div`
 export const Panel = styled.div`
   /* background-color: #8e8d8d; */
   display: grid;
-  grid-template-columns: 67fr 33fr;
+  grid-template-columns: 33fr 33fr;
 `;
 
-export const Column = styled.div``;
+export const Column = styled.div`
+
+`;
 
 export const Galeria = styled.div`
   display: flex;
@@ -95,12 +97,19 @@ export const Producto = styled.div`
   display: flex;
   flex-direction: column;
   padding: 32px 20px;
-  margin: 16px;
+  margin: 30px;
   border: 1px solid #d0d2d1;
   border-radius: 5px;
+  
   ul {
           list-style: none;
       }
+
+  > h4 {
+    text-align: center; 
+    border-bottom: 1px solid #d0d2d1;
+    margin-bottom: 30px;
+  }
 `;
 
 export const Estado = styled.div`
@@ -154,6 +163,7 @@ export const ButtonComprar = styled.div`
 `;
 export const ButtonCarrito = styled.div`
   margin-top: 16px;
+  text-align: center;
 `;
 
 export const Button = styled.button`
@@ -164,20 +174,20 @@ export const Button = styled.button`
   padding: 12px;
   outline: 0;
   cursor: pointer;
-  background-color: #7daffb;
+  background-color: #064fbc;
   width: 50vh;
   color: white;
   &.comprar {
     background-color: #3483f9;
 
     &:hover {
-      background-color: #064fbc;
+      background-color: #7daffb;
       cursor: pointer;
     }
   }
 
   &:hover {
-    background-color: #064fbc;
+    background-color: #7daffb;
     cursor: pointer;
   }
 `;
@@ -207,8 +217,15 @@ export const Form = styled.form`
   
   border: 1px solid #d0d2d1;
   border-radius: 5px;
-  width: 80%;
+  width: 70%;
   height: 92%;
+
+  > h4 {
+    text-align: center; 
+    border-bottom: 1px solid #d0d2d1;
+    margin-bottom: 30px;
+    width: 100%;
+  }
 
   /* padding: 32px 20px;
  margin:16px;

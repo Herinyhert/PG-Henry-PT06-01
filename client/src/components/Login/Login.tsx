@@ -7,6 +7,7 @@ import { loginUser } from "../../actions/index";
 import { useSelector } from "react-redux";
 import { ReduxState } from "../../reducer";
 import { BsGoogle } from "react-icons/bs";
+import { resetState } from "../../actions/index";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import * as Yup from 'yup';
 import swal from 'sweetalert2';
@@ -19,14 +20,17 @@ export default function Signup() {
   });
   const user = useSelector((state: ReduxState) => state.user);
   const errorLogin = useSelector((state: ReduxState)=>state.error)
-console.log(errorLogin)
-  
 
-const [resetState,setResetState]=useState(errorLogin)
 
+ function nresetState() {
+  dispatch(resetState());
+   // window.location.reload(); 
+  }
+   
+   
 
   useEffect(()=>{
-    if(errorLogin ==='Usuario no existe'){
+    if(errorLogin ==='Usuario no Existe'){
       swal.fire({
         title: 'Error',
         text:'Usuario Ingresado no Existe',
@@ -35,8 +39,8 @@ const [resetState,setResetState]=useState(errorLogin)
         timer: 3000,
         timerProgressBar:true
       });
-   /*    window.location.reload(); */
-   setResetState('')
+     nresetState()
+   
     }
     if(errorLogin==='Password Incorrecto'){
       swal.fire({
@@ -47,7 +51,8 @@ const [resetState,setResetState]=useState(errorLogin)
         timer: 3000,
         timerProgressBar:true
       });
-      setResetState('')
+      nresetState()
+     
     }
     
   },[errorLogin])
@@ -61,7 +66,7 @@ const [resetState,setResetState]=useState(errorLogin)
     .required('E-mail es Requerido'),
     password : Yup.string()
     .required('Contraseña es Requerido')
-    .min(6,'debe contener al menos 6 Caracteres')
+    .min(6,'La contraseña debe contener al menos 6 caracteres')
    })
 // creamos el estado local de Errores
    const [error, setError] = useState({
@@ -71,6 +76,7 @@ const [resetState,setResetState]=useState(errorLogin)
 
   // Funcion para Validar los Campos
   function validadora(e){
+    e.preventDefault()
     const newInput = {
       ...input,
       [e.target.name]: e.target.value,
@@ -146,8 +152,6 @@ const [resetState,setResetState]=useState(errorLogin)
                 onChange={(e) => handleChange(e)}
                 placeholder="Ingresa tu  Contraseña"
               />
-              <Span>{error.password}</Span>
-
               <Icon4 onClick={handleShowPwd2}>
                 {showPwd2 ? (
                   <AiFillEye color="black" />
@@ -155,6 +159,7 @@ const [resetState,setResetState]=useState(errorLogin)
                   <AiFillEyeInvisible color="black" />
                 )}
               </Icon4>
+              <Span4>{error.password}</Span4>
             </Div1>
 
             <Recuerdo>
@@ -174,12 +179,12 @@ const [resetState,setResetState]=useState(errorLogin)
 
             <O> O Continuar Con </O>
 
-            <Button onClick={redirect}>
+            <ButtonG onClick={redirect}>
               <DivIcon>
                 <BsGoogle />
               </DivIcon>
               Iniciar Sesión con Google
-            </Button>
+            </ButtonG>
 
             <P>
               <a href="/Signup">¿No Tienes Cuenta? Registrate</a>
@@ -217,17 +222,17 @@ const Form = styled.form`
   color: #fff;
 `;
 
-const Title = styled.h1`
-  position: absoluta;
-  font-size: 18px;
-  margin: auto;
-  padding: auto;
-  color: #335d90;
+// const Title = styled.h1`
+//   position: absoluta;
+//   font-size: 18px;
+//   margin: auto;
+//   padding: auto;
+//   color: #335d90;
 
-  text-transform: uppercase;
-  justify-content: center;
-  align-items: center;
-`;
+//   text-transform: uppercase;
+//   justify-content: center;
+//   align-items: center;
+// `;
 
 const Saludo = styled.div`
   color: black;
@@ -242,14 +247,14 @@ const Input3 = styled.input`
   width: 95%;
   height: 40px;
   padding: 5px 6px;
-  margin: 10px auto;
+  margin: 20px auto;
   border: 1px solid black;
   outline: none;
   border-radius: 5px;
-  background-color: inherit;
+  background-color: #ffffff;
   &:focus {
     border: 2px solid #335d90;
-  }
+    }
 `;
 const Input4 = styled.input`
   display: block;
@@ -257,7 +262,7 @@ const Input4 = styled.input`
   height: 40px;
   padding: 5px 6px;
   /* margin-bottom: 15px; */
-  margin: 10px auto;
+  margin: 20px auto;
   border: 1px solid black;
   outline: none;
   border-radius: 5px;
@@ -273,7 +278,7 @@ const Recuerdo = styled.p`
   margin-top: 15px;
 
   font-size: 15px;
-  color: #335d90;
+  color: #064fbc;
 
   > a {
     text-decoration: none;
@@ -290,7 +295,7 @@ const Button = styled.button`
   margin: 10px auto; */
   width: 100%;
   height: 40px;
-  background-color: #335d90;
+  background-color: #064fbc;
   border: none;
   cursor: pointer;
   border-radius: 20px;
@@ -299,11 +304,31 @@ const Button = styled.button`
  background-color: #cbced1;
 }
  &.activo {
-  background-color:#335d90;
+  background-color:#3483f9;
   &:hover {
-    background-color: #183659;
+    background-color: #7daffb;
   }
 }
+`;
+const ButtonG = styled.button`
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  /* display: block;
+  margin: 10px auto; */
+  width: 100%;
+  height: 40px;
+  background-color: #064fbc;
+  border: none;
+  cursor: pointer;
+  border-radius: 20px;
+  color: #fff;
+ 
+  &:hover {
+    background-color: #7daffb;
+  }
+
 `;
 
 const P = styled.div`
@@ -313,7 +338,7 @@ const P = styled.div`
 
   > a {
     text-decoration: none;
-    color: #335d90;
+    color: ##064fbc;
   }
 `;
 
@@ -342,15 +367,29 @@ const Div1 = styled.div`
 
 const Icon4 = styled.div`
   position: absolute;
+  float: right;
   cursor: pointer;
+  box-sizing: content-box;
   /* top: 29%; */
+  /* bottom: 29% */
   right: 5%;
-  justify-content: right;
-  align-items: right;
+  /* justify-content: right;
+  align-items: right; */
+  /* text-align: right; */
+
 `;
 
 const Span = styled.span`
   color: red;
+  font-size:14px;
+  margin-top: -23px;
+ 
+`;
+const Span4 = styled.span`
+  color: red;
+  margin-top: -23px;
+  font-size:14px;
+ 
 `;
 
 

@@ -22,6 +22,7 @@ import {
   GET_TOTALORDERS,
   GET_DETAIL_USER,
   REGISTRO_EXITOSO,
+  RESET_STATE
 } from "./actiontype";
 
 const { REACT_APP_API_URL = "http://localhost:3001" } = process.env;
@@ -431,7 +432,7 @@ export function loginUser(payload) {
           const alerta = error.response.data.msg 
           dispatch({ type: SET_ERROR, payload:alerta });
           //  .catch(res =>{console.log(res.response.data)})
-          console.log(alerta)
+          
         })
     );
   };
@@ -450,6 +451,15 @@ export function clearState() {
     });
   };
 }
+//* limpiar mi state */
+export function resetState(){
+  return function (dispatch){
+    dispatch({
+      type:RESET_STATE
+    })
+  }
+}
+
 ////////////back office jvqh//////////////////////////////////////////////////////////////////////
 export function postProductBO(token, payload) {
   return function (dispatch) {
