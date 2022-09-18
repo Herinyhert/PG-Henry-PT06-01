@@ -101,23 +101,6 @@ reviewsRouter.get("/userreviews",  auth.authenticate('jwt',{session :false}),asy
 //   }
 // );
 
-reviewsRouter.put(
-  "/viewed",
-  auth.authenticate('jwt',{session :false}),
-  async (req, res) => {
-    const { idproduct } = req.body;
-    const id = Number(idproduct);
-    const user = req.user as TokenPayload;
-    const review = await prisma.review.update({
-      data: {
-        state: "VIEWED",
-      },
-      where: {
-        userId_productId: { userId: user.id, productId: id },
-      },
-    });
-    res.status(200).json(review);
-
 reviewsRouter.put("/viewed", ...forClient, async (req, res) => {
   const { idreview } = req.body;
   const id = Number(idreview);
