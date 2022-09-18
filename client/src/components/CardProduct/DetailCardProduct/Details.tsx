@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
-import { detailsProduct, Articulo, ArticuloCarrito } from "../../../actions/index";
+import {
+  detailsProduct,
+  Articulo,
+  ArticuloCarrito,
+} from "../../../actions/index";
 import { ReduxState } from "../../../reducer";
 import StartRating from "../../StarRating/StarRating";
 import NavBar from "../../NavBar/NavBar";
@@ -30,7 +34,6 @@ import {
   Parrafo,
   Img,
 
-
   /*  ProductoVenta,
   InfoVendedor
  */
@@ -42,33 +45,26 @@ export default function Details() {
   const dispatch = useDispatch<any>();
   const history = useNavigate();
 
-
-   const detalle : ArticuloCarrito =   {
+  const detalle: ArticuloCarrito = {
     id: detail?.id,
-    name:detail?.name ,
-    brand:detail?.brand ,
-    stock:detail?.stock ,
-    price:detail?.price ,
-    img:detail?.img ,
-    state:detail?.state ,
-    categoryId:detail?.categoryId ,
-    category:detail?.category ,
+    name: detail?.name,
+    brand: detail?.brand,
+    stock: detail?.stock,
+    price: detail?.price,
+    img: detail?.img,
+    state: detail?.state,
+    categoryId: detail?.categoryId,
+    category: detail?.category,
     totalCount: 1,
     precioTotal: detail?.price,
-   }
+  };
 
-
-
-
-
-  let carrito = JSON.parse(localStorage.getItem('carrito'));
+  let carrito = JSON.parse(localStorage.getItem("carrito"));
   if (!carrito) {
     carrito = [];
   }
 
-
-
-  const [articulo, setArticulo] = useState([carrito])
+  const [articulo, setArticulo] = useState([carrito]);
   // const [articulo, setArticulo] = useState([{
   //   id: carrito.id,
   //   name: carrito.name,
@@ -84,39 +80,32 @@ export default function Details() {
 
   useEffect(() => {
     dispatch(detailsProduct(id));
-
   }, [dispatch, articulo]);
 
-
-
   function handlerAgregarCarrito(detalle, accion: string) {
-
-    setArticulo(detalle)
+    setArticulo(detalle);
     // if (carrito) {
-    const index = carrito.findIndex((art) => art.id === detalle.id)
+    const index = carrito.findIndex((art) => art.id === detalle.id);
     if (index === -1) {
       //agrego
-      localStorage.setItem('item', JSON.stringify(detalle))
-      carrito.push(JSON.parse(localStorage.getItem('item')))
-      localStorage.setItem('carrito', JSON.stringify(carrito))
-      localStorage.setItem('item', JSON.stringify(""))
+      localStorage.setItem("item", JSON.stringify(detalle));
+      carrito.push(JSON.parse(localStorage.getItem("item")));
+      localStorage.setItem("carrito", JSON.stringify(carrito));
+      localStorage.setItem("item", JSON.stringify(""));
 
-      accion === "comprar"?  history('/ShoppingCart') : history('/home')
-
-    }
-    else{
-      //no agrego sumo. 
+      accion === "comprar" ? history("/ShoppingCart") : history("/home");
+    } else {
+      //no agrego sumo.
       //detalle.totalCount = detalle.totalCount + 1;
-      let carritoAux = JSON.parse(localStorage.getItem('carrito'));
+      let carritoAux = JSON.parse(localStorage.getItem("carrito"));
       carritoAux[index].totalCount = carritoAux[index].totalCount + 1;
-      carritoAux[index].precioTotal = carritoAux[index].price * carritoAux[index].totalCount;
-      localStorage.setItem('carrito', JSON.stringify(carritoAux))
+      carritoAux[index].precioTotal =
+        carritoAux[index].price * carritoAux[index].totalCount;
+      localStorage.setItem("carrito", JSON.stringify(carritoAux));
       //console.log(carrito)
-      accion === "comprar"?  history('/ShoppingCart') : history('/home')
-      
+      accion === "comprar" ? history("/ShoppingCart") : history("/home");
     }
     //console.log(articulo)
-
   }
 
   return (
@@ -144,7 +133,7 @@ export default function Details() {
                 {/* <h1> Bolso Mochila Morral Antirobo Con Puerto Usb Carga Q23</h1>  */}
               </Name>
               <Price>
-                <h4>{detail?.price}</h4>
+                <h4>$ {detail?.price.toFixed(2)}</h4>
               </Price>
               <MetodoPago>
                 <h1>Metodo de Pago</h1>
@@ -173,12 +162,22 @@ export default function Details() {
               {/* <Link to="/buy">
                 {" "} */}
               <ButtonComprar>
-                <Button className="comprar" onClick={()=>handlerAgregarCarrito(detalle, "comprar")}>Comprar ahora</Button>
+                <Button
+                  className="comprar"
+                  onClick={() => handlerAgregarCarrito(detalle, "comprar")}
+                >
+                  Comprar ahora
+                </Button>
               </ButtonComprar>
               {/* </Link> */}
 
               <ButtonCarrito>
-                <Button className="carrito" onClick={()=>handlerAgregarCarrito(detalle, "agregar")}>Agregar al Carrito</Button>
+                <Button
+                  className="carrito"
+                  onClick={() => handlerAgregarCarrito(detalle, "agregar")}
+                >
+                  Agregar al Carrito
+                </Button>
               </ButtonCarrito>
             </Producto>
             <Garantia />
@@ -195,27 +194,25 @@ export default function Details() {
 
 const Info = () => {
   return (
-
     <Description>
       <Img id="logo" src={logo} alt="" />
       <Parrafo>
-        La evolución no para. Por eso CompuStore es experto en tecnología de
-        la más avanzada. En www.compustore.com te ofrecemos un sitio web
-        renovado para que encuentres la mayor variedad de electrodomésticos,
-        tecno y entretenimiento en tu hogar. Nuestro equipo de expertos está
-        preparado para asesorarte y brindarte todos los días una experiencia
-        de compra personalizada que se adapte a lo que buscás. También
-        contamos con un servicio técnico especializado, con asistencia total
-        en posventa para que disfrutes todos los días de tu producto como si
-        fuera el primero. Además, ofrecemos ofertas especiales, descuentos y
-        planes de financiación para que accedas a eso que tanto querés al
-        precio más accesible y con la mejor cuota. Televisores, Smart TV,
-        Celulares libres, Notebooks, Tablets, Aires Acondicionados, Heladeras,
-        Lavarropas y muchos productos en oferta. Disfrutá de la evolución que
-        sólo te puede brindar CompuStore. ¡Bienvenido a la Superevolución!
+        La evolución no para. Por eso CompuStore es experto en tecnología de la
+        más avanzada. En www.compustore.com te ofrecemos un sitio web renovado
+        para que encuentres la mayor variedad de electrodomésticos, tecno y
+        entretenimiento en tu hogar. Nuestro equipo de expertos está preparado
+        para asesorarte y brindarte todos los días una experiencia de compra
+        personalizada que se adapte a lo que buscás. También contamos con un
+        servicio técnico especializado, con asistencia total en posventa para
+        que disfrutes todos los días de tu producto como si fuera el primero.
+        Además, ofrecemos ofertas especiales, descuentos y planes de
+        financiación para que accedas a eso que tanto querés al precio más
+        accesible y con la mejor cuota. Televisores, Smart TV, Celulares libres,
+        Notebooks, Tablets, Aires Acondicionados, Heladeras, Lavarropas y muchos
+        productos en oferta. Disfrutá de la evolución que sólo te puede brindar
+        CompuStore. ¡Bienvenido a la Superevolución!
       </Parrafo>
     </Description>
-
   );
 };
 
@@ -233,7 +230,7 @@ const InfoProducto = () => {
       </Price>
       <MetodoPago>
         <h1>Metodo de Pago</h1>
-        <img src={metodo} alt="Mtodo de Pago" />
+        <img src={metodo} alt="Metodo de Pago" />
       </MetodoPago>
 
       <StartRating />

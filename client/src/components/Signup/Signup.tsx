@@ -49,10 +49,10 @@ export default function Signup() {
       name: Yup.string().required('El nombre es Requerido'),
       surname: Yup.string().required('El surname es Requerido'),
       email: Yup.string()
-        .email('El Email no es Valida')
+        .email('El email no es válido')
         .required('El email es obligatorio'),
       password: Yup.string()
-        .required('El Password Es Requerido')
+        .required('El password es requerido')
         .min(6, 'debe contener al menos 6 Caracteres'),
     }),
     onSubmit: (formData, { resetForm }) => {
@@ -229,13 +229,13 @@ const Input1 = styled.input`
   width: 95%;
   height: 40px;
   padding: 5px 6px;
-  margin: 10px auto;
+  margin: 20px auto;
   border: 1px solid black;
   outline: none;
   border-radius: 5px;
   background-color: inherit;
   &:focus {
-    border: 2px solid #335d90;
+    border: 2px solid #064fbc;
   }
 `;
 const Input2 = styled.input`
@@ -243,13 +243,13 @@ const Input2 = styled.input`
   width: 95%;
   height: 40px;
   padding: 5px 6px;
-  margin: 10px auto;
+  margin: 20px auto;
   border: 1px solid black;
   outline: none;
   border-radius: 5px;
   background-color: inherit;
   &:focus {
-    border: 2px solid #335d90;
+    border: 2px solid #064fbc;
   }
 `;
 const Input3 = styled.input`
@@ -257,13 +257,13 @@ const Input3 = styled.input`
   width: 95%;
   height: 40px;
   padding: 5px 6px;
-  margin: 10px auto;
+  margin: 20px auto;
   border: 1px solid black;
   outline: none;
   border-radius: 5px;
   background-color: inherit;
   &:focus {
-    border: 2px solid #335d90;
+    border: 2px solid #064fbc;
   }
 `;
 const Input4 = styled.input`
@@ -273,13 +273,13 @@ const Input4 = styled.input`
   padding: 5px 6px;
   outline: none;
   border-radius: 1px;
-  margin: 10px auto;
+  margin: 20px auto;
   border: 1px solid black;
   outline: none;
   border-radius: 5px;
   background-color: inherit;
   &:focus {
-    border: 2px solid #335d90;
+    border: 2px solid #064fbc;
   }
 `;
 
@@ -289,7 +289,7 @@ const Acuerdo = styled.p`
   font-size: 15px;
   color: black;
   > a {
-    color: #335d90;
+    color: #064fbc;
     text-decoration: none;
   }
 `;
@@ -299,7 +299,7 @@ const Button = styled.button`
   margin: 10px auto;
   width: 100%;
   height: 40px;
-  background-color: #335d90;
+  background-color: #064fbc;
   border: none;
   cursor: pointer;
   border-radius: 20px;
@@ -309,13 +309,14 @@ const Button = styled.button`
     /* box-shadow: 0 0 8px 0 #335d90 inset, 0 0 8px 4px #335d90;
     transform: scale(1.1);
     border: 1px solid rgba(255, 255, 255, 0.3); */
-    background-color: #183659;
+    background-color: #7daffb;
   }
 `;
 
 const Span = styled.span`
 color:red;
-font-size: 10px;
+font-size: 14px;
+margin-top: -23px;
 `;
 
 
@@ -326,7 +327,7 @@ const P = styled.div`
 
   > a {
     text-decoration: none;
-    color: #335d90;
+    color: #064fbc;
   }
 `;
 

@@ -128,7 +128,7 @@ const Search = styled.button`
   -webkit-appearance: none;
   cursor: pointer;
   font-size: 3vh;
-  background-color: #335d90;
+  background-color: #064fbc;
   /* box-shadow: 0 0 40px 40px #335d90 inset, 0 0 0 0 #335d90;
   -webkit-transition: all 150ms ease-in-out;
   transition: all 150ms ease-in-out; */
@@ -136,12 +136,12 @@ const Search = styled.button`
   &:hover {
     /* box-shadow: 0 0 10px 0 #335d90 inset, 0 0 10px 4px #335d90;
     color: #335d90; */
-    background-color: #183659;
+    background-color: #7daffb;
   }
   &:active {
     /* box-shadow: 0 0 10px 0 #335d90 inset, 0 0 10px 4px #335d90;
     color: #335d90; */
-    background-color: #183659;
+    background-color: #7daffb;
   }
 `;
 
