@@ -21,6 +21,7 @@ import {
   GET_DETAIL_USER,
   REGISTRO_EXITOSO,
   RESET_STATE,
+  GET_CHANGEPASS
 } from "../actions/actiontype";
 import {
   getLocalstorageState,
