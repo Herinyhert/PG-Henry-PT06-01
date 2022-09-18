@@ -104,7 +104,7 @@ export default function Buy() {
             /> */}
 
               <Form>
-                <h3>Datos del comprador</h3>
+                <h4>Datos del comprador</h4>
                 <Input
                   type="text"
                   name="name"
@@ -139,8 +139,10 @@ export default function Buy() {
             {/* <Info /> */}
           </Column>
           <Column>
+          
             {/*  <InfoProducto/> */}
             <Producto>
+            <h4>Resúmen de compra</h4>
               {items_ml.map((it, i) => (
                 <ul key={i}>
                   <li>
