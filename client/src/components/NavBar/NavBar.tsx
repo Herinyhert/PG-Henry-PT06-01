@@ -35,31 +35,29 @@ export default function NavBar() {
 
   return (
     <NavBarContainer>
-      <div>
-        <Link to="/home">
-          <Img id="logo" height="140px" src={Logo} alt="" />
-          <ImgMobile id="logo-mobile" height="140px" src={LogoMobile} alt="" />
-        </Link>
-      </div>
-      <SearchBar />
+      <Link to="/home">
+        <div>
+          <Img id="logo" src={Logo} alt="" />
+          <ImgMobile id="logo-mobile" src={LogoMobile} alt="" />
+        </div>
+      </Link>
+      {location.pathname === "/home" && <SearchBar />}
       <ContainerButtons>
-        <Encabezado>
-          {user ? (
+        {user ? (
+          <Encabezado>
             <Saludo>
               Hola!!!
               <Nombre>{user2?.name}</Nombre>
             </Saludo>
-          ) : null}
-        </Encabezado>
+          </Encabezado>
+        ) : null}
         {location.pathname !== "/home" && (
-          
+          <Link to="/home">
             <DivButtonsNavBar>
-              <Link to="/home">
-              <RiHome2Line style={{color: 'black'}}/>
+              <RiHome2Line style={{ color: "black" }} />
               <ButtonLogin>Home</ButtonLogin>
-              </Link>
             </DivButtonsNavBar>
-          
+          </Link>
         )}
         {location.pathname !== "/admin" && user?.role === "ADMIN" && (
           <Link to="/admin">
@@ -69,36 +67,30 @@ export default function NavBar() {
           </Link>
         )}
         {user?.role === "CLIENT" ? (
-         
+          <Link to="/history">
             <DivButtonsNavBar>
-               <Link to="/history">
-              <FiShoppingBag/>
+              <FiShoppingBag />
               <ButtonLoginCompras>Mis compras</ButtonLoginCompras>
-              </Link>
             </DivButtonsNavBar>
-         
+          </Link>
         ) : null}
         {user ? (
-         
+          <Link to="/home">
             <DivButtonsNavBar>
-               <Link to="/home">
               <BsPersonDash />
               <ButtonLogin onClick={handleLogout}>Logout</ButtonLogin>
-              </Link>
             </DivButtonsNavBar>
-          
+          </Link>
         ) : (
-          
+          <Link to="/Login">
             <DivButtonsNavBar>
-              <Link to="/Login">
-              <BsPersonCheck style={{color: 'black', content:'center' }}/>
+              <BsPersonCheck style={{ color: "black", content: "center" }} />
               <ButtonLogin>Ingresá</ButtonLogin>
-              </Link>
             </DivButtonsNavBar>
-          
+          </Link>
         )}
         <DivButtonsNavBar>
-          <NumeritoNotif>1 </NumeritoNotif>
+          <NumeritoNotif>0</NumeritoNotif>
           <FaRegBell />
         </DivButtonsNavBar>
         <Link to="/ShoppingCart">
@@ -115,10 +107,10 @@ export default function NavBar() {
 // FiShoppingBag  - bolsa de compras
 
 const NavBarContainer = styled.header`
-  /* overflow: hidden; */
+  overflow: hidden;
   position: fixed;
   top: 0;
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
   /* display: inline-flex; */
   flex-wrap: wrap;
   justify-content: space-between;
@@ -126,24 +118,23 @@ const NavBarContainer = styled.header`
   width: 100vw;
   display: flex;
   /* justify-content: space-between; */
-  /* align-items: center; */
+  align-items: center;
   /* padding: 0 20px; */
   flex-wrap: nowrap;
   background-color: #ffffff;
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  /* backdrop-filter: blur(5px); */
+  /* -webkit-backdrop-filter: blur(5px); */
+  /* border: 1px solid rgba(255, 255, 255, 0.3); */
   justify-items: center;
 
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
-    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 20px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
     rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
   z-index: 1;
 `;
 
 const Img = styled.img`
   height: 140px;
-  margin-top: -45px;
+  margin-top: -20px;
   margin-left: 20px;
   z-index: 1;
   object-fit: contain;
@@ -167,7 +158,7 @@ const ContainerButtons = styled.div`
   flex-wrap: nowrap;
   justify-content: center;
   align-items: center;
-  /* margin-right: 1.5rem; */
+  margin-right: 1.5rem;
 `;
 
 const Encabezado = styled.div`
@@ -195,26 +186,24 @@ const DivButtonsNavBar = styled.div`
   align-items: center;
   text-align: center;
   margin: 0 0.5rem;
-  margin-top: 1.8rem;
-  font-size: 14px;
-  margin-bottom: 14px;
-
+  /* margin-top: 1.8rem; */
+  /* font-size: 14px; */
+  font-size: 1.5rem;
+  /* margin-bottom: 14px; */
 
   /* display: flex;
   flex-direction: column; */
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-  margin-right: 1.5rem;
-  margin-top: 1.5rem;
+  /* align-items: center; */
+  /* justify-content: center; */
+  /* margin-right: 1.5rem; */
+  /* margin-top: 1.5rem; */
   color: black;
   text-decoration: none;
- 
 `;
 
 const ButtonLoginCompras = styled.button`
   width: 6rem;
- height: 40px;
+  /* height: 40px; */
   background: transparent;
   justify-content: center;
   align-items: center;
@@ -225,7 +214,7 @@ const ButtonLoginCompras = styled.button`
   font-size: 0.9rem;
   font-family: "Proxima Nova", -apple-system, Roboto, Arial, sans-serif;
   color: black;
-  text-decoration:none;
+  text-decoration: none;
 
   /* background-image: linear-gradient(currentColor, currentColor);
   background-position: 0% 100%;
@@ -244,19 +233,18 @@ const ButtonLoginCompras = styled.button`
 const ButtonLogin = styled.button`
   width: 3.5rem;
   /* width: fit-content; */
-  height: 40px;
+  /* height: 40px; */
   /* text-decoration:none; */
   background: transparent;
   justify-content: center;
   align-items: center;
   border: none;
-  margin: 0 
+  /* margin: 0 ; */
   /* padding: 3px; */
   cursor: pointer;
   font-size: 0.9rem;
   font-family: "Proxima Nova", -apple-system, Roboto, Arial, sans-serif;
   color: black;
-  
 
   background-image: linear-gradient(currentColor, currentColor);
   background-position: 0% 100%;
@@ -274,7 +262,8 @@ const ButtonLogin = styled.button`
 
 const NumeritoNotif = styled.div`
   font-size: 12px;
-  position: absolute;
+  /* position: absolute; */
+  /* align-self:flex-end; */
   z-index: 1;
   width: fit-content;
   height: fit-content;
@@ -284,13 +273,14 @@ const NumeritoNotif = styled.div`
   /* margin: auto 20px; */
   padding-left: 6px;
   padding-right: 6px;
-  top: 15px;
-  right: 10px;
+  /* top: 15px; */
+  /* right: 10px; */
 `;
 
 const Numerito = styled.div`
   font-size: 12px;
-  position: absolute;
+  align-self: flex-end;
+  /* position: absolute; */
   z-index: 1;
   width: fit-content;
   height: fit-content;
@@ -300,8 +290,8 @@ const Numerito = styled.div`
   /* margin: auto 20px; */
   padding-left: 6px;
   padding-right: 6px;
-  top: 15px;
-  right: 10px;
+  /* top: 15px; */
+  /* right: 10px; */
 `;
 const Shop = styled.button`
   width: 3rem;

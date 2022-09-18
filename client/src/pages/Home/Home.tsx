@@ -16,8 +16,6 @@ import Carousel from "../../components/Carousel/Carousel";
 import SideBar from "../../components/SideBar/SideBar";
 import { IoLogoWhatsapp } from "react-icons/io";
 
-
-
 export default function Home() {
   const [state, setState] = useState({
     page: 1,
@@ -36,25 +34,17 @@ export default function Home() {
 
   useEffect(() => {
     dispatch(getCategorias());
-    dispatch(
-      getArticulos({
-        page: state.page,
-        pageSize: state.pageSize,
-        name: state.name,
-        order: state.order,
-        direction: state.direction,
-        categoryId: state.categoryId,
-      })
-    );
-  }, [
-    dispatch,
-    state.page,
-    state.pageSize,
-    state.name,
-    state.order,
-    state.direction,
-    state.categoryId,
-  ]);
+      dispatch(
+        getArticulos({
+          page: state.page,
+          pageSize: state.pageSize,
+          name: state.name,
+          order: state.order,
+          direction: state.direction,
+          categoryId: state.categoryId,
+        })
+      );
+  }, [dispatch, state.page, state.pageSize, state.name, state.order, state.direction, state.categoryId]);
 
   function redirect() {
     window.location.href =
@@ -62,47 +52,33 @@ export default function Home() {
   }
 
   return (
-
     <div>
-      <head>
+      {/* <head>
         <link rel="stylesheet" href="fontello.css" />
-      </head>
+      </head> */}
       <NavBar />
       <Carousel />
       <HomeContainer>
-       <ProductBar>
-        <SideBar
-          homeState={state}
-          filterOreder={(FOState) =>
-            setState({ ...state, page: 1, ...FOState })
-          }
-        />
-        {/* <SearchBar onSearch={(search) => setState({ ...state, page: 1, name: search })} />
+        <ProductBar>
+          <SideBar homeState={state} filterOreder={(FOState) => setState({ ...state, page: 1, ...FOState })} />
+          {/* <SearchBar onSearch={(search) => setState({ ...state, page: 1, name: search })} />
         <TopMenu onClickOpcion={(categoryid) => setState({ ...state, page: 1, categoryId: categoryid })} />
         <Ordenamientos>
           <OrderName onDirection={(direction) => setState({ ...state, page: 1, order: "name", direction: direction })} />
           <OrderPrice onDirection={(direction) => setState({ ...state, page: 1, order: "price", direction: direction })} />
           <OrderBrand onDirection={(direction) => setState({ ...state, page: 1, order: "brand", direction: direction })} />
         </Ordenamientos> */}
-        <CardsProducts>
-          {allProducts.map((art) => (
-            <CardProduct key={art.id} articulo={art} />
-          ))}
-
-          {totalCount > state.pageSize ? (
-            <Paginado
-              onPageChange={(page) => setState({ ...state, page })}
-              totalCount={totalCount}
-              pageSize={state.pageSize}
-            />
-          ) : (
-            ""
-          )}
-        </CardsProducts>
-        <BtnWsp onClick={redirect}>
-          <IoLogoWhatsapp />
-        </BtnWsp>
-        <div dangerouslySetInnerHTML={{ __html: `
+          <CardsProducts>
+            {allProducts.map((art) => (
+              <CardProduct key={art.id} articulo={art} />
+            ))}
+          </CardsProducts>
+          <BtnWsp onClick={redirect}>
+            <IoLogoWhatsapp />
+          </BtnWsp>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: `
         <df-messenger
           intent="WELCOME"
           chat-title="CompuBot"
@@ -111,16 +87,17 @@ export default function Home() {
           language-code="es"
         ></df-messenger>
 
-        `}} />
-         </ProductBar>
-      {totalCount > state.pageSize ? (
-        <Paginado onPageChange={(page) => setState({ ...state, page })} totalCount={totalCount} pageSize={state.pageSize} />
-      ) : (
-        ""
-      )}
+        `,
+            }}
+          />
+        </ProductBar>
+        {totalCount > state.pageSize ? (
+          <Paginado onPageChange={(page) => setState({ ...state, page })} totalCount={totalCount} pageSize={state.pageSize} />
+        ) : (
+          ""
+        )}
       </HomeContainer>
     </div>
- 
   );
 }
 

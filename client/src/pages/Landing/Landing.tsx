@@ -9,7 +9,7 @@ export default function Landing() {
         <h1>E-Commerce Tech Henry´s</h1>
         <div className={s.button}>
           <button className={s.btn}>Login</button>
-          <Link to="/Home">  {" "}        
+          <Link to="/home">  {" "}        
             <button className={s.btn}>Invitado</button>
             
           </Link>

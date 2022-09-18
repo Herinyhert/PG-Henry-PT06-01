@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
 import { getArticulos } from "../../actions";
 import axios from "axios";
+// import { useNavigate } from "react-router-dom";
 
 const { REACT_APP_API_URL = "http://localhost:3001" } = process.env;
 
@@ -17,6 +18,7 @@ export default function SearchBar() {
   const [state, setState] = useState("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const dispatch = useDispatch<any>();
+  // const navigate = useNavigate();
 
   function handlechange(e) {
     setState(e.target.value);
@@ -30,17 +32,6 @@ export default function SearchBar() {
   }
 
   function handleclick() {
-    // if (state === "") {
-    //   // alert("Enter a product to search...")
-    //   Swal.fire({
-    //     title: "Error!",
-    //     text: "Introduce un producto para buscar...",
-    //     icon: "error",
-    //     confirmButtonText: "Volver",
-    //     confirmButtonColor: "#335d90",
-    //   });
-    // }
-    // onSearch(state);
     dispatch(
       getArticulos({
         page: 1,
@@ -51,6 +42,7 @@ export default function SearchBar() {
         categoryId: undefined,
       })
     );
+    // return navigate("/home");
   }
 
   return (
@@ -68,10 +60,10 @@ export default function SearchBar() {
         list="suggestions"
       />
       <datalist id="suggestions">
-          {suggestions.map((suggestion, i) => (
-            <option key={i} value={suggestion} />
-          ))}
-        </datalist>
+        {suggestions.map((suggestion, i) => (
+          <option key={i} value={suggestion} />
+        ))}
+      </datalist>
       <Search onClick={handleclick} title="buscar">
         <ImSearch />
       </Search>
