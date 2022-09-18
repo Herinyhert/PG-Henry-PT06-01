@@ -38,6 +38,7 @@ import {
   InfoVendedor
  */
 } from "./styles";
+import Swal from "sweetalert2";
 
 export default function Details() {
   const { id } = useParams();
@@ -92,6 +93,23 @@ export default function Details() {
       carrito.push(JSON.parse(localStorage.getItem("item")));
       localStorage.setItem("carrito", JSON.stringify(carrito));
       localStorage.setItem("item", JSON.stringify(""));
+      const Toast = Swal.mixin({
+        //alerta que muestra que se agrego producto
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 1000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+      });
+
+      Toast.fire({
+        icon: "success",
+        title: "Se agregó tu producto al carrito",
+      });
 
       accion === "comprar" ? history("/ShoppingCart") : history("/home");
     } else {
@@ -102,10 +120,28 @@ export default function Details() {
       carritoAux[index].precioTotal =
         carritoAux[index].price * carritoAux[index].totalCount;
       localStorage.setItem("carrito", JSON.stringify(carritoAux));
-      //console.log(carrito)
+      
+      const Toast = Swal.mixin({
+        //alerta que muestra que se agrego producto
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 1000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+      });
+
+      Toast.fire({
+        icon: "success",
+        title: "Se agregó tu producto al carrito",
+      });
+ 
       accion === "comprar" ? history("/ShoppingCart") : history("/home");
     }
-    //console.log(articulo)
+   
   }
 
   return (
