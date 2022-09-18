@@ -18,6 +18,7 @@ import { IoLogoWhatsapp } from "react-icons/io";
 
 
 
+
 export default function Home() {
   const [state, setState] = useState({
     page: 1,
@@ -67,6 +68,7 @@ export default function Home() {
       <head>
         <link rel="stylesheet" href="fontello.css" />
       </head>
+      
       <NavBar />
       <Carousel />
       <HomeContainer>
@@ -113,11 +115,11 @@ export default function Home() {
 
         `}} />
          </ProductBar>
-      {totalCount > state.pageSize ? (
+      {/* {totalCount > state.pageSize ? (
         <Paginado onPageChange={(page) => setState({ ...state, page })} totalCount={totalCount} pageSize={state.pageSize} />
       ) : (
         ""
-      )}
+      )} */}
       </HomeContainer>
     </div>
  

@@ -1,5 +1,10 @@
 import { useState } from "react";
-import { TbSortAscendingLetters, TbSortAscendingNumbers, TbSortDescendingLetters, TbSortDescendingNumbers } from "react-icons/tb";
+import {
+  TbSortAscendingLetters,
+  TbSortAscendingNumbers,
+  TbSortDescendingLetters,
+  TbSortDescendingNumbers,
+} from "react-icons/tb";
 import { ImSearch } from "react-icons/im";
 import { useSelector } from "react-redux";
 import styled, { css } from "styled-components";
@@ -51,14 +56,24 @@ export default function SideBar({ homeState, filterOreder }: SideBarProps) {
         </button>
       </SearchBarContainer> */}
       <OrderContainer>
-        <legend>Orden:</legend>
+        <Legend>Orden:</Legend>
         <div>
           {/* <label htmlFor="types">{">"}Ordenar por nombre</label> */}
           <div>
-            <OrderButton onClick={() => handlerchange("name", "asc")} active={homeState.order === "name" && homeState.direction === "asc"}>
+            <OrderButton
+              onClick={() => handlerchange("name", "asc")}
+              active={
+                homeState.order === "name" && homeState.direction === "asc"
+              }
+            >
               <TbSortAscendingLetters style={{ width: 30, height: 30 }} />
             </OrderButton>
-            <OrderButton onClick={() => handlerchange("name", "desc")} active={homeState.order === "name" && homeState.direction === "desc"}>
+            <OrderButton
+              onClick={() => handlerchange("name", "desc")}
+              active={
+                homeState.order === "name" && homeState.direction === "desc"
+              }
+            >
               <TbSortDescendingLetters style={{ width: 30, height: 30 }} />
             </OrderButton>
           </div>
@@ -66,10 +81,20 @@ export default function SideBar({ homeState, filterOreder }: SideBarProps) {
         <div>
           {/* <label htmlFor="types">{">"}Ordenar por precio</label> */}
           <div>
-            <OrderButton onClick={() => handlerchange("price", "asc")} active={homeState.order === "price" && homeState.direction === "asc"}>
+            <OrderButton
+              onClick={() => handlerchange("price", "asc")}
+              active={
+                homeState.order === "price" && homeState.direction === "asc"
+              }
+            >
               <TbSortAscendingNumbers style={{ width: 30, height: 30 }} />
             </OrderButton>
-            <OrderButton onClick={() => handlerchange("price", "desc")} active={homeState.order === "price" && homeState.direction === "desc"}>
+            <OrderButton
+              onClick={() => handlerchange("price", "desc")}
+              active={
+                homeState.order === "price" && homeState.direction === "desc"
+              }
+            >
               <TbSortDescendingNumbers style={{ width: 30, height: 30 }} />
             </OrderButton>
           </div>
@@ -91,13 +116,19 @@ export default function SideBar({ homeState, filterOreder }: SideBarProps) {
         </div> */}
       </OrderContainer>
       <fieldset style={{ margin: 5 }}>
-        <legend>Categorias:</legend>
+        <Legend>Categorias:</Legend>
         {allCategorias.map((cat, i) => (
           <Category key={i}>
             <input
               id={`${i}`}
               type="checkbox"
-              onChange={(e) => filterOreder(homeState.categoryId === cat.id ? { categoryId: "" } : { categoryId: cat.id })}
+              onChange={(e) =>
+                filterOreder(
+                  homeState.categoryId === cat.id
+                    ? { categoryId: "" }
+                    : { categoryId: cat.id }
+                )
+              }
               checked={homeState.categoryId === cat.id}
             />
             <label htmlFor={`${i}`}>{cat.name}</label>
@@ -159,4 +190,11 @@ const OrderButton = styled.button<{ active?: boolean }>`
       background-color: lightblue;
     `}
   margin: 5px;
+`;
+
+const Legend = styled.legend`
+  font-family: "Proxima Nova", -apple-system, Roboto, Arial, sans-serif,
+    sans-serif;
+  font-size: 18px;
+  font-weight: 700;
 `;
