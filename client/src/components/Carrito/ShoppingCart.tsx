@@ -24,9 +24,11 @@ import {
   DivUnidad,
   ContainerCantidad,
   DivNombreColumnas,
+  ClickVaciarCarrito,
 } from "./stylesCart";
 import { ButtonsWayToShop } from "./styles";
 import { ButtonCantidad, ButtonDelete } from "./stylesCart";
+import Swal from "sweetalert2";
 
 const { REACT_APP_API_URL = "http://localhost:3001" } = process.env;
 export default function ShoppingCart() {
@@ -168,6 +170,25 @@ export default function ShoppingCart() {
       history("/login");
     }
   }
+  function handlerVaciarCarrito (e){
+    e.preventDefault()
+    if(productosCarrito.length > 0){
+      localStorage.removeItem("carrito");
+      Swal.fire('Se vació tu carrito')
+      history("/home")
+    } else {
+      Swal.fire('Tu carrito estaba vacío')
+      history("/home")
+    }
+    
+  }
+  function handlerSinProductos(e){
+    e.preventDefault()
+    
+      Swal.fire('Agrega productos a tu carrito')
+      history("/home")
+    
+  }
 
   return (
     <>
@@ -223,21 +244,27 @@ export default function ShoppingCart() {
               <Precio>${preciofinal?.toFixed(2)}</Precio>
             </DivResumen>
             <DivResumen>
+             
               <ButtonCompra>
                 <Button>
                   <Link to="/home">Seguir comprando</Link>
                 </Button>
               </ButtonCompra>
-              <ButtonCompra>
+
+              
+              <ButtonCompra >
                 <Button
-                  onClick={(e) => {
-                    sendOrderToDB(e);
+                   onClick={(e) => {
+                    productosCarrito.length>0?
+                    sendOrderToDB(e)
+                    : handlerSinProductos(e)
                   }}
                 >
                   Finalizar compra
                 </Button>
               </ButtonCompra>
             </DivResumen>
+                  <ClickVaciarCarrito onClick={(e)=>handlerVaciarCarrito(e)}>Vaciar carrito</ClickVaciarCarrito>
           </Column>
         )}
       </Container>
