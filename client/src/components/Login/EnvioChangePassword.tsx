@@ -1,11 +1,15 @@
 import axios from "axios";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import Swal from "sweetalert2";
+import { envioChangePass } from "../../actions";
 import NavBar from "../NavBar/NavBar";
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
 export default function EnvioChangePassword() {
+
   const history = useNavigate();
 //creamos la esque de validacion
 const validationSchema = Yup.object({
@@ -40,9 +44,9 @@ function validadora(e){
   setInput(newInput); 
 
 }
-
-
   
+  const dispatch = useDispatch<any>();
+
   const [input, setInput] = useState({
     email: "",
   });
@@ -52,11 +56,21 @@ function validadora(e){
     validadora(e)
   }
 
+  // function handleSubmit(e) {
+  //   e.preventDefault();
+  //   axios.get(`http://localhost:3001/auth/resetpassword?email=${input.email}`)
+  //   Swal.fire({
+  //       position: 'top-end',
+  //       icon: 'success',
+  //       title: 'Revisá tu correo para restablecer tu contraseña',
+  //       showConfirmButton: false,
+  //       timer: 2500
+  //     })
+  // }
+
   function handleSubmit(e) {
     e.preventDefault();
-    validadora(e)
-    axios.get(`http://localhost:3001/auth/resetpassword?email=${input.email}`)
-    history("/login/checkmail/checkmailpassword");
+    dispatch(envioChangePass(input.email))
   }
   
 
