@@ -111,6 +111,19 @@ export const ButtonDelete = styled.button`
   }
 `;
 
+export const ClickVaciarCarrito = styled.p`
+border: none;
+align-items: flex-start;
+  background: inherit;
+  margin: 1rem;
+  font-size: 1.3rem;
+cursor: pointer;
+&:hover {
+  color: #3483fa;
+}
+`;
+
+
 export const ButtonCantidad = styled.button`
   border: none;
   background: inherit;
