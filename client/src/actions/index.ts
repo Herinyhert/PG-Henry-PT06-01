@@ -23,7 +23,7 @@ import {
   GET_DETAIL_USER,
   REGISTRO_EXITOSO,
   RESET_STATE,
-  GET_CHANGEPASS
+  GET_CHANGEPASS,
 } from "./actiontype";
 
 const { REACT_APP_API_URL = "http://localhost:3001" } = process.env;
@@ -54,7 +54,7 @@ export interface OrderDetailsBO {
   productId: number;
   price: number;
   quantity: number;
-  product: ArticuloBO;  
+  product: ArticuloBO;
 }
 
 export interface User {
@@ -150,7 +150,7 @@ export interface paramsUser {
   name: string;
   order: string;
   direction: string;
-  filter: string
+  filter: string;
   userId: number;
 }
 
@@ -180,35 +180,25 @@ export interface params {
   order: string;
   direction: string;
   categoryId: number;
+  priceMin: number;
+  priceMax: number;
 }
 
-export function getOrders({
-  page,
-  pageSize,
-  name,
-  order,
-  direction,
-}: paramsOrders) {
+export function getOrders({ page, pageSize, name, order, direction }: paramsOrders) {
   return async function (dispatch: Dispatch) {
     try {
-      var json = await axios.get<Orders[]>(
-        REACT_APP_API_URL + "/backoffice/order",
-        {
-          params: {
-            page: page,
-            pageSize: pageSize,
-            name: name,
-            order: order,
-            direction: direction,
-          },
-        }
-      );
+      var json = await axios.get<Orders[]>(REACT_APP_API_URL + "/backoffice/order", {
+        params: {
+          page: page,
+          pageSize: pageSize,
+          name: name,
+          order: order,
+          direction: direction,
+        },
+      });
       // console.log(json.data[1]);
 
-      return [
-        dispatch({ type: GET_ORDERS, payload: json.data[1] }),
-        dispatch({ type: GET_TOTALORDERS, payload: json.data[0] }),
-      ];
+      return [dispatch({ type: GET_ORDERS, payload: json.data[1] }), dispatch({ type: GET_TOTALORDERS, payload: json.data[0] })];
       //
     } catch (error) {
       return dispatch({ type: SET_ERROR, payload: "error" });
@@ -216,14 +206,7 @@ export function getOrders({
   };
 }
 
-export function getArticulos({
-  page,
-  pageSize,
-  name,
-  order,
-  direction,
-  categoryId,
-}: params) {
+export function getArticulos({ page, pageSize, name, order, direction, categoryId, priceMin, priceMax }: params) {
   return async function (dispatch: Dispatch) {
     try {
       var json = await axios.get<Articulo[]>(REACT_APP_API_URL + "/product", {
@@ -234,14 +217,13 @@ export function getArticulos({
           order: order,
           direction: direction,
           categoryId: categoryId,
+          priceMin,
+          priceMax,
         },
       });
       // console.log(json.data[1]);
 
-      return [
-        dispatch({ type: GET_ARTICULOS, payload: json.data[1] }),
-        dispatch({ type: GET_TOTALARTICULOS, payload: json.data[0] }),
-      ];
+      return [dispatch({ type: GET_ARTICULOS, payload: json.data[1] }), dispatch({ type: GET_TOTALARTICULOS, payload: json.data[0] })];
       //
     } catch (error) {
       return dispatch({ type: SET_ERROR, payload: "error" });
@@ -261,13 +243,7 @@ export function deleteUser(id) {
   };
 }
 
-export function getUsers({
-  page,
-  pageSize,
-  name,
-  order,
-  direction,
-}: paramsUser) {
+export function getUsers({ page, pageSize, name, order, direction }: paramsUser) {
   return async function (dispatch: Dispatch) {
     try {
       var json = await axios.get<User[]>(REACT_APP_API_URL + "/user", {
@@ -281,10 +257,7 @@ export function getUsers({
       });
       // console.log(json.data[1]);
 
-      return [
-        dispatch({ type: GET_USERS, payload: json.data[1] }),
-        dispatch({ type: GET_TOTALUSERS, payload: json.data[0] }),
-      ];
+      return [dispatch({ type: GET_USERS, payload: json.data[1] }), dispatch({ type: GET_TOTALUSERS, payload: json.data[0] })];
       //
     } catch (error) {
       return dispatch({ type: SET_ERROR, payload: "error" });
@@ -318,9 +291,7 @@ export function getCategorias() {
 export function deleteCategory(id) {
   return async function (dispatch: Dispatch) {
     try {
-      var json = await axios.delete<Category[]>(
-        REACT_APP_API_URL + `/category/${id}`
-      );
+      var json = await axios.delete<Category[]>(REACT_APP_API_URL + `/category/${id}`);
 
       return dispatch({ type: DELETE_CATEGORY, payload: json.data });
     } catch (error) {
@@ -332,9 +303,7 @@ export function deleteCategory(id) {
 export function deleteProduct(id) {
   return async function (dispatch: Dispatch) {
     try {
-      var json = await axios.delete<Category[]>(
-        REACT_APP_API_URL + `/product/${id}`
-      );
+      var json = await axios.delete<Category[]>(REACT_APP_API_URL + `/product/${id}`);
 
       return dispatch({ type: DELETE_PRODUCT, payload: json.data });
     } catch (error) {
@@ -396,9 +365,7 @@ export function detailsProduct(id: String) {
   //console.log("id action", id);
   return async function (dispatch: Dispatch) {
     try {
-      var json = await axios.get<Articulo[]>(
-        REACT_APP_API_URL + `/product/${id}`
-      );
+      var json = await axios.get<Articulo[]>(REACT_APP_API_URL + `/product/${id}`);
       //console.log("json action", json);
       return dispatch({ type: GET_DETAIL_PRODUCT, payload: json.data });
     } catch (error) {
@@ -411,19 +378,18 @@ export function createUser(payload) {
   return function (dispatch) {
     return axios
       .post(REACT_APP_API_URL + "/auth/signup", payload)
-      .then((response) => /* response */
-         dispatch({
+      .then((response /* response */) =>
+        dispatch({
           type: REGISTRO_EXITOSO,
-          payload:response.data.msg
-         })
+          payload: response.data.msg,
+        })
       )
       .catch((error) => {
-         /* const alerta ={
+        /* const alerta ={
           msg:error.response.data.msg
         }   */
-        const alerta = error.response.data.msg 
-        dispatch({ type: SET_ERROR, payload:  alerta});
-       
+        const alerta = error.response.data.msg;
+        dispatch({ type: SET_ERROR, payload: alerta });
       });
   };
 }
@@ -438,10 +404,9 @@ export function loginUser(payload) {
         })
         //.then(res =>{console.log(res.data.token)})
         .catch((error) => {
-          const alerta = error.response.data.msg 
-          dispatch({ type: SET_ERROR, payload:alerta });
+          const alerta = error.response.data.msg;
+          dispatch({ type: SET_ERROR, payload: alerta });
           //  .catch(res =>{console.log(res.response.data)})
-          
         })
     );
   };
@@ -461,12 +426,12 @@ export function clearState() {
   };
 }
 //* limpiar mi state */
-export function resetState(){
-  return function (dispatch){
+export function resetState() {
+  return function (dispatch) {
     dispatch({
-      type:RESET_STATE
-    })
-  }
+      type: RESET_STATE,
+    });
+  };
 }
 
 ////////////back office jvqh//////////////////////////////////////////////////////////////////////
@@ -486,9 +451,7 @@ export function postProductBO(token, payload) {
 export function deleteProductBO(id) {
   return async function (dispatch: Dispatch) {
     try {
-      var json = await axios.delete<Category[]>(
-        REACT_APP_API_URL + `/backoffice/product/${id}`
-      );
+      var json = await axios.delete<Category[]>(REACT_APP_API_URL + `/backoffice/product/${id}`);
 
       return dispatch({ type: DELETE_PRODUCT, payload: json.data });
     } catch (error) {
@@ -497,37 +460,23 @@ export function deleteProductBO(id) {
   };
 }
 
-export function getUsersBO({
-  page,
-  pageSize,
-  name,
-  order,
-  direction,
-  filter,
-  userId
-}: paramsUser) {
+export function getUsersBO({ page, pageSize, name, order, direction, filter, userId }: paramsUser) {
   return async function (dispatch: Dispatch) {
     try {
-      var json = await axios.get<User[]>(
-        REACT_APP_API_URL + "/backoffice/user",
-        {
-          params: {
-            page: page,
-            pageSize: pageSize,
-            name: name,
-            order: order,
-            direction: direction,
-            filter: filter,
-            id: userId
-          },
-        }
-      );
+      var json = await axios.get<User[]>(REACT_APP_API_URL + "/backoffice/user", {
+        params: {
+          page: page,
+          pageSize: pageSize,
+          name: name,
+          order: order,
+          direction: direction,
+          filter: filter,
+          id: userId,
+        },
+      });
       // console.log(json.data[1]);
 
-      return [
-        dispatch({ type: GET_USERS, payload: json.data[1] }),
-        dispatch({ type: GET_TOTALUSERS, payload: json.data[0] }),
-      ];
+      return [dispatch({ type: GET_USERS, payload: json.data[1] }), dispatch({ type: GET_TOTALUSERS, payload: json.data[0] })];
       //
     } catch (error) {
       return dispatch({ type: SET_ERROR, payload: "error" });
@@ -538,9 +487,12 @@ export function getUsersBO({
 export function postUserBO(token, payload) {
   return function (dispatch) {
     return axios
-      .post(REACT_APP_API_URL + "/backoffice/user", payload/* , {
+      .post(
+        REACT_APP_API_URL + "/backoffice/user",
+        payload /* , {
         headers: { authorization: `Bearer ${token}` },
-      } */)
+      } */
+      )
       .then((response) => {
         //response
         console.log(response);
@@ -555,9 +507,7 @@ export function postUserBO(token, payload) {
 export function deleteUserBO(id) {
   return async function (dispatch: Dispatch) {
     try {
-      var json = await axios.delete<User[]>(
-        REACT_APP_API_URL + `/backoffice/user/${id}`
-      );
+      var json = await axios.delete<User[]>(REACT_APP_API_URL + `/backoffice/user/${id}`);
 
       return dispatch({ type: DELETE_USER, payload: json.data });
     } catch (error) {
@@ -582,9 +532,7 @@ export function postCategoryBO(token, payload) {
 export function deleteCategoryBO(id) {
   return async function (dispatch: Dispatch) {
     try {
-      var json = await axios.delete<Category[]>(
-        REACT_APP_API_URL + `/backoffice/category/${id}`
-      );
+      var json = await axios.delete<Category[]>(REACT_APP_API_URL + `/backoffice/category/${id}`);
 
       return dispatch({ type: DELETE_CATEGORY, payload: json.data });
     } catch (error) {
@@ -593,34 +541,20 @@ export function deleteCategoryBO(id) {
   };
 }
 
-export function getOrdersBO({
-  page,
-  pageSize,
-  name,
-  order,
-  direction,
-  userId,
-  filter
-}: paramsOrders) {
+export function getOrdersBO({ page, pageSize, name, order, direction, userId, filter }: paramsOrders) {
   return async function (dispatch: Dispatch) {
     try {
-      var json = await axios.get<OrdersBO[]>(
-        REACT_APP_API_URL + "/backoffice/orders",
-        {
-          params: {
-            page: page,
-            pageSize: pageSize,
-            name: name,
-            order: order,
-            direction: direction,
-            userId: userId,
-          },
-        }
-      );
-      return [
-        dispatch({ type: GET_ORDERS, payload: json.data[1] }),
-        dispatch({ type: GET_TOTALORDERS, payload: json.data[0] }),
-      ];
+      var json = await axios.get<OrdersBO[]>(REACT_APP_API_URL + "/backoffice/orders", {
+        params: {
+          page: page,
+          pageSize: pageSize,
+          name: name,
+          order: order,
+          direction: direction,
+          userId: userId,
+        },
+      });
+      return [dispatch({ type: GET_ORDERS, payload: json.data[1] }), dispatch({ type: GET_TOTALORDERS, payload: json.data[0] })];
       //
     } catch (error) {
       return dispatch({ type: SET_ERROR, payload: "error" });
@@ -628,15 +562,7 @@ export function getOrdersBO({
   };
 }
 
-export function getArticulosBO({
-  page,
-  pageSize,
-  name,
-  order,
-  direction,
-  categoryId,
-  filter
-}: paramsArtBO) {
+export function getArticulosBO({ page, pageSize, name, order, direction, categoryId, filter }: paramsArtBO) {
   return async function (dispatch: Dispatch) {
     try {
       var json = await axios.get<Articulo[]>(REACT_APP_API_URL + "/backoffice/product", {
@@ -647,15 +573,12 @@ export function getArticulosBO({
           order: order,
           direction: direction,
           categoryId: categoryId,
-          filter: filter
+          filter: filter,
         },
       });
       // console.log(json.data[1]);
 
-      return [
-        dispatch({ type: GET_ARTICULOS, payload: json.data[1] }),
-        dispatch({ type: GET_TOTALARTICULOS, payload: json.data[0] }),
-      ];
+      return [dispatch({ type: GET_ARTICULOS, payload: json.data[1] }), dispatch({ type: GET_TOTALARTICULOS, payload: json.data[0] })];
       //
     } catch (error) {
       return dispatch({ type: SET_ERROR, payload: "error" });
@@ -663,49 +586,40 @@ export function getArticulosBO({
   };
 }
 
-export function getCategoriasBO({
-  page,
-  pageSize,
-  name,
-  order,
-  direction,
-  filter,
-}: paramsCatBO) {
+export function getCategoriasBO({ page, pageSize, name, order, direction, filter }: paramsCatBO) {
   return async function (dispatch: Dispatch) {
     try {
-      var json = await axios.get<Category[]>(
-        REACT_APP_API_URL + "/backoffice/category",
-        {
-          params: {
-            page: page,
-            pageSize: pageSize,
-            name: name,
-            order: order,
-            direction: direction,
-            filter: filter,
-          },
-        }
-      );
+      var json = await axios.get<Category[]>(REACT_APP_API_URL + "/backoffice/category", {
+        params: {
+          page: page,
+          pageSize: pageSize,
+          name: name,
+          order: order,
+          direction: direction,
+          filter: filter,
+        },
+      });
       // console.log(json.data[1]);
 
-      return [
-        dispatch({ type: GET_CATEGORIESBO, payload: json.data[1] }),
-        dispatch({ type: GET_TOTALCATEGORIASBO, payload: json.data[0] }),
-      ];
+      return [dispatch({ type: GET_CATEGORIESBO, payload: json.data[1] }), dispatch({ type: GET_TOTALCATEGORIASBO, payload: json.data[0] })];
       //
     } catch (error) {
       return dispatch({ type: SET_ERROR, payload: "error" });
     }
   };
 }
-
 
 export function envioChangePass(payload) {
   return function (dispatch) {
     return (
       axios
         .get(`http://localhost:3001/auth/resetpassword?email=${payload}`)
-        .then((response) => response)
+        .then((response) => /* response */
+        dispatch({
+          type:GET_CHANGEPASS,
+          payload:response.data.msg
+        })
+        )
         .catch((error) => {
           const mensaje= error.response.data.msg 
           dispatch({ type: SET_ERROR, payload:mensaje });
