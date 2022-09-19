@@ -64,7 +64,7 @@ export default function Home() {
       <Carousel />
       <HomeContainer>
         <ProductBar>
-          <SideBar homeState={state} filterOreder={(FOState) => setState({ ...state, page: 1, ...FOState })} />
+          <SideBar homeState={state} filterOrder={(FOState) => setState({ ...state, page: 1, ...FOState })} />
           {/* <SearchBar onSearch={(search) => setState({ ...state, page: 1, name: search })} />
         <TopMenu onClickOpcion={(categoryid) => setState({ ...state, page: 1, categoryId: categoryid })} />
         <Ordenamientos>

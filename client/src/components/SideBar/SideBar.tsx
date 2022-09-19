@@ -8,7 +8,7 @@ import { ReduxState } from "../../reducer";
 import React from "react";
 
 export interface SideBarProps {
-  filterOreder: Function;
+  filterOrder: Function;
   homeState: {
     order;
     direction;
@@ -18,19 +18,19 @@ export interface SideBarProps {
   };
 }
 
-export default function SideBar({ homeState, filterOreder }: SideBarProps) {
+export default function SideBar({ homeState, filterOrder }: SideBarProps) {
   // const [searchName, setSearchName] = useState("");
   const [minMax, setMinMax] = useState({ priceMin: undefined, priceMax: undefined });
   const allCategorias = useSelector((state: ReduxState) => state.categorias);
 
   const handlerOrder = (order, direction) => {
     if (homeState.order === order && homeState.direction === direction) {
-      filterOreder({
+      filterOrder({
         order: "name",
         direction: "asc",
       });
     } else {
-      filterOreder({
+      filterOrder({
         order,
         direction,
       });
@@ -55,9 +55,9 @@ export default function SideBar({ homeState, filterOreder }: SideBarProps) {
   };
   const handlerMinMaxClick = () => {
     if (homeState.priceMin === minMax.priceMin && homeState.priceMax === minMax.priceMax) {
-      return filterOreder({ priceMin: undefined, priceMax: undefined });
+      return filterOrder({ priceMin: undefined, priceMax: undefined });
     }
-    filterOreder(minMax);
+    filterOrder(minMax);
   };
 
   return (
@@ -69,11 +69,11 @@ export default function SideBar({ homeState, filterOreder }: SideBarProps) {
           onChange={(e) => setSearchName(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
-              filterOreder({ name: searchName });
+              filterOrder({ name: searchName });
             }
           }}
         />
-        <button onClick={() => filterOreder({ name: searchName })}>
+        <button onClick={() => filterOrder({ name: searchName })}>
           <ImSearch />
         </button>
       </SearchBarContainer> */}
@@ -140,7 +140,7 @@ export default function SideBar({ homeState, filterOreder }: SideBarProps) {
             <input
               id={`${i}`}
               type="checkbox"
-              onChange={(e) => filterOreder(homeState.categoryId === cat.id ? { categoryId: "" } : { categoryId: cat.id })}
+              onChange={(e) => filterOrder(homeState.categoryId === cat.id ? { categoryId: "" } : { categoryId: cat.id })}
               checked={homeState.categoryId === cat.id}
             />
             <label htmlFor={`${i}`}>{cat.name}</label>
