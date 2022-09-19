@@ -12,13 +12,25 @@ categoryRoutes.post("/", async (req, res) => {
       return;
     }
 
+    
+    let idIncr = id;
+    if (id === 0) {
+      const c = await prisma.category.findFirst({       
+        orderBy: {
+          id: "asc",
+        },
+        take: -1
+      });
+      idIncr = Number(c?.id)+1;
+    }
+    
     const newCategory = await prisma.category.upsert({
-      where: { id },
+      where: { id:idIncr },
       update: {
         name: name,
       },
       create: {
-        name: name
+        name: name,
       },
     });
 
@@ -72,14 +84,14 @@ categoryRoutes.get("/", async (req, res) => {
     return;
   }
 
-  const where: Prisma.ProductWhereInput = {};
-  if (filter) {
+   const where: Prisma.CategoryWhereInput = {};
+  /*if (filter) {
     const filter_field = String(filter).split("-")[0];
     const filter_val = String(filter).split("-")[1];
     if (filter_field === "state" && filter_val !== "null") {
       where.state = String(filter_val);
     }
-  }
+  } */
   
   if (name) {
     where.name = {

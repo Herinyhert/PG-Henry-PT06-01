@@ -1,11 +1,11 @@
-import axios from 'axios';
-import { useParams ,useNavigate} from 'react-router-dom';
-import styled from 'styled-components';
-import NavBar from '../NavBar/NavBar';
-import { useState } from 'react';
-import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
-import * as Yup from 'yup';
-import swal from 'sweetalert2';
+import axios from "axios";
+import { useParams, useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import NavBar from "../NavBar/NavBar";
+import { useState } from "react";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import * as Yup from "yup";
+import swal from "sweetalert2";
 
 export default function ChangePassword() {
   const [showPwd, setShowPwd] = useState(false);
@@ -14,13 +14,13 @@ export default function ChangePassword() {
 
   const validationSchema = Yup.object({
     password: Yup.string()
-      .required('Contraseña Requerida')
-      .min(6, 'Debe Contener al Menos 6 Caracteres')
-      .oneOf([Yup.ref('passwordconfirm')], 'Las Contraseñas no son Iguales'),
+      .required("Contraseña Requerida")
+      .min(6, "Debe Contener al Menos 6 Caracteres")
+      .oneOf([Yup.ref("passwordconfirm")], "Las Contraseñas no son Iguales"),
     passwordconfirm: Yup.string()
-      .required('contraseña Requerida')
-      .min(6, 'Debe Contener al Menos 6 Caracteres')
-      .oneOf([Yup.ref('password')], 'las contraseñas no son iguales'),
+      .required("contraseña Requerida")
+      .min(6, "Debe Contener al Menos 6 Caracteres")
+      .oneOf([Yup.ref("password")], "las contraseñas no son iguales"),
   });
 
   function handleShowPwd(e) {
@@ -33,21 +33,21 @@ export default function ChangePassword() {
 
   const { token } = useParams<{ token: string }>();
   const [input, setInput] = useState({
-    password: '',
-    passwordconfirm: '',
+    password: "",
+    passwordconfirm: "",
   });
   const [error, setError] = useState({
-    password: '',
-    passwordconfirm: '',
+    password: "",
+    passwordconfirm: "",
   });
 
   // Funcion para Validar los Campos
-  function validadora(e){
+  function validadora(e) {
     const newInput = {
       ...input,
       [e.target.name]: e.target.value,
     };
-    const newError = { password: '', passwordconfirm: '' };
+    const newError = { password: "", passwordconfirm: "" };
     try {
       validationSchema.validateSync(newInput, { abortEarly: false });
     } catch (err) {
@@ -62,15 +62,11 @@ export default function ChangePassword() {
     }
     setError(newError);
     setInput(newInput);
-
-    
-
   }
 
   function handleChange(e) {
     e.preventDefault();
-    validadora(e)
-
+    validadora(e);
   }
 
   function handleSubmit(e) {
@@ -81,16 +77,16 @@ export default function ChangePassword() {
     });
     validadora(e);
     swal.fire({
-      title: 'Exito',
-      text:`Contraseña Restablecida Exitosa`,
-      icon: 'success',
-      position:'center',
+      title: "Exito",
+      text: `Contraseña Restablecida Exitosa`,
+      icon: "success",
+      position: "center",
       timer: 5000,
-      timerProgressBar:true
+      timerProgressBar: true,
     });
-setTimeout(() => {
-  history('/login'); 
-}, 5000);
+    setTimeout(() => {
+      history("/login");
+    }, 5000);
   }
 
   return (
@@ -100,7 +96,7 @@ setTimeout(() => {
         <Title>Restablecer su contraseña</Title>
         <Div1>
           <Input3
-            type={showPwd ? 'text' : 'password'}
+            type={showPwd ? "text" : "password"}
             name="password"
             id="password"
             placeholder="Ingresa tu nueva contraseña"
@@ -118,7 +114,7 @@ setTimeout(() => {
         </Div1>
         <Div1>
           <Input4
-            type={showPwd2 ? 'text' : 'password'}
+            type={showPwd2 ? "text" : "password"}
             name="passwordconfirm"
             id="passwordconfirm"
             placeholder="Ingresa tu nueva contraseña"
@@ -135,10 +131,14 @@ setTimeout(() => {
           </Icon4>
         </Div1>
 
-        {!input.password || !input.passwordconfirm  || input.password !== input.passwordconfirm ? (
-          <Button disabled className='inactivo'>Restablecer  Contraseña</Button>
+        {!input.password ||
+        !input.passwordconfirm ||
+        input.password !== input.passwordconfirm ? (
+          <Button disabled className="inactivo">
+            Restablecer Contraseña
+          </Button>
         ) : (
-          <Button className='activo'>Restablecer  Contraseña</Button>
+          <Button className="activo">Restablecer Contraseña</Button>
         )}
       </Form>
     </Body>
@@ -263,15 +263,15 @@ const Button = styled.button`
   color: #fff;
   margin: 20px auto 0;
 
- &.inactivo {
- background-color: #cbced1;
-}
- &.activo {
-  background-color:#335d90;
-  &:hover {
-    background-color: #183659;
+  &.inactivo {
+    background-color: #cbced1;
   }
-}
+  &.activo {
+    background-color: #335d90;
+    &:hover {
+      background-color: #183659;
+    }
+  }
 `;
 
 const Span = styled.span`
