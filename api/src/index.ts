@@ -1,6 +1,6 @@
 import app from "./app"
 
-const { PORT = 5550} = process.env
+const { PORT = 3001} = process.env
 
 
 app.listen(PORT, ()=>{
