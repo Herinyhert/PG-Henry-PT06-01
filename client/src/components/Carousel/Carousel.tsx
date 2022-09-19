@@ -4,7 +4,7 @@ export interface CarouselProps {}
 
 export default function Carousel() {
   return (
-    <CarouselContainer>
+    <CarouselContainer title="Noticias, promociones y descuentos">
       <div id="carouselExampleCaptions" className="carousel slide" margin-top="70px" data-bs-ride="carousel">
         <div className="carousel-indicators">
           <Button

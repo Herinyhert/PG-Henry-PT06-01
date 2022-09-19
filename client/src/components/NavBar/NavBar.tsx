@@ -56,7 +56,7 @@ export default function NavBar() {
           <Link to="/home" title="Home">
             <DivButtonsNavBar>
               <RiHome2Line style={{ color: "black" }} />
-              <ButtonLogin>Home</ButtonLogin>
+              <ButtonLogin>Inicio</ButtonLogin>
             </DivButtonsNavBar>
           </Link>
         )}

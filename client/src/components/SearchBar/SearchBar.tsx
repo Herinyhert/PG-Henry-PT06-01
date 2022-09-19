@@ -40,6 +40,8 @@ export default function SearchBar() {
         order: "name",
         direction: "asc",
         categoryId: undefined,
+        priceMin: undefined,
+        priceMax: undefined,
       })
     );
     // return navigate("/home");

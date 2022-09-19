@@ -24,6 +24,8 @@ export default function Home() {
     order: "name",
     direction: "asc",
     categoryId: undefined,
+    priceMin: undefined,
+    priceMax: undefined,
   });
 
   const allProducts = useSelector((state: ReduxState) => state.articulos);
@@ -34,17 +36,19 @@ export default function Home() {
 
   useEffect(() => {
     dispatch(getCategorias());
-      dispatch(
-        getArticulos({
-          page: state.page,
-          pageSize: state.pageSize,
-          name: state.name,
-          order: state.order,
-          direction: state.direction,
-          categoryId: state.categoryId,
-        })
-      );
-  }, [dispatch, state.page, state.pageSize, state.name, state.order, state.direction, state.categoryId]);
+    dispatch(
+      getArticulos({
+        page: state.page,
+        pageSize: state.pageSize,
+        name: state.name,
+        order: state.order,
+        direction: state.direction,
+        categoryId: state.categoryId,
+        priceMin: state.priceMin,
+        priceMax: state.priceMax,
+      })
+    );
+  }, [dispatch, state]);
 
   function redirect() {
     window.location.href =
