@@ -697,7 +697,12 @@ export function envioChangePass(payload) {
     return (
       axios
         .get(`http://localhost:3001/auth/resetpassword?email=${payload}`)
-        .then((response) => response)
+        .then((response) => /* response */
+        dispatch({
+          type:GET_CHANGEPASS,
+          payload:response.data.msg
+        })
+        )
         .catch((error) => {
           const mensaje= error.response.data.msg 
           dispatch({ type: SET_ERROR, payload:mensaje });
