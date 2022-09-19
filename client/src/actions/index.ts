@@ -22,6 +22,8 @@ import {
   GET_TOTALORDERS,
   GET_DETAIL_USER,
   REGISTRO_EXITOSO,
+  RESET_STATE,
+  GET_CHANGEPASS
 } from "./actiontype";
 
 const { REACT_APP_API_URL = "http://localhost:3001" } = process.env;
@@ -421,7 +423,7 @@ export function createUser(payload) {
         }   */
         const alerta = error.response.data.msg 
         dispatch({ type: SET_ERROR, payload:  alerta});
-        console.log(alerta)
+       
       });
   };
 }
@@ -436,8 +438,10 @@ export function loginUser(payload) {
         })
         //.then(res =>{console.log(res.data.token)})
         .catch((error) => {
-          dispatch({ type: SET_ERROR, payload: error.response.data });
+          const alerta = error.response.data.msg 
+          dispatch({ type: SET_ERROR, payload:alerta });
           //  .catch(res =>{console.log(res.response.data)})
+          
         })
     );
   };
@@ -456,6 +460,15 @@ export function clearState() {
     });
   };
 }
+//* limpiar mi state */
+export function resetState(){
+  return function (dispatch){
+    dispatch({
+      type:RESET_STATE
+    })
+  }
+}
+
 ////////////back office jvqh//////////////////////////////////////////////////////////////////////
 export function postProductBO(token, payload) {
   return function (dispatch) {
@@ -685,4 +698,19 @@ export function getCategoriasBO({
     }
   };
 }
+
+
+export function envioChangePass(payload) {
+  return function (dispatch) {
+    return (
+      axios
+        .get(`http://localhost:3001/auth/resetpassword?email=${payload}`)
+        .then((response) => response)
+        .catch((error) => {
+          dispatch({ type: SET_ERROR, payload: error.response.data });
+        })
+    );
+  };
+}
+
 //////////////////////back office/////////////////////////////////////////////////////////////////

@@ -88,7 +88,7 @@ authRouter.post('/signin', async (req, res) => {
     },
   });
   if (!user) {
-    res.status(400).send('el usuario no existe');
+    res.status(400).send({msg:'Usuario no Existe'});
     return;
   }else if(user.state === UserState.NOTCONFIRMED){
     res.status(400).send('usuario no confirmado')
@@ -96,7 +96,7 @@ authRouter.post('/signin', async (req, res) => {
     // revisar el pasword------/
     const passworCorrecto = await bcrypt.compare(password, user.password);
     if (!passworCorrecto) {
-      res.status(400).send('Password Incorrecto');
+      res.status(400).send({msg:'Password Incorrecto'});
       return;
     } else {
       res.status(200).json({ token: createToken(user) });
@@ -113,11 +113,13 @@ authRouter.post('/signin', async (req, res) => {
 authRouter.get('/resetpassword', async (req,res)=>{
   const { email } = req.query
   const useremail = String(email)
+  console.log(useremail);
+  
   const user = await prisma.user.findUnique({
     where : {email: useremail}
   })
   if(!user){
-    res.status(400).send('el correo no esta registrado como usuario')
+    res.status(400).send({msg:'el correo no esta registrado como usuario'})
     return
   }else{
     const token = createToken({id: user.id, email: user.email, role: user.role})

@@ -1,35 +1,76 @@
 import axios from "axios";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import Swal from "sweetalert2";
+import { envioChangePass } from "../../actions";
 import NavBar from "../NavBar/NavBar";
-
+import { useNavigate } from 'react-router-dom';
+import * as Yup from 'yup';
 
 export default function EnvioChangePassword() {
+
+  const history = useNavigate();
+//creamos la esque de validacion
+const validationSchema = Yup.object({
+  email: Yup.string()
+  .email('E-mail no es Valido')
+  .required('E-mail es Requerido'),
+ })
+// creamos el estado local de Errores
+ const [error, setError] = useState({
+  email: '',
+});
+// Funcion para Validar los Campos
+function validadora(e){
+  const newInput = {
+    ...input,
+    [e.target.name]: e.target.value,
+  };
+  const newError = { email: '' };
+  try {
+    validationSchema.validateSync(newInput, { abortEarly: false });
+  } catch (err) {
+    if (err instanceof Yup.ValidationError) {
+      err.inner.forEach((err) => {
+        const name = err.path;
+        if (name && !newError[name]) {
+          newError[name] = err.message;
+        }
+      });
+    }
+  }
+  setError(newError);
+  setInput(newInput); 
+
+}
   
-  
+  const dispatch = useDispatch<any>();
+
   const [input, setInput] = useState({
     email: "",
   });
 
   function handleChange(e) {
     e.preventDefault();
-    setInput({
-      ...input,
-      [e.target.name]: e.target.value,
-    });
+    validadora(e)
   }
+
+  // function handleSubmit(e) {
+  //   e.preventDefault();
+  //   axios.get(`http://localhost:3001/auth/resetpassword?email=${input.email}`)
+  //   Swal.fire({
+  //       position: 'top-end',
+  //       icon: 'success',
+  //       title: 'Revisá tu correo para restablecer tu contraseña',
+  //       showConfirmButton: false,
+  //       timer: 2500
+  //     })
+  // }
 
   function handleSubmit(e) {
     e.preventDefault();
-    axios.get(`http://localhost:3001/auth/resetpassword?email=${input.email}`)
-    Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: 'Revisá tu correo para restablecer su contraseña',
-        showConfirmButton: false,
-        timer: 2500
-      })
+    dispatch(envioChangePass(input.email))
   }
   
 
@@ -50,8 +91,8 @@ export default function EnvioChangePassword() {
               name="email"
               placeholder="Ingresá tu Correo"
               onChange={(e) => handleChange(e)}
-
             />
+            <Span>{error.email}</Span>
            
             
             <Button >Restablecer la contraseña</Button>
@@ -159,6 +200,9 @@ const P = styled.div`
     text-decoration: none;
     color: #335d90;
   }
+`;
+const Span = styled.span`
+  color: red;
 `;
 
 

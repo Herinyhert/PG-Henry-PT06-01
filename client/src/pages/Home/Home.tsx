@@ -14,6 +14,10 @@ import OrderBrand from "../../components/SideBar/OrderBrand";
 import NavBar from "../../components/NavBar/NavBar";
 import Carousel from "../../components/Carousel/Carousel";
 import SideBar from "../../components/SideBar/SideBar";
+import { IoLogoWhatsapp } from "react-icons/io";
+
+
+
 
 export default function Home() {
   const [state, setState] = useState({
@@ -43,14 +47,38 @@ export default function Home() {
         categoryId: state.categoryId,
       })
     );
-  }, [dispatch, state.page, state.pageSize, state.name, state.order, state.direction, state.categoryId]);
+  }, [
+    dispatch,
+    state.page,
+    state.pageSize,
+    state.name,
+    state.order,
+    state.direction,
+    state.categoryId,
+  ]);
+
+  function redirect() {
+    window.location.href =
+      "https://api.whatsapp.com/send?phone=5493512322922&&text=%C2%A1Hola%20%F0%9F%91%8B!%20Te%20doy%20la%20bienvenida%20al%20canal%20de%20atenci%C3%B3n%20de%20CompuStore.";
+  }
 
   return (
-    <HomeContainer>
+
+    <div>
+      <head>
+        <link rel="stylesheet" href="fontello.css" />
+      </head>
+      
       <NavBar />
       <Carousel />
-      <ProductBar>
-        <SideBar homeState={state} filterOreder={(FOState) => setState({ ...state, page: 1, ...FOState })} />
+      <HomeContainer>
+       <ProductBar>
+        <SideBar
+          homeState={state}
+          filterOreder={(FOState) =>
+            setState({ ...state, page: 1, ...FOState })
+          }
+        />
         {/* <SearchBar onSearch={(search) => setState({ ...state, page: 1, name: search })} />
         <TopMenu onClickOpcion={(categoryid) => setState({ ...state, page: 1, categoryId: categoryid })} />
         <Ordenamientos>
@@ -62,14 +90,39 @@ export default function Home() {
           {allProducts.map((art) => (
             <CardProduct key={art.id} articulo={art} />
           ))}
+
+          {totalCount > state.pageSize ? (
+            <Paginado
+              onPageChange={(page) => setState({ ...state, page })}
+              totalCount={totalCount}
+              pageSize={state.pageSize}
+            />
+          ) : (
+            ""
+          )}
         </CardsProducts>
-      </ProductBar>
-      {totalCount > state.pageSize ? (
+        <BtnWsp onClick={redirect}>
+          <IoLogoWhatsapp />
+        </BtnWsp>
+        <div dangerouslySetInnerHTML={{ __html: `
+        <df-messenger
+          intent="WELCOME"
+          chat-title="CompuBot"
+          agent-id="8d3c03bd-3633-48fe-a805-eade4a8af416"
+          chat-icon="https://res.cloudinary.com/carina-bosio/image/upload/v1663334659/CompuBot_kepb4d.png"
+          language-code="es"
+        ></df-messenger>
+
+        `}} />
+         </ProductBar>
+      {/* {totalCount > state.pageSize ? (
         <Paginado onPageChange={(page) => setState({ ...state, page })} totalCount={totalCount} pageSize={state.pageSize} />
       ) : (
         ""
-      )}
-    </HomeContainer>
+      )} */}
+      </HomeContainer>
+    </div>
+ 
   );
 }
 
@@ -91,4 +144,29 @@ const CardsProducts = styled.div`
 
 const ProductBar = styled.div`
   display: flex;
+`;
+
+const BtnWsp = styled.div`
+  position: fixed;
+  width: 55px;
+  height: 55px;
+  /* line-height: 55px; */
+  bottom: 80px;
+  right: 23px;
+  /* padding: -20px; */
+  background: #0df053;
+  color: #fff;
+  border-radius: 50%;
+  text-align: center;
+  justify-content: center;
+  font-size: 30px;
+  box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.3);
+  z-index: 100;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: none;
+    color: #0df053;
+    background: #fff;
+  }
 `;

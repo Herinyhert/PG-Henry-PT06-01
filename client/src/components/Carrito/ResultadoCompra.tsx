@@ -12,10 +12,10 @@ export default function ResultadoCompra() {
     <>
       <NavBar />
       <Container>
-        <h1>Probando... Tu compra fue exitosa!! </h1>
+        <h1>¡Felicidades! Tu compra fue exitosa </h1>
         <ButtonResultadoCompra>
           <Button>
-            <Link to="/home">Seguir comprando</Link>
+            <Link to="/home">Seguir explorando la tienda</Link>
           </Button>
         </ButtonResultadoCompra>
       </Container>
