@@ -699,7 +699,9 @@ export function envioChangePass(payload) {
         .get(`http://localhost:3001/auth/resetpassword?email=${payload}`)
         .then((response) => response)
         .catch((error) => {
-          dispatch({ type: SET_ERROR, payload: error.response.data });
+          const mensaje= error.response.data.msg 
+          dispatch({ type: SET_ERROR, payload:mensaje });
+          console.log(mensaje)
         })
     );
   };
