@@ -23,6 +23,7 @@ import {
   GET_DETAIL_USER,
   REGISTRO_EXITOSO,
   RESET_STATE,
+  GET_CHANGEPASS
 } from "./actiontype";
 
 const { REACT_APP_API_URL = "http://localhost:3001" } = process.env;
@@ -599,4 +600,19 @@ export function getCategoriasBO({ page, pageSize, name, order, direction, filter
     }
   };
 }
+
+
+export function envioChangePass(payload) {
+  return function (dispatch) {
+    return (
+      axios
+        .get(`http://localhost:3001/auth/resetpassword?email=${payload}`)
+        .then((response) => response)
+        .catch((error) => {
+          dispatch({ type: SET_ERROR, payload: error.response.data });
+        })
+    );
+  };
+}
+
 //////////////////////back office/////////////////////////////////////////////////////////////////

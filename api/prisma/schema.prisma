@@ -16,10 +16,11 @@ model Product {
   priceSpecial Float          @default(0)
   img          String
   state        String
+  averageRate  Int            @default(0)
   categoryId   Int
   category     Category       @relation(fields: [categoryId], references: [id])
   order_detail Order_detail[]
-  review  Review[]
+  review       Review[]
 }
 
 model Category {

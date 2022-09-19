@@ -113,6 +113,8 @@ authRouter.post('/signin', async (req, res) => {
 authRouter.get('/resetpassword', async (req,res)=>{
   const { email } = req.query
   const useremail = String(email)
+  console.log(useremail);
+  
   const user = await prisma.user.findUnique({
     where : {email: useremail}
   })
