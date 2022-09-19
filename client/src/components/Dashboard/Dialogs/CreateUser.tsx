@@ -59,10 +59,10 @@ export default function FormDialog({
     surname: user.surname || "",
     email: user.email || "",
     password: "",
-    state: user.state || "",
+    state: user.state || "ACTIVE",
     role: user.role || "",
     errors: null,
-    showPassword:false,
+    showPassword: false,
   });
 
   const token = useSelector((state: ReduxState) => state.token);
@@ -72,57 +72,46 @@ export default function FormDialog({
     setInput({
       ...input,
       [e.target.name]: e.target.value,
+      errors: validation(e, { [e.target.name]: e.target.value }),
     });
   }
 
-  function validation(e) {
+  const errorsMessage = {
+    name: "El nombre es requerido",
+    surname: "El nombre de usuario es requerido",
+    email: "El correo electronico es requerido",
+    password: "El password es requerido",
+    state: "El estado es requerido",
+    role: "El es requerido",
+  };
+
+  function validation(e:any,data:any) {
     let errors = {};
-    if (e) {
-      if (e.target.name === "name" && e.target.value === "") {
-        errors["name"] = { action: { error: true }, message: "required" };
+      if (e?.target.name === "name" && e?.target.value === ""|| data?.name ==='') {
+        errors["name"] = { action: { error: true }, message: errorsMessage.name };
       }
-      if (e.target.name === "surname" && e.target.value === "") {
-        errors["surname"] = { action: { error: true }, message: "required" };
+      if (e?.target.name === "surname" && e?.target.value === ""|| data?.surname ==='') {
+        errors["surname"] = { action: { error: true }, message: errorsMessage.surname };
       }
-      if (e.target.name === "email" && e.target.value === "") {
-        errors["email"] = { action: { error: true }, message: "required" };
+      if (e?.target.name === "email" && e?.target.value === ""|| data?.email ==='') {
+        errors["email"] = { action: { error: true }, message: errorsMessage.email };
       }
-      if (e.target.name === "password" && e.target.value === "") {
-        errors["password"] = { action: { error: true }, message: "required" };
+      if (e?.target.name === "password" && e?.target.value === ""|| data?.password ==='' && input.id ===0) {
+        errors["password"] = { action: { error: true }, message: errorsMessage.password };
       }
-      if (e.target.name === "state" && e.target.value === "") {
-        errors["state"] = { action: { error: true }, message: "required" };
+      if (e?.target.name === "state" && e?.target.value === ""|| data?.state ==='') {
+        errors["state"] = { action: { error: true }, message: errorsMessage.state };
       }
-      if (e.target.name === "role" && e.target.value === "") {
-        errors["role"] = { action: { error: true }, message: "required" };
+      if (e?.target.name === "role" && e?.target.value === ""|| data?.role ==='') {
+        errors["role"] = { action: { error: true }, message: errorsMessage.role };
       }
-    } else {
-      if (input.name === "") {
-        errors["name"] = { action: { error: true }, message: "required" };
-      }
-      if (input.surname === "") {
-        errors["surname"] = { action: { error: true }, message: "required" };
-      }
-      if (input.email === "") {
-        errors["email"] = { action: { error: true }, message: "required" };
-      }
-      if (input.password === "" && !user.id) {
-        errors["password"] = { action: { error: true }, message: "required" };
-      }
-      if (input.state === '') {
-        errors["state"] = { action: { error: true }, message: "required" };
-      }
-      if (input.role === "") {
-        errors["role"] = { action: { error: true }, message: "required" };
-      }
-    }
 
     return errors;
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
-    const errors = validation(null);
+    const errors = validation(null, input);
     setInput({
       ...input,
       errors: errors,
@@ -156,9 +145,7 @@ export default function FormDialog({
       
       handleClose();
     }
-  }
-
-  
+  }  
 
   const handleClickShowPassword = () => {
     setInput({
@@ -328,7 +315,7 @@ export default function FormDialog({
           >
             <InputLabel id="state">Rol</InputLabel>
             <Select
-              {...(userprop.role === "CLIENT" ? { disabled: true } : null)}
+              {...(userprop.role === "CLIENT" ? { disabled: false } : null)}
               labelId="role"
               id="role"
               name="role"

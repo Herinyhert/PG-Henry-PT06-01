@@ -31,6 +31,7 @@ function createData(
 
 
 export default function DenseTable() {
+  const dispatch = useDispatch<any>();
   const [state, setState] = useState({
     page: 1,
     pageSize: 12,
@@ -40,7 +41,7 @@ export default function DenseTable() {
     categoryId: undefined,
     filter: null,
   });
-  const dispatch = useDispatch<any>();
+  
   const allCategories = useSelector((state: ReduxState) => state.categoriasbo).map(
     (item) => {
       return createData(
@@ -49,28 +50,22 @@ export default function DenseTable() {
       );
     }
   );
+
   const totalCategorias = useSelector((state1: ReduxState) => state1.totalCategoriasbo);
 
-  useEffect(() => {
-    dispatch(
+  async function setPaginate(page) {
+    setState({ ...state, page });
+    await dispatch(
       getCategoriasBO({
-        page: state.page,
-        pageSize: state.pageSize,
+        page: page,
+        pageSize: 12,
         name: state.name,
-        order: state.order,
-        direction: state.direction,
-        filter: null,
+        order: "id",
+        direction: "desc",
+        filter: state.filter,
       })
     );
-  }, [
-    dispatch,
-    state.page,
-    state.pageSize,
-    state.name,
-    state.order,
-    state.direction,
-    state.filter,
-  ]);
+  }
 
   async function clickDelete(id) {
     await dispatch(deleteCategoryBO(id));
@@ -128,7 +123,7 @@ export default function DenseTable() {
         </Table>
       </TableContainer>
       <Paginado
-        onPageChange={(page) => setState({ ...state, page })}
+        onPageChange={(page) => setPaginate(page)}
         totalCount={totalCategorias}
         pageSize={state.pageSize}
       />

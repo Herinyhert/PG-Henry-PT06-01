@@ -23,7 +23,7 @@ import {
   GET_DETAIL_USER,
   REGISTRO_EXITOSO,
   RESET_STATE,
-  GET_CHANGEPASS
+  GET_CHANGEPASS,
 } from "./actiontype";
 
 const { REACT_APP_API_URL = "http://localhost:3001" } = process.env;
@@ -39,6 +39,13 @@ export interface OrdersBO {
   payment_type: String;
   order_detail: OrderDetailsBO[];
   user: User;
+}
+
+export interface ReviewBO {
+  value: number;
+  state: String;
+  userId: number;
+  productId: number;
 }
 
 export interface OrderDetailsBO {
@@ -92,6 +99,7 @@ export interface ArticuloBO {
   categoryId: number;
   category: Category;
   totalCount: number;
+  review: ReviewBO;
 }
 
 export interface Articulo {
@@ -601,15 +609,21 @@ export function getCategoriasBO({ page, pageSize, name, order, direction, filter
   };
 }
 
-
 export function envioChangePass(payload) {
   return function (dispatch) {
     return (
       axios
         .get(`http://localhost:3001/auth/resetpassword?email=${payload}`)
-        .then((response) => response)
+        .then((response) => /* response */
+        dispatch({
+          type:GET_CHANGEPASS,
+          payload:response.data.msg
+        })
+        )
         .catch((error) => {
-          dispatch({ type: SET_ERROR, payload: error.response.data });
+          const mensaje= error.response.data.msg 
+          dispatch({ type: SET_ERROR, payload:mensaje });
+          console.log(mensaje)
         })
     );
   };

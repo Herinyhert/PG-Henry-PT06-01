@@ -80,7 +80,7 @@ backofficeRoutesOrders.get("/", async (req, res) => {
     include: {
       user: true,
       order_detail: {
-        include: { product: {include:{ category:true}} },
+        include: { product: { include: { review:true, category: true } } },
       },
     },
   });
@@ -92,7 +92,7 @@ backofficeRoutesOrders.get("/", async (req, res) => {
   res.status(200).json([totalCuantity, searchorder]);
 });
 
-backofficeRoutesOrders.get("/", async (req, res) => {
+/* backofficeRoutesOrders.get("/", async (req, res) => {
   //  const id = req.query.name;
 
   let allOrders = await prisma.order.findMany();
@@ -101,7 +101,7 @@ backofficeRoutesOrders.get("/", async (req, res) => {
   } else {
     res.status(404).send("error");
   }
-});
+}); */
 
 backofficeRoutesOrders.get("/:id", async (req, res) => {
   const orderId = Number(req.params.id);

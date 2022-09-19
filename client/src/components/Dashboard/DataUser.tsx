@@ -59,27 +59,20 @@ export default function DenseTable() {
     );
   }
 
-  useEffect(() => {
-    dispatch(
+  async function setPaginate(page) {
+    setState({ ...state, page });
+    await dispatch(
       getUsersBO({
-        page: state.page,
-        pageSize: state.pageSize,
+        page: page,
+        pageSize: 12,
         name: state.name,
-        order: state.order,
-        direction: state.direction,
+        order: "id",
+        direction: "desc",
         filter: state.filter,
         userId: user.role === "CLIENT" ? user.id : null,
       })
     );
-  }, [
-    dispatch,
-    state.page,
-    state.pageSize,
-    state.name,
-    state.order,
-    state.direction,
-    state.filter
-  ]);
+  }
 
   async function clickDelete(id) {
     await dispatch(deleteUserBO(id));
@@ -115,12 +108,12 @@ export default function DenseTable() {
                   <FormControl sx={{ m: 1, width: "100%" }} size="small">
                     <InputLabel id="state">Estado</InputLabel>
                     <Select
-                        labelId="state"
-                        id="state"
-                        name="state"
-                        label="state"
-                        onChange={handlechangeFilter}
-                      >
+                      labelId="state"
+                      id="state"
+                      name="state"
+                      label="state"
+                      onChange={handlechangeFilter}
+                    >
                       <MenuItem value={null} selected>
                         <em>Todos</em>
                       </MenuItem>
@@ -146,23 +139,17 @@ export default function DenseTable() {
                   <TableCell align="right">************</TableCell>
                   <TableCell align="right">{row.email}</TableCell>
                   <TableCell align="right">
-                    {
-                      row.state.toLowerCase()==='active' ? "Activo" : null
-                    }
-                    {
-                      row.state.toLowerCase()==='blocked' ? "Bloqueado" : null
-                    }
-                    {
-                      row.state.toLowerCase()==='notconfirmed' ? "No Confirmado":null
-                    }
+                    {row.state.toLowerCase() === "active" ? "Activo" : null}
+                    {row.state.toLowerCase() === "blocked" ? "Bloqueado" : null}
+                    {row.state.toLowerCase() === "notconfirmed"
+                      ? "No Confirmado"
+                      : null}
                   </TableCell>
                   <TableCell align="right">
-                    {
-                      row.role.toLowerCase()==='admin' ? "Administrador" : null
-                    }
-                    {
-                      row.role.toLowerCase()==='client' ? "Cliente" : null
-                    }
+                    {row.role.toLowerCase() === "admin"
+                      ? "Administrador"
+                      : null}
+                    {row.role.toLowerCase() === "client" ? "Cliente" : null}
                   </TableCell>
                   <TableCell align="right">
                     <CreateUser user={row} stateC={state} />
@@ -182,7 +169,7 @@ export default function DenseTable() {
         </TableContainer>
       </Paper>
       <Paginado
-        onPageChange={(page) => setState({ ...state, page })}
+        onPageChange={(page) => setPaginate(page)}
         totalCount={totalUser}
         pageSize={state.pageSize}
       />

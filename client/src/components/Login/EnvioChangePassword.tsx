@@ -1,17 +1,37 @@
-import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import Swal from "sweetalert2";
+import swal from "sweetalert2";
 import { envioChangePass } from "../../actions";
 import NavBar from "../NavBar/NavBar";
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
+import { useSelector } from "react-redux";
+import { ReduxState } from "../../reducer";
+import { resetState } from "../../actions";
 
 export default function EnvioChangePassword() {
 
   const history = useNavigate();
-//creamos la esque de validacion
+  const errorLogin = useSelector((state: ReduxState)=>state.error)
+  function nresetState() {
+    dispatch(resetState());
+    }
+  useEffect(()=>{
+    if(errorLogin){
+      swal.fire({
+        title: 'Error',
+        text:'Usuario Ingresado no Existe',
+        icon: 'error',
+        position:'center',
+        timer: 3000,
+        timerProgressBar:true
+      });
+      nresetState();
+    }
+  },[errorLogin])
+
+  //creamos la esque de validacion
 const validationSchema = Yup.object({
   email: Yup.string()
   .email('E-mail no es Valido')
@@ -54,6 +74,7 @@ function validadora(e){
   function handleChange(e) {
     e.preventDefault();
     validadora(e)
+  
   }
 
   // function handleSubmit(e) {
@@ -70,6 +91,7 @@ function validadora(e){
 
   function handleSubmit(e) {
     e.preventDefault();
+    validadora(e)
     dispatch(envioChangePass(input.email))
   }
   
@@ -94,8 +116,14 @@ function validadora(e){
             />
             <Span>{error.email}</Span>
            
-            
-            <Button >Restablecer la contraseña</Button>
+            {
+              !input.email || (!/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(input.email))
+              ?
+              <Button disabled className="inactivo">Restablecer la contraseña</Button>
+              :
+              <Button className="activo">Restablecer la contraseña</Button>
+
+            }
             <P>
               <a href="/Signup">¿No tienes cuenta? Registrate</a>
             </P>
@@ -186,9 +214,15 @@ display: inline-flex;
   color: #fff;
   margin: 20px auto 0;
 
+  &.inactivo {
+ background-color: #cbced1;
+}
+ &.activo {
+  background-color:#335d90;
   &:hover {
-   background-color: #183659;
+    background-color: #183659;
   }
+}
 `;
 
 const P = styled.div`

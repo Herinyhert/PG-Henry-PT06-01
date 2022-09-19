@@ -70,69 +70,6 @@ function Dashboard() {
   const dispatch = useDispatch<any>();
   const user = useSelector((state: ReduxState) => state.user);
 
-  useEffect(() =>  {
-    if (dashboardmenu === "products") {
-         dispatch(getCategorias());
-         dispatch(
-          getArticulosBO({
-            page: state.page,
-            pageSize: state.pageSize,
-            name: state.name,
-            order: state.order,
-            direction: state.direction,
-            categoryId: state.categoryId,
-            filter: state.filter,
-          })
-        );      
-    }
-    if (dashboardmenu === "categories") {
-      dispatch(
-        getCategoriasBO({
-          page: state.page,
-          pageSize: state.pageSize,
-          name: state.name,
-          order: state.order,
-          direction: state.direction,
-          filter: state.filter,
-        })
-      );
-    }
-    if (dashboardmenu === "users") {
-      dispatch(
-        getUsersBO({
-          page: state.page,
-          pageSize: state.pageSize,
-          name: state.name,
-          order: state.order,
-          direction: state.direction,
-          filter: state.filter,
-          userId: user.role === "CLIENT" ? user.id : null,
-        })
-      );
-      if (dashboardmenu === "orders") {
-        dispatch(
-          getOrdersBO({
-            page: state.page,
-            pageSize: state.pageSize,
-            name: state.name,
-            order: state.order,
-            direction: state.direction,
-            userId:0,
-            filter: state.filter,
-          })
-        );
-      }
-    }
-  }, [
-    dispatch,
-    state.page,
-    state.pageSize,
-    state.name,
-    state.order,
-    state.direction,
-    state.categoryId,
-    state.filter,
-  ]);
 
   const handleClickOpen = () => {
     setOpen(true);
