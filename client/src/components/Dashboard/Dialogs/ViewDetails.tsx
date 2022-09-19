@@ -22,6 +22,11 @@ import Paper from "@mui/material/Paper";
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 
+import styled from "styled-components";
+
+import { FaStar } from "react-icons/fa";
+
+
 export interface CardOrderProps {
   viewdetails: OrderDetailsBO[];
   stateC: any;
@@ -63,6 +68,7 @@ export default function FormDialog({ viewdetails, stateC }: CardOrderProps) {
               >
                 <TableHead>
                   <TableRow>
+                    <TableCell align="right">Calificación</TableCell>
                     <TableCell align="right">Img</TableCell>
                     <TableCell align="right">Nombre</TableCell>
                     <TableCell align="right">Marca</TableCell>
@@ -80,6 +86,25 @@ export default function FormDialog({ viewdetails, stateC }: CardOrderProps) {
                           "&:last-child td, &:last-child th": { border: 0 },
                         }}
                       >
+                        <TableCell align="right">
+                          {
+                            (row.product?.review[0])?
+                            [...Array(row.product?.review[0]?.value)].map(
+                              (start, i) => {
+                                const ratingValue = i + 1;
+                                return (
+                                  <Stars>
+                                    <FaStar
+                                      color={"#ffc107"}
+                                      size={15}
+                                    />
+                                  </Stars>
+                                );
+                              }
+                            )
+                          :null
+                          }
+                        </TableCell>
                         <TableCell align="right">
                           <Stack direction="row" spacing={2}>
                             <Avatar
@@ -111,3 +136,11 @@ export default function FormDialog({ viewdetails, stateC }: CardOrderProps) {
     </div>
   );
 }
+
+const Stars = styled.div`
+  cursor: pointer;
+  transition: color 200ms;
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+`;

@@ -38,28 +38,20 @@ export default function DenseTable() {
   const totalCount = useSelector((state1: ReduxState) => state1.totalCount);
   const dispatch = useDispatch<any>();
 
-  useEffect(() => {
-    dispatch(
-      getArticulosBO({
-        page: state.page,
-        pageSize: state.pageSize,
-        name: state.name,
-        order: state.order,
-        direction: state.direction,
-        categoryId: state.categoryId,
-        filter: state.filter,
-      })
+  async function setPaginate(page) {
+    setState({ ...state, page });
+    await dispatch(
+       getArticulosBO({
+         page: page,
+         pageSize: 12,
+         name: state.name,
+         order: "id",
+         direction: "desc",
+         categoryId: state.categoryId,
+         filter: state.filter,
+       })
     );
-  }, [
-    dispatch,
-    state.page,
-    state.pageSize,
-    state.name,
-    state.order,
-    state.direction,
-    state.categoryId,
-    state.filter
-  ]);
+  }
 
    async function clickDelete(id) {
      await dispatch(deleteProductBO(id));
@@ -114,10 +106,7 @@ export default function DenseTable() {
                 <TableCell align="right">Cantida Almacen</TableCell>
                 <TableCell align="right">Precio</TableCell>
                 <TableCell align="right">
-                  <FormControl
-                    sx={{ m: 1, width: "100%" }}
-                    size="small"
-                  >
+                  <FormControl sx={{ m: 1, width: "100%" }} size="small">
                     <InputLabel id="state">Estado</InputLabel>
                     <Select
                       labelId="state"
@@ -131,7 +120,7 @@ export default function DenseTable() {
                       </MenuItem>
                       <MenuItem value="Active">Activos</MenuItem>
                       <MenuItem value="Inactive">Inactivos</MenuItem>
-                    </Select>                    
+                    </Select>
                   </FormControl>
                 </TableCell>
                 <TableCell align="right">Actualizar</TableCell>
@@ -157,20 +146,15 @@ export default function DenseTable() {
                   <TableCell align="right">{row.brand}</TableCell>
                   <TableCell align="right">{row.category.name}</TableCell>
                   <TableCell align="right">{row.stock}</TableCell>
-                  <TableCell align="right">${row.price}{` / `}${row.priceSpecial}</TableCell>
                   <TableCell align="right">
-                    {
-                      row.state.toLowerCase()==='active' ? "Activo" : null
-                    }
-                    {
-                      row.state.toLowerCase()==='a' ? "Activo" : null
-                    }
-                    {
-                      row.state.toLowerCase()==='inactive' ? "Inactivo" : null
-                    }
-                    {
-                      row.state.toLowerCase()==='i' ? "Inactivo" : null
-                    }
+                    ${row.price}
+                    {` / `}${row.priceSpecial}
+                  </TableCell>
+                  <TableCell align="right">
+                    {row.state.toLowerCase() === "active" ? "Activo" : null}
+                    {row.state.toLowerCase() === "a" ? "Activo" : null}
+                    {row.state.toLowerCase() === "inactive" ? "Inactivo" : null}
+                    {row.state.toLowerCase() === "i" ? "Inactivo" : null}
                   </TableCell>
                   <TableCell align="right">
                     <CreateProduct articulo={row} stateC={state} />
@@ -190,7 +174,7 @@ export default function DenseTable() {
         </TableContainer>
       </Paper>
       <Paginado
-        onPageChange={(page) => setState({ ...state, page })}
+        onPageChange={(page) => setPaginate(page)}
         totalCount={totalCount}
         pageSize={state.pageSize}
       />

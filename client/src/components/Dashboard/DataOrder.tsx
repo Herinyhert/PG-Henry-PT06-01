@@ -33,28 +33,20 @@ export default function DenseTable() {
 
   const dispatch = useDispatch<any>();
 
-  useEffect(() => {
-    dispatch(
+  async function setPaginate(page) {
+    setState({ ...state, page });
+    await dispatch(
       getOrdersBO({
-        page: state.page,
-        pageSize: state.pageSize,
-        name: state.name,
-        order: state.order,
-        direction: state.direction,
-        userId: user.role === 'CLIENT' ? user.id : 0,
-        filter:null
+        page: page,
+        pageSize: 12,
+        name: null,
+        order: "id",
+        direction: "asc",
+        filter: null,
+        userId: user.role === "CLIENT" ? user.id : null,
       })
     );
-  }, [
-    dispatch,
-    state.page,
-    state.pageSize,
-    state.name,
-    state.order,
-    state.direction,
-    state.userId,
-    state.filter
-  ]);
+  }
 
   function clickDelete(id) {
         dispatch(deleteProduct(id));
@@ -63,12 +55,16 @@ export default function DenseTable() {
   return (
     <>
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
-        <TableContainer component={Paper} sx={{ maxHeight: 440, maxWidth:1100}}>
+        <TableContainer
+          component={Paper}
+          sx={{ maxHeight: 440, maxWidth: 1100 }}
+        >
           <Table
             sx={{ minWidth: 650 }}
             size="small"
             stickyHeader
-            aria-label="sticky table">
+            aria-label="sticky table"
+          >
             <TableHead>
               <TableRow>
                 <TableCell>ID de la Orden</TableCell>
@@ -89,17 +85,23 @@ export default function DenseTable() {
                 return (
                   <TableRow
                     key={row.id}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
                     <TableCell align="right">{row.id}</TableCell>
                     <TableCell align="right">{row.amount}</TableCell>
                     <TableCell align="right">{row.date.toString()}</TableCell>
                     <TableCell align="right">{row.status}</TableCell>
-                    <TableCell align="right">{row.user.email}{" "}{row.user.name}</TableCell>
+                    <TableCell align="right">
+                      {row.user.email} {row.user.name}
+                    </TableCell>
                     <TableCell align="right">{row.payment_id}</TableCell>
                     <TableCell align="right">{row.payment_status}</TableCell>
                     <TableCell align="right">{row.payment_type}</TableCell>
-                    <TableCell align="right">                         
-                       <ViewDetails viewdetails={row?.order_detail} stateC={state} /> 
+                    <TableCell align="right">
+                      <ViewDetails
+                        viewdetails={row?.order_detail}
+                        stateC={state}
+                      />
                     </TableCell>
                     {/* <TableCell align="right">
                       <ButtonMUI
@@ -110,14 +112,14 @@ export default function DenseTable() {
                       </ButtonMUI>
                     </TableCell> */}
                   </TableRow>
-                )
+                );
               })}
             </TableBody>
           </Table>
         </TableContainer>
       </Paper>
       <Paginado
-        onPageChange={(page) => setState({ ...state, page })}
+        onPageChange={(page) => setPaginate(page)}
         totalCount={totalOrders}
         pageSize={state.pageSize}
       />

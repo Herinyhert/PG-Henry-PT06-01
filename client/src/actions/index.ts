@@ -39,13 +39,20 @@ export interface OrdersBO {
   user: User;
 }
 
+export interface ReviewBO {
+  value: number;
+  state: String;
+  userId: number;
+  productId: number;
+}
+
 export interface OrderDetailsBO {
   id: number;
   orderId: number;
   productId: number;
   price: number;
   quantity: number;
-  product: ArticuloBO;
+  product: ArticuloBO;  
 }
 
 export interface User {
@@ -90,6 +97,7 @@ export interface ArticuloBO {
   categoryId: number;
   category: Category;
   totalCount: number;
+  review: ReviewBO;
 }
 
 export interface Articulo {
