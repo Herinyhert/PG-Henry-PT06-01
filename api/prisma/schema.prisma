@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgres"
-  url      = "postgres://postgres:pg-Grupal@database-1.cxwzlzfyjaka.sa-east-1.rds.amazonaws.com/postgres?sslmode=require"
+  url      = env("DATABASE_URL")
 }
 
 model Product {
