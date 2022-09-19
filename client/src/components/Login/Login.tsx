@@ -338,7 +338,7 @@ const P = styled.div`
 
   > a {
     text-decoration: none;
-    color: ##064fbc;
+    color: #064fbc;
   }
 `;
 
