@@ -169,7 +169,9 @@ export default function Signup() {
             </Recuerdo>
 
               {
-                !input.email || !input.password 
+                !input.email ||
+               !input.password  ||
+               (!/^.{6,30}$/.test(input.password))
                 ? 
                 <Button type="submit" className="inactivo" disabled>Iniciar Sesión</Button>
                 :
