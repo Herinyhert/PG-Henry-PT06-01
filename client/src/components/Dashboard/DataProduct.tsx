@@ -23,6 +23,8 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 
+import { FaStar } from "react-icons/fa";
+
 export default function DenseTable() {
   const [state, setState] = useState({
     page: 1,
@@ -33,8 +35,19 @@ export default function DenseTable() {
     categoryId: undefined,
     filter: null
   });
+
+  let reviewList = [];
   
   const allProducts = useSelector((state: ReduxState) => state.articulosbo);
+
+  allProducts.map((item) => {
+      let avg=0
+      item.review?.map((data,index) => {
+        avg = (avg + data.value) / (index + 1);
+      })
+      reviewList[item.id] = Math.round(avg);
+  })
+
   const totalCount = useSelector((state1: ReduxState) => state1.totalCount);
   const dispatch = useDispatch<any>();
 
@@ -99,6 +112,7 @@ export default function DenseTable() {
           >
             <TableHead>
               <TableRow>
+                <TableCell>Calificación</TableCell>
                 <TableCell>Imagenes</TableCell>
                 <TableCell>Nombre</TableCell>
                 <TableCell align="right">Marca</TableCell>
@@ -133,6 +147,18 @@ export default function DenseTable() {
                   key={row.id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
+                  <TableCell align="right">
+                    {reviewList[row.id]>0
+                        ? [...Array(reviewList[row.id])].map((start, i) => {
+                            const ratingValue = i + 1;
+                            return (
+                              <Stars>
+                                <FaStar color={"#ffc107"} size={15} />
+                              </Stars>
+                            );
+                          })
+                      : null}
+                  </TableCell>
                   <TableCell align="right">
                     <Stack direction="row" spacing={2}>
                       <Avatar
@@ -198,4 +224,12 @@ const Button = styled.button`
     transform: scale(1.1);
     border: 1px solid rgba(255, 255, 255, 0.3);
   }
+`;
+
+const Stars = styled.div`
+  cursor: pointer;
+  transition: color 200ms;
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
 `;

@@ -88,7 +88,7 @@ export default function FormDialog({ viewdetails, stateC }: CardOrderProps) {
                       >
                         <TableCell align="right">
                           {
-                            (row.product?.review[0])?
+                            (row?.product?.review[0])?
                             [...Array(row.product?.review[0]?.value)].map(
                               (start, i) => {
                                 const ratingValue = i + 1;

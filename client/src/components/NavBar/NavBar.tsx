@@ -166,7 +166,6 @@ const NavBarContainer = styled.header`
   /* -webkit-backdrop-filter: blur(5px); */
   /* border: 1px solid rgba(255, 255, 255, 0.3); */
   justify-items: center;
-
   box-shadow: rgba(0, 0, 0, 0.25) 0px 20px 55px,
     rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
     rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
@@ -233,7 +232,6 @@ const DivButtonsNavBar = styled.div`
   /* font-size: 14px; */
   font-size: 1.5rem;
   /* margin-bottom: 14px; */
-
   /* display: flex;
   flex-direction: column; */
   /* align-items: center; */
@@ -243,7 +241,6 @@ const DivButtonsNavBar = styled.div`
   color: black;
   text-decoration: none;
   position: relative;
-
   > ul {
     position: absolute;
     top: 3.6rem;
@@ -256,7 +253,6 @@ const DivButtonsNavBar = styled.div`
     list-style: none;
     display: none;
   }
-
   &:hover > ul {
     display: block;
   }
@@ -276,13 +272,11 @@ const ButtonLoginCompras = styled.button`
   font-family: "Proxima Nova", -apple-system, Roboto, Arial, sans-serif;
   color: black;
   text-decoration: none;
-
   /* background-image: linear-gradient(currentColor, currentColor);
   background-position: 0% 100%;
   background-repeat: no-repeat;
   background-size: 0% 2px;
   transition: background-size 0.3s; */
-
   -webkit-transition: all 150ms ease-in-out;
   transition: all 150ms ease-in-out;
   &:hover,
@@ -306,13 +300,11 @@ const ButtonLogin = styled.button`
   font-size: 0.9rem;
   font-family: "Proxima Nova", -apple-system, Roboto, Arial, sans-serif;
   color: black;
-
   /* background-image: linear-gradient(currentColor, currentColor);
   background-position: 0% 100%;
   background-repeat: no-repeat;
   background-size: 0% 2px;
   transition: background-size 0.3s; */
-
   -webkit-transition: all 150ms ease-in-out;
   transition: all 150ms ease-in-out;
   &:hover,

@@ -85,7 +85,8 @@ export default function FormDialog({
     role: "El es requerido",
   };
 
-  function validation(e:any,data:any) {
+  function validation(e: any, data: any) {
+    
     let errors = {};
       if (e?.target.name === "name" && e?.target.value === ""|| data?.name ==='') {
         errors["name"] = { action: { error: true }, message: errorsMessage.name };
@@ -315,7 +316,7 @@ export default function FormDialog({
           >
             <InputLabel id="state">Rol</InputLabel>
             <Select
-              {...(userprop.role === "CLIENT" ? { disabled: false } : null)}
+              {...(userprop.role === "CLIENT" ? { disabled: true } : null)}
               labelId="role"
               id="role"
               name="role"

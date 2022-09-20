@@ -50,6 +50,14 @@ export interface ReviewBO {
   productId: number;
 }
 
+export interface ReviewUserBO {
+  value: number;
+  state: String;
+  userId: number;
+  productId: number;
+  product: ArticuloBO;
+}
+
 export interface OrderDetailsBO {
   id: number;
   orderId: number;
@@ -57,6 +65,17 @@ export interface OrderDetailsBO {
   price: number;
   quantity: number;
   product: ArticuloBO;
+}
+
+export interface UserBO {
+  id: number;
+  name: String;
+  surname: String;
+  email: String;
+  password: String;
+  state: String;
+  role: String;
+  review: ReviewUserBO[];
 }
 
 export interface User {
@@ -101,7 +120,7 @@ export interface ArticuloBO {
   categoryId: number;
   category: Category;
   totalCount: number;
-  review: ReviewBO;
+  review: ReviewBO[];
 }
 
 export interface Articulo {

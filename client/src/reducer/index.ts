@@ -34,6 +34,7 @@ export interface ReduxState {
   ordersBO: OrdersBO[];
   orders: Orders[];
   users: User[];
+  usersbo: UserBO[];
   detailsUser: User;
   dashboardmenu: String;
   articulos: Articulo[];
@@ -83,6 +84,7 @@ const initialState: ReduxState = {
   ordersBO: [],
   orders: [],
   users: [],
+  usersbo: [],
   detailsUser: undefined,
   dashboardmenu: "products",
   articulos: [],
@@ -152,6 +154,7 @@ function rootReducer(state: ReduxState, action: actionI) {
       return {
         ...state,
         users: action.payload,
+        usersbo: action.payload
       };
     case GET_DETAIL_USER:
       return {
