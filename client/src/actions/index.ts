@@ -212,6 +212,17 @@ export interface params {
   priceMax: number;
 }
 
+export interface UserBO {
+  id: number;
+  name: String;
+  surname: String;
+  email: String;
+  password: String;
+  state: String;
+  role: String;
+  review: ReviewUserBO[];
+}
+
 export function getOrders({ page, pageSize, name, order, direction }: paramsOrders) {
   return async function (dispatch: Dispatch) {
     try {
