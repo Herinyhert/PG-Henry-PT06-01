@@ -24,6 +24,7 @@ import ChangePassword from "./components/Login/ChangePassword"
 import EnvioChangePassword from "./components/Login/EnvioChangePassword";
 import CheckMailPassword from './components/Login/CheckMailPassword';
 import CheckMailSignup from "./components/Signup/CheckMailSignup";
+import UndefinedSearch from "./components/SearchBar/UndefinedSearch"
 
 export default function App() {
   const user = useSelector((state: ReduxState) => state.user);
@@ -50,10 +51,11 @@ export default function App() {
         <Route path="Pagar" element={<Pagar/>}/>
         <Route path="terminos-y-condiciones" element={<Terminos/>} />
         <Route path="login/checkmail/:token" element={<CheckMail/>}/>
-       <Route path="login/checkmail/changepassword/:token" element={<ChangePassword/>}/> 
+        <Route path="login/checkmail/changepassword/:token" element={<ChangePassword/>}/>
         <Route path="login/checkmail/enviochangepassword" element={<EnvioChangePassword/>}/>
         <Route path="login/checkmail/checkmailpassword" element={<CheckMailPassword/>}/>
         <Route path="login/checkmail/checkmailsignup" element={<CheckMailSignup/>}/>
+        <Route path="undefinedsearch" element={<UndefinedSearch />}/>
 
       </Routes>
     </BrowserRouter>
