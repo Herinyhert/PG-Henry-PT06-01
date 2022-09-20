@@ -142,7 +142,7 @@ productRoutes.get("/", async (req, res) => {
   const totalCuantity = await prisma.product.count({
     where: where,
   });
-  res.status(200).json([totalCuantity, searchproducts]);
+  res.status(200).json([totalCuantity, searchproducts, req.query]);
 });
 
 productRoutes.get("/suggestions", async (req, res) => {
