@@ -21,13 +21,11 @@ import {
   GET_DETAIL_USER,
   REGISTRO_EXITOSO,
   RESET_STATE,
-  GET_CHANGEPASS
+  GET_CHANGEPASS,
+  GET_FILTERORDER,
 } from "../actions/actiontype";
-import {
-  getLocalstorageState,
-  setLocalstorageState,
-} from "../utils/localstorage";
-import { ArticuloBO, Articulo, Category, User, UserBO, Orders, OrdersBO } from "../actions";
+import { getLocalstorageState, setLocalstorageState } from "../utils/localstorage";
+import { ArticuloBO, Articulo, Category, User, Orders, OrdersBO } from "../actions";
 import jwtdecode from "jwt-decode";
 import { string } from "yup";
 
@@ -55,6 +53,16 @@ export interface ReduxState {
   error: string;
   mensaje: string;
   useregistrado: boolean;
+  filterOrder: {
+    page: number;
+    pageSize: number;
+    name: string;
+    order: string;
+    direction: string;
+    categoryId: number | undefined;
+    priceMin: number | undefined;
+    priceMax: number | undefined;
+  };
 }
 
 interface actionI {
@@ -86,6 +94,16 @@ const initialState: ReduxState = {
   error: null,
   mensaje: null,
   useregistrado: null,
+  filterOrder: {
+    page: 1,
+    pageSize: 12,
+    name: "",
+    order: "name",
+    direction: "asc",
+    categoryId: undefined,
+    priceMin: undefined,
+    priceMax: undefined,
+  },
 };
 
 function rootReducer(state: ReduxState, action: actionI) {
@@ -110,6 +128,11 @@ function rootReducer(state: ReduxState, action: actionI) {
         ...state,
         articulos: action.payload,
         articulosbo: action.payload,
+      };
+    case GET_FILTERORDER:
+      return {
+        ...state,
+        filterOrder: action.payload,
       };
     case SET_DASHBOARDMENU:
       return {
@@ -194,16 +217,14 @@ function rootReducer(state: ReduxState, action: actionI) {
         ...state,
         user: undefined,
         token: "",
-        
       };
 
-      case RESET_STATE:
-        return{
-          ...state,
-          error:null
-        }
+    case RESET_STATE:
+      return {
+        ...state,
+        error: null,
+      };
 
-      
     case SET_ERROR:
       return {
         ...state,

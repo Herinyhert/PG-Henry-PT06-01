@@ -24,6 +24,7 @@ import {
   REGISTRO_EXITOSO,
   RESET_STATE,
   GET_CHANGEPASS,
+  GET_FILTERORDER,
 } from "./actiontype";
 
 const { REACT_APP_API_URL = "http://localhost:3001" } = process.env;
@@ -242,7 +243,11 @@ export function getArticulos({ page, pageSize, name, order, direction, categoryI
       });
       // console.log(json.data[1]);
 
-      return [dispatch({ type: GET_ARTICULOS, payload: json.data[1] }), dispatch({ type: GET_TOTALARTICULOS, payload: json.data[0] })];
+      return [
+        dispatch({ type: GET_ARTICULOS, payload: json.data[1] }),
+        dispatch({ type: GET_TOTALARTICULOS, payload: json.data[0] }),
+        dispatch({ type: GET_FILTERORDER, payload: json.data[2] }),
+      ];
       //
     } catch (error) {
       return dispatch({ type: SET_ERROR, payload: "error" });
@@ -630,21 +635,19 @@ export function getCategoriasBO({ page, pageSize, name, order, direction, filter
 
 export function envioChangePass(payload) {
   return function (dispatch) {
-    return (
-      axios
-        .get(`http://localhost:3001/auth/resetpassword?email=${payload}`)
-        .then((response) => /* response */
+    return axios
+      .get(`http://localhost:3001/auth/resetpassword?email=${payload}`)
+      .then((response /* response */) =>
         dispatch({
-          type:GET_CHANGEPASS,
-          payload:response.data.msg
+          type: GET_CHANGEPASS,
+          payload: response.data.msg,
         })
-        )
-        .catch((error) => {
-          const mensaje= error.response.data.msg 
-          dispatch({ type: SET_ERROR, payload:mensaje });
-          console.log(mensaje)
-        })
-    );
+      )
+      .catch((error) => {
+        const mensaje = error.response.data.msg;
+        dispatch({ type: SET_ERROR, payload: mensaje });
+        console.log(mensaje);
+      });
   };
 }
 

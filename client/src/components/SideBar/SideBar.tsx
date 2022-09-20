@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import styled, { css } from "styled-components";
 import { ReduxState } from "../../reducer";
 import React from "react";
+import { defaultFilterOrder } from "../../pages/Home/Home";
 
 export interface SideBarProps {
   filterOrder: Function;
@@ -22,6 +23,8 @@ export default function SideBar({ homeState, filterOrder }: SideBarProps) {
   // const [searchName, setSearchName] = useState("");
   const [minMax, setMinMax] = useState({ priceMin: undefined, priceMax: undefined });
   const allCategorias = useSelector((state: ReduxState) => state.categorias);
+  // console.log("homeState", homeState);
+  // console.log("defaultFilterOrder", defaultFilterOrder);
 
   const handlerOrder = (order, direction) => {
     if (homeState.order === order && homeState.direction === direction) {
@@ -77,6 +80,17 @@ export default function SideBar({ homeState, filterOrder }: SideBarProps) {
           <ImSearch />
         </button>
       </SearchBarContainer> */}
+      {JSON.stringify({ ...homeState, page: defaultFilterOrder.page, pageSize: defaultFilterOrder.pageSize, name: defaultFilterOrder.name }) !=
+        JSON.stringify(defaultFilterOrder) && (
+        <OrderButton style={{marginTop: 20}}
+          onClick={() => {
+            filterOrder(defaultFilterOrder);
+            setMinMax({ priceMin: undefined, priceMax: undefined });
+          }}>
+          Reiniciar orden y filtros
+        </OrderButton>
+      )}
+
       <OrderContainer>
         <Legend>Orden:</Legend>
         <div>

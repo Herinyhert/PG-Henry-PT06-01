@@ -144,7 +144,7 @@ const Tarjeta = styled.div`
 
 const Body = styled.div`
   > img {
-    width: 240px;
+    width: 100%;
     height: 224px;
     border-bottom: 1px solid #d0d2d1;
     padding-bottom: 10px;

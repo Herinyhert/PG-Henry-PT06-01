@@ -50,6 +50,7 @@ export default function SearchBar() {
   return (
     <SearchBarContainer>
       <Input
+        type={"text"}
         autoFocus
         onChange={handlechange}
         placeholder="Encontrá lo que buscás"
@@ -95,7 +96,7 @@ const SearchBarContainer = styled.div`
 `;
 
 const Input = styled.input`
-  type: "text"; // ver si imporatndo bien anda
+  /* type: "text"; // ver si imporatndo bien anda */
   width: 80%;
   height: 2.74rem;
   border-top-left-radius: 0.313rem;

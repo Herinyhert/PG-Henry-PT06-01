@@ -16,21 +16,27 @@ import Carousel from "../../components/Carousel/Carousel";
 import SideBar from "../../components/SideBar/SideBar";
 import { IoLogoWhatsapp } from "react-icons/io";
 
+export const defaultFilterOrder = {
+  page: 1 ,
+  pageSize: 12,
+  name: undefined || "",
+  order: "name",
+  direction: "asc",
+  categoryId: undefined,
+  priceMin: undefined,
+  priceMax: undefined,
+};
 export default function Home() {
-  const [state, setState] = useState({
-    page: 1,
-    pageSize: 12,
-    name: undefined,
-    order: "name",
-    direction: "asc",
-    categoryId: undefined,
-    priceMin: undefined,
-    priceMax: undefined,
-  });
-
   const allProducts = useSelector((state: ReduxState) => state.articulos);
 
   const totalCount = useSelector((state1: ReduxState) => state1.totalCount);
+
+  const filterOrder = useSelector((state: ReduxState) => state.filterOrder);
+
+  const [state, setState] = useState({ ...defaultFilterOrder, ...filterOrder });
+  // const [state, setState] = useState(filterOrder );
+
+  // setState({ ...state, ...filterOrder });
 
   const dispatch = useDispatch<any>();
 
@@ -40,7 +46,7 @@ export default function Home() {
       getArticulos({
         page: state.page,
         pageSize: state.pageSize,
-        name: state.name,
+        name: filterOrder.name,
         order: state.order,
         direction: state.direction,
         categoryId: state.categoryId,
@@ -48,7 +54,7 @@ export default function Home() {
         priceMax: state.priceMax,
       })
     );
-  }, [dispatch, state]);
+  }, [dispatch, state.page, filterOrder.name, state.order, state.direction, state.categoryId, state.priceMin, state.priceMax]);
 
   function redirect() {
     window.location.href =
