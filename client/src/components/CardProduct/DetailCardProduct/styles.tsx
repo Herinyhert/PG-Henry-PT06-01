@@ -2,11 +2,12 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   width: 1024px;
-  height: 1024px;
+  height: auto;
+
   display: flex;
-  margin: 0 auto;
+  margin: 90px auto 25px auto;
   flex-direction: column;
-  margin-top: 3rem;
+  /* margin-top: 3rem; */
   border: 1px solid #d0d2d1;
   border-radius: 5px;
   background-color: white;
@@ -49,20 +50,20 @@ export const Description = styled.div`
   
   border: 1px solid #d0d2d1;
   border-radius: 5px;
-  width: 80%;
-  height: 40%;
+  width: 90%;
+  height: auto;
 
 
 `;
 
 export const Section = styled.div`
-  padding: 32px 16px;
-  margin: 0 16px;
+  padding: 32px 16px 15px 16px;
+  margin: 0 16px 15px 16px;
   border: 1px solid #d0d2d1;
 
   > h5 {
     font-size: 25px;
-    margin-bottom: 28px;
+    margin-bottom: 25px;
     color: #737373;
     line-height: 22.5px;
   }
@@ -70,14 +71,14 @@ export const Section = styled.div`
   > div {
     display: flex;
     flex-direction: column;
-    line-height: 18.9px;
+    line-height: 16px;
 
     > span + span {
-      margin-top: 24px;
+      margin-top: 20px;
     }
     .title {
       font-size: 16px;
-      line-height: 21.6px;
+      line-height: 20px;
     }
     .description {
       font-size: 12px;
@@ -86,7 +87,8 @@ export const Section = styled.div`
     }
     .conoce__mas {
       color: blue;
-      margin-top: 20px;
+      margin-top: 15px;
+      
     }
   }
 `;
@@ -111,15 +113,21 @@ export const Name = styled.div`
     width: 100%;
     line-height: 25.9px;
     font-weight: 500;
+    font-size: 20px;
   }
 `;
 export const Price = styled.div`
   font-size: 36px;
+  font-family: Proxima Nova,-apple-system,Helvetica Neue,Helvetica,Roboto,Arial,sans-serif;
   line-height: 36px;
   padding: 24px;
   font-weight: inherit;
   color: #222423;
-  margin-left: 30px;
+  margin-left: 15px;
+
+  > h4 {
+    font-size: 36px;
+  }
 `;
 export const CardEnvio = styled.div`
   display: flex;
@@ -161,20 +169,20 @@ export const Button = styled.button`
   padding: 12px;
   outline: 0;
   cursor: pointer;
-  background-color: #7daffb;
+  background-color: #064fbc;
   width: 50vh;
   color: white;
   &.comprar {
     background-color: #3483f9;
 
     &:hover {
-      background-color: #064fbc;
+      background-color: #7daffb;
       cursor: pointer;
     }
   }
 
   &:hover {
-    background-color: #064fbc;
+    background-color: #7daffb;
     cursor: pointer;
   }
 `;

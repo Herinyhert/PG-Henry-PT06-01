@@ -1,13 +1,16 @@
 import { Navigate } from "react-router-dom";
 import styled from "styled-components";
 import NavBar from "../NavBar/NavBar";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../../actions/index";
 import { useSelector } from "react-redux";
 import { ReduxState } from "../../reducer";
 import { BsGoogle } from "react-icons/bs";
+import { resetState } from "../../actions/index";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import * as Yup from 'yup';
+import swal from 'sweetalert2';
 
 export default function Signup() {
   const dispatch = useDispatch<any>();
@@ -15,20 +18,98 @@ export default function Signup() {
     email: "",
     password: "",
   });
-
   const user = useSelector((state: ReduxState) => state.user);
+  const errorLogin = useSelector((state: ReduxState)=>state.error)
+
+
+ function nresetState() {
+  dispatch(resetState());
+   // window.location.reload(); 
+  }
+   
+   
+
+  useEffect(()=>{
+    if(errorLogin ==='Usuario no Existe'){
+      swal.fire({
+        title: 'Error',
+        text:'Usuario Ingresado no Existe',
+        icon: 'error',
+        position:'center',
+        timer: 3000,
+        timerProgressBar:true
+      });
+     nresetState()
+   
+    }
+    if(errorLogin==='Password Incorrecto'){
+      swal.fire({
+        title: 'Error',
+        text:'La Contraseña Ingresa es Incorrecta',
+        icon: 'error',
+        position:'center',
+        timer: 3000,
+        timerProgressBar:true
+      });
+      nresetState()
+     
+    }
+    
+  },[errorLogin])
+
+ 
+
+   //creamos la esque de validacion
+   const validationSchema = Yup.object({
+    email: Yup.string()
+    .email('E-mail no es Valido')
+    .required('E-mail es Requerido'),
+    password : Yup.string()
+    .required('Contraseña es Requerido')
+    .min(6,'La contraseña debe contener al menos 6 caracteres')
+   })
+// creamos el estado local de Errores
+   const [error, setError] = useState({
+    email: '',
+    password: '',
+  });
+
+  // Funcion para Validar los Campos
+  function validadora(e){
+    e.preventDefault()
+    const newInput = {
+      ...input,
+      [e.target.name]: e.target.value,
+    };
+    const newError = { email: '', password: '' };
+    try {
+      validationSchema.validateSync(newInput, { abortEarly: false });
+    } catch (err) {
+      if (err instanceof Yup.ValidationError) {
+        err.inner.forEach((err) => {
+          const name = err.path;
+          if (name && !newError[name]) {
+            newError[name] = err.message;
+          }
+        });
+      }
+    }
+    setError(newError);
+    setInput(newInput); 
+
+  }
+  
+  
 
   function handleChange(e) {
     e.preventDefault();
-    setInput({
-      ...input,
-      [e.target.name]: e.target.value,
-    });
+    validadora(e)
   }
 
   function handleSubmit(e) {
     e.preventDefault();
     dispatch(loginUser(input));
+    validadora(e)
   }
 
   function redirect() {
@@ -53,38 +134,23 @@ export default function Signup() {
           <NavBar />
           <Form onSubmit={(e) => handleSubmit(e)}>
             <Saludo>
-              ¡Hola! Para seguir, ingresá los datos con los que te registraste.
+              ¡Hola! Para seguir, Ingresá los Datos con los que te Registraste.
             </Saludo>
 
             <Input3
               type="email"
               name="email"
               onChange={(e) => handleChange(e)}
-              placeholder="Ingrese su Correo"
+              placeholder="Ingrese su E-mail"
             />
-
-            <Input4
-              type="password"
-              name="password"
-              onChange={(e) => handleChange(e)}
-              placeholder="Ingrese su contraseña"
-            />
-            <Recuerdo >
-            <a href="login/checkmail/enviochangepassword">
-                ¿Olvidaste tu contraseña?
-              </a>
-            {/*   ¿Olvidaste tu contraseña? */}
-              
-              </Recuerdo>
-
+             <Span>{error.email}</Span>
             <Div1>
               <Input4
                 type={showPwd2 ? "text" : "password"}
                   id="password"
                   name="password"
                 onChange={(e) => handleChange(e)}
-                placeholder="Ingresa tu nueva contraseña"
-
+                placeholder="Ingresa tu  Contraseña"
               />
               <Icon4 onClick={handleShowPwd2}>
                 {showPwd2 ? (
@@ -93,27 +159,35 @@ export default function Signup() {
                   <AiFillEyeInvisible color="black" />
                 )}
               </Icon4>
+              <Span4>{error.password}</Span4>
             </Div1>
 
             <Recuerdo>
               <a href="login/checkmail/enviochangepassword">
-                ¿Olvidaste tu contraseña?
+                ¿Olvidaste tu Contraseña?
               </a>
             </Recuerdo>
 
+              {
+                !input.email || !input.password 
+                ? 
+                <Button type="submit" className="inactivo" disabled>Iniciar Sesión</Button>
+                :
+                <Button type="submit" className="activo">Iniciar Sesión</Button>
+              }    
 
-            <Button type="submit">Iniciar sesión</Button>
-            <O> O continuar con</O>
 
-            <Button onClick={redirect}>
+            <O> O Continuar Con </O>
+
+            <ButtonG onClick={redirect}>
               <DivIcon>
                 <BsGoogle />
               </DivIcon>
-              Iniciar sesión con Google
-            </Button>
+              Iniciar Sesión con Google
+            </ButtonG>
 
             <P>
-              <a href="/Signup">¿No tienes cuenta? Registrate</a>
+              <a href="/Signup">¿No Tienes Cuenta? Registrate</a>
             </P>
           </Form>
         </Body>
@@ -148,17 +222,17 @@ const Form = styled.form`
   color: #fff;
 `;
 
-const Title = styled.h1`
-  position: absoluta;
-  font-size: 18px;
-  margin: auto;
-  padding: auto;
-  color: #335d90;
+// const Title = styled.h1`
+//   position: absoluta;
+//   font-size: 18px;
+//   margin: auto;
+//   padding: auto;
+//   color: #335d90;
 
-  text-transform: uppercase;
-  justify-content: center;
-  align-items: center;
-`;
+//   text-transform: uppercase;
+//   justify-content: center;
+//   align-items: center;
+// `;
 
 const Saludo = styled.div`
   color: black;
@@ -173,14 +247,14 @@ const Input3 = styled.input`
   width: 95%;
   height: 40px;
   padding: 5px 6px;
-  margin: 10px auto;
+  margin: 20px auto;
   border: 1px solid black;
   outline: none;
   border-radius: 5px;
-  background-color: inherit;
+  background-color: #ffffff;
   &:focus {
     border: 2px solid #335d90;
-  }
+    }
 `;
 const Input4 = styled.input`
   display: block;
@@ -188,7 +262,7 @@ const Input4 = styled.input`
   height: 40px;
   padding: 5px 6px;
   /* margin-bottom: 15px; */
-  margin: 10px auto;
+  margin: 20px auto;
   border: 1px solid black;
   outline: none;
   border-radius: 5px;
@@ -204,7 +278,7 @@ const Recuerdo = styled.p`
   margin-top: 15px;
 
   font-size: 15px;
-  color: #335d90;
+  color: #064fbc;
 
   > a {
     text-decoration: none;
@@ -221,18 +295,40 @@ const Button = styled.button`
   margin: 10px auto; */
   width: 100%;
   height: 40px;
-  background-color: #335d90;
+  background-color: #064fbc;
   border: none;
   cursor: pointer;
   border-radius: 20px;
   color: #fff;
-
+  &.inactivo {
+ background-color: #cbced1;
+}
+ &.activo {
+  background-color:#3483f9;
   &:hover {
-    /* box-shadow: 0 0 8px 0 #335d90 inset, 0 0 8px 4px #335d90;
-    transform: scale(1.1);
-    border: 1px solid rgba(255, 255, 255, 0.3); */
-    background-color: #183659;
+    background-color: #7daffb;
   }
+}
+`;
+const ButtonG = styled.button`
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  /* display: block;
+  margin: 10px auto; */
+  width: 100%;
+  height: 40px;
+  background-color: #064fbc;
+  border: none;
+  cursor: pointer;
+  border-radius: 20px;
+  color: #fff;
+ 
+  &:hover {
+    background-color: #7daffb;
+  }
+
 `;
 
 const P = styled.div`
@@ -242,7 +338,7 @@ const P = styled.div`
 
   > a {
     text-decoration: none;
-    color: #335d90;
+    color: #064fbc;
   }
 `;
 
@@ -271,9 +367,30 @@ const Div1 = styled.div`
 
 const Icon4 = styled.div`
   position: absolute;
+  float: right;
   cursor: pointer;
+  box-sizing: content-box;
   /* top: 29%; */
+  /* bottom: 29% */
   right: 5%;
-  justify-content: right;
-  align-items: right;
+  /* justify-content: right;
+  align-items: right; */
+  /* text-align: right; */
+
 `;
+
+const Span = styled.span`
+  color: red;
+  font-size:14px;
+  margin-top: -23px;
+ 
+`;
+const Span4 = styled.span`
+  color: red;
+  margin-top: -23px;
+  font-size:14px;
+ 
+`;
+
+
+

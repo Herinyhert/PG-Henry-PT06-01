@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
 import { getArticulos } from "../../actions";
 import axios from "axios";
+// import { useNavigate } from "react-router-dom";
 
 const { REACT_APP_API_URL = "http://localhost:3001" } = process.env;
 
@@ -17,6 +18,7 @@ export default function SearchBar() {
   const [state, setState] = useState("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const dispatch = useDispatch<any>();
+  // const navigate = useNavigate();
 
   function handlechange(e) {
     setState(e.target.value);
@@ -30,17 +32,6 @@ export default function SearchBar() {
   }
 
   function handleclick() {
-    // if (state === "") {
-    //   // alert("Enter a product to search...")
-    //   Swal.fire({
-    //     title: "Error!",
-    //     text: "Introduce un producto para buscar...",
-    //     icon: "error",
-    //     confirmButtonText: "Volver",
-    //     confirmButtonColor: "#335d90",
-    //   });
-    // }
-    // onSearch(state);
     dispatch(
       getArticulos({
         page: 1,
@@ -49,8 +40,11 @@ export default function SearchBar() {
         order: "name",
         direction: "asc",
         categoryId: undefined,
+        priceMin: undefined,
+        priceMax: undefined,
       })
     );
+    // return navigate("/home");
   }
 
   return (
@@ -68,10 +62,10 @@ export default function SearchBar() {
         list="suggestions"
       />
       <datalist id="suggestions">
-          {suggestions.map((suggestion, i) => (
-            <option key={i} value={suggestion} />
-          ))}
-        </datalist>
+        {suggestions.map((suggestion, i) => (
+          <option key={i} value={suggestion} />
+        ))}
+      </datalist>
       <Search onClick={handleclick} title="buscar">
         <ImSearch />
       </Search>
@@ -102,7 +96,7 @@ const SearchBarContainer = styled.div`
 
 const Input = styled.input`
   type: "text"; // ver si imporatndo bien anda
-  width: 100%;
+  width: 80%;
   height: 2.74rem;
   border-top-left-radius: 0.313rem;
   border-bottom-left-radius: 0.313rem;
@@ -128,7 +122,7 @@ const Search = styled.button`
   -webkit-appearance: none;
   cursor: pointer;
   font-size: 3vh;
-  background-color: #335d90;
+  background-color: #064fbc;
   /* box-shadow: 0 0 40px 40px #335d90 inset, 0 0 0 0 #335d90;
   -webkit-transition: all 150ms ease-in-out;
   transition: all 150ms ease-in-out; */
@@ -136,12 +130,12 @@ const Search = styled.button`
   &:hover {
     /* box-shadow: 0 0 10px 0 #335d90 inset, 0 0 10px 4px #335d90;
     color: #335d90; */
-    background-color: #183659;
+    background-color: #7daffb;
   }
   &:active {
     /* box-shadow: 0 0 10px 0 #335d90 inset, 0 0 10px 4px #335d90;
     color: #335d90; */
-    background-color: #183659;
+    background-color: #7daffb;
   }
 `;
 

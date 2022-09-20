@@ -20,6 +20,8 @@ import {
   GET_GOOGLE,
   GET_DETAIL_USER,
   REGISTRO_EXITOSO,
+  RESET_STATE,
+  GET_CHANGEPASS
 } from "../actions/actiontype";
 import {
   getLocalstorageState,
@@ -94,6 +96,14 @@ function rootReducer(state: ReduxState, action: actionI) {
         mensaje: action.payload,
         useregistrado: true,
       };
+
+      case GET_CHANGEPASS:
+        return{
+          ...state,
+          mensaje:action.payload,
+          useregistrado: true,
+        }
+
 
     case GET_ARTICULOS:
       return {
@@ -184,7 +194,16 @@ function rootReducer(state: ReduxState, action: actionI) {
         ...state,
         user: undefined,
         token: "",
+        
       };
+
+      case RESET_STATE:
+        return{
+          ...state,
+          error:null
+        }
+
+      
     case SET_ERROR:
       return {
         ...state,
