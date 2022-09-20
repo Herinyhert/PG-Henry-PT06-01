@@ -32,19 +32,26 @@ export default function SearchBar() {
   }
 
   function handleclick() {
-    dispatch(
-      getArticulos({
-        page: 1,
-        pageSize: 12,
-        name: state,
-        order: "name",
-        direction: "asc",
-        categoryId: undefined,
-        priceMin: undefined,
-        priceMax: undefined,
-      })
-    );
-    // return navigate("/home");
+    if (state.length > 0) {
+      dispatch(
+        getArticulos({
+          page: 1,
+          pageSize: 12,
+          name: state,
+          order: "name",
+          direction: "asc",
+          categoryId: undefined,
+          priceMin: undefined,
+          priceMax: undefined,
+        })
+      );
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "No se ingreso ningun producto",
+      });
+    }
   }
 
   return (
@@ -62,6 +69,7 @@ export default function SearchBar() {
         }}
         list="suggestions"
       />
+
       <datalist id="suggestions">
         {suggestions.map((suggestion, i) => (
           <option key={i} value={suggestion} />

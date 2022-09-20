@@ -25,6 +25,7 @@ import {
   RESET_STATE,
   GET_CHANGEPASS,
   GET_FILTERORDER,
+  GET_REVIEWSPENDING,
 } from "./actiontype";
 
 const { REACT_APP_API_URL = "http://localhost:3001" } = process.env;
@@ -147,6 +148,13 @@ export interface ArticuloCarrito {
   category: Category;
   totalCount: number;
   precioTotal: number;
+}
+
+interface Review{
+  value: number;
+  state: string;
+  userId: number;
+  productId: number;
 }
 
 export interface Category {
@@ -648,6 +656,41 @@ export function envioChangePass(payload) {
         dispatch({ type: SET_ERROR, payload: mensaje });
         console.log(mensaje);
       });
+  };
+}
+
+export function getReviewsPending(token){
+  return async function (dispatch: Dispatch) {
+    try {
+      var json = await axios.get<Review[]>(
+        REACT_APP_API_URL + "/review/userpending", {
+          headers: { authorization: `Bearer ${token}` },
+        }
+       
+      );
+      return dispatch({ type: GET_REVIEWSPENDING, payload: json.data });
+    } catch (error) {
+      return dispatch({ type: SET_ERROR, payload: "error" });
+    }
+  };
+}
+
+export function deleteReview({id, token}) {
+  return async function (dispatch: Dispatch) {
+    try {
+      var response = await axios.delete<Review[]>(
+        REACT_APP_API_URL + "/review",
+        {
+          headers: { authorization: `Bearer ${token}` },
+          data:{
+            idproduct:id
+          }
+        }
+      );
+      return ((response) => response)
+    } catch (error) {
+      return dispatch({ type: SET_ERROR, payload: "error" });
+    }
   };
 }
 
