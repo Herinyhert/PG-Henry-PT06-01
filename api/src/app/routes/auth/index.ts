@@ -119,11 +119,12 @@ authRouter.get('/resetpassword', async (req,res)=>{
     where : {email: useremail}
   })
   if(!user){
-    res.status(400).send({msg:'el correo no esta registrado como usuario'})
+    res.status(400).send({msg:'El Correo no Esta Registrado como Usuario'})
     return
   }else{
     const token = createToken({id: user.id, email: user.email, role: user.role})
     resetpassword({name: user.name, surname: user.surname, email: user.email, token: token})
+    res.status(200).send({msg:'Usuario Existe'})
   }
 })
 

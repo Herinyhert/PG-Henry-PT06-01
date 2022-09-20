@@ -113,6 +113,14 @@ function rootReducer(state: ReduxState, action: actionI) {
         useregistrado: true,
       };
 
+      case GET_CHANGEPASS:
+        return{
+          ...state,
+          mensaje:action.payload,
+          useregistrado: true,
+        }
+
+
     case GET_ARTICULOS:
       return {
         ...state,
