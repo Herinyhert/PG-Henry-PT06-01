@@ -6,6 +6,7 @@ import DataProduct from "./DataProduct";
 import DataCategories from "./DataCategories";
 import DataUser from "./DataUser";
 import DataOrder from "./DataOrder";
+import DataReviews from "./DataReviews";
 
 import Menu from "./Menu";
 
@@ -103,6 +104,8 @@ function Dashboard() {
         return <DataUser />;
       case "orders":
         return <DataOrder />;
+      case "reviews":
+        return <DataReviews />;
     }
   };
 

@@ -25,7 +25,7 @@ import {
   getLocalstorageState,
   setLocalstorageState,
 } from "../utils/localstorage";
-import { ArticuloBO, Articulo, Category, User, Orders, OrdersBO } from "../actions";
+import { ArticuloBO, Articulo, Category, User, UserBO, Orders, OrdersBO } from "../actions";
 import jwtdecode from "jwt-decode";
 import { string } from "yup";
 
@@ -33,6 +33,7 @@ export interface ReduxState {
   ordersBO: OrdersBO[];
   orders: Orders[];
   users: User[];
+  usersbo: UserBO[];
   detailsUser: User;
   dashboardmenu: String;
   articulos: Articulo[];
@@ -63,6 +64,7 @@ const initialState: ReduxState = {
   ordersBO: [],
   orders: [],
   users: [],
+  usersbo: [],
   detailsUser: undefined,
   dashboardmenu: "products",
   articulos: [],
@@ -108,6 +110,7 @@ function rootReducer(state: ReduxState, action: actionI) {
       return {
         ...state,
         users: action.payload,
+        usersbo: action.payload
       };
     case GET_DETAIL_USER:
       return {

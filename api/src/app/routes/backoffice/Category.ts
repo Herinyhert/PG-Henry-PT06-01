@@ -13,28 +13,26 @@ categoryRoutes.post("/", async (req, res) => {
     }
 
     
-    let idIncr = id;
     if (id === 0) {
-      const c = await prisma.category.findFirst({       
-        orderBy: {
-          id: "asc",
+
+      const newCategory = await prisma.category.create({
+        data: {
+          name: name,
         },
-        take: -1
       });
-      idIncr = Number(c?.id)+1;
+      res.status(200).json(newCategory);
+
+    } else {
+      const newCategory = await prisma.category.update({
+        where: { id: id },
+        data: {
+          name: name,
+        }
+      });
+      res.status(200).json(newCategory);
+
     }
     
-    const newCategory = await prisma.category.upsert({
-      where: { id:idIncr },
-      update: {
-        name: name,
-      },
-      create: {
-        name: name,
-      },
-    });
-
-    res.status(200).json(newCategory);
   } catch (error) {
     console.log("post category fail", error);
     res.status(400).json({ message: `post category fail ${error}` });

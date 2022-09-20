@@ -67,6 +67,19 @@ export default function TypographyMenu() {
         })
       );
     }
+    if (itemMenu === "reviews") {
+      dispatch(
+        getUsersBO({
+          page: 1,
+          pageSize: 12,
+          name: null,
+          order: "name",
+          direction: "asc",
+          filter: null,
+          userId: user.role === "CLIENT" ? user.id : null,
+        })
+      );
+    }
       if (itemMenu === "orders") {
         dispatch(
           getOrdersBO({
@@ -125,6 +138,7 @@ export default function TypographyMenu() {
     </Paper>
   ) : (
       <Paper sx={{ width: 230 }}>
+      <MenuList>  
         <MenuItem selected={3 === selectedIndexClient} onClick={(e) => handleChange(e, 3, "users")}>
           <ListItemIcon>
             <DraftsIcon fontSize="small" />
@@ -133,13 +147,21 @@ export default function TypographyMenu() {
             Usuarios
           </Typography>
         </MenuItem>
-      <MenuList>
+      
         <MenuItem selected={1 === selectedIndexClient} onClick={(e) => handleChange(e, 1, "orders")}>
           <ListItemIcon>
             <DraftsIcon fontSize="small" />
           </ListItemIcon>
           <Typography variant="inherit" noWrap>
             Orders
+          </Typography>
+          </MenuItem>
+          <MenuItem selected={5 === selectedIndexClient} onClick={(e) => handleChange(e, 5, "reviews")}>
+          <ListItemIcon>
+            <DraftsIcon fontSize="small" />
+          </ListItemIcon>
+          <Typography variant="inherit" noWrap>
+            Reseñas
           </Typography>
         </MenuItem>
       </MenuList>

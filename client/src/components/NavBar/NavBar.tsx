@@ -40,7 +40,7 @@ export default function NavBar() {
           <ImgMobile id="logo-mobile" height="140px" src={LogoMobile} alt="" />
         </Link>
       </div>
-      <SearchBar />
+      {user?.role==='CLIENT' && location.pathname === "/home"? <SearchBar /> : null}
       <ContainerButtons>
         <Encabezado>
           {user ? (

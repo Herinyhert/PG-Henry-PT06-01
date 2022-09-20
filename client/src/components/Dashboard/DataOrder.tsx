@@ -81,7 +81,6 @@ export default function DenseTable() {
             </TableHead>
             <TableBody>
               {allOrders.map((row) => {
-                console.log(row);
                 return (
                   <TableRow
                     key={row.id}

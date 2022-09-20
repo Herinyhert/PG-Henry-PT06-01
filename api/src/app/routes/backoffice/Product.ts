@@ -150,19 +150,16 @@ productRoutes.get("/", async (req, res) => {
     where.categoryId = filterCategoryId;
   }
 
-  console.log(where);
-
   const searchproducts = await prisma.product.findMany({
     skip: (pageNumber - 1) * pageSizeNumber,
     take: pageSizeNumber,
     where: where,
     orderBy: { [order]: direction },
-    include: { category: true },
+    include: { review:true, category: true },
   });
   const totalCuantity = await prisma.product.count({
     where: where,
   });
-  //console.log(searchproducts);
   res.status(200).json([totalCuantity, searchproducts]);
 });
 
