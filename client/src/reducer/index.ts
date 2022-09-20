@@ -23,6 +23,7 @@ import {
   RESET_STATE,
   GET_CHANGEPASS,
   GET_FILTERORDER,
+  GET_REVIEWSPENDING,
 } from "../actions/actiontype";
 import { getLocalstorageState, setLocalstorageState } from "../utils/localstorage";
 import { ArticuloBO, Articulo, Category, User, Orders, OrdersBO } from "../actions";
@@ -62,11 +63,20 @@ export interface ReduxState {
     priceMin: number | undefined;
     priceMax: number | undefined;
   };
+  reviewsP: Review[];
 }
 
 interface actionI {
   type: string;
   payload: any;
+}
+
+interface Review{
+  value: number;
+  state: string;
+  userId: number;
+  productId: number;
+  product: Articulo;
 }
 
 const initialState: ReduxState = {
@@ -102,6 +112,7 @@ const initialState: ReduxState = {
     priceMin: undefined,
     priceMax: undefined,
   },
+  reviewsP:[],
 };
 
 function rootReducer(state: ReduxState, action: actionI) {
@@ -240,6 +251,12 @@ function rootReducer(state: ReduxState, action: actionI) {
         user: usergoogle,
         token: action.payload,
       };
+
+      case GET_REVIEWSPENDING:
+        return{
+          ...state,
+          reviewsP: action.payload
+        }
 
     default:
       if (!state) {

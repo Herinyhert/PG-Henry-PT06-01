@@ -144,7 +144,11 @@ const Tarjeta = styled.div`
 
 const Body = styled.div`
   > img {
+<<<<<<< Updated upstream
     width: 100%;
+=======
+    width: 230px;
+>>>>>>> Stashed changes
     height: 224px;
     border-bottom: 1px solid #d0d2d1;
     padding-bottom: 10px;
