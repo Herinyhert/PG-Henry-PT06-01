@@ -26,7 +26,7 @@ import {
   GET_REVIEWSPENDING,
 } from "../actions/actiontype";
 import { getLocalstorageState, setLocalstorageState } from "../utils/localstorage";
-import { ArticuloBO, Articulo, Category, User, Orders, OrdersBO } from "../actions";
+import { ArticuloBO, Articulo, Category, User, Orders, OrdersBO, UserBO } from "../actions";
 import jwtdecode from "jwt-decode";
 import { string } from "yup";
 

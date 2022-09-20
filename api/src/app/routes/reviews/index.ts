@@ -50,7 +50,7 @@ async function average(id: number) {
   return aggregations._avg.value;
 }
 
-reviewsRouter.get("/userreviews/all", auth.authenticate('jwt',{session :false}),async (req, res) => {
+reviewsRouter.get("/userreviews/all", ...forClient,async (req, res) => {
   const user = req.user as TokenPayload;
   const reviewsuser = await prisma.review.findMany({
     where: {
@@ -63,7 +63,7 @@ reviewsRouter.get("/userreviews/all", auth.authenticate('jwt',{session :false}),
   res.status(200).json(reviewsuser);
 });
 
-reviewsRouter.get("/userpending", auth.authenticate('jwt',{session :false}),async (req, res) => {
+reviewsRouter.get("/userpending", ...forClient,async (req, res) => {
   const user = req.user as TokenPayload;
   const reviewsuser = await prisma.review.findMany({
     where: {
@@ -80,7 +80,7 @@ reviewsRouter.get("/userpending", auth.authenticate('jwt',{session :false}),asyn
   res.status(200).json(reviewsuser);
 });
 
-reviewsRouter.get("/userreviews",  auth.authenticate('jwt',{session :false}),async (req, res) => {
+reviewsRouter.get("/userreviews",  ...forClient,async (req, res) => {
   const user = req.user as TokenPayload;
   const reviewsuser = await prisma.review.findMany({
     where: {
