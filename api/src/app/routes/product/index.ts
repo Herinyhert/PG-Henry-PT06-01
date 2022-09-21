@@ -62,11 +62,14 @@ productRoutes.post("/", passport.authenticate("jwt", { session: false }), async 
 });
 
 productRoutes.get("/", async (req, res) => {
-  let { page = 1, pageSize = 12, name, order = "name", direction = "asc", categoryId } = req.query;
+  let { page = 1, pageSize = 12, name, order = "name", direction = "asc", categoryId, priceMin, priceMax } = req.query;
 
   const pageNumber = Number(page);
   const pageSizeNumber = Number(pageSize);
   const filterCategoryId = Number(categoryId);
+  const filterPriceMin = Number(priceMin);
+  const filterPriceMax = Number(priceMax);
+
   if (!Number.isFinite(pageNumber) || page < 1) {
     res.status(400).json({ message: `the 'page' must be a number > 0` });
     return;
@@ -93,6 +96,14 @@ productRoutes.get("/", async (req, res) => {
     res.status(400).json({ message: `the 'direction' must be 'asc' or 'desc'` });
     return;
   }
+  if (filterPriceMin && (typeof filterPriceMin !== "number" || filterPriceMin < 0)) {
+    res.status(400).json({ message: `the 'priceMin' must be a number >= 0` });
+    return;
+  }
+  if (filterPriceMax && (typeof filterPriceMax !== "number" || filterPriceMax < 0 || filterPriceMax < filterPriceMin)) {
+    res.status(400).json({ message: `the 'priceMax' must be a number > 0 and > priceMin` });
+    return;
+  }
 
   const where: Prisma.ProductWhereInput = {};
   if (name) {
@@ -103,6 +114,22 @@ productRoutes.get("/", async (req, res) => {
   }
   if (categoryId) {
     where.categoryId = filterCategoryId;
+  }
+  if (filterPriceMin) {
+    where.price = {
+      gte: filterPriceMin,
+    };
+  }
+  if (filterPriceMax) {
+    where.price = {
+      lte: filterPriceMax,
+    };
+  }
+  if (filterPriceMax && filterPriceMin) {
+    where.price = {
+      gte: filterPriceMin,
+      lte: filterPriceMax,
+    };
   }
 
   const searchproducts = await prisma.product.findMany({
@@ -115,7 +142,7 @@ productRoutes.get("/", async (req, res) => {
   const totalCuantity = await prisma.product.count({
     where: where,
   });
-  res.status(200).json([totalCuantity, searchproducts]);
+  res.status(200).json([totalCuantity, searchproducts, req.query]);
 });
 
 productRoutes.get("/suggestions", async (req, res) => {

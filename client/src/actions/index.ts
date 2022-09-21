@@ -23,7 +23,9 @@ import {
   GET_DETAIL_USER,
   REGISTRO_EXITOSO,
   RESET_STATE,
-  GET_CHANGEPASS
+  GET_CHANGEPASS,
+  GET_FILTERORDER,
+  GET_REVIEWSPENDING,
 } from "./actiontype";
 
 const { REACT_APP_API_URL = "http://localhost:3001" } = process.env;
@@ -41,6 +43,21 @@ export interface OrdersBO {
   user: User;
 }
 
+export interface ReviewBO {
+  value: number;
+  state: String;
+  userId: number;
+  productId: number;
+}
+
+export interface ReviewUserBO {
+  value: number;
+  state: String;
+  userId: number;
+  productId: number;
+  product: ArticuloBO;
+}
+
 export interface OrderDetailsBO {
   id: number;
   orderId: number;
@@ -48,6 +65,18 @@ export interface OrderDetailsBO {
   price: number;
   quantity: number;
   product: ArticuloBO;
+}
+
+export interface UserBO {
+  id: number;
+  name: String;
+  surname: String;
+  email: String;
+  password: String;
+  state: String;
+  role: String;
+  review: ReviewUserBO[];
+  orderU: OrdersBO[];
 }
 
 export interface User {
@@ -92,6 +121,7 @@ export interface ArticuloBO {
   categoryId: number;
   category: Category;
   totalCount: number;
+  review: ReviewBO[];
 }
 
 export interface Articulo {
@@ -121,6 +151,13 @@ export interface ArticuloCarrito {
   precioTotal: number;
 }
 
+interface Review {
+  value: number;
+  state: string;
+  userId: number;
+  productId: number;
+}
+
 export interface Category {
   id: number;
   name: String;
@@ -142,7 +179,7 @@ export interface paramsUser {
   name: string;
   order: string;
   direction: string;
-  filter: string
+  filter: string;
   userId: number;
 }
 
@@ -172,6 +209,19 @@ export interface params {
   order: string;
   direction: string;
   categoryId: number;
+  priceMin: number;
+  priceMax: number;
+}
+
+export interface UserBO {
+  id: number;
+  name: String;
+  surname: String;
+  email: String;
+  password: String;
+  state: String;
+  role: String;
+  review: ReviewUserBO[];
 }
 
 export function getOrders({
@@ -215,6 +265,8 @@ export function getArticulos({
   order,
   direction,
   categoryId,
+  priceMin,
+  priceMax,
 }: params) {
   return async function (dispatch: Dispatch) {
     try {
@@ -226,6 +278,8 @@ export function getArticulos({
           order: order,
           direction: direction,
           categoryId: categoryId,
+          priceMin,
+          priceMax,
         },
       });
       // console.log(json.data[1]);
@@ -233,6 +287,7 @@ export function getArticulos({
       return [
         dispatch({ type: GET_ARTICULOS, payload: json.data[1] }),
         dispatch({ type: GET_TOTALARTICULOS, payload: json.data[0] }),
+        dispatch({ type: GET_FILTERORDER, payload: json.data[2] }),
       ];
       //
     } catch (error) {
@@ -403,19 +458,18 @@ export function createUser(payload) {
   return function (dispatch) {
     return axios
       .post(REACT_APP_API_URL + "/auth/signup", payload)
-      .then((response) => /* response */
-         dispatch({
+      .then((response /* response */) =>
+        dispatch({
           type: REGISTRO_EXITOSO,
-          payload:response.data.msg
-         })
+          payload: response.data.msg,
+        })
       )
       .catch((error) => {
-         /* const alerta ={
+        /* const alerta ={
           msg:error.response.data.msg
         }   */
-        const alerta = error.response.data.msg 
-        dispatch({ type: SET_ERROR, payload:  alerta});
-       
+        const alerta = error.response.data.msg;
+        dispatch({ type: SET_ERROR, payload: alerta });
       });
   };
 }
@@ -430,10 +484,9 @@ export function loginUser(payload) {
         })
         //.then(res =>{console.log(res.data.token)})
         .catch((error) => {
-          const alerta = error.response.data.msg 
-          dispatch({ type: SET_ERROR, payload:alerta });
+          const alerta = error.response.data.msg;
+          dispatch({ type: SET_ERROR, payload: alerta });
           //  .catch(res =>{console.log(res.response.data)})
-          
         })
     );
   };
@@ -453,12 +506,12 @@ export function clearState() {
   };
 }
 //* limpiar mi state */
-export function resetState(){
-  return function (dispatch){
+export function resetState() {
+  return function (dispatch) {
     dispatch({
-      type:RESET_STATE
-    })
-  }
+      type: RESET_STATE,
+    });
+  };
 }
 
 ////////////back office jvqh//////////////////////////////////////////////////////////////////////
@@ -496,13 +549,11 @@ export function getUsersBO({
   order,
   direction,
   filter,
-  userId
+  userId,
 }: paramsUser) {
   return async function (dispatch: Dispatch) {
     try {
-      var json = await axios.get<User[]>(
-        REACT_APP_API_URL + "/backoffice/user",
-        {
+      var json = await axios.get<User[]>(REACT_APP_API_URL + "/backoffice/user",{
           params: {
             page: page,
             pageSize: pageSize,
@@ -510,12 +561,11 @@ export function getUsersBO({
             order: order,
             direction: direction,
             filter: filter,
-            id: userId
+            id: userId,
           },
         }
       );
       // console.log(json.data[1]);
-
       return [
         dispatch({ type: GET_USERS, payload: json.data[1] }),
         dispatch({ type: GET_TOTALUSERS, payload: json.data[0] }),
@@ -530,9 +580,12 @@ export function getUsersBO({
 export function postUserBO(token, payload) {
   return function (dispatch) {
     return axios
-      .post(REACT_APP_API_URL + "/backoffice/user", payload/* , {
+      .post(
+        REACT_APP_API_URL + "/backoffice/user",
+        payload /* , {
         headers: { authorization: `Bearer ${token}` },
-      } */)
+      } */
+      )
       .then((response) => {
         //response
         console.log(response);
@@ -555,6 +608,19 @@ export function deleteUserBO(id) {
     } catch (error) {
       return dispatch({ type: SET_ERROR, payload: "error" });
     }
+  };
+}
+
+export function setRatingBO(token, payload) {
+  return function (dispatch) {
+    return axios
+      .post(REACT_APP_API_URL + "/review/create", payload, {
+        headers: { authorization: `Bearer ${token}` },
+      })
+      .then((response) => response)
+      .catch((error) => {
+        dispatch({ type: SET_ERROR, payload: error });
+      });
   };
 }
 
@@ -592,7 +658,7 @@ export function getOrdersBO({
   order,
   direction,
   userId,
-  filter
+  filter,
 }: paramsOrders) {
   return async function (dispatch: Dispatch) {
     try {
@@ -627,21 +693,24 @@ export function getArticulosBO({
   order,
   direction,
   categoryId,
-  filter
+  filter,
 }: paramsArtBO) {
   return async function (dispatch: Dispatch) {
     try {
-      var json = await axios.get<Articulo[]>(REACT_APP_API_URL + "/backoffice/product", {
-        params: {
-          page: page,
-          pageSize: pageSize,
-          name: name,
-          order: order,
-          direction: direction,
-          categoryId: categoryId,
-          filter: filter
-        },
-      });
+      var json = await axios.get<Articulo[]>(
+        REACT_APP_API_URL + "/backoffice/product",
+        {
+          params: {
+            page: page,
+            pageSize: pageSize,
+            name: name,
+            order: order,
+            direction: direction,
+            categoryId: categoryId,
+            filter: filter,
+          },
+        }
+      );
       // console.log(json.data[1]);
 
       return [
@@ -691,19 +760,74 @@ export function getCategoriasBO({
   };
 }
 
-
 export function envioChangePass(payload) {
   return function (dispatch) {
-    return (
-      axios
-        .get(`http://localhost:3001/auth/resetpassword?email=${payload}`)
-        .then((response) => response)
-        .catch((error) => {
-          const mensaje= error.response.data.msg 
-          dispatch({ type: SET_ERROR, payload:mensaje });
-          console.log(mensaje)
+    return axios
+      .get(`http://localhost:3001/auth/resetpassword?email=${payload}`)
+      .then((response /* response */) =>
+        dispatch({
+          type: GET_CHANGEPASS,
+          payload: response.data.msg,
         })
-    );
+      )
+      .catch((error) => {
+        const mensaje = error.response.data.msg;
+        dispatch({ type: SET_ERROR, payload: mensaje });
+        console.log(mensaje);
+      });
+  };
+}
+
+export function getReviewsPending(token) {
+  return async function (dispatch: Dispatch) {
+    try {
+      var json = await axios.get<Review[]>(
+        REACT_APP_API_URL + "/review/userpending",
+        {
+          headers: { authorization: `Bearer ${token}` },
+        }
+      );
+      return dispatch({ type: GET_REVIEWSPENDING, payload: json.data });
+    } catch (error) {
+      return dispatch({ type: SET_ERROR, payload: "error" });
+    }
+  };
+}
+
+export function deleteReview({ id, token }) {
+  return async function (dispatch: Dispatch) {
+    try {
+      var response = await axios.delete<Review[]>(
+        REACT_APP_API_URL + "/review",
+        {
+          headers: { authorization: `Bearer ${token}` },
+          data: {
+            idproduct: id,
+          },
+        }
+      );
+      return (response) => response;
+    } catch (error) {
+      return dispatch({ type: SET_ERROR, payload: "error" });
+    }
+  };
+}
+
+export function viewReview({ id, token }) {
+  return async function (dispatch: Dispatch) {
+    try {
+      await axios.put<Review[]>(
+        REACT_APP_API_URL + "/review/setviewed",
+        {
+          idproduct: id,
+        },
+        {
+          headers: { authorization: `Bearer ${token}` },
+        }
+      );
+    } catch (error) {
+      return dispatch({ type: SET_ERROR, payload: "error" });
+    }
   };
 }
 

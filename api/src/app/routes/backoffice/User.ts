@@ -164,12 +164,30 @@ userRoutes.get("/", async (req, res) => {
       where.state = filter_val;
     }
   }
+
   if (name) {
     if (name !== "") {
-      where.name = {
+      /* where.name = {
         contains: String(name),
-        mode: "insensitive",
-      };
+        mode: "insensitive"
+      }; */
+      where.OR = [
+        {
+          name: {
+            contains: String(name),
+          },
+        },
+        {
+          email: {
+            contains: String(name),
+          },
+        },
+        {
+          surname: {
+            contains: String(name),
+          },
+        },
+      ];
     }
   }
 
@@ -180,7 +198,7 @@ userRoutes.get("/", async (req, res) => {
     take: pageSizeNumber,
     where: where,
     orderBy: { [order]: direction },
-    include: { orderU: true },
+    include: { review:true, orderU: { include: { order_detail: {include:{product:{include:{category:true}}}} } } },
   });
 
   const totalCuantity = await prisma.user.count({

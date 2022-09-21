@@ -34,7 +34,8 @@ backofficeRoutesOrders.get("/", async (req, res) => {
     status,
     order = "id",
     direction = "desc",
-    userId
+    userId,
+    name
   } = req.query;
 
   const pageNumber = Number(page);
@@ -68,8 +69,52 @@ backofficeRoutesOrders.get("/", async (req, res) => {
   }
 
   const where: Prisma.OrderWhereInput = {};
-  if (Number(userId)>0) {
-    where.userId = Number(userId);
+  
+  if (userId) {
+    if (Number(userId) > 0) {
+      where.userId = Number(userId);
+    }
+  }
+
+  if (name) {
+    if (name !== "") {
+      where.OR = [
+        {
+          user: {
+            name: {
+              contains: String(name),
+              mode: "insensitive",
+            },
+          },
+        },
+        {
+          user: {
+            email: {
+              contains: String(name),
+              mode: "insensitive",
+            },
+          },
+        },
+        {
+          status: {
+            contains: String(name),
+            mode: "insensitive",
+          },
+        },
+        {
+          payment_type: {
+            contains: String(name),
+            mode: "insensitive",
+          },
+        },
+        {
+          payment_status: {
+            contains: String(name),
+            mode: "insensitive",
+          },
+        },
+      ];
+    }
   }
 
   const searchorder = await prisma.order.findMany({
@@ -80,10 +125,12 @@ backofficeRoutesOrders.get("/", async (req, res) => {
     include: {
       user: true,
       order_detail: {
-        include: { product: {include:{ category:true}} },
+        include: { product: { include: { review:true, category: true } } },
       },
     },
   });
+
+
 
   const totalCuantity = await prisma.order.count({
     where: where,
@@ -92,7 +139,7 @@ backofficeRoutesOrders.get("/", async (req, res) => {
   res.status(200).json([totalCuantity, searchorder]);
 });
 
-backofficeRoutesOrders.get("/", async (req, res) => {
+/* backofficeRoutesOrders.get("/", async (req, res) => {
   //  const id = req.query.name;
 
   let allOrders = await prisma.order.findMany();
@@ -101,7 +148,7 @@ backofficeRoutesOrders.get("/", async (req, res) => {
   } else {
     res.status(404).send("error");
   }
-});
+}); */
 
 backofficeRoutesOrders.get("/:id", async (req, res) => {
   const orderId = Number(req.params.id);

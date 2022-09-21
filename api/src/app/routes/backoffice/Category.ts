@@ -12,17 +12,27 @@ categoryRoutes.post("/", async (req, res) => {
       return;
     }
 
-    const newCategory = await prisma.category.upsert({
-      where: { id },
-      update: {
-        name: name,
-      },
-      create: {
-        name: name
-      },
-    });
+    
+    if (id === 0) {
 
-    res.status(200).json(newCategory);
+      const newCategory = await prisma.category.create({
+        data: {
+          name: name,
+        },
+      });
+      res.status(200).json(newCategory);
+
+    } else {
+      const newCategory = await prisma.category.update({
+        where: { id: id },
+        data: {
+          name: name,
+        }
+      });
+      res.status(200).json(newCategory);
+
+    }
+    
   } catch (error) {
     console.log("post category fail", error);
     res.status(400).json({ message: `post category fail ${error}` });
@@ -72,14 +82,14 @@ categoryRoutes.get("/", async (req, res) => {
     return;
   }
 
-  const where: Prisma.ProductWhereInput = {};
-  if (filter) {
+   const where: Prisma.CategoryWhereInput = {};
+  /*if (filter) {
     const filter_field = String(filter).split("-")[0];
     const filter_val = String(filter).split("-")[1];
     if (filter_field === "state" && filter_val !== "null") {
       where.state = String(filter_val);
     }
-  }
+  } */
   
   if (name) {
     where.name = {

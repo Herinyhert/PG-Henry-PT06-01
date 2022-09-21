@@ -14,10 +14,17 @@ export default function EnvioChangePassword() {
 
   const history = useNavigate();
   const errorLogin = useSelector((state: ReduxState)=>state.error)
+  const mensajeExitoso = useSelector((state: ReduxState)=>state.useregistrado)
+ console.log(mensajeExitoso)
+ 
   function nresetState() {
     dispatch(resetState());
     }
   useEffect(()=>{
+    if(mensajeExitoso){
+      history('/login/checkmail/checkmailpassword')
+   }
+    
     if(errorLogin){
       swal.fire({
         title: 'Error',
@@ -29,7 +36,8 @@ export default function EnvioChangePassword() {
       });
       nresetState();
     }
-  },[errorLogin])
+   
+  },[errorLogin,mensajeExitoso])
 
   //creamos la esque de validacion
 const validationSchema = Yup.object({
@@ -93,8 +101,10 @@ function validadora(e){
     e.preventDefault();
     validadora(e)
     dispatch(envioChangePass(input.email))
-  }
   
+
+   
+}
 
   return (
     
@@ -238,5 +248,3 @@ const P = styled.div`
 const Span = styled.span`
   color: red;
 `;
-
-

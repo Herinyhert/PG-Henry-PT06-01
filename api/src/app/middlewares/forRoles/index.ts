@@ -6,6 +6,8 @@ export const forClient: Handler[] = [
   auth.authenticate("jwt", { session: false }),
   function (req, res, next) {
     const user = req.user as TokenPayload;
+    console.log(user);
+    
     if (user.role !== "CLIENT") {
       return res
         .status(401)

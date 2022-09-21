@@ -208,7 +208,7 @@ export default function ShoppingCart() {
                 <h5>Cantidad</h5>
                 <h5>Precio Unidad</h5>
                 <h5>Precio Cantidad</h5>
-                <h5></h5>
+                <h5><ClickVaciarCarrito onClick={(e)=>handlerVaciarCarrito(e)}>Vaciar carrito</ClickVaciarCarrito></h5>
               </DivNombreColumnas>
             </DivTitulo>
 

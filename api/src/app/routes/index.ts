@@ -17,6 +17,10 @@ import backofficeRoutesProduct from "./backoffice/Product";
 import backofficeRoutesOrders from "./backoffice/Orders";
 import reviewsRouter from './reviews';
 
+import passport from "passport";
+import { forClient } from '../middlewares/forRoles';
+
+
 
 const router = Router();
 
@@ -29,7 +33,7 @@ router.use('/auth', authRouter)
 router.use('/prueba', pruebaRoutes)
 router.use('/mercadopago', mercadoPagoRoutes)
 router.use('/mail', accountRoutes)
-router.use('/review', reviewsRouter)
+router.use('/review',reviewsRouter)
 
 router.use("/backoffice/user", backofficeRoutesUser);
 router.use("/backoffice/category", backofficeRoutesCategory);

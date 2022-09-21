@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
 import { getArticulos } from "../../actions";
 import axios from "axios";
+// import { useNavigate } from "react-router-dom";
 
 const { REACT_APP_API_URL = "http://localhost:3001" } = process.env;
 
@@ -17,6 +18,7 @@ export default function SearchBar() {
   const [state, setState] = useState("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const dispatch = useDispatch<any>();
+  // const navigate = useNavigate();
 
   function handlechange(e) {
     setState(e.target.value);
@@ -30,32 +32,32 @@ export default function SearchBar() {
   }
 
   function handleclick() {
-    // if (state === "") {
-    //   // alert("Enter a product to search...")
-    //   Swal.fire({
-    //     title: "Error!",
-    //     text: "Introduce un producto para buscar...",
-    //     icon: "error",
-    //     confirmButtonText: "Volver",
-    //     confirmButtonColor: "#335d90",
-    //   });
-    // }
-    // onSearch(state);
-    dispatch(
-      getArticulos({
-        page: 1,
-        pageSize: 12,
-        name: state,
-        order: "name",
-        direction: "asc",
-        categoryId: undefined,
-      })
-    );
+    if (state.length > 0) {
+      dispatch(
+        getArticulos({
+          page: 1,
+          pageSize: 12,
+          name: state,
+          order: "name",
+          direction: "asc",
+          categoryId: undefined,
+          priceMin: undefined,
+          priceMax: undefined,
+        })
+      );
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "No se ingreso ningun producto",
+      });
+    }
   }
 
   return (
     <SearchBarContainer>
       <Input
+        type={"text"}
         autoFocus
         onChange={handlechange}
         placeholder="Encontrá lo que buscás"
@@ -67,11 +69,12 @@ export default function SearchBar() {
         }}
         list="suggestions"
       />
+
       <datalist id="suggestions">
-          {suggestions.map((suggestion, i) => (
-            <option key={i} value={suggestion} />
-          ))}
-        </datalist>
+        {suggestions.map((suggestion, i) => (
+          <option key={i} value={suggestion} />
+        ))}
+      </datalist>
       <Search onClick={handleclick} title="buscar">
         <ImSearch />
       </Search>
@@ -101,7 +104,7 @@ const SearchBarContainer = styled.div`
 `;
 
 const Input = styled.input`
-  type: "text"; // ver si imporatndo bien anda
+  /* type: "text"; // ver si imporatndo bien anda */
   width: 80%;
   height: 2.74rem;
   border-top-left-radius: 0.313rem;

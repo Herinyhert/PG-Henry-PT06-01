@@ -12,26 +12,98 @@ import { useDispatch, useSelector } from "react-redux";
 import { ReduxState } from "../../reducer";
 import { setDashboardMenu } from "../../actions";
 
+import { getArticulosBO, getArticulos, getCategorias, Articulo, getCategoriasBO, getUsersBO, getOrdersBO } from "../../actions";
+
+
 export default function TypographyMenu() {
   const dispatch = useDispatch<any>();
   const [status, setStatus] = useState(null);
   const [selectedIndex, setSelectedIndex] = React.useState(1);
   const [selectedIndexClient, setSelectedIndexClient] = React.useState(3);
 
-  const rol = useSelector((state: ReduxState) => state.user.role);
+  const user = useSelector((state: ReduxState) => state.user);
+  const dashboardmenu = useSelector((state: ReduxState) => state.dashboardmenu);
+
   function handleChange(e: React.MouseEvent<HTMLElement>, index: number,itemMenu:string) {
       setSelectedIndex(index);
       setSelectedIndexClient(index);
-      dispatch(setDashboardMenu(itemMenu));
+      dispatch(setDashboardMenu(itemMenu));    
+      if (itemMenu === "products") {
+          dispatch(getCategorias());
+          dispatch(
+            getArticulosBO({
+              page: 1,
+              pageSize: 12,
+              name: null,
+              order: 'name',
+              direction: 'asc',
+              filter: null,
+              categoryId: null
+            })
+          );      
+      }
+      if (itemMenu === "categories") {
+        dispatch(
+          getCategoriasBO({
+            page: 1,
+            pageSize: 12,
+            name: null,
+            order: "name",
+            direction: "asc",
+            filter: null,
+          })
+        );
+      }
+    if (itemMenu === "users") {
+      dispatch(
+        getUsersBO({
+          page: 1,
+          pageSize: 12,
+          name: null,
+          order: "name",
+          direction: "asc",
+          filter: null,
+          userId: user.role === "CLIENT" ? user.id : null,
+        })
+      );
+    }
+    if (itemMenu === "reviews") {
+      dispatch(
+        getUsersBO({
+          page: 1,
+          pageSize: 12,
+          name: null,
+          order: "name",
+          direction: "asc",
+          filter: null,
+          userId: user.role === "CLIENT" ? user.id : null,
+        })
+      );
+    }
+      if (itemMenu === "orders") {
+        dispatch(
+          getOrdersBO({
+            page: 1,
+            pageSize: 12,
+            name: null,
+            order: "id",
+            direction: "asc",
+            filter: null,
+            userId: user.role === "CLIENT" ? user.id : null,
+          })
+        );
+      }
   }
 
   useEffect(() => {
-    dispatch(setDashboardMenu(rol === "ADMIN" ? "products" : "users"));
+    const menuSet = user.role === "ADMIN" ? { label: "products", index: 1 } : { label:"users",index:3};
+    dispatch(setDashboardMenu(menuSet.label));
+    handleChange(null, menuSet.index, menuSet.label);
   }, [
     dispatch
   ]);
 
-  return rol === "ADMIN" ? (
+  return user.role === "ADMIN" ? (
     <Paper sx={{ width: 230 }}>
       <MenuList>
         <MenuItem selected={1 === selectedIndex} onClick={(e) => handleChange(e, 1,"products")}>
@@ -66,21 +138,30 @@ export default function TypographyMenu() {
     </Paper>
   ) : (
       <Paper sx={{ width: 230 }}>
+      <MenuList>  
         <MenuItem selected={3 === selectedIndexClient} onClick={(e) => handleChange(e, 3, "users")}>
           <ListItemIcon>
             <DraftsIcon fontSize="small" />
           </ListItemIcon>
           <Typography variant="inherit" noWrap>
-            Usuarios
+            Mi Cuenta
           </Typography>
         </MenuItem>
-      <MenuList>
+      
         <MenuItem selected={1 === selectedIndexClient} onClick={(e) => handleChange(e, 1, "orders")}>
           <ListItemIcon>
             <DraftsIcon fontSize="small" />
           </ListItemIcon>
           <Typography variant="inherit" noWrap>
-            Orders
+            Ordenes
+          </Typography>
+          </MenuItem>
+          <MenuItem selected={5 === selectedIndexClient} onClick={(e) => handleChange(e, 5, "reviews")}>
+          <ListItemIcon>
+            <DraftsIcon fontSize="small" />
+          </ListItemIcon>
+          <Typography variant="inherit" noWrap>
+            Reseñas
           </Typography>
         </MenuItem>
       </MenuList>

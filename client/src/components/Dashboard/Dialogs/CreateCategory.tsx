@@ -11,6 +11,7 @@ import { postCategoryBO, getCategoriasBO } from "../../../actions";
 import { useDispatch, useSelector } from "react-redux";
 import { ReduxState } from "../../../reducer/index";
 
+
 export interface CardCategoryProps {
   category: Category;
   stateC: any;
@@ -28,29 +29,29 @@ export default function FormDialog({
     errors: null,
   });
 
+  
+
   const token = useSelector((state: ReduxState) => state.token);
 
   const handleClickOpen = () => {
     setOpen(true);
   };
 
-  function validation(e: any) {
+  const errorsMessage = {
+    name: "El nombre es requerido",
+  };
+
+  function validation(e: any, data:any) {
     let errors = {};
-    if (e) {
-      if (e.target.name === "name" && e.target.value === "") {
-        errors["name"] = { action: { error: true }, message: "required" };
-      }
-    } else {
-      if (input.name === "") {
-        errors["name"] = { action: { error: true }, message: "required" };
-      }
-    }
+    if (e?.target.name === "name" && e?.target.value === "" || data?.name === "") {
+      errors["name"] = { action: { error: true }, message: errorsMessage.name };
+    }   
     return errors;
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
-    const errors = validation(null);
+    const errors = validation(null,input);
     setInput({
       ...input,
       errors: errors,
@@ -86,7 +87,7 @@ export default function FormDialog({
     setInput({
       ...input,
       [e.target.name]: e.target.value,
-      errors: validation(e),
+      errors: validation(e, { [e.target.name]: e.target.value }),
     });
   }
 

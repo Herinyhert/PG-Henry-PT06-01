@@ -47,6 +47,7 @@ export default function FormDialog({
     categoryId: 0,
     category: { id: 0, name: null },
     totalCount: 0,
+    review:null
   },
   stateC,
 }: CardProductProps) {
@@ -56,70 +57,64 @@ export default function FormDialog({
     name: articulo.name || "",
     brand: articulo.brand || "",
     img: articulo.img || "",
-    state: articulo.state || "",
+    state: articulo.state || "Active",
     price: articulo.price || 0,
     priceSpecial: articulo.priceSpecial || 0,
     stock: articulo.stock || 0,
     categoryId: articulo.category.id || 0,
     errors: null,
+    review:null
   });
 
   const token = useSelector((state: ReduxState) => state.token);
   let categories = useSelector((state: ReduxState) => state.categorias);
 
-  function validation(e) {
-    let errors = {};
-    if (e) {
-      if (e.target.name === "name" && e.target.value === "") {
-        errors["name"] = { action: { error: true }, message: "required" };
-      }
-      if (e.target.name === "price" && e.target.value <= 0) {
-        errors["price"] = { action: { error: true }, message: "required" };
-      }
-      if (e.target.name === "stock" && e.target.value <= 0) {
-        errors["stock"] = { action: { error: true }, message: "required" };
-      }
-      if (e.target.name === "brand" && e.target.value === "") {
-        errors["brand"] = { action: { error: true }, message: "required" };
-      }
-      if (e.target.name === "categoryId" && e.target.value <= 0) {
-        errors["categoryId"] = { action: { error: true }, message: "required" };
-      }
-      if (e.target.name === "state" && e.target.value === "") {
-        errors["state"] = { action: { error: true }, message: "required" };
-      }
-    } else {
-      if (input.name === "") {
-        errors["name"] = { action: { error: true }, message: "required" };
-      }
-      if (input.price <= 0) {
-        errors["price"] = { action: { error: true }, message: "required" };
-      }
-      if (input.stock <= 0) {
-        errors["stock"] = { action: { error: true }, message: "required" };
-      }
-      if (input.brand === "") {
-        errors["brand"] = { action: { error: true }, message: "required" };
-      }
-      if (input.categoryId === 0) {
-        errors["categoryId"] = { action: { error: true }, message: "required" };
-      }
-      if (input.state === "") {
-        errors["state"] = { action: { error: true }, message: "required" };
-      }
-      if (input.img === "") {
-        errors["img"] = { action: { error: true }, message: "" };
-      }
-    }
+  const errorsMessage = {
+    name: "El nombre es requerido",
+    price: "El precio debe ser mayor a 0",
+    stock: "El stock debe de ser mayor a cero",
+    brand: "La marca es requerida",
+    category: "La categoria es requerida",
+    state: "El estado es requerido",
+    priceSpecial: "El precio debe ser mayor a 0",
+    img: "La imagen es requerida",
+  };
 
-    return errors;
+  function validation(e:any, data:any) {
+      let errors = {};
+      if (e?.target.name === "name" && e?.target.value === "" || data?.name ==='') {
+        errors["name"] = { action: { error: true }, message: errorsMessage.name };
+      }
+      if (e?.target.name === "price" && e?.target.value <= 0 || data?.price <=0) {
+        errors["price"] = { action: { error: true }, message: errorsMessage.price };
+      }
+      if (e?.target.name === "stock" && e?.target.value <= 0 || data?.stock <=0) {
+        errors["stock"] = { action: { error: true }, message: errorsMessage.stock };
+      }
+      if (e?.target.name === "brand" && e?.target.value === "" || data?.brand==='') {
+        errors["brand"] = { action: { error: true }, message: errorsMessage.brand };
+      }
+      if (e?.target.name === "categoryId" && e?.target.value <= 0 || data?.categoryId===0) {
+        errors["categoryId"] = { action: { error: true }, message: errorsMessage.category };
+      }
+      if (e?.target.name === "state" && e?.target.value === "" || data?.state==='') {
+        errors["state"] = { action: { error: true }, message: errorsMessage.state };
+      }
+      if (e?.target.name === "state" && e?.target.value === "" || data?.priceSpecial<=0) {
+        errors["priceSpecial"] = { action: { error: true }, message: errorsMessage.priceSpecial };
+      }    
+      if (input.img === '') {
+        errors["img"] = { action: { error: true }, message: errorsMessage.img };
+      }
+
+      return errors;
   }
 
   function handlechange(e) {
     setInput({
       ...input,
       [e.target.name]: e.target.value,
-      errors: validation(e),
+      errors: validation(e, { [e.target.name]: e.target.value }),
     });
   }
 
@@ -137,7 +132,7 @@ export default function FormDialog({
 
   async function handelSubmit(e) {
     e.preventDefault();
-    const errors = validation(null);
+    const errors = validation(null,input);
     setInput({
       ...input,
       errors: errors,
@@ -167,6 +162,7 @@ export default function FormDialog({
           stock: 0,
           categoryId: 0,
           errors: null,
+          review:null
         });
       }
       handleClose();
@@ -203,7 +199,7 @@ export default function FormDialog({
             accept="image/*"
             hidden
             onChange={handleImageChange}
-          />
+          />          
           <AddPhotoAlternateIcon fontSize="medium" />
           <Stack direction="row" spacing={2}>
             <Avatar
@@ -215,7 +211,6 @@ export default function FormDialog({
             </Avatar>
           </Stack>
         </IconButton>
-
         <DialogContent>
           <TextField
             {...input.errors?.name?.action}
@@ -319,7 +314,7 @@ export default function FormDialog({
             size="small"
             {...input.errors?.state?.action}
           >
-            <InputLabel id="state">State</InputLabel>
+            <InputLabel id="stateL">State</InputLabel>
             <Select
               labelId="state"
               id="state"
