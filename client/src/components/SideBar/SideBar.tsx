@@ -204,6 +204,11 @@ const SearchBarContainer = styled.div`
 const Category = styled.div`
   display: flex;
   width: 200px;
+
+  @media (max-width: 829px) {
+    width: 100%;
+    font-size: 0.8rem;
+  }
 `;
 const OrderContainer = styled.fieldset`
   width: 200px;
@@ -223,16 +228,31 @@ const Legend = styled.legend`
   font-size: 18px;
   font-weight: 700;
   margin-top: 1rem;
+
+  @media (max-width: 829px) {
+    width: 100%;
+    font-size: 0.9rem;
+  }
 `;
 
 const FiltraPrecio = styled.div`
   display: flex;
   align-items: center;
   width: 16rem;
+
+  @media (max-width: 829px) {
+    width: 100%;
+    font-size: 0.8rem;
+  }
 `;
 
 const InputMinMax = styled.input`
   /* display: flex; */
   width: 4rem;
   height: 2rem;
+
+  @media (max-width: 829px) {
+    width: 100%;
+    font-size: 0.8rem;
+  }
 `;

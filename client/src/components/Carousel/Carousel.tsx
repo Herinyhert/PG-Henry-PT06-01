@@ -20,7 +20,7 @@ export default function Carousel() {
         <div className="carousel-inner">
           <div className="carousel-item active">
             <img
-              src="https://res.cloudinary.com/carina-bosio/image/upload/v1662592738/SL-030320-28610-18_2_m1g2di.jpg"
+              src="https://res.cloudinary.com/carina-bosio/image/upload/v1663540846/Oferta_we4myx.png"
               className="d-block w-100"
               alt="..."
             />
@@ -31,7 +31,7 @@ export default function Carousel() {
           </div>
           <div className="carousel-item">
             <img
-              src="https://res.cloudinary.com/carina-bosio/image/upload/v1662592759/SL-030320-28610-18_3_cimmbs.jpg"
+              src="https://res.cloudinary.com/carina-bosio/image/upload/v1663547415/Madre_tfi4kp.png"
               className="d-block w-100"
               alt="..."
             />
@@ -42,7 +42,7 @@ export default function Carousel() {
           </div>
           <div className="carousel-item">
             <img
-              src="https://res.cloudinary.com/carina-bosio/image/upload/v1662592765/SL-030320-28610-18_4_xsb6wc.jpg"
+              src="https://res.cloudinary.com/carina-bosio/image/upload/v1663555683/Delivery_2_dwdjhf.png"
               className="d-block w-100"
               alt="..."
             />

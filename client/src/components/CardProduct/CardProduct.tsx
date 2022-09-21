@@ -136,6 +136,7 @@ const Tarjeta = styled.div`
   justify-items: center;
   text-align: center;
   vertical-align: center;
+  overflow: hidden;
 
   &:hover {
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -144,11 +145,11 @@ const Tarjeta = styled.div`
 
 const Body = styled.div`
   > img {
-<<<<<<< Updated upstream
-    width: 100%;
-=======
+
+    /* width: 100%; */
+
     width: 230px;
->>>>>>> Stashed changes
+
     height: 224px;
     border-bottom: 1px solid #d0d2d1;
     padding-bottom: 10px;

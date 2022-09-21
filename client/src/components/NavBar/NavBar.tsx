@@ -18,9 +18,10 @@ import { useEffect } from "react";
 import { BsPersonCheck, BsPersonDash } from "react-icons/bs";
 import { RiHome2Line } from "react-icons/ri";
 import SearchBar from "../SearchBar/SearchBar";
-import { FaRegBell } from "react-icons/fa";
+import { FaBars, FaRegBell } from "react-icons/fa";
 import Link from "../Link";
 import { AiOutlineDelete } from "react-icons/ai";
+import { fontSize, width } from "@mui/system";
 
 export default function NavBar() {
   const dispatch = useDispatch<any>();
@@ -117,12 +118,13 @@ export default function NavBar() {
           <NumeritoNotif>{allReviews.length}</NumeritoNotif>
           <FaRegBell />
           <ul>
+          <Puntuacion>Puntúa tus compras</Puntuacion>
             {allReviews?.map((r) => (
               <li>
                 <DivUnidad>
                   <img src={r.product.img} alt="img" width="80px" />
                   <h3>{r.product.name}</h3>
-                  <ButtonVisto onClick={() => handleView(r)}>Ver</ButtonVisto>
+                  <ButtonVisto onClick={() => handleView(r)}>Visto</ButtonVisto>
 
                   <ButtonDelete onClick={() => handleDelete(r)}>
                     <AiOutlineDelete />
@@ -135,9 +137,12 @@ export default function NavBar() {
         <Link to="/ShoppingCart" title="Carrito">
           <DivButtonsNavBar>
             <Numerito>{productosCarrito?.length} </Numerito>
-            <FiShoppingCart />
+            <FiShoppingCart style={{ color: "black", content: "center", fontSize:"27px" }}/>
           </DivButtonsNavBar>
         </Link>
+        <Bars>
+          <FaBars style={{ cursor: "pointer" }} />
+        </Bars>
       </ContainerButtons>
     </NavBarContainer>
   );
@@ -207,17 +212,30 @@ const Encabezado = styled.div`
   margin-top: 1.8rem;
   font-size: 14px;
   margin-bottom: 25px;
-  width: 4rem;
+  width: 6rem;
+
+  @media (max-width: 952px) {
+    font-size: 10px;
+    width: 4rem;
+  }
 `;
 
 const Saludo = styled.div`
   /* justify-content: center;
   align-items: center; */
   font-weight: bold;
+  @media (max-width: 952px) {
+    font-size: 12px;
+  }
+  @media (max-width: 700px) {
+    display: none;
+  }
 `;
 
 const Nombre = styled.div`
   color: #000;
+  
+
 `;
 
 const DivButtonsNavBar = styled.div`
@@ -240,21 +258,52 @@ const DivButtonsNavBar = styled.div`
   color: black;
   text-decoration: none;
   position: relative;
+
+
   > ul {
     position: absolute;
     top: 3.6rem;
-    width: 20rem;
+    width: 25rem;
+    height: 35rem;
     right: -50px;
     background: #fff;
-    border-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
     box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.25);
     padding: 0.5rem 0;
     list-style: none;
     display: none;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    z-index: 0;
+    overflow-y: auto;
+    font-size: 1rem;
+    
   }
   &:hover > ul {
     display: block;
   }
+
+  > ul > li {
+    padding: 0.5rem 1rem;
+    visibility: visible;
+    display: block;
+  }
+
+  @media (max-width: 952px) {
+    font-size: 12px;
+  }
+  @media (max-width: 700px) {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    background-color: red;
+    top: 4.6rem;
+    left: 100%;
+    text-align: center;
+    transition: all 0.5s;
+  }
+
 `;
 
 const ButtonLoginCompras = styled.button`
@@ -267,7 +316,7 @@ const ButtonLoginCompras = styled.button`
   //margin: 0 0.5rem 24px;
   /* padding: 3px; */
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-family: "Proxima Nova", -apple-system, Roboto, Arial, sans-serif;
   color: black;
   text-decoration: none;
@@ -296,7 +345,7 @@ const ButtonLogin = styled.button`
   /* margin: 0 ; */
   /* padding: 3px; */
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-family: "Proxima Nova", -apple-system, Roboto, Arial, sans-serif;
   color: black;
   /* background-image: linear-gradient(currentColor, currentColor);
@@ -310,6 +359,7 @@ const ButtonLogin = styled.button`
   &:focus {
     background-size: 100% 2px;
   }
+  
 `;
 
 const NumeritoNotif = styled.div`
@@ -327,6 +377,14 @@ const NumeritoNotif = styled.div`
   padding-right: 6px;
   /* top: 15px; */
   /* right: 10px; */
+
+  @media (max-width: 952px) {
+    font-size: 5px;
+  }
+
+  @media (max-width: 700px) {
+    display: none;
+  }
 `;
 
 const Numerito = styled.div`
@@ -380,22 +438,29 @@ const Numerito = styled.div`
 
 export const DivUnidad = styled.div`
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   grid-template-rows: 1fr;
   grid-column-gap: 2rem;
   grid-row-gap: 0px;
   justify-content: center;
   align-items: center;
+  border-bottom: 1px solid #e5e5e5;
   h3 {
-    font-size: 1rem;
+    font-size: 0.875rem;
+    text-transform: lowercase;
+  ::first-letter {
+    text-transform: uppercase;
+  }
   }
 `;
 
 const ButtonVisto = styled.button`
-  border: 1px solid #d0d2d1;
+  border: 1px solid #064fbc;
+  color: #064fbc;
   background: inherit;
   margin: 1rem;
-  font-size: 1.5rem;
+  padding:0.5rem;
+  font-size: 0.8rem;
 `;
 
 export const ButtonDelete = styled.button`
@@ -406,4 +471,22 @@ export const ButtonDelete = styled.button`
   &:hover {
     color: #116cf3;
   }
+`;
+
+export const Puntuacion = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  margin: 1.5rem;
+  `;
+
+const Bars = styled.div`
+display: none;
+font-size: 2rem;
+@media (max-width: 700px) {
+  display: block;
+}
 `;

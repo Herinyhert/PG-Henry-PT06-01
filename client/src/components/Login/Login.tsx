@@ -203,6 +203,20 @@ const Body = styled.div`
   height: 100vh;
   margin: 0;
   box-sizing: border-box;
+
+  @media (max-width: 952px) {
+    width: 50%;
+    height: 100vh;
+    margin: 0;
+    box-sizing: border-box;
+  }
+
+  @media (max-width: 600px) {
+    width: 100%;
+    height: 100vh;
+    margin: 0;
+    box-sizing: border-box;
+  }
 `;
 
 const Form = styled.form`
@@ -222,6 +236,21 @@ const Form = styled.form`
   backdrop-filter: blur(1rem);
   border-radius: 10px;
   color: #fff;
+
+  @media (max-width: 952px) {
+    width: 40%;
+    height: 30vh;
+    margin: 0;
+    box-sizing: border-box;
+    padding: 35px;
+
+  }
+
+  @media (max-width: 600px) {
+    width: 45%;
+    height: 23vh;
+
+ 
 `;
 
 // const Title = styled.h1`
@@ -242,6 +271,15 @@ const Saludo = styled.div`
   font-weight: bold;
   text-align: center;
   margin-bottom: 25px;
+
+  @media (max-width: 952px) {
+    font-size: 15px;
+    margin-bottom: 15px;
+  }
+
+  @media (max-width: 600px) {
+    font-size: 10px;
+  }
 `;
 
 const Input3 = styled.input`
@@ -257,6 +295,32 @@ const Input3 = styled.input`
   &:focus {
     border: 2px solid #335d90;
     }
+
+  @media (max-width: 952px) {
+    width: 95%;
+    height: 8%;
+    padding: 5px 6px;
+    margin: 15px auto;
+    border: 1px solid black;
+    outline: none;
+    border-radius: 5px;
+    background-color: #ffffff;
+    font-size: 12px;
+
+  }
+
+  @media (max-width: 600px) {
+    width: 95%;
+    height: 10%;
+    padding: 5px 6px;
+    margin: 15px auto;
+    border: 1px solid black;
+    outline: none;
+    border-radius: 5px;
+    background-color: #ffffff;
+    font-size: 10px;
+  }
+
 `;
 const Input4 = styled.input`
   display: block;
@@ -272,6 +336,30 @@ const Input4 = styled.input`
   &:focus {
     border: 2px solid #335d90;
   }
+
+  @media (max-width: 952px) {
+    width: 95%;
+    height: 55%;
+    padding: 5px 6px;
+    margin: 15px auto;
+    border: 1px solid black;
+    outline: none;
+    border-radius: 5px;
+    background-color: #ffffff;
+    font-size: 12px;
+  }
+
+  @media (max-width: 600px) {
+    width: 95%;
+    height:45%;
+    padding: 5px 6px;
+    margin: 15px auto;
+    border: 1px solid black;
+    outline: none;
+    border-radius: 5px;
+    background-color: #ffffff;
+    font-size: 10px;
+  }
 `;
 
 const Recuerdo = styled.p`
@@ -285,6 +373,18 @@ const Recuerdo = styled.p`
   > a {
     text-decoration: none;
     color: #335d90;
+  }
+
+  @media (max-width: 952px) {
+    font-size: 12px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+
+  @media (max-width: 600px) {
+    font-size: 10px;
+    margin-bottom: 8px;
+    margin-top: 8px;
   }
 `;
 
@@ -311,6 +411,29 @@ const Button = styled.button`
     background-color: #7daffb;
   }
 }
+
+  @media (max-width: 952px) {
+    width: 100%;
+    height: 8%;
+    background-color: #064fbc;
+    border: none;
+    cursor: pointer;
+    border-radius: 20px;
+    color: #fff;
+    font-size: 12px;
+  }
+
+  @media (max-width: 600px) {
+    width: 100%;
+    height: 8%;
+    background-color: #064fbc;
+    border: none;
+    cursor: pointer;
+    border-radius: 20px;
+    color: #fff;
+    font-size: 10px;
+  }
+
 `;
 const ButtonG = styled.button`
   display: inline-flex;
@@ -331,6 +454,28 @@ const ButtonG = styled.button`
     background-color: #7daffb;
   }
 
+  @media (max-width: 952px) {
+    width: 100%;
+    height: 8%;
+    background-color: #064fbc;
+    border: none;
+    cursor: pointer;
+    border-radius: 20px;
+    color: #fff;
+    font-size: 12px;
+  }
+
+  @media (max-width: 600px) {
+    width: 100%;
+    height:8%;
+    background-color: #064fbc;
+    border: none;
+    cursor: pointer;
+    border-radius: 20px;
+    color: #fff;
+    font-size: 10px;
+  }
+
 `;
 
 const P = styled.div`
@@ -342,6 +487,16 @@ const P = styled.div`
     text-decoration: none;
     color: #064fbc;
   }
+
+  @media (max-width: 952px) {
+    font-size: 12px;
+    margin-top: 10px;
+  }
+
+  @media (max-width: 600px) {
+    font-size: 10px;
+    margin-top: 8px;
+  }
 `;
 
 const DivIcon = styled.div`
@@ -350,12 +505,34 @@ const DivIcon = styled.div`
   margin-bottom: 5px;
   font-size: 20px;
   color: #fff;
+
+  @media (max-width: 952px) {
+    font-size: 15px;
+    margin-right: 10px;
+    margin-bottom: 5px;
+  }
+
+  @media (max-width: 600px) {
+    font-size: 10px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+  }
 `;
 
 const O = styled.div`
   font-size: 15px;
   color: black;
   margin: 10px 0;
+
+  @media (max-width: 952px) {
+    font-size: 12px;
+    margin: 8px 0;
+  }
+
+  @media (max-width: 600px) {
+    font-size: 10px;
+    margin: 5px 0;
+  }
 `;
 
 const Div1 = styled.div`
