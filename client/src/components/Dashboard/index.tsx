@@ -6,7 +6,7 @@ import DataProduct from "./DataProduct";
 import DataCategories from "./DataCategories";
 import DataUser from "./DataUser";
 import DataOrder from "./DataOrder";
-import DataReviews from "./DataReviews";
+import DataReviews from "./DataReviews"
 
 import Menu from "./Menu";
 

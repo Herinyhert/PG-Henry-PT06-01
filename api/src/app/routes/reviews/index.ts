@@ -8,21 +8,21 @@ import { TokenPayload } from "../auth";
 const reviewsRouter = Router();
 
 //llevar esta logica al finalizar orden
-reviewsRouter.post("/create", async (req, res) => {
-  const { productId, userId, state, ratingValue } = req.body;
-  const review = await prisma.review.create({
-    data: {
-      productId: productId,
-      userId: userId,
-      state: state,
-      value: ratingValue
-    },
-  });
-  if (!review) {
-    res.status(400).send("error al crear review");
-  }
-  res.status(200).json(review);
-});
+// reviewsRouter.post("/create", async (req, res) => {
+//   const { productId, userId, state, ratingValue } = req.body;
+//   const review = await prisma.review.create({
+//     data: {
+//       productId: productId,
+//       userId: userId,
+//       state: state,
+//       value: ratingValue
+//     },
+//   });
+//   if (!review) {
+//     res.status(400).send("error al crear review");
+//   }
+//   res.status(200).json(review);
+// });
 
 // reviewsRouter.get("/average", async (req, res) => {
 //   const { idproduct } = req.query;
@@ -52,7 +52,7 @@ async function average(id: number) {
   return aggregations._avg.value;
 }
 
-reviewsRouter.get("/userreviews/all",async (req, res) => {
+reviewsRouter.get("/userreviews/all", ...forClient, async (req, res) => {
   const user = req.user as TokenPayload;
   const reviewsuser = await prisma.review.findMany({
     where: {
@@ -65,7 +65,7 @@ reviewsRouter.get("/userreviews/all",async (req, res) => {
   res.status(200).json(reviewsuser);
 });
 
-reviewsRouter.get("/userpending",...forClient,async (req, res) => {
+reviewsRouter.get("/userpending", ...forClient, async (req, res) => {
   const user = req.user as TokenPayload;
   const reviewsuser = await prisma.review.findMany({
     where: {
@@ -82,7 +82,7 @@ reviewsRouter.get("/userpending",...forClient,async (req, res) => {
   res.status(200).json(reviewsuser);
 });
 
-reviewsRouter.get("/userreviews",async (req, res) => {
+reviewsRouter.get("/userreviews", ...forClient,async (req, res) => {
   const user = req.user as TokenPayload;
   const reviewsuser = await prisma.review.findMany({
     where: {
@@ -136,9 +136,9 @@ reviewsRouter.put("/setviewed", ...forClient, async (req, res) => {
   res.status(200).json(review);
 });
 
-reviewsRouter.put("/upreview",async (req, res) => {
-  const { idreview, value } = req.body;
-  const id = Number(idreview);
+reviewsRouter.put("/upreview", ...forClient, async (req, res) => {
+  const { productId, value } = req.body;
+  const productIdNumber = Number(productId);
   const user = req.user as TokenPayload;
   const review = await prisma.review.update({
     data: {
@@ -146,17 +146,17 @@ reviewsRouter.put("/upreview",async (req, res) => {
       value: value,
     },
     where: {
-      userId_productId: { userId: user.id, productId: id },
+      userId_productId: { userId: user.id, productId: productIdNumber },
     },
   });
-  const rate = await average(id);
+  const rate = await average(productIdNumber);
   
   const rating = await prisma.product.update({
     data: {
       averageRate: rate,
     },
     where:{
-      id: id
+      id: productIdNumber
     }
   })
   if(!rating){
@@ -165,7 +165,7 @@ reviewsRouter.put("/upreview",async (req, res) => {
   res.status(200).json(rating)
 });
 
-reviewsRouter.delete('/',  async (req,res) => {
+reviewsRouter.delete('/', ...forClient, async (req,res) => {
   const { idproduct } = req.body;
   const id = Number(idproduct);
   const user = req.user as TokenPayload;

@@ -26,6 +26,7 @@ import {
   GET_CHANGEPASS,
   GET_FILTERORDER,
   GET_REVIEWSPENDING,
+  GET_REVIEWSPENDINGVIEW
 } from "./actiontype";
 
 const { REACT_APP_API_URL = "http://localhost:3001" } = process.env;
@@ -611,12 +612,18 @@ export function deleteUserBO(id) {
   };
 }
 
-export function setRatingBO(token, payload) {
+export function setRatingBO({ id, token, value }) {
   return function (dispatch) {
     return axios
-      .post(REACT_APP_API_URL + "/review/create", payload, {
+      .put(REACT_APP_API_URL + "/review/upreview",
+      {
+        value: value,
+        productId: id
+      },
+      {
         headers: { authorization: `Bearer ${token}` },
-      })
+      },
+      )
       .then((response) => response)
       .catch((error) => {
         dispatch({ type: SET_ERROR, payload: error });
@@ -788,6 +795,22 @@ export function getReviewsPending(token) {
         }
       );
       return dispatch({ type: GET_REVIEWSPENDING, payload: json.data });
+    } catch (error) {
+      return dispatch({ type: SET_ERROR, payload: "error" });
+    }
+  };
+}
+
+export function getReviewsPendingView(token) {
+  return async function (dispatch: Dispatch) {
+    try {
+      var json = await axios.get<Review[]>(
+        REACT_APP_API_URL + "/review/userreviews",
+        {
+          headers: { authorization: `Bearer ${token}` },
+        }
+      );
+      return dispatch({ type: GET_REVIEWSPENDINGVIEW, payload: json.data });
     } catch (error) {
       return dispatch({ type: SET_ERROR, payload: "error" });
     }
