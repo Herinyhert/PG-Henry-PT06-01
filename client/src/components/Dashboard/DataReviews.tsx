@@ -47,14 +47,17 @@ export default function DenseTable() {
 
   const allUser = useSelector((state: ReduxState) => state.usersbo);
 
-  allUser.map((item) => {
+  /* allUser.map((item) => {
+    console.log(item)
     let avg = 0;
     item.review?.map((data, index) => {
+      console.log(data)
       reviewList[data.productId] = reviewList[data.productId] || 0;
       reviewListCount[data.productId] = reviewListCount[data.productId]+1 || 1;
       reviewList[data.productId] = Math.round((reviewList[data.productId] + data.value) / (reviewListCount[data.productId]));
+      console.log(reviewList[data.productId]);
     });    
-  });
+  }); */
 
   
   const totalUser = useSelector((state1: ReduxState) => state1.totalUser);
@@ -134,13 +137,14 @@ export default function DenseTable() {
             <TableBody>
               {allUser.map((row) =>
                 row.orderU?.map((order) =>
-                  order.order_detail.map((rev) => (
+                  order.order_detail.map((rev) => {
+                    return (
                     <TableRow
                       key={rev.id}
                       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                     >
                       <TableCell align="right">
-                        <StarRating user={row} order={rev} />
+                        <StarRating user={row} order={rev.product} />
                         {/*rev
                           ? [...Array(reviewList[rev.product.id]||5)].map((start, i) => {
                               const ratingValue = i + 1;
@@ -180,7 +184,7 @@ export default function DenseTable() {
                         {rev.product?.category.name}
                       </TableCell>
                     </TableRow>
-                  ))
+                  )})
                 )
               )}
             </TableBody>

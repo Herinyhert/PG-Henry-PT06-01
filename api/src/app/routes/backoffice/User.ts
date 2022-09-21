@@ -198,7 +198,7 @@ userRoutes.get("/", async (req, res) => {
     take: pageSizeNumber,
     where: where,
     orderBy: { [order]: direction },
-    include: { review:true, orderU: { include: { order_detail: {include:{product:{include:{category:true}}}} } } },
+    include: { review: { include: { product:true } }, orderU: { include: { order_detail: {include:{product:{include:{review:true,category:true}}}} } } },
   });
 
   const totalCuantity = await prisma.user.count({

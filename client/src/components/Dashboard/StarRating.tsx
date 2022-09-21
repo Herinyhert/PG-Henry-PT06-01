@@ -6,13 +6,13 @@ import { ReduxState } from "../../reducer";
 
 
 
-import { UserBO, OrdersBO, OrderDetailsBO, setRatingBO, getUsersBO } from "../../actions";
+import { UserBO, OrdersBO, OrderDetailsBO, setRatingBO, getUsersBO, ArticuloBO } from "../../actions";
 
 
 
 export interface StartProps {
     user: UserBO;
-    order: OrderDetailsBO;
+  order: ArticuloBO;
 }
   
 export default function StartRating({user ,order }:StartProps) {
@@ -26,11 +26,21 @@ export default function StartRating({user ,order }:StartProps) {
   let reviewList = [];
   let reviewListCount = [];
 
-  user.review?.map((data, index) => {
-    reviewList[data.productId] = reviewList[data.productId] || 0;
-    reviewListCount[data.productId] = reviewListCount[data.productId]+1 || 1;
-    reviewList[data.productId] = Math.round((reviewList[data.productId] + data.value) / (reviewListCount[data.productId]));
+  user.review?.map((data, index) => {    
+    //if (data?.value) {
+      if (!reviewList[data.productId]) {
+        reviewList[data.productId] = 0;
+      } else {
+        reviewList[data.productId] = Math.round((reviewList[data.productId] + data.value) / (reviewListCount[data.productId]));
+      }
+      if (!reviewListCount[data.productId]) {
+        reviewListCount[data.productId] = 0;
+      } else {
+        reviewListCount[data.productId] = reviewListCount[data.productId] + 1;
+      }     
+   // }
   });
+  console.log(reviewList);
 
   async function putRating(data) {
     setRating(data.ratingValue);
@@ -53,21 +63,20 @@ export default function StartRating({user ,order }:StartProps) {
   return (
     <div>
       {         
-      [...Array(reviewList[order?.product?.id] || 5)].map((start, i) => {
+      [...Array(/*reviewList[order?.product?.id]*/order.review[0]?.value|| 5)].map((start, i) => {
           const ratingValue = i + 1;
-        return (
-            
+          return (            
             <label key={i}>
               <Input
                 type="radio"
                 name="rating"
                 value={ratingValue}
-                onClick={() => reviewList[order?.product?.id]?()=>{}:putRating({ state: 'COMPLETED',ratingValue: ratingValue, userId:user.id,productId:order?.product?.id}) }
+                onClick={() => order.review[0]?.value?()=>{}:putRating({ state: 'COMPLETED',ratingValue: ratingValue, userId:user.id,productId:order?.id}) }
               />
               <Stars>
                 <FaStar
                   color={
-                    reviewList[order?.product?.id]
+                    /* reviewList[order?.product?.id] */order.review[0]?.value
                       ? "#0000FF"
                       : ratingValue <= (hover || rating)
                       ? "#ffc107"
