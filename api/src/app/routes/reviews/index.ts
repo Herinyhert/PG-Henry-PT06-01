@@ -8,19 +8,21 @@ import { TokenPayload } from "../auth";
 const reviewsRouter = Router();
 
 //llevar esta logica al finalizar orden
-// reviewsRouter.post("/create", async (req, res) => {
-//   const { idproduct, iduser } = req.body;
-//   const review = await prisma.review.create({
-//     data: {
-//       productId: idproduct,
-//       userId: iduser,
-//     },
-//   });
-//   if (!review) {
-//     res.status(400).send("error al crear review");
-//   }
-//   res.status(200).json(review);
-// });
+reviewsRouter.post("/create", async (req, res) => {
+  const { productId, userId, state, ratingValue } = req.body;
+  const review = await prisma.review.create({
+    data: {
+      productId: productId,
+      userId: userId,
+      state: state,
+      value: ratingValue
+    },
+  });
+  if (!review) {
+    res.status(400).send("error al crear review");
+  }
+  res.status(200).json(review);
+});
 
 // reviewsRouter.get("/average", async (req, res) => {
 //   const { idproduct } = req.query;

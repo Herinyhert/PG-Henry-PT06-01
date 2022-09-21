@@ -81,6 +81,64 @@ function Dashboard() {
 
   const dashboardmenu = useSelector((state: ReduxState) => state.dashboardmenu);
 
+  function serachData(name: string) {
+    setState({ ...state, page: 1, name: name });
+    const itemMenu = dashboardmenu;
+    if (itemMenu === "products") {
+      dispatch(getCategorias());
+      dispatch(
+        getArticulosBO({
+          page: 1,
+          pageSize: 12,
+          name: name,
+          order: "name",
+          direction: "asc",
+          filter: null,
+          categoryId: null,
+        })
+      );
+    }
+    if (itemMenu === "categories") {
+      dispatch(
+        getCategoriasBO({
+          page: 1,
+          pageSize: 12,
+          name: name,
+          order: "name",
+          direction: "asc",
+          filter: null,
+        })
+      );
+    }
+    if (itemMenu === "users") {
+      dispatch(
+        getUsersBO({
+          page: 1,
+          pageSize: 12,
+          name: name,
+          order: "name",
+          direction: "asc",
+          filter: null,
+          userId: null,
+        })
+      );
+    }
+    if (itemMenu === "orders") {
+      dispatch(
+        getOrdersBO({
+          page: 1,
+          pageSize: 12,
+          name: name,
+          order: "id",
+          direction: "asc",
+          filter: null,
+          userId: null,
+        })
+      );
+    }
+  }
+
+
   const getComponentRouter = (root: String, props: any) => {
     switch (root) {
       case "products":
@@ -128,18 +186,18 @@ function Dashboard() {
               <Grid container spacing={3}>
                 <Grid item xs={12}>
                   <Box sx={{ flexGrow: 1 }}>
-                    {user.role === "ADMIN" ?
+                    {user.role === "ADMIN" ? (
                       <AppBar position="static" color="default">
                         <Toolbar>
                           {getComponentRouter(dashboardmenu, state)}
                           <SearchBar
                             onSearch={(search) =>
-                              setState({ ...state, page: 1, name: search })
+                              serachData(search)
                             }
                           />
                         </Toolbar>
                       </AppBar>
-                      : null}
+                    ) : null}
                   </Box>
                 </Grid>
                 {/* <Grid item xs={8}></Grid>

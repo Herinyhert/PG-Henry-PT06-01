@@ -6,6 +6,15 @@ import passport from "passport";
 
 const productRoutes = Router();
 
+function paginated(arr:any, chunkSize:number) {
+  const res = [];
+  for (let i = 0; i < arr.length; i += chunkSize) {
+    const chunk = arr.slice(i, i + chunkSize);
+    res.push(chunk);
+  }
+  return res;
+}
+
 productRoutes.post(
   "/",
   /* passport.authenticate('jwt',{session :false}), */ async (req, res) => {
@@ -140,27 +149,63 @@ productRoutes.get("/", async (req, res) => {
     }    
   }
 
-  if (name) {
-    where.name = {
-      contains: name,
-      mode: "insensitive",
-    };
-  }
   if (categoryId) {
     where.categoryId = filterCategoryId;
   }
 
-  const searchproducts = await prisma.product.findMany({
-    skip: (pageNumber - 1) * pageSizeNumber,
-    take: pageSizeNumber,
-    where: where,
-    orderBy: { [order]: direction },
-    include: { review:true, category: true },
-  });
-  const totalCuantity = await prisma.product.count({
-    where: where,
-  });
-  res.status(200).json([totalCuantity, searchproducts]);
+  if (name) {
+    if (name !== "") {
+      where.OR = [
+        {
+          name: {
+            contains: String(name),
+            mode: "insensitive",
+          },
+        },
+        {
+          brand: {
+            contains: String(name),
+            mode: "insensitive",
+          },
+        },
+        {
+          category: {
+            name: {
+              contains: String(name),
+              mode: "insensitive",
+            },
+          }
+        },
+      ];
+
+      const searchproducts = await prisma.product.findMany({
+        where: where,
+        orderBy: { [order]: direction },
+        include: { review: true, category: true },
+      });
+
+      const paginateData = paginated(searchproducts, pageSizeNumber);
+      let data = [];
+      if(paginateData[pageNumber - 1]) { data = paginateData[pageNumber - 1]; }
+      res.status(200).json([paginateData.length, data]);
+    }
+  } else {
+  
+    const searchproducts = await prisma.product.findMany({
+      skip: (pageNumber - 1) * pageSizeNumber,
+      take: pageSizeNumber,
+      where: where,
+      orderBy: { [order]: direction },
+      include: { review: true, category: true },
+    });
+
+    const totalCuantity = await prisma.product.count({
+      where: where,
+    });
+
+    res.status(200).json([totalCuantity, searchproducts]);
+
+  }
 });
 
 productRoutes.get("/:id", async (req, res) => {

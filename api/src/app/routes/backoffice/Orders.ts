@@ -34,7 +34,8 @@ backofficeRoutesOrders.get("/", async (req, res) => {
     status,
     order = "id",
     direction = "desc",
-    userId
+    userId,
+    name
   } = req.query;
 
   const pageNumber = Number(page);
@@ -68,8 +69,52 @@ backofficeRoutesOrders.get("/", async (req, res) => {
   }
 
   const where: Prisma.OrderWhereInput = {};
-  if (Number(userId)>0) {
-    where.userId = Number(userId);
+  
+  if (userId) {
+    if (Number(userId) > 0) {
+      where.userId = Number(userId);
+    }
+  }
+
+  if (name) {
+    if (name !== "") {
+      where.OR = [
+        {
+          user: {
+            name: {
+              contains: String(name),
+              mode: "insensitive",
+            },
+          },
+        },
+        {
+          user: {
+            email: {
+              contains: String(name),
+              mode: "insensitive",
+            },
+          },
+        },
+        {
+          status: {
+            contains: String(name),
+            mode: "insensitive",
+          },
+        },
+        {
+          payment_type: {
+            contains: String(name),
+            mode: "insensitive",
+          },
+        },
+        {
+          payment_status: {
+            contains: String(name),
+            mode: "insensitive",
+          },
+        },
+      ];
+    }
   }
 
   const searchorder = await prisma.order.findMany({
@@ -84,6 +129,8 @@ backofficeRoutesOrders.get("/", async (req, res) => {
       },
     },
   });
+
+
 
   const totalCuantity = await prisma.order.count({
     where: where,
