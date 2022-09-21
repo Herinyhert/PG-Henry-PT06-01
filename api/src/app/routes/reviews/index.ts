@@ -1,6 +1,6 @@
 import { Router } from "express";
 import prisma from "../../../db";
-import { forClient } from "../../middlewares/forRoles";
+import { forClient, forClientOrAdmin } from "../../middlewares/forRoles";
 
 import auth from "../../middlewares/passport";
 import { TokenPayload } from "../auth";
@@ -52,7 +52,7 @@ async function average(id: number) {
   return aggregations._avg.value;
 }
 
-reviewsRouter.get("/userreviews/all", ...forClient,async (req, res) => {
+reviewsRouter.get("/userreviews/all",async (req, res) => {
   const user = req.user as TokenPayload;
   const reviewsuser = await prisma.review.findMany({
     where: {
@@ -65,7 +65,7 @@ reviewsRouter.get("/userreviews/all", ...forClient,async (req, res) => {
   res.status(200).json(reviewsuser);
 });
 
-reviewsRouter.get("/userpending", ...forClient,async (req, res) => {
+reviewsRouter.get("/userpending",...forClient,async (req, res) => {
   const user = req.user as TokenPayload;
   const reviewsuser = await prisma.review.findMany({
     where: {
@@ -82,7 +82,7 @@ reviewsRouter.get("/userpending", ...forClient,async (req, res) => {
   res.status(200).json(reviewsuser);
 });
 
-reviewsRouter.get("/userreviews",  ...forClient,async (req, res) => {
+reviewsRouter.get("/userreviews",async (req, res) => {
   const user = req.user as TokenPayload;
   const reviewsuser = await prisma.review.findMany({
     where: {
@@ -121,11 +121,11 @@ reviewsRouter.get("/userreviews",  ...forClient,async (req, res) => {
 //   }
 // );
 
-reviewsRouter.put("/viewed", ...forClient, async (req, res) => {
-  const { idreview } = req.body;
-  const id = Number(idreview);
+reviewsRouter.put("/setviewed", ...forClient, async (req, res) => {
+  const { idproduct } = req.body;
+  const id = Number(idproduct);
   const user = req.user as TokenPayload;
-  const review = await prisma.review.update({
+    const review = await prisma.review.update({
     data: {
       state: "VIEWED",
     },
@@ -136,7 +136,7 @@ reviewsRouter.put("/viewed", ...forClient, async (req, res) => {
   res.status(200).json(review);
 });
 
-reviewsRouter.put("/upreview", ...forClient ,async (req, res) => {
+reviewsRouter.put("/upreview",async (req, res) => {
   const { idreview, value } = req.body;
   const id = Number(idreview);
   const user = req.user as TokenPayload;
@@ -165,10 +165,9 @@ reviewsRouter.put("/upreview", ...forClient ,async (req, res) => {
   res.status(200).json(rating)
 });
 
-reviewsRouter.delete('/', ...forClient, async (req,res) => {
+reviewsRouter.delete('/',  async (req,res) => {
   const { idproduct } = req.body;
   const id = Number(idproduct);
-  console.log(id)
   const user = req.user as TokenPayload;
   const reviewdelete = await prisma.review.delete({
     where:{

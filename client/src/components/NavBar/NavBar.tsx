@@ -9,6 +9,7 @@ import {
   getUserID,
   deleteReview,
   getReviewsPending,
+  viewReview,
 } from "../../actions/index";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -47,13 +48,11 @@ export default function NavBar() {
 
  
 
-  function handleView(r) {
-    // dispatch(deleteReview({ token: token, id: r.productId }));
-    // dispatch(getReviewsPending(token));
+  function handleView(r) {    
+    dispatch(viewReview({ token: token, id: r.productId }));
   }
   function handleDelete(r) {
     dispatch(deleteReview({ token: token, id: r.productId }));
-    // dispatch(getReviewsPending(token));
   }
 
   //FIN NOTIFICACIONES----------------------------------------------------
