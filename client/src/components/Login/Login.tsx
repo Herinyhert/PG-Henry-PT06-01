@@ -13,6 +13,7 @@ import * as Yup from 'yup';
 import swal from 'sweetalert2';
 
 export default function Signup() {
+  const { REACT_APP_API_URL = "http://localhost:3001" } = process.env
   const dispatch = useDispatch<any>();
   const [input, setInput] = useState({
     email: "",
@@ -113,7 +114,7 @@ export default function Signup() {
   }
 
   function redirect() {
-    window.location.href = "http://localhost:3001/auth/google";
+    window.location.href = REACT_APP_API_URL + "/auth/google";
   }
 
   const [showPwd2, setShowPwd2] = useState(false);

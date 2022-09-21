@@ -3,11 +3,12 @@ import axios from "axios";
 import styled from "styled-components";
 
 export default function PruebaCarrito() {
+  const { REACT_APP_API_URL = "http://localhost:3001" } = process.env
   const [datos, setDatos] = useState("");
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/mercadopago")
+      .get(REACT_APP_API_URL + "/mercadopago")
       .then((data) => {
         setDatos(data.data.id);
         console.info("Contenido de data:", data);

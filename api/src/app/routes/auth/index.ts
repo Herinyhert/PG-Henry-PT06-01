@@ -12,6 +12,8 @@ const bcrypt = require('bcrypt');
 
 const authRouter = Router();
 
+const { CLIENT_URL = "http://localhost:3000"} = process.env
+
 export interface TokenPayload {
   id: number;
   email: string;
@@ -168,7 +170,7 @@ authRouter.get(
 authRouter.get('/google/success', auth.authenticate('google',{session :false}), (req,res)=>{
   // res.status(200).json({token: createToken(req.user as TokenPayload)})
   const token = createToken(req.user as TokenPayload)
-  return res.redirect(`http://localhost:3000/checkgoogle/${token}`)
+  return res.redirect(CLIENT_URL + `/checkgoogle/${token}`)
 })
 
 

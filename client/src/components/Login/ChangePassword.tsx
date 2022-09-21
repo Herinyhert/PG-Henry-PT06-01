@@ -8,6 +8,9 @@ import * as Yup from "yup";
 import swal from "sweetalert2";
 
 export default function ChangePassword() {
+
+  const { REACT_APP_API_URL = "http://localhost:3001" } = process.env
+
   const [showPwd, setShowPwd] = useState(false);
   const [showPwd2, setShowPwd2] = useState(false);
   const history = useNavigate();
@@ -71,7 +74,7 @@ export default function ChangePassword() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    axios.post(`http://localhost:3001/auth/confirmnewpassword?token=${token}`, {
+    axios.post(REACT_APP_API_URL + `/auth/confirmnewpassword?token=${token}`, {
       password: input.password,
       passwordconfirm: input.passwordconfirm,
     });
