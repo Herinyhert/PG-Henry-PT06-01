@@ -25,28 +25,29 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 
 import { FaStar } from "react-icons/fa";
 
+
 export default function DenseTable() {
   const [state, setState] = useState({
     page: 1,
     pageSize: 12,
-    name: undefined,
+    name: null,
     order: undefined,
     direction: undefined,
     categoryId: undefined,
-    filter: null
+    filter: null,
   });
 
   let reviewList = [];
-  
+
   const allProducts = useSelector((state: ReduxState) => state.articulosbo);
 
   allProducts.map((item) => {
-      let avg=0
-      item.review?.map((data,index) => {
-        avg = (avg + data.value) / (index + 1);
-      })
-      reviewList[item.id] = Math.round(avg);
-  })
+    let avg = 0;
+    item.review?.map((data, index) => {
+      avg = (avg + data.value) / (index + 1);
+    });
+    reviewList[item.id] = Math.round(avg);
+  });
 
   const totalCount = useSelector((state1: ReduxState) => state1.totalCount);
   const dispatch = useDispatch<any>();
@@ -54,52 +55,51 @@ export default function DenseTable() {
   async function setPaginate(page) {
     setState({ ...state, page });
     await dispatch(
-       getArticulosBO({
-         page: page,
-         pageSize: 12,
-         name: state.name,
-         order: "id",
-         direction: "desc",
-         categoryId: state.categoryId,
-         filter: state.filter,
-       })
+      getArticulosBO({
+        page: page,
+        pageSize: 12,
+        name: state.name,
+        order: "id",
+        direction: "desc",
+        categoryId: state.categoryId,
+        filter: state.filter,
+      })
     );
   }
 
-   async function clickDelete(id) {
-     await dispatch(deleteProductBO(id));
-     await dispatch(
-       getArticulosBO({
-         page: state.page,
-         pageSize: 12,
-         name: state.name,
-         order: "id",
-         direction: "desc",
-         categoryId: state.categoryId,
-         filter: state.filter
-       })
-     );
-  }
-  
-  async function handlechangeFilter(e) {
-     setState({
-       ...state,
-       ['filter']: [e.target.name]+'-'+e.target.value ,
-     });
-     await dispatch(
-       getArticulosBO({
-         page: 1,
-         pageSize: 12,
-         name: state.name,
-         order: "id",
-         direction: "desc",
-         categoryId: state.categoryId,
-         filter: [e.target.name] + "-" + e.target.value,
-       })
-     );
+  async function clickDelete(id) {
+    await dispatch(deleteProductBO(id));
+    await dispatch(
+      getArticulosBO({
+        page: state.page,
+        pageSize: 12,
+        name: state.name,
+        order: "id",
+        direction: "desc",
+        categoryId: state.categoryId,
+        filter: state.filter,
+      })
+    );
   }
 
-  
+  async function handlechangeFilter(e) {
+    setState({
+      ...state,
+      ["filter"]: [e.target.name] + "-" + e.target.value,
+    });
+    await dispatch(
+      getArticulosBO({
+        page: 1,
+        pageSize: 12,
+        name: state.name,
+        order: "id",
+        direction: "desc",
+        categoryId: state.categoryId,
+        filter: [e.target.name] + "-" + e.target.value,
+      })
+    );
+  }
+
   return (
     <>
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
@@ -148,15 +148,15 @@ export default function DenseTable() {
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell align="right">
-                    {reviewList[row.id]>0
-                        ? [...Array(reviewList[row.id])].map((start, i) => {
-                            const ratingValue = i + 1;
-                            return (
-                              <Stars>
-                                <FaStar color={"#ffc107"} size={15} />
-                              </Stars>
-                            );
-                          })
+                    {reviewList[row.id] > 0
+                      ? [...Array(reviewList[row.id])].map((start, i) => {
+                          const ratingValue = i + 1;
+                          return (
+                            <Stars>
+                              <FaStar color={"#ffc107"} size={15} />
+                            </Stars>
+                          );
+                        })
                       : null}
                   </TableCell>
                   <TableCell align="right">

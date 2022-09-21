@@ -53,7 +53,7 @@ export default function FormDialog({ viewdetails, stateC }: CardOrderProps) {
         View
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Detalles de Orden # {viewdetails[0].orderId}</DialogTitle>
+        <DialogTitle>Detalles de Orden # {viewdetails[0]?.orderId}</DialogTitle>
         <DialogContent>
           <Paper sx={{ width: "100%", overflow: "hidden" }}>
             <TableContainer

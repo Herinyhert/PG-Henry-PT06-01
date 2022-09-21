@@ -76,6 +76,7 @@ export interface UserBO {
   state: String;
   role: String;
   review: ReviewUserBO[];
+  orderU: OrdersBO[];
 }
 
 export interface User {
@@ -517,7 +518,7 @@ export function getUsersBO({ page, pageSize, name, order, direction, filter, use
           id: userId,
         },
       });
-      // console.log(json.data[1]);
+      console.log(json.data[1]);
 
       return [dispatch({ type: GET_USERS, payload: json.data[1] }), dispatch({ type: GET_TOTALUSERS, payload: json.data[0] })];
       //
@@ -556,6 +557,19 @@ export function deleteUserBO(id) {
     } catch (error) {
       return dispatch({ type: SET_ERROR, payload: "error" });
     }
+  };
+}
+
+export function setRatingBO(token, payload) {
+  return function (dispatch) {
+    return axios
+      .post(REACT_APP_API_URL + "/review/create", payload, {
+        headers: { authorization: `Bearer ${token}` },
+      })
+      .then((response) => response)
+      .catch((error) => {
+        dispatch({ type: SET_ERROR, payload: error });
+      });
   };
 }
 

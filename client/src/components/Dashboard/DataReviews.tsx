@@ -24,6 +24,8 @@ import InputLabel from "@mui/material/InputLabel";
 
 import { FaStar } from "react-icons/fa";
 
+import StarRating from "./StarRating";
+
 
 
 export default function DenseTable() {
@@ -37,11 +39,30 @@ export default function DenseTable() {
     userId: null
   });
 
+  const [rating, setRating] = useState(null);
+  const [hover, setHover] = useState(null);
+
+  let reviewList = [];
+  let reviewListCount = [];
+
   const allUser = useSelector((state: ReduxState) => state.usersbo);
+
+  allUser.map((item) => {
+    let avg = 0;
+    item.review?.map((data, index) => {
+      reviewList[data.productId] = reviewList[data.productId] || 0;
+      reviewListCount[data.productId] = reviewListCount[data.productId]+1 || 1;
+      reviewList[data.productId] = Math.round((reviewList[data.productId] + data.value) / (reviewListCount[data.productId]));
+    });    
+  });
+
+  
   const totalUser = useSelector((state1: ReduxState) => state1.totalUser);
   const user = useSelector((state: ReduxState) => state.user);
 
   const dispatch = useDispatch<any>();
+
+  
 
   async function handlechangeFilter(e) {
     setState({
@@ -103,6 +124,8 @@ export default function DenseTable() {
             <TableHead>
               <TableRow>
                 <TableCell>Puntos</TableCell>
+                <TableCell>Orden ID</TableCell>
+                <TableCell>Fecha</TableCell>
                 <TableCell align="right">Producto</TableCell>
                 <TableCell align="right">Marca</TableCell>
                 <TableCell align="right">Categoria</TableCell>
@@ -110,30 +133,55 @@ export default function DenseTable() {
             </TableHead>
             <TableBody>
               {allUser.map((row) =>
-                row.review?.map((rev) => (
-                  <TableRow
-                    key={rev.productId}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell align="right">
-                      {rev
-                        ? [...Array(rev.value)].map((start, i) => {
-                            const ratingValue = i + 1;
-                            return (
-                              <Stars>
-                                <FaStar color={"#ffc107"} size={15} />
-                              </Stars>
-                            );
-                          })
-                        : null}
-                    </TableCell>
-                    <TableCell align="right">{rev.product?.name}</TableCell>
-                    <TableCell align="right">{rev.product?.brand}</TableCell>
-                    <TableCell align="right">
-                      {rev.product?.category.name}
-                    </TableCell>
-                  </TableRow>
-                ))
+                row.orderU?.map((order) =>
+                  order.order_detail.map((rev) => (
+                    <TableRow
+                      key={rev.id}
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell align="right">
+                        <StarRating user={row} order={rev} />
+                        {/*rev
+                          ? [...Array(reviewList[rev.product.id]||5)].map((start, i) => {
+                              const ratingValue = i + 1;
+                              return (
+                                <label key={i}>
+                                  <Input
+                                    type="radio"
+                                    name="rating"
+                                    value={ratingValue}
+                                    onClick={() => putRating(ratingValue)}
+                                  />
+                                  <Stars>
+                                    <FaStar
+                                      color={
+                                        reviewList[rev.product.id]?'#0000FF':
+                                        ratingValue <= (hover || rating)
+                                          ? "#ffc107"
+                                          : "#e4e5e9"
+                                      }
+                                      size={15}
+                                      onMouseEnter={() => setHover(ratingValue)}
+                                      onMouseLeave={() => setHover(null)}
+                                    />
+                                  </Stars>
+                                </label>
+                              );
+                            })
+                          : null*/}
+                      </TableCell>
+                      <TableCell align="right">{order.id}</TableCell>
+                      <TableCell align="right">
+                        {order.date.toString()}
+                      </TableCell>
+                      <TableCell align="right">{rev.product?.name}</TableCell>
+                      <TableCell align="right">{rev.product?.brand}</TableCell>
+                      <TableCell align="right">
+                        {rev.product?.category.name}
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )
               )}
             </TableBody>
           </Table>
@@ -147,6 +195,11 @@ export default function DenseTable() {
     </>
   );
 }
+const Input = styled.input`
+  cursor: pointer;
+  transition: color 200ms;
+  display: none;
+`;
 const Stars = styled.div`
   cursor: pointer;
   transition: color 200ms;

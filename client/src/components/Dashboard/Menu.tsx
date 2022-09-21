@@ -144,7 +144,7 @@ export default function TypographyMenu() {
             <DraftsIcon fontSize="small" />
           </ListItemIcon>
           <Typography variant="inherit" noWrap>
-            Usuarios
+            Mi Cuenta
           </Typography>
         </MenuItem>
       
@@ -153,7 +153,7 @@ export default function TypographyMenu() {
             <DraftsIcon fontSize="small" />
           </ListItemIcon>
           <Typography variant="inherit" noWrap>
-            Orders
+            Ordenes
           </Typography>
           </MenuItem>
           <MenuItem selected={5 === selectedIndexClient} onClick={(e) => handleChange(e, 5, "reviews")}>
