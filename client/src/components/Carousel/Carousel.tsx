@@ -19,7 +19,13 @@ export default function Carousel() {
         </div>
         <div className="carousel-inner">
           <div className="carousel-item active">
-            <img src="https://res.cloudinary.com/carina-bosio/image/upload/v1663540846/Oferta_we4myx.png" className="d-block w-100" alt="..." />
+
+            <img
+              src="https://res.cloudinary.com/carina-bosio/image/upload/v1663801507/Oferta_1_jfaywx.png"
+              className="d-block w-100"
+              alt="..."
+            />
+
             {/* <div className="carousel-caption d-none d-md-block">
         <h5>First slide label</h5>
         <p>Some representative placeholder content for the first slide.</p>
