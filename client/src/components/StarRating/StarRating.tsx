@@ -1,10 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { FaStar } from "react-icons/fa";
+import { useSelector } from "react-redux";
+import { ReduxState } from "../../reducer";
 
-export default function StartRating() {
+
+export default function StartRating( averageRate ) {
   const [rating, setRating] = useState(null);
   const [hover, setHover] = useState(null);
+
+  console.log(averageRate.rate)
+
+  
+  useEffect(() => {
+    if(averageRate.rate !== 0){
+      setRating(averageRate.rate)
+    }else{
+      setHover(0)
+    }
+  }, []);
 
   return (
     <div>
@@ -16,16 +30,14 @@ export default function StartRating() {
             <Input
               type="radio"
               name="rating"
-              value={ratingValue}
-              onClick={() => setRating(ratingValue)}
+              value={averageRate}
+              // onClick={() => setRating(ratingValue)}
             />
             {/* display="none" */}
             <Stars>
               <FaStar
                 color={ratingValue <= (hover || rating) ? "#ffc107" : "#e4e5e9"}
                 size={15}
-                onMouseEnter={() => setHover(ratingValue)}
-                onMouseLeave={() => setHover(null)}
               />
             </Stars>
           </label>
