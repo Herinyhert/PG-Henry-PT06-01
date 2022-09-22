@@ -136,7 +136,51 @@ export default function NavBar() {
         </Link>
         <Bars>
           <FaBars style={{ cursor: "pointer" }} onMouseEnter={() => setMiniContainer(true)} />
-          {miniContainer && <MiniContainerButtons onMouseLeave={() => setMiniContainer(false)}>TODAS LAS OPCIONES</MiniContainerButtons>}
+          {miniContainer && <MiniContainerButtons onMouseLeave={() => setMiniContainer(false)}>
+            {location.pathname !== "/home" && (
+              <Link to="/home" title="Home">
+                <DivButtonsNavBar>
+                  <RiHome2Line style={{ color: "black" }} />
+                  <ButtonLogin>Inicio</ButtonLogin>
+                </DivButtonsNavBar>
+              </Link>
+            )}
+            {location.pathname !== "/admin" && user?.role === "ADMIN" && (
+              <Link to="/admin" title="admin">
+                <DivButtonsNavBar>
+                  <ButtonLogin>Admin</ButtonLogin>
+                </DivButtonsNavBar>
+              </Link>
+            )}
+            {user?.role === "CLIENT" ? (
+              <Link to="/history" title="Mis compras">
+                <DivButtonsNavBar>
+                  <FiShoppingBag />
+                  <ButtonLoginCompras>Mis compras</ButtonLoginCompras>
+                </DivButtonsNavBar>
+              </Link>
+            ) : null}
+            {user ? (
+              <Link to="/home" title="Salir">
+                <DivButtonsNavBar>
+                  <BsPersonDash />
+                  <ButtonLogin onClick={handleLogout}>Salir</ButtonLogin>
+                </DivButtonsNavBar>
+              </Link>
+            ) : (
+              <Link to="/Login" title="Ingresá">
+                <DivButtonsNavBar>
+                  <BsPersonCheck style={{ color: "black", content: "center" }} />
+                  <ButtonLogin>Ingresá</ButtonLogin>
+                </DivButtonsNavBar>
+              </Link>
+            )}
+            <Link to="/ShoppingCart" title="Carrito">
+              <DivButtonsNavBar>
+                <Numerito>{productosCarrito?.length} </Numerito>
+                <FiShoppingCart style={{ color: "black", content: "center", fontSize: "27px" }} />
+              </DivButtonsNavBar>
+            </Link>TODAS LAS OPCIONES</MiniContainerButtons>}
         </Bars>
       </ContainerButtons>
     </NavBarContainer>
@@ -237,8 +281,6 @@ const DivButtonsNavBar = styled.div`
   align-items: center;
   text-align: center;
   margin: 0 0.5rem;
-  /* margin-top: 1.8rem; */
-  /* font-size: 14px; */
   font-size: 1.5rem;
   /* margin-bottom: 14px; */
   /* display: flex;
@@ -251,12 +293,13 @@ const DivButtonsNavBar = styled.div`
   text-decoration: none;
   position: relative;
 
+
   > ul {
     position: absolute;
     top: 3.6rem;
     width: 25rem;
     height: 35rem;
-    right: -50px;
+    right: -60px;
     background: #fff;
     border-bottom-left-radius: 0.5rem;
     border-bottom-right-radius: 0.5rem;
@@ -268,9 +311,16 @@ const DivButtonsNavBar = styled.div`
     z-index: 0;
     overflow-y: auto;
     font-size: 1rem;
+
+    transition: height 0.5s ease-in;
+
+    
+    
+
   }
   &:hover > ul {
-    display: block;
+    display: inline-block;
+    text-align: left;
   }
 
   > ul > li {
@@ -278,6 +328,7 @@ const DivButtonsNavBar = styled.div`
     visibility: visible;
     display: block;
   }
+  
 
   @media (max-width: 952px) {
     font-size: 12px;
@@ -392,37 +443,7 @@ const Numerito = styled.div`
   /* right: 10px; */
 `;
 
-// const Submenu = styled.ul`
-//   position:absolute;
-//   width: 200px;
-//   height: auto;
-//   /* right: 0; */
-//   background-color: #333333;
-//   top:3.6rem;
-//   right: -5;
-//   /* display: none; */
-//   /* visibility: hidden; */
-//   box-sizing: border-box;
-//   z-index: 999 !important;
 
-//   > li {
-//     display: block;
-//     position: relative;
-//     /* visibility: hidden; */
-//     padding: 15px;
-//     color: white;
-//     text-decoration: none;
-//     font-size: 14px;
-//     z-index: 0 !important;
-
-//     &:hover {
-//       background-color: #000;
-//         visibility: visible;
-//         z-index: 999 !important;
-
-//   }
-
-// `;
 
 export const DivUnidad = styled.div`
   display: grid;

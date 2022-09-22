@@ -86,9 +86,7 @@ export default function Home() {
           <BtnWsp onClick={redirect}>
             <IoLogoWhatsapp />
           </BtnWsp>
-          <div
-            dangerouslySetInnerHTML={{
-              __html: `
+          <div dangerouslySetInnerHTML={{ __html: `
         <df-messenger
           intent="WELCOME"
           chat-title="CompuBot"
@@ -97,9 +95,7 @@ export default function Home() {
           language-code="es"
         ></df-messenger>
 
-        `,
-            }}
-          />
+        `}} />
         </ProductBar>
         {totalCount > state.pageSize ? (
           <Paginado onPageChange={(page) => setState({ ...state, page })} totalCount={totalCount} pageSize={state.pageSize} />
@@ -117,12 +113,14 @@ const HomeContainer = styled.div`
   /* align-items: center; */
   /* justify-content: center; */
   /* overflow-x: hidden; */
+  padding-bottom: 40px;
 `;
 
 const CardsProducts = styled.div`
   display: inline-flex;
   flex-wrap: wrap;
   justify-content: center;
+  margin-top: 20px;
   margin-bottom: 30px;
   width: 100%;
 `;

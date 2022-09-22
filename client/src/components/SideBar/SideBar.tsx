@@ -7,6 +7,7 @@ import styled, { css } from "styled-components";
 import { ReduxState } from "../../reducer";
 import React from "react";
 import { defaultFilterOrder } from "../../pages/Home/Home";
+import { FiFilter } from "react-icons/fi";
 
 export interface SideBarProps {
   filterOrder: Function;
@@ -65,69 +66,78 @@ export default function SideBar({ homeState, filterOrder }: SideBarProps) {
 
   return (
     <SideBarContainer>
-      {/* <SearchBarContainer>
-        <input
-          placeholder="Buscar"
-          autoFocus
-          onChange={(e) => setSearchName(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              filterOrder({ name: searchName });
-            }
-          }}
-        />
-        <button onClick={() => filterOrder({ name: searchName })}>
-          <ImSearch />
-        </button>
-      </SearchBarContainer> */}
-      {JSON.stringify({ ...homeState, page: defaultFilterOrder.page, pageSize: defaultFilterOrder.pageSize, name: defaultFilterOrder.name }) !=
-        JSON.stringify(defaultFilterOrder) && (
-        <OrderButton style={{marginTop: 20}}
+      <div>
+      {JSON.stringify({
+        ...homeState,
+        page: defaultFilterOrder.page,
+        pageSize: defaultFilterOrder.pageSize,
+        name: defaultFilterOrder.name,
+      }) != JSON.stringify(defaultFilterOrder) && (
+        <OrderButtonReinicio
+          style={{ marginTop: 20 }}
           onClick={() => {
             filterOrder(defaultFilterOrder);
             setMinMax({ priceMin: undefined, priceMax: undefined });
-          }}>
+          }}
+        >
           Reiniciar orden y filtros
-        </OrderButton>
+         </OrderButtonReinicio>
       )}
+      </div>
 
       <OrderContainer>
-        <Legend>Orden:</Legend>
+        <Legend>Artículos:</Legend>
+        <H5>Orden:</H5>
         <div>
           <div>
             <OrderButton
               title="Nombre ascendente"
               onClick={() => handlerOrder("name", "asc")}
-              active={homeState.order === "name" && homeState.direction === "asc"}>
-              <TbSortAscendingLetters style={{ width: 30, height: 30 }} />
+              active={
+                homeState.order === "name" && homeState.direction === "asc"
+              }
+            >
+              <TbSortAscendingLetters style={{ width: 25, height: 25 }} />
             </OrderButton>
             <OrderButton
               title="Nombre descendente"
               onClick={() => handlerOrder("name", "desc")}
-              active={homeState.order === "name" && homeState.direction === "desc"}>
-              <TbSortDescendingLetters style={{ width: 30, height: 30 }} />
+              active={
+                homeState.order === "name" && homeState.direction === "desc"
+              }
+            >
+              <TbSortDescendingLetters style={{ width: 25, height: 25 }} />
             </OrderButton>
           </div>
         </div>
         <div>
+          <Legend>Precio:</Legend>
+          <H5>Orden:</H5>
           <div>
             <OrderButton
               title="Precio ascendente"
               onClick={() => handlerOrder("price", "asc")}
-              active={homeState.order === "price" && homeState.direction === "asc"}>
-              <TbSortAscendingNumbers style={{ width: 30, height: 30 }} />
+              active={
+                homeState.order === "price" && homeState.direction === "asc"
+              }
+            >
+              <TbSortAscendingNumbers style={{ width: 25, height: 25 }} />
             </OrderButton>
             <OrderButton
               title="Precio ascendente"
               onClick={() => handlerOrder("price", "desc")}
-              active={homeState.order === "price" && homeState.direction === "desc"}>
-              <TbSortDescendingNumbers style={{ width: 30, height: 30 }} />
+              active={
+                homeState.order === "price" && homeState.direction === "desc"
+              }
+            >
+              <TbSortDescendingNumbers style={{ width: 25, height: 25 }} />
             </OrderButton>
           </div>
         </div>
       </OrderContainer>
       <fieldset style={{ margin: 5 }}>
-        <Legend>Filtrar Precio:</Legend>
+        {/* <Legend>Filtrar Precio:</Legend> */}
+        <H5>Rango:</H5>
         <FiltraPrecio>
           <InputMinMax
             type={"number"}
@@ -144,8 +154,13 @@ export default function SideBar({ homeState, filterOrder }: SideBarProps) {
             onChange={handlerMinMaxChange}
             value={minMax.priceMax === undefined ? "" : minMax.priceMax}
           />
-          <OrderButton onClick={handlerMinMaxClick} active={homeState.priceMin || homeState.priceMax}>
-            <HiOutlineFilter style={{ width: 30, height: 30 }} />
+          <OrderButton
+            onClick={handlerMinMaxClick}
+            active={homeState.priceMin || homeState.priceMax}
+          >
+            <IconFilter>
+            <FiFilter style={{ width: 20, height: 20 }} />
+            </IconFilter>
           </OrderButton>
         </FiltraPrecio>
         <Legend>Categorias:</Legend>
@@ -154,7 +169,13 @@ export default function SideBar({ homeState, filterOrder }: SideBarProps) {
             <input
               id={`${i}`}
               type="checkbox"
-              onChange={(e) => filterOrder(homeState.categoryId === cat.id ? { categoryId: "" } : { categoryId: cat.id })}
+              onChange={(e) =>
+                filterOrder(
+                  homeState.categoryId === cat.id
+                    ? { categoryId: "" }
+                    : { categoryId: cat.id }
+                )
+              }
               checked={homeState.categoryId === cat.id}
             />
             <label htmlFor={`${i}`}>{cat.name}</label>
@@ -165,69 +186,92 @@ export default function SideBar({ homeState, filterOrder }: SideBarProps) {
   );
 }
 const SideBarContainer = styled.div`
-  /* background-color: rgb(235, 235, 335); */
-  /* position: absolute; */
   display: flex;
   flex-direction: column;
-  /* width: 15px; */
   overflow: hidden;
-  transition: width 0.2s linear;
-  /* border-radius: 0.3rem; */
-  /* border: 0.13rem solid black; */
-  /* &:hover {
-    width: 215px;
-    box-shadow: 50px 50px 100vw 0 #000000;
-  } */
+  /* transition: width 0.2s linear; */
+  padding: 4rem 0;
   margin-left: 10px;
-  /*  */
-  //   width: auto;
-  //   height: 2rem;
-  /*  */
-  //   padding: 0.313rem;
-  //   margin: 0.3rem;
-  //   /* margin: 0.625rem 0 -1.25rem 0; */
-  //   -webkit-appearance: none;
-  //   cursor: pointer;
-  //   -webkit-transition: all 150ms ease-in-out;
-  //   transition: all 150ms ease-in-out;
-  //   border: none;
-  //   position: relative;
-  //   color: #f0f0f1;
-  //   z-index: 0;
+  height: auto;
 `;
-const SearchBarContainer = styled.div`
-  display: flex;
-  width: 200px;
-  margin: 5px;
-  margin-top: 15px;
-`;
-const Category = styled.div`
-  display: flex;
-  width: 200px;
+
+const OrderButtonReinicio = styled.button<{ active?: boolean }>`
+  ${({ active }) =>
+    active &&
+    css`
+      background-color: #7daffb;
+    `}
+  margin: 5px 0; 
+  padding: 5px 5px;
+  border-radius: 5px;
+  background-color: #064fbc;
+  color: white;
+
+  &:hover {
+    background-color: #7daffb;
+  }
 
   @media (max-width: 829px) {
     width: 100%;
-    font-size: 0.8rem;
+    font-size: 12px;
+  }
+  @media (max-width: 600px) {
+    width: 100%;
+    font-size: 10px;
+  }
+
+`;
+
+ 
+
+// const SearchBarContainer = styled.div`
+//   display: flex;
+//   width: 200px;
+//   margin: 5px;
+//   margin-top: 15px;
+// `;
+const Category = styled.div`
+  display: flex;
+  width: 200px;
+  margin: 5px;
+
+  input {
+    margin-right: 5px;
+  }
+  
+
+  @media (max-width: 829px) {
+    width: 100%;
+    font-size: 12px;
+  }
+  @media (max-width: 600px) {
+    width: 100%;
+    font-size: 10px;
   }
 `;
 const OrderContainer = styled.fieldset`
   width: 200px;
   margin: 5px;
 `;
+
 const OrderButton = styled.button<{ active?: boolean }>`
   ${({ active }) =>
     active &&
     css`
-      background-color: lightblue;
+      background-color: #7daffb;
     `}
   margin: 5px;
+  border-radius: 5px;
 `;
 
 const Legend = styled.legend`
-  font-family: "Proxima Nova", -apple-system, Roboto, Arial, sans-serif, sans-serif;
+  font-family: "Proxima Nova", -apple-system, Roboto, Arial, sans-serif,
+    sans-serif;
   font-size: 18px;
   font-weight: 700;
   margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #8d99ae;
 
   @media (max-width: 829px) {
     width: 100%;
@@ -248,11 +292,48 @@ const FiltraPrecio = styled.div`
 
 const InputMinMax = styled.input`
   /* display: flex; */
-  width: 4rem;
-  height: 2rem;
+  width: 3.5rem;
+  height: 1.5rem;
+  border-radius: 5px;
+
+  ::placeholder {
+    font-size: 0.8rem;
+    padding-left: 0.3rem;
+  }
 
   @media (max-width: 829px) {
     width: 100%;
     font-size: 0.8rem;
+  }
+
+  @media (max-width: 600px) {
+    width: 100%;
+    font-size: 0.6rem;
+
+    ::placeholder {
+      font-size: 0.5rem;
+      padding-left: 0.2rem;
+    }
+  }
+`;
+
+const H5 = styled.h5`
+  font-size: 1rem;
+  margin: 0;
+  margin-right: 0.5rem;
+`;
+
+const IconFilter = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 1.3rem;
+  height: 1.3rem;
+  border-radius: 5px;
+  
+
+  &:hover {
+    background-color: #7daffb;
+    
   }
 `;
