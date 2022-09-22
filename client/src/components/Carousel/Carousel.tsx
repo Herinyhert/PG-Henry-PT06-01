@@ -19,33 +19,21 @@ export default function Carousel() {
         </div>
         <div className="carousel-inner">
           <div className="carousel-item active">
-            <img
-              src="https://res.cloudinary.com/carina-bosio/image/upload/v1663540846/Oferta_we4myx.png"
-              className="d-block w-100"
-              alt="..."
-            />
+            <img src="https://res.cloudinary.com/carina-bosio/image/upload/v1663540846/Oferta_we4myx.png" className="d-block w-100" alt="..." />
             {/* <div className="carousel-caption d-none d-md-block">
         <h5>First slide label</h5>
         <p>Some representative placeholder content for the first slide.</p>
       </div> */}
           </div>
           <div className="carousel-item">
-            <img
-              src="https://res.cloudinary.com/carina-bosio/image/upload/v1663547415/Madre_tfi4kp.png"
-              className="d-block w-100"
-              alt="..."
-            />
+            <img src="https://res.cloudinary.com/carina-bosio/image/upload/v1663547415/Madre_tfi4kp.png" className="d-block w-100" alt="..." />
             {/* <div className="carousel-caption d-none d-md-block">
         <h5>Second slide label</h5>
         <p>Some representative placeholder content for the second slide.</p>
       </div> */}
           </div>
           <div className="carousel-item">
-            <img
-              src="https://res.cloudinary.com/carina-bosio/image/upload/v1663555683/Delivery_2_dwdjhf.png"
-              className="d-block w-100"
-              alt="..."
-            />
+            <img src="https://res.cloudinary.com/carina-bosio/image/upload/v1663555683/Delivery_2_dwdjhf.png" className="d-block w-100" alt="..." />
             {/* <div className="carousel-caption d-none d-md-block">
         <h5>Third slide label</h5>
         <p>Some representative placeholder content for the third slide.</p>
@@ -69,6 +57,7 @@ const CarouselContainer = styled.div`
   margin-top: 70px;
   z-index: auto;
   display: inline-block;
+  width: 100vw;
 `;
 const Button = styled.button`
   z-index: auto;

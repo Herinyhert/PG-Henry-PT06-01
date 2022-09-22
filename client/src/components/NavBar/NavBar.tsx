@@ -1,16 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { FiShoppingBag, FiShoppingCart } from "react-icons/fi";
 import { useLocation } from "react-router-dom";
 import Logo from "../../img/Logo.png";
 import LogoMobile from "../../img/Logo-mobile.png";
-import {
-  clearState,
-  getUserID,
-  deleteReview,
-  getReviewsPending,
-  viewReview,
-} from "../../actions/index";
+import { clearState, getUserID, deleteReview, getReviewsPending, viewReview } from "../../actions/index";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { ReduxState } from "../../reducer";
@@ -24,6 +18,8 @@ import { AiOutlineDelete } from "react-icons/ai";
 import { fontSize, width } from "@mui/system";
 
 export default function NavBar() {
+  const [miniContainer, setMiniContainer] = useState(false);
+
   const dispatch = useDispatch<any>();
 
   function handleLogout() {
@@ -47,9 +43,7 @@ export default function NavBar() {
 
   //PRINCIPIO NOTIFICACIONES-----------------------------------------------
 
- 
-
-  function handleView(r) {    
+  function handleView(r) {
     dispatch(viewReview({ token: token, id: r.productId }));
   }
   function handleDelete(r) {
@@ -118,7 +112,7 @@ export default function NavBar() {
           <NumeritoNotif>{allReviews.length}</NumeritoNotif>
           <FaRegBell />
           <ul>
-          <Puntuacion>Puntúa tus compras</Puntuacion>
+            <Puntuacion>Puntúa tus compras</Puntuacion>
             {allReviews?.map((r) => (
               <li>
                 <DivUnidad>
@@ -137,11 +131,12 @@ export default function NavBar() {
         <Link to="/ShoppingCart" title="Carrito">
           <DivButtonsNavBar>
             <Numerito>{productosCarrito?.length} </Numerito>
-            <FiShoppingCart style={{ color: "black", content: "center", fontSize:"27px" }}/>
+            <FiShoppingCart style={{ color: "black", content: "center", fontSize: "27px" }} />
           </DivButtonsNavBar>
         </Link>
         <Bars>
-          <FaBars style={{ cursor: "pointer" }} />
+          <FaBars style={{ cursor: "pointer" }} onMouseEnter={() => setMiniContainer(true)} />
+          {miniContainer && <MiniContainerButtons onMouseLeave={() => setMiniContainer(false)}>TODAS LAS OPCIONES</MiniContainerButtons>}
         </Bars>
       </ContainerButtons>
     </NavBarContainer>
@@ -170,8 +165,7 @@ const NavBarContainer = styled.header`
   /* -webkit-backdrop-filter: blur(5px); */
   /* border: 1px solid rgba(255, 255, 255, 0.3); */
   justify-items: center;
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 20px 55px,
-    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 20px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
     rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
   z-index: 1;
 `;
@@ -234,8 +228,6 @@ const Saludo = styled.div`
 
 const Nombre = styled.div`
   color: #000;
-  
-
 `;
 
 const DivButtonsNavBar = styled.div`
@@ -259,7 +251,6 @@ const DivButtonsNavBar = styled.div`
   text-decoration: none;
   position: relative;
 
-
   > ul {
     position: absolute;
     top: 3.6rem;
@@ -277,7 +268,6 @@ const DivButtonsNavBar = styled.div`
     z-index: 0;
     overflow-y: auto;
     font-size: 1rem;
-    
   }
   &:hover > ul {
     display: block;
@@ -303,7 +293,6 @@ const DivButtonsNavBar = styled.div`
     text-align: center;
     transition: all 0.5s;
   }
-
 `;
 
 const ButtonLoginCompras = styled.button`
@@ -359,7 +348,6 @@ const ButtonLogin = styled.button`
   &:focus {
     background-size: 100% 2px;
   }
-  
 `;
 
 const NumeritoNotif = styled.div`
@@ -448,9 +436,9 @@ export const DivUnidad = styled.div`
   h3 {
     font-size: 0.875rem;
     text-transform: lowercase;
-  ::first-letter {
-    text-transform: uppercase;
-  }
+    ::first-letter {
+      text-transform: uppercase;
+    }
   }
 `;
 
@@ -459,7 +447,7 @@ const ButtonVisto = styled.button`
   color: #064fbc;
   background: inherit;
   margin: 1rem;
-  padding:0.5rem;
+  padding: 0.5rem;
   font-size: 0.8rem;
 `;
 
@@ -481,12 +469,17 @@ export const Puntuacion = styled.div`
   border-top: 1px solid black;
   border-bottom: 1px solid black;
   margin: 1.5rem;
-  `;
+`;
 
 const Bars = styled.div`
-display: none;
-font-size: 2rem;
-@media (max-width: 700px) {
-  display: block;
-}
+  display: none;
+  font-size: 2rem;
+  @media (max-width: 700px) {
+    display: block;
+  }
+`;
+
+const MiniContainerButtons = styled.div`
+  position: fixed;
+  transform: translate(-124px, 10px);
 `;
