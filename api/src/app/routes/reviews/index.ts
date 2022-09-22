@@ -153,7 +153,7 @@ reviewsRouter.put("/upreview", ...forClient, async (req, res) => {
   
   const rating = await prisma.product.update({
     data: {
-      averageRate: rate,
+      averageRate: Math.ceil(rate),
     },
     where:{
       id: productIdNumber

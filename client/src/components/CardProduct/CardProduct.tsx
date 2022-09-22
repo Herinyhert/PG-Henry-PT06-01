@@ -108,7 +108,7 @@ export default function CardProduct({ articulo }: CardProductProps) {
 
         <Header>
           <Start>
-            <StartRating />
+            <StartRating  rate={articulo.averageRate} />
           </Start>
           <Name>{articulo.name}</Name>
         </Header>
