@@ -136,6 +136,7 @@ export interface Articulo {
   categoryId: number;
   category: Category;
   totalCount: number;
+  averageRate: number;
 }
 
 export interface ArticuloCarrito {
