@@ -5,6 +5,7 @@ import {
   detailsProduct,
   Articulo,
   ArticuloCarrito,
+  clearStateDetail,
 } from "../../../actions/index";
 import { ReduxState } from "../../../reducer";
 import StartRating from "../../StarRating/StarRating";
@@ -81,6 +82,9 @@ export default function Details() {
 
   useEffect(() => {
     dispatch(detailsProduct(id));
+    return ()=>{
+      dispatch(clearStateDetail())
+    }
   }, [dispatch, articulo]);
 
   function handlerAgregarCarrito(detalle, accion: string) {
@@ -197,7 +201,15 @@ export default function Details() {
               </Categoria>
               {/* <Link to="/buy">
                 {" "} */}
-              <ButtonComprar>
+                {
+                  detalle.stock === 0
+                  ? <ButtonComprar>
+                  <button disabled={true}>
+                   <h1>Sin Stock</h1>
+                   </button>
+                </ButtonComprar>
+                  : <>
+                   <ButtonComprar>
                 <Button
                   className="comprar"
                   onClick={() => handlerAgregarCarrito(detalle, "comprar")}
@@ -214,7 +226,9 @@ export default function Details() {
                 >
                   Agregar al Carrito
                 </Button>
-              </ButtonCarrito>
+              </ButtonCarrito></>
+                }
+             
             </Producto>
             <Garantia />
             {/*  <ProductoVenta/>

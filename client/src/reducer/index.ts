@@ -24,12 +24,25 @@ import {
   GET_CHANGEPASS,
   GET_FILTERORDER,
   GET_REVIEWSPENDING,
-  GET_REVIEWSPENDINGVIEW
+  GET_REVIEWSPENDINGVIEW,
+  CLEAR_STATE_DETAIL,
 } from "../actions/actiontype";
-import { getLocalstorageState, setLocalstorageState } from "../utils/localstorage";
-import { ArticuloBO, Articulo, Category, User, Orders, OrdersBO, UserBO } from "../actions";
+import {
+  getLocalstorageState,
+  setLocalstorageState,
+} from "../utils/localstorage";
+import {
+  ArticuloBO,
+  Articulo,
+  Category,
+  User,
+  Orders,
+  OrdersBO,
+  UserBO,
+} from "../actions";
 import jwtdecode from "jwt-decode";
 import { string } from "yup";
+import { detailsProduct } from "../actions/index";
 
 export interface ReduxState {
   ordersBO: OrdersBO[];
@@ -74,7 +87,7 @@ interface actionI {
   payload: any;
 }
 
-interface Review{
+interface Review {
   value: number;
   state: string;
   userId: number;
@@ -116,8 +129,8 @@ const initialState: ReduxState = {
     priceMin: undefined,
     priceMax: undefined,
   },
-  reviewsP:[],
-  reviwesPV:[],
+  reviewsP: [],
+  reviwesPV: [],
 };
 
 function rootReducer(state: ReduxState, action: actionI) {
@@ -129,13 +142,12 @@ function rootReducer(state: ReduxState, action: actionI) {
         useregistrado: true,
       };
 
-      case GET_CHANGEPASS:
-        return{
-          ...state,
-          mensaje:action.payload,
-          useregistrado: true,
-        }
-
+    case GET_CHANGEPASS:
+      return {
+        ...state,
+        mensaje: action.payload,
+        useregistrado: true,
+      };
 
     case GET_ARTICULOS:
       return {
@@ -157,7 +169,7 @@ function rootReducer(state: ReduxState, action: actionI) {
       return {
         ...state,
         users: action.payload,
-        usersbo: action.payload
+        usersbo: action.payload,
       };
     case GET_DETAIL_USER:
       return {
@@ -258,17 +270,23 @@ function rootReducer(state: ReduxState, action: actionI) {
         token: action.payload,
       };
 
-      case GET_REVIEWSPENDING:
-        return{
-          ...state,
-          reviewsP: action.payload
-        }
+    case GET_REVIEWSPENDING:
+      return {
+        ...state,
+        reviewsP: action.payload,
+      };
 
     case GET_REVIEWSPENDINGVIEW:
-      return{
+      return {
         ...state,
-        reviwesPV: action.payload
-      }
+        reviwesPV: action.payload,
+      };
+
+    case CLEAR_STATE_DETAIL:
+      return {
+        ...state,
+        detailsProduct: undefined,
+      };
 
     default:
       if (!state) {

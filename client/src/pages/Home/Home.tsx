@@ -15,9 +15,10 @@ import NavBar from "../../components/NavBar/NavBar";
 import Carousel from "../../components/Carousel/Carousel";
 import SideBar from "../../components/SideBar/SideBar";
 import { IoLogoWhatsapp } from "react-icons/io";
+import UndefinedSearchBar from "../../components/SearchBar/UndefinedSearch";
 
 export const defaultFilterOrder = {
-  page: 1 ,
+  page: 1,
   pageSize: 12,
   name: undefined || "",
   order: "name",
@@ -33,12 +34,17 @@ export default function Home() {
 
   const filterOrder = useSelector((state: ReduxState) => state.filterOrder);
 
+  const error = useSelector((state: ReduxState) => state.error);
+
   const [state, setState] = useState({ ...defaultFilterOrder, ...filterOrder });
+
   // const [state, setState] = useState(filterOrder );
 
   // setState({ ...state, ...filterOrder });
 
   const dispatch = useDispatch<any>();
+  console.log(allProducts);
+  
 
   useEffect(() => {
     dispatch(getCategorias());
@@ -54,7 +60,16 @@ export default function Home() {
         priceMax: state?.priceMax,
       })
     );
-  }, [dispatch, state?.page, filterOrder?.name, state?.order, state?.direction, state?.categoryId, state?.priceMin, state?.priceMax]);
+  }, [
+    dispatch,
+    state?.page,
+    filterOrder?.name,
+    state?.order,
+    state?.direction,
+    state?.categoryId,
+    state?.priceMin,
+    state?.priceMax,
+  ]);
 
   function redirect() {
     window.location.href =
@@ -67,17 +82,28 @@ export default function Home() {
         <link rel="stylesheet" href="fontello.css" />
       </head> */}
       <NavBar />
-      <Carousel />
-      <HomeContainer>
-        <ProductBar>
-          <SideBar homeState={state} filterOrder={(FOState) => setState({ ...state, page: 1, ...FOState })} />
-          {/* <SearchBar onSearch={(search) => setState({ ...state, page: 1, name: search })} />
+
+      {error ? (
+        <UndefinedSearchBar />
+      ) : (
+        <>
+          <Carousel />
+          <HomeContainer>
+            <ProductBar>
+              <SideBar
+                homeState={state}
+                filterOrder={(FOState) =>
+                  setState({ ...state, page: 1, ...FOState })
+                }
+              />
+              {/* <SearchBar onSearch={(search) => setState({ ...state, page: 1, name: search })} />
         <TopMenu onClickOpcion={(categoryid) => setState({ ...state, page: 1, categoryId: categoryid })} />
         <Ordenamientos>
           <OrderName onDirection={(direction) => setState({ ...state, page: 1, order: "name", direction: direction })} />
           <OrderPrice onDirection={(direction) => setState({ ...state, page: 1, order: "price", direction: direction })} />
           <OrderBrand onDirection={(direction) => setState({ ...state, page: 1, order: "brand", direction: direction })} />
         </Ordenamientos> */}
+
           <CardsProducts>
             {allProducts.map((art) => (
               <CardProduct key={art.id} articulo={art} />
@@ -87,6 +113,7 @@ export default function Home() {
             <IoLogoWhatsapp />
           </BtnWsp>
           <div dangerouslySetInnerHTML={{ __html: `
+
         <df-messenger
           intent="WELCOME"
           chat-title="CompuBot"
@@ -95,14 +122,23 @@ export default function Home() {
           language-code="es"
         ></df-messenger>
 
-        `}} />
-        </ProductBar>
-        {totalCount > state.pageSize ? (
-          <Paginado onPageChange={(page) => setState({ ...state, page })} totalCount={totalCount} pageSize={state.pageSize} />
-        ) : (
-          ""
-        )}
-      </HomeContainer>
+        `,
+                }}
+              />
+            </ProductBar>
+            {totalCount > state.pageSize ? (
+              <Paginado
+                onPageChange={(page) => setState({ ...state, page })}
+                totalCount={totalCount}
+                pageSize={state.pageSize}
+              />
+            ) : (
+              ""
+            )}
+          </HomeContainer>
+        </>
+      )}
+
     </div>
   );
 }

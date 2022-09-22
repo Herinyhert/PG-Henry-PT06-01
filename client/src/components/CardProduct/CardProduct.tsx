@@ -89,6 +89,28 @@ export default function CardProduct({ articulo }: CardProductProps) {
       navigate("/home");
     }
   }
+
+  function handlerButtonCarritoSinStock (e) {
+    e.preventDefault()
+    const Toast = Swal.mixin({
+      //alerta que muestra que se agrego producto
+      toast: true,
+      position: "center",
+      showConfirmButton: false,
+      timer: 1200,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener("mouseenter", Swal.stopTimer);
+        toast.addEventListener("mouseleave", Swal.resumeTimer);
+      },
+    });
+
+    Toast.fire({
+      icon: "error",
+      title: "No hay stock disponible",
+    });
+
+  }
   return (
     <CardLink to={`/detail/${articulo.id}`}>
       <Tarjeta>
@@ -96,9 +118,16 @@ export default function CardProduct({ articulo }: CardProductProps) {
           <img src={articulo.img} width="180" height="127" alt="img" />
         </Body>
         <Footer>
+          {
+            detalle.stock == 0
+            ? <CarritoImgButoon onClick={(e) => handlerButtonCarritoSinStock(e)}>
+            <BsCartPlus />
+          </CarritoImgButoon>
+            :
           <CarritoImgButoon onClick={(e) => handlerButtonCarrito(e, detalle)}>
             <BsCartPlus />
           </CarritoImgButoon>
+          }
           <span>|</span>
 
           <div>

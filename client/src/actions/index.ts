@@ -26,7 +26,8 @@ import {
   GET_CHANGEPASS,
   GET_FILTERORDER,
   GET_REVIEWSPENDING,
-  GET_REVIEWSPENDINGVIEW
+  GET_REVIEWSPENDINGVIEW,
+  CLEAR_STATE_DETAIL
 } from "./actiontype";
 
 const { REACT_APP_API_URL = "http://localhost:3001" } = process.env;
@@ -856,3 +857,10 @@ export function viewReview({ id, token }) {
 }
 
 //////////////////////back office/////////////////////////////////////////////////////////////////
+export function clearStateDetail() {
+  return function (dispatch) {
+    dispatch({
+      type: CLEAR_STATE_DETAIL,
+    });
+  };
+}
