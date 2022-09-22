@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { ImSearch } from "react-icons/im";
 import Swal from "sweetalert2";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getArticulos } from "../../actions";
 import axios from "axios";
+import { ReduxState } from "../../reducer";
 // import { useNavigate } from "react-router-dom";
 
 const { REACT_APP_API_URL = "http://localhost:3001" } = process.env;
@@ -15,9 +16,11 @@ export interface SearchBarProps {
 
 // export default function SearchBar({ onSearch }: SearchBarProps) {
 export default function SearchBar() {
-  const [state, setState] = useState("");
+  const { name } = useSelector((state: ReduxState) => state.filterOrder);
+  const [state, setState] = useState(name || "");
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const dispatch = useDispatch<any>();
+
   // const navigate = useNavigate();
 
   function handlechange(e) {
@@ -32,7 +35,13 @@ export default function SearchBar() {
   }
 
   function handleclick() {
-    if (state.length > 0) {
+    if (!state.length && state === name) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "No se ingreso ningun producto",
+      });
+    } else
       dispatch(
         getArticulos({
           page: 1,
@@ -45,13 +54,6 @@ export default function SearchBar() {
           priceMax: undefined,
         })
       );
-    } else {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "No se ingreso ningun producto",
-      });
-    }
   }
 
   return (
@@ -60,6 +62,7 @@ export default function SearchBar() {
         type={"text"}
         autoFocus
         onChange={handlechange}
+        value={state}
         placeholder="Encontrá lo que buscás"
         onKeyDown={(e) => {
           if (e.key === "Enter") {
@@ -69,7 +72,6 @@ export default function SearchBar() {
         }}
         list="suggestions"
       />
-
       <datalist id="suggestions">
         {suggestions.map((suggestion, i) => (
           <option key={i} value={suggestion} />
