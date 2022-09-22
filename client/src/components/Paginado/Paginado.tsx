@@ -20,6 +20,7 @@ const ContainerPage = styled.div`
   align-items: center;
   justify-content: center;
   /* margin: 0 150px; */
+  margin-botton: 5rem;
 `;
 
 const Button = styled.button`

@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
+import styled from "styled-components";
 import Landing from "./pages/Landing/Landing";
 import Home from "./pages/Home/Home";
 import ErrorCard from "./components/ErrorCard/ErrorCard";
@@ -58,6 +59,22 @@ export default function App() {
         <Route path="undefinedsearch" element={<UndefinedSearch />}/>
 
       </Routes>
+      {/* <Footer>
+        
+          © Copyright 2022 | Grupo 1 | Diseño y Desarrollo | Todos los
+          derechos reservados | Henry`s PG
+        
+      </Footer> */}
     </BrowserRouter>
   );
 }
+
+// const Footer = styled.div`
+//    font-size: 15px;
+//   height: 2rem;
+//   padding-top: 10px;
+//   background-color: #e2e2e2;
+//   display:flex;
+//   justify-content: space-around;
+//   `;
+

@@ -103,17 +103,17 @@ export default function Home() {
           <OrderPrice onDirection={(direction) => setState({ ...state, page: 1, order: "price", direction: direction })} />
           <OrderBrand onDirection={(direction) => setState({ ...state, page: 1, order: "brand", direction: direction })} />
         </Ordenamientos> */}
-              <CardsProducts>
-                {allProducts.map((art) => (
-                  <CardProduct key={art.id} articulo={art} />
-                ))}
-              </CardsProducts>
-              <BtnWsp onClick={redirect}>
-                <IoLogoWhatsapp />
-              </BtnWsp>
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: `
+
+          <CardsProducts>
+            {allProducts.map((art) => (
+              <CardProduct key={art.id} articulo={art} />
+            ))}
+          </CardsProducts>
+          <BtnWsp onClick={redirect}>
+            <IoLogoWhatsapp />
+          </BtnWsp>
+          <div dangerouslySetInnerHTML={{ __html: `
+
         <df-messenger
           intent="WELCOME"
           chat-title="CompuBot"
@@ -138,6 +138,7 @@ export default function Home() {
           </HomeContainer>
         </>
       )}
+
     </div>
   );
 }
@@ -148,12 +149,14 @@ const HomeContainer = styled.div`
   /* align-items: center; */
   /* justify-content: center; */
   /* overflow-x: hidden; */
+  padding-bottom: 40px;
 `;
 
 const CardsProducts = styled.div`
   display: inline-flex;
   flex-wrap: wrap;
   justify-content: center;
+  margin-top: 20px;
   margin-bottom: 30px;
   width: 100%;
 `;
