@@ -114,7 +114,7 @@ export default function Signup() {
   }
 
   function redirect() {
-    window.location.href = REACT_APP_API_URL + "/auth/google/success";
+    window.location.href = REACT_APP_API_URL + "/auth/google";
   }
 
   const [showPwd2, setShowPwd2] = useState(false);
