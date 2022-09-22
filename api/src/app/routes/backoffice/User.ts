@@ -115,7 +115,7 @@ userRoutes.get("/", async (req, res) => {
     order = "id",
     direction = "desc",
     filter,
-    id
+    id,
   } = req.query;
 
   const pageNumber = Number(page);
@@ -191,14 +191,25 @@ userRoutes.get("/", async (req, res) => {
     }
   }
 
-  if (id) { where.id = Number(id); }
+  if (id) {
+    where.id = Number(id);
+  }
 
   const searchuser = await prisma.user.findMany({
     skip: (pageNumber - 1) * pageSizeNumber,
     take: pageSizeNumber,
     where: where,
     orderBy: { [order]: direction },
-    include: { review: { include: { product:true } }, orderU: { include: { order_detail: {include:{product:{include:{review:true,category:true}}}} } } },
+    include: {
+      review: { include: { product: true } },
+      orderU: {
+        include: {
+          order_detail: {
+            include: { product: { include: { review: true, category: true } } },
+          },
+        },
+      },
+    },
   });
 
   const totalCuantity = await prisma.user.count({

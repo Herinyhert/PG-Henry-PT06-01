@@ -10,7 +10,7 @@ import Paper from "@mui/material/Paper";
 
 import { useDispatch, useSelector } from "react-redux";
 import { ReduxState } from "../../reducer";
-import { getUsersBO, deleteUserBO } from "../../actions";
+import { getUsersBO, deleteUserBO, getReviewsPendingView, setRatingBO } from "../../actions";
 import Paginado from "../Paginado/Paginado";
 import ButtonMUI from "@mui/material/Button";
 
@@ -25,6 +25,7 @@ import InputLabel from "@mui/material/InputLabel";
 import { FaStar } from "react-icons/fa";
 
 import StarRating from "./StarRating";
+import OrderBrand from "../SideBar/OrderBrand";
 
 
 
@@ -62,10 +63,14 @@ export default function DenseTable() {
   
   const totalUser = useSelector((state1: ReduxState) => state1.totalUser);
   const user = useSelector((state: ReduxState) => state.user);
+  const allReviews = useSelector((state: ReduxState) => state.reviwesPV);
+  const token = useSelector((state: ReduxState) => state.token);
 
   const dispatch = useDispatch<any>();
 
-  
+  useEffect(() => {
+    dispatch(getReviewsPendingView(token));
+  }, [dispatch]);
 
   async function handlechangeFilter(e) {
     setState({
@@ -114,6 +119,7 @@ export default function DenseTable() {
       })
     );
   }
+
   return (
     <>
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
@@ -127,65 +133,25 @@ export default function DenseTable() {
             <TableHead>
               <TableRow>
                 <TableCell>Puntos</TableCell>
-                <TableCell>Orden ID</TableCell>
-                <TableCell>Fecha</TableCell>
                 <TableCell align="right">Producto</TableCell>
-                <TableCell align="right">Marca</TableCell>
                 <TableCell align="right">Categoria</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {allUser.map((row) =>
-                row.orderU?.map((order) =>
-                  order.order_detail.map((rev) => {
+              {allReviews.map((review) =>{
                     return (
                     <TableRow
-                      key={rev.id}
+                      key={review.productId}
                       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                     >
                       <TableCell align="right">
-                        <StarRating user={row} order={rev.product} />
-                        {/*rev
-                          ? [...Array(reviewList[rev.product.id]||5)].map((start, i) => {
-                              const ratingValue = i + 1;
-                              return (
-                                <label key={i}>
-                                  <Input
-                                    type="radio"
-                                    name="rating"
-                                    value={ratingValue}
-                                    onClick={() => putRating(ratingValue)}
-                                  />
-                                  <Stars>
-                                    <FaStar
-                                      color={
-                                        reviewList[rev.product.id]?'#0000FF':
-                                        ratingValue <= (hover || rating)
-                                          ? "#ffc107"
-                                          : "#e4e5e9"
-                                      }
-                                      size={15}
-                                      onMouseEnter={() => setHover(ratingValue)}
-                                      onMouseLeave={() => setHover(null)}
-                                    />
-                                  </Stars>
-                                </label>
-                              );
-                            })
-                          : null*/}
+                        <StarRating review={review}/>                
                       </TableCell>
-                      <TableCell align="right">{order.id}</TableCell>
-                      <TableCell align="right">
-                        {order.date.toString()}
-                      </TableCell>
-                      <TableCell align="right">{rev.product?.name}</TableCell>
-                      <TableCell align="right">{rev.product?.brand}</TableCell>
-                      <TableCell align="right">
-                        {rev.product?.category.name}
-                      </TableCell>
+                      <TableCell align="right">{review.product.name}</TableCell>
+                      <TableCell align="right">{review.product.brand}</TableCell>
                     </TableRow>
-                  )})
-                )
+                  )}
+                
               )}
             </TableBody>
           </Table>
