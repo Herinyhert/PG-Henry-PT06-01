@@ -41,7 +41,7 @@ export default function SearchBar() {
         title: "Oops...",
         text: "No se ingreso ningun producto",
       });
-      setState("")
+     
     } else
       dispatch(
         getArticulos({
@@ -55,7 +55,7 @@ export default function SearchBar() {
           priceMax: undefined,
         })
       );
-      setState("")
+    
   }
 
   return (
