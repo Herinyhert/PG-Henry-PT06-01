@@ -21,7 +21,7 @@ export default function resetpassword ({name, surname, email, token}: ConfirmMai
           from: 'compustorehenry@gmail.com',
           to: email,
           subject: "CompuStore - Instrucciones para restablecer la contraseña",
-          // text: `http://localhost:3000/login/checkmail/changepassword/${token}`,
+          // text: `https://compustore-ecomerce-henry.vercel.app/login/checkmail/changepassword/${token}`,
           html:`
           <div class="one-div" border="0" cellpadding="0" cellspacing="0" width="70%" style="border-spacing:0; border-left:1px solid #495057; border-right:1px solid #495057; border-bottom:1px solid #495057; border-top:1px solid #495057; margin: 20px 200px; padding: 0 20px 20px 20px" bg="#FFFFFF">
     <wrapper class="header" >
@@ -61,7 +61,7 @@ export default function resetpassword ({name, surname, email, token}: ConfirmMai
                   <table border="0" cellpadding="0" cellspacing="0" style="Margin:0 auto;">
                       <tr>
                           <td width="250" height="60" align="center" bgcolor="#2f9780" style="-moz-border-radius: 30px; -webkit-border-radius: 30px; border-radius: 30px;">
-                              <a href="http://localhost:3000/login/checkmail/changepassword/${token}" style="width:250; display:block; text-decoration:none; border:0; text-align:center; font-weight:bold;font-size:18px; font-family: Arial, sans-serif; color: #ffffff" class="button_link">Restablecer contraseña</a>
+                              <a href="https://compustore-ecomerce-henry.vercel.app/login/checkmail/changepassword/${token}" style="width:250; display:block; text-decoration:none; border:0; text-align:center; font-weight:bold;font-size:18px; font-family: Arial, sans-serif; color: #ffffff" class="button_link">Restablecer contraseña</a>
                               
                                  
                           </td>
@@ -75,7 +75,7 @@ export default function resetpassword ({name, surname, email, token}: ConfirmMai
                   Si el botón no funciona por algún motivo, también puede hacer click o pegar lo siguiente en su navegador:
                   <br />
 <br />
-                  <Link to="/login/checkmail/changepassword/${token}">http://localhost:3000/login/checkmail/changepassword/${token}</Link>
+                  <Link to="/login/checkmail/changepassword/${token}">https://compustore-ecomerce-henry.vercel.app/login/checkmail/changepassword/${token}</Link>
                </p></td>
           </tr>
           <tr>

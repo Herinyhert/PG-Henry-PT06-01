@@ -5,6 +5,7 @@ import { loginGoogle } from '../../actions';
 
 
 export default function CheckGoogle () {
+    const { CLIENT_URL = "http://localhost:3001" } = process.env
     const dispatch = useDispatch<any>()
     let { token } = useParams();
 
@@ -13,7 +14,7 @@ export default function CheckGoogle () {
     useEffect(() => {
         dispatch(loginGoogle(token))
         if(token){
-            window.location.assign("http://localhost:3000/home");
+            window.location.assign(CLIENT_URL + "/home");
         }     
     },dispatch)
 

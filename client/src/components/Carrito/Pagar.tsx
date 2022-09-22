@@ -44,6 +44,9 @@ export default function Buy() {
     id: string;
   }
 
+  const { CLIENT_URL = "http://localhost:3000", REACT_APP_API_URL = "http://localhost:3001" } = process.env
+
+
   //const { order } = useParams();
   const search = useLocation().search;
   const order = new URLSearchParams(search).get("order");
@@ -68,7 +71,7 @@ export default function Buy() {
 
   useEffect(() => {
     axios
-      .post("http://localhost:3001/mercadopago", {
+      .post( REACT_APP_API_URL + "/mercadopago", {
         carrito: JSON.stringify(items_ml),
         order: orderNro,
       })
