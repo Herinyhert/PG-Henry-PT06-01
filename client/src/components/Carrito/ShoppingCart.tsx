@@ -194,7 +194,7 @@ export default function ShoppingCart() {
     <>
       <NavBar />
       <Container>
-        {!productosCarrito ? (
+        {!productosCarrito.length ? (
           <DivTitulo>
             <h3>No hay productos en el carrito</h3>
           </DivTitulo>
