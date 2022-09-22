@@ -102,7 +102,7 @@ const initialState: ReduxState = {
   usersbo: [],
   detailsUser: undefined,
   dashboardmenu: "products",
-  articulos: [],
+  articulos: undefined,
   articulosbo: [],
   categorias: [],
   categoriasbo: [],

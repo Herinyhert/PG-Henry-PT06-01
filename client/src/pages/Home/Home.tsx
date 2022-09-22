@@ -44,7 +44,6 @@ export default function Home() {
 
   const dispatch = useDispatch<any>();
   console.log(allProducts);
-  
 
   useEffect(() => {
     dispatch(getCategorias());
@@ -83,7 +82,21 @@ export default function Home() {
       </head> */}
       <NavBar />
 
-      {error ? (
+      {!allProducts ? (
+        <HomeContainer>
+          <CardsProducts>
+            <Img>
+              <img
+                src="https://tradinglatam.com/wp-content/uploads/2019/04/loading-gif-png-4.gif"
+                alt="cargando"
+                height="250px"
+                width="250px"
+                margin-top="100px"
+              />
+            </Img>
+          </CardsProducts>
+        </HomeContainer>
+      ) : allProducts.length === 0 ? (
         <UndefinedSearchBar />
       ) : (
         <>
@@ -141,6 +154,11 @@ export default function Home() {
     </div>
   );
 }
+
+const Img = styled.div`
+  margin-top: 100px;
+  justify-content: center;
+`;
 
 const HomeContainer = styled.div`
   display: flex;
