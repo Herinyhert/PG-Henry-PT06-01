@@ -8,7 +8,7 @@ const googleStrategy = new Strategy(
   {
     clientID: process.env.GOOGLE_CLIENT_ID as string,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-    callbackURL: "/auth/google/success",
+    callbackURL: "https://compustore-ecomerce-henry-mxuog4fk4-herinyhert.vercel.app/auth/google/success",
   },
   async function (accestoken, refreshToken, profile, done) {
     const emailObj = profile.emails?.find(({ verified }) => verified);
