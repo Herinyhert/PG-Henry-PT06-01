@@ -22,7 +22,7 @@ export default function validateuser ({name, surname, email, token}: ConfirmMail
           to: email,
 
           subject: "Bienvenido a CompuStore - Importante: completemos la configuración de su cuenta ✔",
-          text: `http://localhost:3000/login/checkmail/${token}`,
+          text: `https://compustore-ecomerce-henry.vercel.app/login/checkmail/${token}`,
           html:`
           <div class="one-div" border="0" cellpadding="0" cellspacing="0" width="70%" style="border-spacing:0; border-left:1px solid #495057; border-right:1px solid #495057; border-bottom:1px solid #495057; border-top:1px solid #495057; margin: 20px 200px; padding: 0 20px 20px 20px" bg="#FFFFFF">
     <wrapper class="header" >
@@ -61,7 +61,7 @@ Ya casi está listo para comenzar a utilizar la App de CompuStore. Simplemente h
                   <table border="0" cellpadding="0" cellspacing="0" style="Margin:0 auto;">
                       <tr>
                           <td width="250" height="60" align="center" bgcolor="#2f9780" style="-moz-border-radius: 30px; -webkit-border-radius: 30px; border-radius: 30px;">
-                              <a href="http://localhost:3000/login/checkmail/${token}" style="width:400; display:block; text-decoration:none; border:0; text-align:center; font-weight:bold;font-size:18px; font-family: Arial, sans-serif; color: #ffffff" class="button_link">Validar su dirección de correo electrónico
+                              <a href="https://compustore-ecomerce-henry.vercel.app/login/checkmail/${token}" style="width:400; display:block; text-decoration:none; border:0; text-align:center; font-weight:bold;font-size:18px; font-family: Arial, sans-serif; color: #ffffff" class="button_link">Validar su dirección de correo electrónico
                               
                                   </a>
                           </td>
@@ -75,7 +75,7 @@ Ya casi está listo para comenzar a utilizar la App de CompuStore. Simplemente h
                   Si el botón no funciona por algún motivo, también puede hacer click o pegar lo siguiente en su navegador:
                   <br />
 <br />
-                  <Link to="/login/checkmail/${token}">http://localhost:3000/login/checkmail/${token}</Link>
+                  <Link to="/login/checkmail/${token}">https://compustore-ecomerce-henry.vercel.app/login/checkmail/${token}</Link>
                </p></td>
           </tr>
           <tr>

@@ -44,17 +44,17 @@ export default function Home() {
     dispatch(getCategorias());
     dispatch(
       getArticulos({
-        page: state.page,
-        pageSize: state.pageSize,
-        name: filterOrder.name,
-        order: state.order,
-        direction: state.direction,
-        categoryId: state.categoryId,
-        priceMin: state.priceMin,
-        priceMax: state.priceMax,
+        page: state?.page,
+        pageSize: state?.pageSize,
+        name: filterOrder?.name,
+        order: state?.order,
+        direction: state?.direction,
+        categoryId: state?.categoryId,
+        priceMin: state?.priceMin,
+        priceMax: state?.priceMax,
       })
     );
-  }, [dispatch, state.page, filterOrder.name, state.order, state.direction, state.categoryId, state.priceMin, state.priceMax]);
+  }, [dispatch, state?.page, filterOrder?.name, state?.order, state?.direction, state?.categoryId, state?.priceMin, state?.priceMax]);
 
   function redirect() {
     window.location.href =
